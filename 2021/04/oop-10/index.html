@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Week 10 多态与模板10.0 Overview 纯虚函数与抽象类 向下类型转换 多重继承的虚函数表，多重继承的利弊 多态 函数模板与类模板  10.1 纯虚函数与抽象类 虚函数还可以进一步声明为纯虚函数，包含纯虚函数的类，通常被称为“抽象类”。  virtual 返回类型 函数名(形式参数) &#x3D; 0;   抽象类不允许定义对象，定义基类为抽象类的主要用途是为派生类规定共性“接口”   &#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP 课程笔记 Week 10 多态与模板">
+<meta property="og:url" content="https://cc7w.cf/2021/04/oop-10/index.html">
+<meta property="og:site_name" content="c7w 的破站 v2.0">
+<meta property="og:description" content="Week 10 多态与模板10.0 Overview 纯虚函数与抽象类 向下类型转换 多重继承的虚函数表，多重继承的利弊 多态 函数模板与类模板  10.1 纯虚函数与抽象类 虚函数还可以进一步声明为纯虚函数，包含纯虚函数的类，通常被称为“抽象类”。  virtual 返回类型 函数名(形式参数) &#x3D; 0;   抽象类不允许定义对象，定义基类为抽象类的主要用途是为派生类规定共性“接口”   &#x2F;&#x2F;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-04-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-26T06:36:32.358Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cc7w.cf/2021/04/oop-10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh'
+  };
+</script>
+
+  <title>OOP 课程笔记 Week 10 多态与模板 | c7w 的破站 v2.0</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">c7w 的破站 v2.0</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/04/oop-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="c7w">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c7w 的破站 v2.0">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OOP 课程笔记 Week 10 多态与模板
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-26T00:00:00+08:00">2021-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-26 14:36:32" itemprop="dateModified" datetime="2021-07-26T14:36:32+08:00">2021-07-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Week-10-多态与模板"><a href="#Week-10-多态与模板" class="headerlink" title="Week 10 多态与模板"></a>Week 10 多态与模板</h2><h3 id="10-0-Overview"><a href="#10-0-Overview" class="headerlink" title="10.0 Overview"></a>10.0 Overview</h3><ul>
+<li>纯虚函数与抽象类</li>
+<li>向下类型转换</li>
+<li>多重继承的虚函数表，多重继承的利弊</li>
+<li>多态</li>
+<li>函数模板与类模板</li>
+</ul>
+<h3 id="10-1-纯虚函数与抽象类"><a href="#10-1-纯虚函数与抽象类" class="headerlink" title="10.1 纯虚函数与抽象类"></a>10.1 纯虚函数与抽象类</h3><ul>
+<li><p>虚函数还可以进一步声明为纯虚函数，包含纯虚函数的类，通常被称为“抽象类”。</p>
+<ul>
+<li><code>virtual 返回类型 函数名(形式参数) = 0;</code></li>
+</ul>
+</li>
+<li><p>抽象类不允许定义对象，定义基类为抽象类的主要用途是为派生类规定共性“接口”</p>
+</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.1.1</span>
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">/// 可在类外定义函数体提供默认实现。派生类通过 A::f() 调用</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+A obj<span class="token punctuation">;</span> <span class="token comment">/// 不准抽象类定义对象！编译不通过！</span></code></pre>
+<ul>
+<li><p>抽象类</p>
+<ul>
+<li>定义：含有至少一个纯虚函数。</li>
+<li>特点：<ul>
+<li>不允许定义对象。</li>
+<li>只能为派生类提供接口。</li>
+<li>能避免对象切片：保证只有指针和引用能被向上类型转换。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>基类纯虚函数被派生类重写覆盖之前仍是纯虚函数。因此当继承一个抽象类时，必须实现所有纯虚函数，否则继承出的类也是抽象类。</p>
+</li>
+<li><strong>纯虚析构函数除外</strong><ul>
+<li>对于纯虚析构函数而言，即便派生类中不显式实现，编译器也会自动合成默认析构函数。因此，即使派生类不覆盖纯虚析构函数，派生类可以不是抽象类，可以定义派生类对象。</li>
+<li>回顾：虚函数与析构函数<ul>
+<li>析构函数能是虚的，且常常是虚的。<strong>虚析构函数仍需定义函数体</strong>。</li>
+<li>虚析构函数的用途：当删除基类对象指针时，编译器将根据指针所指对象的实际类型，调用相应的析构函数。</li>
+</ul>
+</li>
+<li>析构函数也可以是纯虚函数<ul>
+<li>纯虚析构函数仍然需要函数体</li>
+<li>目的：使基类成为抽象类，不能创建基类的对象。如果有其他函数是纯虚函数，则析构函数不必是纯虚的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.1.2</span>
+<span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span> 
+    <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token class-name">Base</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token comment">/// 必须有函数体</span>
+<span class="token keyword">class</span> <span class="token class-name">Derive</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Base b<span class="token punctuation">;</span> <span class="token comment">/// 编译错误，基类是抽象类</span>
+    Derive d1<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="10-2-向下类型转换"><a href="#10-2-向下类型转换" class="headerlink" title="10.2 向下类型转换"></a>10.2 向下类型转换</h3><ul>
+<li>基类指针/引用转换成派生类指针/引用，则称为向下类型转换。（类层次中向下移动）</li>
+<li>如何确保转换的正确性？<ul>
+<li>如何保证基类指针指向的对象也可以被要转换的派生类的指针指向？—— 借助虚函数表进行动态类型检查！</li>
+</ul>
+</li>
+<li>C++提供了一个特殊的显式类型转换，称为<code>dynamic_cast</code>，是一种安全类型向下类型转换。<ul>
+<li>使用dynamic_cast的对象必须有虚函数，因为它使用了存储在虚函数表中的信息判断实际的类型。使用方法：<ul>
+<li>obj_p，obj_r分别是T1类型的指针和引用<ul>
+<li><code>T2* pObj = dynamic_cast&lt;T2*&gt;(obj_p);</code>//转换为T2指针，运行时失败返回 <code>nullptr</code></li>
+<li><code>T2&amp; refObj = dynamic_cast&lt;T2&amp;&gt;(obj_r);</code> //转换为T2引用，运行时失败抛出 <code>bad_cast</code> 异常</li>
+</ul>
+</li>
+<li>T1必须是多态类型（声明或继承了至少一个虚函数的类），否则不过编译；T2不必。T1,T2没有继承关系也能通过编译，只不过运行时会转换失败。</li>
+</ul>
+</li>
+<li>如果我们知道正在处理的是哪些类型，可以使用static_cast来避免这种开销。<ul>
+<li>static_cast在编译时静态浏览类层次，只检查继承关系。没有继承关系的类之间，必须具有转换途径才能进行转换（要么自定义，要么是语言语法支持），否则不过编译。运行时无法确认是否正确转换。</li>
+<li>static_cast使用方法：<ul>
+<li>obj_p，obj_r分别是T1类型的指针和引用</li>
+<li><code>T2* pObj = static_cast&lt;T2*&gt;(obj_p);</code>   //转换为T2指针</li>
+<li><code>T2&amp; refObj = static_cast&lt;T2&amp;&gt;(obj_r);</code>   //转换为T2引用</li>
+<li>不安全：不保证转换后的目标是T2类型的，可能导致非法内存访问。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.2.1</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">&#123;</span><span class="token number">2018</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    D d<span class="token punctuation">;</span>
+    B b<span class="token punctuation">;</span>
+    <span class="token comment">//    D d1 = static_cast&lt;D>(b); ///未定义类型转换方式</span>
+    <span class="token comment">//    D d2 = dynamic_cast&lt;D>(b); ///只允许指针和引用转换</span>
+
+    D<span class="token operator">*</span> pd1 <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>D<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/// 有继承关系，允许转换</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pd1 <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"static_cast, B*(B) --> D*: OK"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"D::i="</span> <span class="token operator">&lt;&lt;</span> pd1<span class="token operator">-></span>i <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">/// 但是不安全：对D中成员i可能非法访问</span>
+
+    D<span class="token operator">*</span> pd2 <span class="token operator">=</span> <span class="token generic-function"><span class="token function">dynamic_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>D<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pd2 <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>  <span class="token comment">/// 不允许不安全的转换</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"dynamic_cast, B*(B) --> D*: FAILED"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">static_cast</span><span class="token punctuation">,</span> B<span class="token operator">*</span><span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">></span> D<span class="token operator">*</span><span class="token operator">:</span>OK
+<span class="token operator">>></span><span class="token operator">></span> D<span class="token double-colon punctuation">::</span>i<span class="token operator">=</span><span class="token number">124455624</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">dynamic_cast</span><span class="token punctuation">,</span> B<span class="token operator">*</span><span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">></span> D<span class="token operator">*</span><span class="token operator">:</span> FAILED</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.2.2</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">&#123;</span><span class="token number">2018</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    D d<span class="token punctuation">;</span>
+    B b<span class="token punctuation">;</span>
+    <span class="token comment">//    D d1 = static_cast&lt;D>(b); ///未定义类型转换</span>
+    <span class="token comment">//    D d2 = dynamic_cast&lt;D>(b); ///只允许指针和引用转换</span>
+    B<span class="token operator">*</span> pb <span class="token operator">=</span> <span class="token operator">&amp;</span>d<span class="token punctuation">;</span>
+    D<span class="token operator">*</span> pd3 <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>D<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>pb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pd3 <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"static_cast, B*(D) --> D*: OK"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"D::i="</span> <span class="token operator">&lt;&lt;</span> pd3<span class="token operator">-></span>i <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    D<span class="token operator">*</span> pd4 <span class="token operator">=</span> <span class="token generic-function"><span class="token function">dynamic_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>D<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>pb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pd4 <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"dynamic_cast, B*(D) --> D*: OK"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"D::i="</span> <span class="token operator">&lt;&lt;</span> pd4<span class="token operator">-></span>i <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">static_cast</span><span class="token punctuation">,</span> B<span class="token operator">*</span><span class="token punctuation">(</span>D<span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">></span> D<span class="token operator">*</span><span class="token operator">:</span> OK
+<span class="token operator">>></span><span class="token operator">></span> D<span class="token double-colon punctuation">::</span>i<span class="token operator">=</span><span class="token number">2018</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">dynamic_cast</span><span class="token punctuation">,</span> B<span class="token operator">*</span><span class="token punctuation">(</span>D<span class="token punctuation">)</span> <span class="token operator">--</span><span class="token operator">></span> D<span class="token operator">*</span><span class="token operator">:</span> OK
+<span class="token operator">>></span><span class="token operator">></span> D<span class="token double-colon punctuation">::</span>i<span class="token operator">=</span><span class="token number">2018</span></code></pre>
+<ul>
+<li><p>重要原则(清楚指针所指向的真正对象)：<br>1）指针或引用的向上转换总是安全的；<br>2）向下转换时用dynamic_cast，安全检查；<br>3）避免对象之间的转换。</p>
+</li>
+<li><p>对于基类中有虚函数的情况：</p>
+<ul>
+<li>向上类型转换：<ul>
+<li>转换为基类指针或引用，则对应虚函数表仍为派生类的虚函数表（晚绑定）。</li>
+<li>转换为基类对象，则对应虚函数表是基类的虚函数表（早绑定）。</li>
+</ul>
+</li>
+<li>向下类型转换：<br>dynamic_cast通过虚函数表来判断是否能进行向下类型转换。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.2.3</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Pet</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">Pet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Dog</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Pet</span></span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"dog run"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Bird</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Pet</span></span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">fly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"bird fly"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">action</span><span class="token punctuation">(</span>Pet<span class="token operator">*</span> p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">auto</span> d <span class="token operator">=</span> <span class="token generic-function"><span class="token function">dynamic_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>Dog<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">/// 向下类型转换</span>
+    <span class="token keyword">auto</span> b <span class="token operator">=</span> <span class="token generic-function"><span class="token function">dynamic_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span>Bird<span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/// 向下类型转换</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>d<span class="token punctuation">)</span>  <span class="token comment">/// 运行时根据实际类型表现特性</span>
+        d<span class="token operator">-></span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+        b<span class="token operator">-></span><span class="token function">fly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Pet<span class="token operator">*</span> p<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    p<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> Dog<span class="token punctuation">;</span>   <span class="token comment">/// 向上类型转换</span>
+    p<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> Bird<span class="token punctuation">;</span>  <span class="token comment">/// 向上类型转换</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">action</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="10-3-多重继承的虚函数表与利弊"><a href="#10-3-多重继承的虚函数表与利弊" class="headerlink" title="10.3 多重继承的虚函数表与利弊"></a>10.3 多重继承的虚函数表与利弊</h3><ul>
+<li>多重继承中的虚函数<ul>
+<li>最多继承一个非抽象类 <strong>避免</strong> 多重继承的二义性</li>
+<li>可以集成多个抽象类 <strong>利用</strong> 一个对象可以实现多个接口</li>
+</ul>
+</li>
+</ul>
+<h3 id="10-4-多态"><a href="#10-4-多态" class="headerlink" title="10.4 多态"></a>10.4 多态</h3><ul>
+<li><p>按照基类的接口定义，调用指针或引用所指对象的接口函数，函数执行过程因对象实际所属派生类的不同而呈现不同的效果（表现），这个现象被称为“多态”。</p>
+<ul>
+<li>当利用基类指针/引用调用函数时<ul>
+<li>虚函数在运行时确定执行哪个版本，取决于引用或指针对象的真实类型</li>
+<li>非虚函数在编译时绑定</li>
+</ul>
+</li>
+<li>当利用类的对象直接调用函数时<ul>
+<li>无论什么函数，均在编译时绑定</li>
+</ul>
+</li>
+<li>产生多态效果的条件：继承 &amp;&amp; 虚函数 &amp;&amp; (引用 || 指针)</li>
+</ul>
+</li>
+<li><p>应用：TEMPLATE METHOD设计模式</p>
+<ul>
+<li>在接口的一个方法中定义算法的骨架</li>
+<li>将一些步骤的实现延迟到子类中</li>
+<li>使得子类可以在不改变算法结构的情况下，重新定义算法中的某些步骤。</li>
+</ul>
+</li>
+<li>模板方法是一种源代码重用的基本技术，在类库的设计实现中应用十分广泛，因为这个设计模式能有效地解决 “类库提供公共行为”与“用户定制特殊细节”之间的折中平衡。</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.4.1</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">step1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">step2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">step3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">step1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::step1"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">step2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::step2"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">step3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::step3"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived1</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">step1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived1::step1"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Derived2</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">step2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived2::step2"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Base<span class="token operator">*</span> ba<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token keyword">new</span> Base<span class="token punctuation">,</span> <span class="token keyword">new</span> Derived1<span class="token punctuation">,</span> <span class="token keyword">new</span> Derived2<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ba<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-></span><span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"==="</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token operator">>></span><span class="token operator">></span>
+Base<span class="token double-colon punctuation">::</span>step1
+Base<span class="token double-colon punctuation">::</span>step2
+Base<span class="token double-colon punctuation">::</span>step3
+<span class="token operator">==</span><span class="token operator">=</span>
+Derived1<span class="token double-colon punctuation">::</span>step1
+Base<span class="token double-colon punctuation">::</span>step2
+Base<span class="token double-colon punctuation">::</span>step3
+<span class="token operator">==</span><span class="token operator">=</span>
+Base<span class="token double-colon punctuation">::</span>step1
+Derived2<span class="token double-colon punctuation">::</span>step2
+Base<span class="token double-colon punctuation">::</span>step3
+<span class="token operator">==</span><span class="token operator">=</span></code></pre>
+<h3 id="10-5-函数模板与类模板"><a href="#10-5-函数模板与类模板" class="headerlink" title="10.5 函数模板与类模板"></a>10.5 函数模板与类模板</h3><ol>
+<li>函数模板</li>
+</ol>
+<ul>
+<li>有些算法实现与类型无关，所以可以将函数的参数类型也定义为一种特殊的“参数”，这样就得到了“函数模板”。</li>
+<li>定义函数模板的方法<ul>
+<li><code>template &lt;typename T&gt; ReturnType Func(Args)；</code></li>
+<li>如：任意类型两个变量相加的“函数模板”</li>
+<li><code>template &lt;typename T&gt;  T sum(T a, T b) &#123; return a + b; &#125;</code></li>
+<li>注：typename也可换为class</li>
+</ul>
+</li>
+<li>函数模板在调用时，编译器能自动推导出实际参数的类型（这个过程叫做实例化）。<ul>
+<li>所以，形式上调用一个函数模板与普通函数没有区别。</li>
+<li>当多个参数的类型不一致时，无法推导：<ul>
+<li><code>cout &lt;&lt; sum(9, 2.1);</code> //编译错误</li>
+<li>手工指定调用类型：<code>sum&lt;int&gt;(9, 2.1);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>类模板</li>
+</ol>
+<ul>
+<li>在定义类时也可以将一些类型信息抽取出来，用模板参数来替换，从而使类更具通用性。这种类被称为“类模板”。</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.5.1</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+    T data<span class="token punctuation">;</span>
+
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    A<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> a<span class="token punctuation">;</span>
+    a<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li>类模板中成员函数的类外定义</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.5.2</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+    T data<span class="token punctuation">;</span>
+
+   <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">A</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token double-colon punctuation">::</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    A<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> a<span class="token punctuation">;</span>
+    a<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li>类模板的“模板参数”<ul>
+<li>类型参数：使用typename或class标记</li>
+<li>非类型参数：整数，枚举，指针（指向对象或函数），引用（引用对象或引用函数）。整数型比较常用。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Example 10.5.3</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">unsigned</span> size<span class="token operator">></span>
+<span class="token keyword">class</span> <span class="token class-name">array</span> <span class="token punctuation">&#123;</span>
+    T elems<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+array<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token operator">></span> array0<span class="token punctuation">;</span></code></pre>
+<ul>
+<li>模板与多态<ul>
+<li>模板使用泛型标记，使用同一段代码，来关联不同但相似的特定行为，最后可以获得不同的结果。模板也是多态的一种体现。</li>
+<li>但模板的关联是在编译期处理，称为静多态。<ul>
+<li>往往和函数重载同时使用</li>
+<li>高效，省去函数调用</li>
+<li>编译后代码增多</li>
+</ul>
+</li>
+<li>基于继承和虚函数的多态在运行期处理，称为动多态<ul>
+<li>运行时，灵活方便</li>
+<li>侵入式，必须继承</li>
+<li>存在函数调用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/oop-09/" rel="prev" title="OOP 课程笔记 Week 09 虚函数">
+      <i class="fa fa-chevron-left"></i> OOP 课程笔记 Week 09 虚函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/oop-11/" rel="next" title="OOP 课程笔记 Week 11 模板与STL初步">
+      OOP 课程笔记 Week 11 模板与STL初步 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week-10-%E5%A4%9A%E6%80%81%E4%B8%8E%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">Week 10 多态与模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-0-Overview"><span class="nav-number">1.1.</span> <span class="nav-text">10.0 Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">10.1 纯虚函数与抽象类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-%E5%90%91%E4%B8%8B%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.3.</span> <span class="nav-text">10.2 向下类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF%E7%9A%84%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8%E4%B8%8E%E5%88%A9%E5%BC%8A"><span class="nav-number">1.4.</span> <span class="nav-text">10.3 多重继承的虚函数表与利弊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-%E5%A4%9A%E6%80%81"><span class="nav-number">1.5.</span> <span class="nav-text">10.4 多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-5-%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.6.</span> <span class="nav-text">10.5 函数模板与类模板</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">c7w</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c7w</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

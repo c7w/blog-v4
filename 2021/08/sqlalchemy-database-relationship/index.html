@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SQLAlchemy 主要用于将 Python 中的类映射为数据库中的数据表，方便进行后端的管理操作。&gt;&gt; Object-relational mapper (ORM) 我们从数据库关系的常见设计模式，一对一，一对多，多对一，多对多开始回顾，然后给出 SQLAlchemy 下其具体实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLAlchemy 下的数据库关系设计">
+<meta property="og:url" content="https://cc7w.cf/2021/08/sqlalchemy-database-relationship/index.html">
+<meta property="og:site_name" content="c7w 的破站 v2.0">
+<meta property="og:description" content="SQLAlchemy 主要用于将 Python 中的类映射为数据库中的数据表，方便进行后端的管理操作。&gt;&gt; Object-relational mapper (ORM) 我们从数据库关系的常见设计模式，一对一，一对多，多对一，多对多开始回顾，然后给出 SQLAlchemy 下其具体实现。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-08-08T03:46:47.000Z">
+<meta property="article:modified_time" content="2021-08-08T15:00:48.305Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="Backend">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cc7w.cf/2021/08/sqlalchemy-database-relationship/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh'
+  };
+</script>
+
+  <title>SQLAlchemy 下的数据库关系设计 | c7w 的破站 v2.0</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">c7w 的破站 v2.0</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/sqlalchemy-database-relationship/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="c7w">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c7w 的破站 v2.0">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQLAlchemy 下的数据库关系设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-08 11:46:47 / Modified: 23:00:48" itemprop="dateCreated datePublished" datetime="2021-08-08T11:46:47+08:00">2021-08-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>SQLAlchemy</strong> 主要用于将 Python 中的类映射为数据库中的数据表，方便进行后端的管理操作。&gt;&gt; <strong>Object-relational mapper</strong> <em>(ORM)</em></p>
+<p>我们从数据库关系的常见设计模式，一对一，一对多，多对一，多对多开始回顾，然后给出 <strong>SQLAlchemy</strong> 下其具体实现。</p>
+<span id="more"></span>
+<h2 id="引入包-Imports"><a href="#引入包-Imports" class="headerlink" title="引入包 Imports"></a>引入包 Imports</h2><p>Import all packages that will be used in the later sections.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Table<span class="token punctuation">,</span> Column<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>ext<span class="token punctuation">.</span>declarative <span class="token keyword">import</span> declarative_base
+
+Base <span class="token operator">=</span> declarative_base<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="一对多-One-to-Many"><a href="#一对多-One-to-Many" class="headerlink" title="一对多 One to Many"></a>一对多 One to Many</h2><p>我们不妨用<code>Exam</code>表示一次考试，<code>ExamRecord</code>表示一条考试记录。</p>
+<p>显而易见，一次考试应该有多条考试记录。</p>
+<p>我们需要在 <code>ExamRecord</code>(Child) 的数据成员列表中添加一个数据成员并标记为<code>ForeignKey</code>，指向 <code>Exam</code>(Parent) 的 <code>PrimaryKey</code>。</p>
+<p>同时，我们需要在 <code>Exam</code>(Parent) 新增数据成员 <code>records</code> 用于指向 <code>ExamRecord</code> 中的成员。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Not completed...</span>
+<span class="token keyword">import</span> json
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>type_api <span class="token keyword">import</span> TypeDecorator
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+<span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean<span class="token punctuation">,</span> PickleType
+
+<span class="token keyword">class</span> <span class="token class-name">Exam</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exams"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    state <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    records <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"ExamRecord"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExamRecord</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exam_records"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    author_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'account_users.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'exam_exams.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    feedback <span class="token operator">=</span> Column<span class="token punctuation">(</span>PickleType<span class="token punctuation">)</span></code></pre>
+<p>到此为止，我们只完成了一对多关系建立的单向更新功能。我们还需要建立该关系的另一边。可能的解决方案有两种：</p>
+<ol>
+<li><p>此时，如果我们想在<code>ExamRecord</code>中直接访问其对应的<code>Exam</code>对象，即要求实现<code>ExamRecord.Exam</code>的效果的话，我们还需要添加一个<code>exam</code>对象，并使用<code>back_populates</code>参数。</p>
+</li>
+<li><p>我们可以在其中一个<code>relationship()</code>中使用<code>relationship.backref</code>参数创建一个反向引用。</p>
+</li>
+</ol>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Example Code for Solution 1</span>
+<span class="token keyword">import</span> json
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>type_api <span class="token keyword">import</span> TypeDecorator
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+<span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean<span class="token punctuation">,</span> PickleType
+
+<span class="token keyword">class</span> <span class="token class-name">Exam</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exams"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    state <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    records <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"ExamRecord"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"exam"</span><span class="token punctuation">)</span> <span class="token comment"># Here</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExamRecord</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exam_records"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    author_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'account_users.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'exam_exams.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Exam"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"records"</span><span class="token punctuation">)</span> <span class="token comment"># And here</span>
+    feedback <span class="token operator">=</span> Column<span class="token punctuation">(</span>PickleType<span class="token punctuation">)</span></code></pre>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Example Code for Solution 2</span>
+<span class="token keyword">import</span> json
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>type_api <span class="token keyword">import</span> TypeDecorator
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+<span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean<span class="token punctuation">,</span> PickleType
+
+<span class="token keyword">class</span> <span class="token class-name">Exam</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exams"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    state <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    records <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"ExamRecord"</span><span class="token punctuation">,</span> backref<span class="token operator">=</span><span class="token string">"exam"</span><span class="token punctuation">)</span> <span class="token comment"># Only here</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExamRecord</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exam_records"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    author_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'account_users.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'exam_exams.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    feedback <span class="token operator">=</span> Column<span class="token punctuation">(</span>PickleType<span class="token punctuation">)</span></code></pre>
+<h3 id="如何理解-back-ref？-Why-back-ref"><a href="#如何理解-back-ref？-Why-back-ref" class="headerlink" title="如何理解 back_ref？ Why back_ref?"></a>如何理解 back_ref？ Why back_ref?</h3><p>我们该如何理解关系的“单边”性呢？如果理解了“单边”是什么意思，我们自然就知道了<code>back_populates</code>和<code>back_ref</code>的意义了。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Example Code without back_ref</span>
+<span class="token keyword">class</span> <span class="token class-name">Parent</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'parent'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    children <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Child"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Child</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'child'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    parent_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'parent.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    parent <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Parent"</span><span class="token punctuation">)</span></code></pre>
+<p>这时，如果我们执行如下命令：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> parent <span class="token operator">=</span> Parent<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> child <span class="token operator">=</span> Child<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> child<span class="token punctuation">.</span>parent <span class="token operator">=</span> parent
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span><span class="token punctuation">(</span>parent<span class="token punctuation">.</span>child<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token punctuation">]</span></code></pre>
+<p>我们会发现，<code>parent</code>的<code>child</code>字段并没有随之更新。</p>
+<p>也就是说，这个关系的“单边”体现在只有一边的数据进行了更新。</p>
+<p>而这显然不是我们在数据关系的处理时想要的。</p>
+<p>于是我们就通过<code>back_populates</code>和<code>back_ref</code>字段的设置来完成了这种关系的双向绑定。</p>
+<h3 id="自动删除-Cascade-on-delete"><a href="#自动删除-Cascade-on-delete" class="headerlink" title="自动删除 Cascade on delete"></a>自动删除 Cascade on delete</h3><p>我们想实现是，一旦一个<code>Exam</code>对象被删除，其对应的<code>ExamRecord</code>对象被全部删除的功能。</p>
+<p>我们自然可以想到，在原有的数据库中，我们可以通过外键约束来实现这个功能。</p>
+<p>那么，该如何在 <code>SQLAlchemy</code> 中实现这个功能呢？</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>type_api <span class="token keyword">import</span> TypeDecorator
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+<span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean<span class="token punctuation">,</span> PickleType
+
+<span class="token keyword">class</span> <span class="token class-name">Exam</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exams"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    state <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    records <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"ExamRecord"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"exam"</span><span class="token punctuation">,</span>
+                           cascade<span class="token operator">=</span><span class="token string">"all, delete"</span><span class="token punctuation">,</span> passive_deletes<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExamRecord</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"exam_exam_records"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    author_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span>
+        <span class="token string">'account_users.id'</span><span class="token punctuation">,</span> ondelete<span class="token operator">=</span><span class="token string">"CASCADE"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'exam_exams.id'</span><span class="token punctuation">,</span> ondelete<span class="token operator">=</span><span class="token string">"CASCADE"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    exam <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Exam"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"records"</span><span class="token punctuation">)</span>
+    feedback <span class="token operator">=</span> Column<span class="token punctuation">(</span>PickleType<span class="token punctuation">)</span></code></pre>
+<p>我们可以通过配置子表的 <code>ForeignKey.ondelete</code> 字段和父表的 <code>relationship.cascade</code> 字段来实现该功能。</p>
+<h3 id="多对一-Many-to-One"><a href="#多对一-Many-to-One" class="headerlink" title="多对一 Many to One"></a>多对一 Many to One</h3><p>由于类似于一对多关系，我们不再单独分 Section.</p>
+<p>如果我们在<code>Exam</code>中添加字段 <code>records_id</code>，其值赋为<code>Column(Integer, ForeignKey(&#39;exam_exam_records.id&#39;))</code>，我们便实现了一个多对一关系单边更新的创建。</p>
+<p>另一边同理，也是使用<code>back_populates</code>或<code>back_ref</code>实现的。</p>
+<h2 id="一对一-One-to-One"><a href="#一对一-One-to-One" class="headerlink" title="一对一 One to One"></a>一对一 One to One</h2><p>这里我们仍然使用 <code>Parent</code> 类和 <code>Child</code> 类做例子，即使在一对一关系中不应存在父子关系。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Parent</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'parent'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># previously one-to-many Parent.children is now</span>
+    <span class="token comment"># one-to-one Parent.child</span>
+    <span class="token comment"># uselist=False #</span>
+    child <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Child"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"parent"</span><span class="token punctuation">,</span> uselist<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Child</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'child'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    parent_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'parent.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># many-to-one side remains, see tip below</span>
+    parent <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Parent"</span><span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"child"</span><span class="token punctuation">)</span></code></pre>
+<p>当然，不使用<code>back_populates</code>，我们仍然可以使用<code>back_ref</code>。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> backref
+
+<span class="token keyword">class</span> <span class="token class-name">Parent</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'parent'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Child</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">'child'</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    parent_id <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'parent.id'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    parent <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Parent"</span><span class="token punctuation">,</span> backref<span class="token operator">=</span>backref<span class="token punctuation">(</span><span class="token string">"child"</span><span class="token punctuation">,</span> uselist<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h2 id="多对多-Many-to-Many"><a href="#多对多-Many-to-Many" class="headerlink" title="多对多 Many to Many"></a>多对多 Many to Many</h2><p>我们考虑用户类<code>User</code>与用户组类<code>Group</code>。一个用户组中可以有多名用户，一个用户也可以同时属于多个用户组。</p>
+<h3 id="使用-Table"><a href="#使用-Table" class="headerlink" title="使用 Table"></a>使用 Table</h3><p>为了实现多对多关系的建立，我们需要在<code>User</code>与<code>Group</code>之外，单独再建立一个描述二者之间关系的数据表。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># Not Implemented...</span>
+<span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey<span class="token punctuation">,</span> Table
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+
+UserGroupAssociation <span class="token operator">=</span> Table<span class="token punctuation">(</span><span class="token string">"account_user_group"</span><span class="token punctuation">,</span> Base<span class="token punctuation">.</span>metadata<span class="token punctuation">,</span>
+                             Column<span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'User.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                             Column<span class="token punctuation">(</span><span class="token string">'group'</span><span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'Group.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_users"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    password <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    groups <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Group"</span><span class="token punctuation">,</span> secondary<span class="token operator">=</span>UserGroupAssociation<span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Group</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_groups"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    users <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"User"</span><span class="token punctuation">,</span> secondary<span class="token operator">=</span>UserGroupAssociation<span class="token punctuation">)</span>    </code></pre>
+<p>然后，我们只需要再使用<code>back_populates</code>或者<code>back_ref</code>进行双边关系绑定就好了。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey<span class="token punctuation">,</span> Table
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+
+UserGroupAssociation <span class="token operator">=</span> Table<span class="token punctuation">(</span><span class="token string">"account_user_group"</span><span class="token punctuation">,</span> Base<span class="token punctuation">.</span>metadata<span class="token punctuation">,</span>
+                             Column<span class="token punctuation">(</span><span class="token string">'user'</span><span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'User.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                             Column<span class="token punctuation">(</span><span class="token string">'group'</span><span class="token punctuation">,</span> ForeignKey<span class="token punctuation">(</span><span class="token string">'Group.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_users"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    password <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    groups <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"Group"</span><span class="token punctuation">,</span> secondary<span class="token operator">=</span>UserGroupAssociation<span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"users"</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Group</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_groups"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    users <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"User"</span><span class="token punctuation">,</span> secondary<span class="token operator">=</span>UserGroupAssociation<span class="token punctuation">,</span> back_populates<span class="token operator">=</span><span class="token string">"groups"</span><span class="token punctuation">)</span></code></pre>
+<h3 id="使用-Association-类-Optional"><a href="#使用-Association-类-Optional" class="headerlink" title="使用 Association 类 (Optional)"></a>使用 Association 类 (Optional)</h3><p>我们可以使用一个新类来存储数据关系。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> Column<span class="token punctuation">,</span> String<span class="token punctuation">,</span> Integer<span class="token punctuation">,</span> Boolean
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>orm <span class="token keyword">import</span> relationship
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>schema <span class="token keyword">import</span> ForeignKey
+<span class="token keyword">from</span> models<span class="token punctuation">.</span>database <span class="token keyword">import</span> Base
+
+<span class="token keyword">class</span> <span class="token class-name">UserGroupAssociation</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_user_group"</span>
+    user <span class="token operator">=</span> Column<span class="token punctuation">(</span>ForeignKey<span class="token punctuation">(</span><span class="token string">'User.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    group <span class="token operator">=</span> Column<span class="token punctuation">(</span>ForeignKey<span class="token punctuation">(</span><span class="token string">'Group.id'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    role <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_users"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    password <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    groups <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"UserGroupAssociation"</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Group</span><span class="token punctuation">(</span>Base<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __tablename__ <span class="token operator">=</span> <span class="token string">"account_groups"</span>
+    <span class="token builtin">id</span> <span class="token operator">=</span> Column<span class="token punctuation">(</span>Integer<span class="token punctuation">,</span> primary_key<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoincrement<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> Column<span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+    is_active <span class="token operator">=</span> Column<span class="token punctuation">(</span>Boolean<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    users <span class="token operator">=</span> relationship<span class="token punctuation">(</span><span class="token string">"UserGroupAssociation"</span><span class="token punctuation">)</span></code></pre>
+<h2 id="总结-Conclusion"><a href="#总结-Conclusion" class="headerlink" title="总结 Conclusion"></a>总结 Conclusion</h2><p><code>SQLAlchemy</code> 是一个 Python 的 ORM 管理包，可以协助 API 及后端的开发。</p>
+<p>在一对一，一对多，多对一关系中，数据关系的建立主要是通过外键<code>Foreign Key</code>来实现的。</p>
+<p>而在多对多的关系中，数据关系主要是通过建立新数据表<code>Association</code>来存储的。</p>
+<p>为了建立能够双向更新的数据关系，<code>back_populates</code>和<code>back_ref</code>是不可或缺的。</p>
+<h2 id="参考资料-Reference"><a href="#参考资料-Reference" class="headerlink" title="参考资料 Reference"></a>参考资料 Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#one-to-many">https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#one-to-many</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates">https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+              <a href="/tags/Backend/" rel="tag"># Backend</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/python-func-decorators/" rel="prev" title="Python 函数装饰器">
+      <i class="fa fa-chevron-left"></i> Python 函数装饰器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/python-requests/" rel="next" title="Python Requests 库的基本使用">
+      Python Requests 库的基本使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E5%8C%85-Imports"><span class="nav-number">1.</span> <span class="nav-text">引入包 Imports</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A-One-to-Many"><span class="nav-number">2.</span> <span class="nav-text">一对多 One to Many</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-back-ref%EF%BC%9F-Why-back-ref"><span class="nav-number">2.1.</span> <span class="nav-text">如何理解 back_ref？ Why back_ref?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4-Cascade-on-delete"><span class="nav-number">2.2.</span> <span class="nav-text">自动删除 Cascade on delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E4%B8%80-Many-to-One"><span class="nav-number">2.3.</span> <span class="nav-text">多对一 Many to One</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80-One-to-One"><span class="nav-number">3.</span> <span class="nav-text">一对一 One to One</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A-Many-to-Many"><span class="nav-number">4.</span> <span class="nav-text">多对多 Many to Many</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Table"><span class="nav-number">4.1.</span> <span class="nav-text">使用 Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Association-%E7%B1%BB-Optional"><span class="nav-number">4.2.</span> <span class="nav-text">使用 Association 类 (Optional)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-Conclusion"><span class="nav-number">5.</span> <span class="nav-text">总结 Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99-Reference"><span class="nav-number">6.</span> <span class="nav-text">参考资料 Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">c7w</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c7w</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

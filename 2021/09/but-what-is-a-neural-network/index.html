@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Notes taken from watching 3Blue1Brown series: Nerual networks.  But what is a nerual network? Gradient Descent Back Propagation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="但是什么是神经网络？">
+<meta property="og:url" content="https://cc7w.cf/2021/09/but-what-is-a-neural-network/index.html">
+<meta property="og:site_name" content="c7w 的破站 v2.0">
+<meta property="og:description" content="Notes taken from watching 3Blue1Brown series: Nerual networks.  But what is a nerual network? Gradient Descent Back Propagation">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/2OhjAcN1p9JesRX.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/pQn9PXsdu3lZNO1.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/aZoQXd3Ec2T1GFL.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/OLumsy3nIMQtekc.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/BrJF1SleKfVTqOD.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/03/rpMKl7V1faHI4S5.png">
+<meta property="article:published_time" content="2021-09-03T06:37:19.000Z">
+<meta property="article:modified_time" content="2021-09-04T08:34:13.365Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/03/2OhjAcN1p9JesRX.png">
+
+<link rel="canonical" href="https://cc7w.cf/2021/09/but-what-is-a-neural-network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh'
+  };
+</script>
+
+  <title>但是什么是神经网络？ | c7w 的破站 v2.0</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">c7w 的破站 v2.0</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/09/but-what-is-a-neural-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="c7w">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c7w 的破站 v2.0">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          但是什么是神经网络？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-03 14:37:19" itemprop="dateCreated datePublished" datetime="2021-09-03T14:37:19+08:00">2021-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-04 16:34:13" itemprop="dateModified" datetime="2021-09-04T16:34:13+08:00">2021-09-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Notes taken from watching <strong>3Blue1Brown series: Nerual networks</strong>.</p>
+<ul>
+<li>But what is a nerual network?</li>
+<li>Gradient Descent</li>
+<li>Back Propagation</li>
+</ul>
+<span id="more"></span>
+<h2 id="Chapter-1-Overview"><a href="#Chapter-1-Overview" class="headerlink" title="Chapter 1: Overview"></a>Chapter 1: Overview</h2><p>Consider <strong>Nerual network</strong>:</p>
+<ul>
+<li>What are the neurons?<ul>
+<li>Functions, which take several numbers as input and give a number as output</li>
+</ul>
+</li>
+<li>How are they linked together? </li>
+</ul>
+<p><strong>Layers</strong> (Each layer made up of neurons):</p>
+<ul>
+<li>The activations of one layer determines the activations of the next layer.</li>
+</ul>
+<p>What those <strong>middle layers</strong> might be doing?</p>
+<ul>
+<li>It may be holding subcomponents of the image.</li>
+<li>Input layer -&gt; Edge layer -&gt; Pattern layer -&gt; Output Digit Layer (?)</li>
+</ul>
+<p><strong>Edge Detection Example</strong></p>
+<ul>
+<li>Assign a weight to <strong>each connection</strong> between the neuron and the neurons from the former layer</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/03/2OhjAcN1p9JesRX.png" alt="image-20210903150326487"></p>
+<ul>
+<li>Let activations from the last layer be $a_1, a_2, a_3, …a_n$​ and the weight numbers be $w_1, w_2, w_3, …w_n$​​.</li>
+<li>Let $w_1a_1 + w_2a_2 + … + w_na_n$ represent the neuron activation? No! We have to make the range of activation between [0, 1], but the result comes along with any possible real number.</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/03/pQn9PXsdu3lZNO1.png" alt="image-20210903150746983"></p>
+<ul>
+<li>We could use the <strong>sigmoid function</strong>, or the <strong>logistic curve</strong> to solve this. $\sigma(x) = \frac 1 {1+e^{-x}}$​</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/03/aZoQXd3Ec2T1GFL.png" alt="image-20210903151057105"></p>
+<ul>
+<li>So can we let the activation of the neuron be $\sigma(w_1a_1 + w_2a_2 + … + w_na_n)$​, which is basically a measure of how <strong>positively</strong> the relevant weighted sum is?</li>
+<li>Well, maybe we need some <strong>bias</strong>, say, only activate when $w_1a_1 + w_2a_2 + … + w_na_n &gt; 10$?</li>
+<li>So finally we get, the activation of the neuron, which is $\sigma(w_1a_1 + w_2a_2 + … + w_na_n + bias)$, which is -10 in this case.​​</li>
+</ul>
+<p><strong>Counting weights and biases</strong></p>
+<ul>
+<li>All described above is just above <strong>one specific neuron</strong>, and in fact, in a middle layer, we have several neurons!</li>
+<li>Take the video example, just a two-middle-layered network have more than 13k parameters to tweak!</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/03/OLumsy3nIMQtekc.png" alt="image-20210903151909640"></p>
+<ul>
+<li>So when we talk about learning, it is about <strong>finding the right weights and biases</strong> to make the network behave in the right way.</li>
+</ul>
+<p><strong>Notations and linear algebra</strong></p>
+<ul>
+<li><p>Let activations from one layer be a column vector: $\begin {bmatrix} a_1^{(0)}\ a_2^{(0)}\ \vdots\ a_n^{(0)}\ \end {bmatrix}$​​​​​​</p>
+</li>
+<li><p>Let weights of connection between two adjacent layers be a matrix: $\begin {bmatrix} w<em>{1,1} &amp; w</em>{1,2} &amp; \cdots &amp; w<em>{1,n} \ w</em>{2,1} &amp; w<em>{2,2} &amp; \cdots &amp; w</em>{2,n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ w<em>{k,1} &amp; w</em>{k,2} &amp; \cdots &amp; w_{k,n}  \end {bmatrix}$​​</p>
+<ul>
+<li>Row $i$ of the matrix represents the connection weight between neuron $i$ with the neurons from the last layer.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Let the biases be in a column vector: $\begin {bmatrix} b_1\ b_2\ \vdots\ b_n\ \end {bmatrix}$​​​​</p>
+</li>
+<li><p>And let $\sigma(\begin {bmatrix} x\ y\ \vdots\ z\ \end {bmatrix}) \ := \ \begin {bmatrix} \sigma(x)\ \sigma(y)\ \vdots\ \sigma(z)\ \end {bmatrix}$</p>
+</li>
+<li><p>So we get our notation now: $a^{(2)} = \sigma(W^{(2)}a^{(1)}+b^{(2)})$​​​</p>
+<ul>
+<li>$a^{(i)}$: the activations of the $i$​-th layer</li>
+<li>$W^{(i)}$: connection weight matrix between layer $i$ and $i-1$</li>
+<li>$b^{(i)}$: biases of neurons in the layer $i$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Chapter-2-Gradient-descent"><a href="#Chapter-2-Gradient-descent" class="headerlink" title="Chapter 2: Gradient descent"></a>Chapter 2: Gradient descent</h2><p><strong>Using training data</strong></p>
+<ul>
+<li>We can divide our data with labels into two groups, the training group and the testing group.</li>
+<li>Firstly, we can use the data in the training group to train our network.</li>
+<li>Then we could use the test group to check its accuracy.</li>
+</ul>
+<p><strong>Cost Function</strong></p>
+<ul>
+<li>Review: Nerual network function<ul>
+<li>Input: 784 numbers (pixels)</li>
+<li>Output: 10 numbers</li>
+<li>Parameters: 13k weights or biases</li>
+</ul>
+</li>
+<li>But the cost function might be like…<ul>
+<li>Input: 13k weights or biases</li>
+<li>Output: 1 single number (namely the cost)</li>
+<li>Parameters: Different set of training examples</li>
+</ul>
+</li>
+<li>Notation<ul>
+<li>$C(w<em>1, w_2, \cdots, w</em>{13002}) := \frac 1 {2n} \sum_x|| y(x)-a ||^2$​</li>
+<li>Now we can just try to solve this problem: how to find the minimum of $C$ and the corresponding set of $w$​!</li>
+</ul>
+</li>
+<li>It is hard to solve this minimum problem using mathematic methods when the amount of parameters is high, but we can…<ul>
+<li>Start at an old input</li>
+<li>Figure out which direction you should step to make the cost lower</li>
+<li>And that direction is: $-\nabla C$​</li>
+</ul>
+</li>
+<li>So we could just choose $\Delta v =-\eta\nabla C$​.<ul>
+<li>In which $\eta$​ is a small, positive parameter (known as <em>learning rate</em>) </li>
+<li>Then we can make $ v \rightarrow (v’=v-\eta\nabla C)$​ in every iteration</li>
+</ul>
+</li>
+</ul>
+<p><strong>Anaylsing the network</strong></p>
+<ul>
+<li>Does the network’s middle layer really doing what was imagined? Namely, edges, patterns, etc.?<ul>
+<li>Not at all!</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/03/BrJF1SleKfVTqOD.png" alt="image-20210903164518327"></p>
+<ul>
+<li>The magnitude of each element in the gradient is indicating how sensitive the cost function is to each weight or bias.</li>
+</ul>
+<h2 id="Chapter-3-Back-Propagation"><a href="#Chapter-3-Back-Propagation" class="headerlink" title="Chapter 3: Back Propagation"></a>Chapter 3: Back Propagation</h2><p><strong>What is back propagation?</strong></p>
+<ul>
+<li>It is an algorithm for computing the gradients of the cost function.</li>
+</ul>
+<p><strong>Stochastic gradient descent</strong></p>
+<ul>
+<li>It takes the computer rather long time to add up the influence of every single training example.</li>
+<li>So we can randomly shuffle our training data, then divide it into mini-batches.</li>
+<li>Then we can compute a step according to the mini-batch.</li>
+</ul>
+<p><strong>Chain rule</strong></p>
+<p><img src="https://i.loli.net/2021/09/03/rpMKl7V1faHI4S5.png" alt="image-20210903215157598"></p>
+<pre class="mermaid">graph LR
+subgraph "Layer m-1"
+A0("1")
+A1("2")
+A2("3")
+A3("4")
+end
+subgraph "Layer m"
+B2("output(i-1)")
+B0("output(i)")
+B1("output(i+1)")
+end
+subgraph "Anticipated label"
+C2("y(i-1)")
+C0("y(i)")
+C1("y(i+1)")
+end
+A0 --> B0
+A1 --> B0
+A2 --> B0
+A3 --> B0
+B0 --> C0
+B1 --> C1
+B2 --> C2</pre>
+
+<ul>
+<li>We remember $\begin {bmatrix} a<em>1^{(2)}\ a_2^{(2)}\ \vdots\ a_k^{(2)}\ \end {bmatrix}= \sigma (\begin {bmatrix} w^{(2)}</em>{1,1} &amp; w^{(2)}<em>{1,2} &amp; \cdots &amp; w^{(2)}</em>{1,n} \ w^{(2)}<em>{2,1} &amp; w^{(2)}</em>{2,2} &amp; \cdots &amp; w^{(2)}<em>{2,n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ w^{(2)}</em>{k,1} &amp; w^{(2)}<em>{k,2} &amp; \cdots &amp; w^{(2)}</em>{k,n}  \end {bmatrix}\begin {bmatrix} a_1^{(1)}\ a_2^{(1)}\ \vdots\ a_n^{(1)}\ \end {bmatrix} + \begin {bmatrix} b_1^{(2)}\ b_2^{(2)}\ \vdots\ b_k^{(2)}\ \end {bmatrix})$<ul>
+<li>Namely $a^{(L)}<em>i  = \sigma( \sum_jw^{(L)}</em>{i, j}a_j^{(L-1)}+ b^{(L)})$​​​​​.​</li>
+<li>We denote this by $z^l = w^la^{l-1}+b^l$​ and $a^l = \sigma(z^l)$​</li>
+</ul>
+</li>
+<li>And we have $C(\vec W, \vec b) = \frac 1 {2n} \sum_x|| y(x)-a ||^2$<ul>
+<li>We assume that $C = \frac 1 n \sum_x C_x$​, in which $C_x = \frac 1 2 ||y-a^{L}||^2$​​​</li>
+</ul>
+</li>
+</ul>
+<pre class="mermaid">graph RL
+CX("$C$")
+aE("$a^L$")
+zE("$z^L$")
+wE("$w^L$")
+aEL("$a^{L-1}$")
+bE("$b^L$")
+zEL("$z^{L-1}$")
+wEL("$w^{L-1}$")
+aELL("$a^{L-2}$")
+bEL("$b^{L-1}$")
+
+aE -->|"$(y_x-a^L_x)^2$"| CX
+zE -->|"$\sigma$"| aE
+wE --> zE
+aEL --> zE
+bE --> zE
+zEL -->|"$\sigma$"| aEL
+wEL --> zEL
+aELL --> zEL
+bEL --> zEL
+dot("$\cdots$") --> aELL</pre>
+
+<ul>
+<li>Then the core equations of back propagation…<ul>
+<li>$\frac {\partial C} {\partial z_i^L} = \frac {\partial C} {\partial a_i^L}\frac {\partial a_i^L} {\partial z_i^L} = (a_i^L-y_i)\sigma’(z_i^L)$​​​​ (Initialize)​<ul>
+<li>That is $\delta := \frac {\partial C} {\partial z^L} = (a^L-y) \odot \sigma’(z^L)$​​</li>
+</ul>
+</li>
+<li>According to $z^{(L)}<em>i = \sum_jw^{(L)}</em>{i, j}a_j^{(L-1)}+ b_i^{(L)}$​​​​, suppose we have calculated $\frac {\partial C} {\partial z^M_i}$​​​ for all neuron $i$​​​ in layer $M$​​​.<ul>
+<li>How can we get $\frac {\partial C} {\partial w^M_{i, j}}$​​​ for all neuron $i$​​​ in layer $M$​​ and $j$​​ in layer $M-1$​​​​?<ul>
+<li>$\frac {\partial C} {\partial w^M<em>{i, j}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial w^M</em>{i, j}} = \frac {\partial C} {\partial z^M_i} a_j^{M-1}$​<ul>
+<li>$\frac {\partial C} {\partial w^M} = \frac {\partial C} {\partial z^L} (a^{M-1})^T$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How can we get $\frac {\partial C} {\partial b^M_i} $​​ for all neuron $i$​​ in layer $M$​?<ul>
+<li>$\frac {\partial C} {\partial b^M<em>{i}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial b^M</em>{i}} = \frac {\partial C} {\partial z^M_i}$​<ul>
+<li>$\frac {\partial C} {\partial b^M} = \frac {\partial C} {\partial z^M}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How can we get $\frac {\partial C} {\partial a^{M-1}_j} $ and $\frac {\partial C} {\partial z^{M-1}_j} $ for all neuron $j$ in layer $M-1$?<ul>
+<li>$\frac {\partial C} {\partial a^{M-1}<em>j}  = \sum_i \frac {\partial C}{\partial z^M_i} \frac {\partial z^M_i} {a_j^{M-1}} = \sum_i \frac {\partial C}{\partial z^M_i} w</em>{i,j}^M$​<ul>
+<li>$\frac {\partial C} {\partial a^{M-1}} = (w^M)^T \frac {\partial C} {\partial z^M}$​</li>
+</ul>
+</li>
+<li>Then $\frac {\partial C} {\partial z^{M-1}_j} = \frac {\partial C} {\partial a^{M-1}_j} \sigma’(z^{M-1}_j)$​<ul>
+<li>$\frac {\partial C} {\partial z^{M-1}} = (w^M)^T \frac {\partial C} {\partial z^M}\odot\sigma’(z^{M-1})$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Then by recursion, we could calculate all the partial derivatives of weights and biases.</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/python-numpy-matplotlib/" rel="prev" title="Python Numpy + Matplotlib 再探">
+      <i class="fa fa-chevron-left"></i> Python Numpy + Matplotlib 再探
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/implementing-MNIST-classifier/" rel="next" title="实现 MNIST 鉴别手写数字过程手记">
+      实现 MNIST 鉴别手写数字过程手记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-1-Overview"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1: Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-2-Gradient-descent"><span class="nav-number">2.</span> <span class="nav-text">Chapter 2: Gradient descent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3-Back-Propagation"><span class="nav-number">3.</span> <span class="nav-text">Chapter 3: Back Propagation</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">c7w</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c7w</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

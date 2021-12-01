@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(Nana 印象图 初版) 速览本文：  Docker 的安装 数据库的安装 MariaDB phpMyAdmin   nodejs 与 npm 的安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)">
+<meta property="og:url" content="https://cc7w.cf/2021/08/dear-memory-with-nana-2/index.html">
+<meta property="og:site_name" content="c7w 的破站 v2.0">
+<meta property="og:description" content="(Nana 印象图 初版) 速览本文：  Docker 的安装 数据库的安装 MariaDB phpMyAdmin   nodejs 与 npm 的安装">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/08/25/NsUTCOdzWXnYmSu.png">
+<meta property="article:published_time" content="2021-08-25T13:10:28.000Z">
+<meta property="article:modified_time" content="2021-08-26T02:03:15.771Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg">
+
+<link rel="canonical" href="https://cc7w.cf/2021/08/dear-memory-with-nana-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh'
+  };
+</script>
+
+  <title>与 Nana 的日常 —— 从零开始的 Linux 调教指北(2) | c7w 的破站 v2.0</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">c7w 的破站 v2.0</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
+    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/dear-memory-with-nana-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="c7w">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="c7w 的破站 v2.0">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-25 21:10:28" itemprop="dateCreated datePublished" datetime="2021-08-25T21:10:28+08:00">2021-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-26 10:03:15" itemprop="dateModified" datetime="2021-08-26T10:03:15+08:00">2021-08-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
+<p>(Nana 印象图 初版)</p>
+<p>速览本文：</p>
+<ul>
+<li>Docker 的安装</li>
+<li>数据库的安装<ul>
+<li>MariaDB</li>
+<li>phpMyAdmin</li>
+</ul>
+</li>
+<li>nodejs 与 npm 的安装</li>
+</ul>
+<span id="more"></span>
+<h2 id="Docker-的介绍与安装"><a href="#Docker-的介绍与安装" class="headerlink" title="Docker 的介绍与安装"></a>Docker 的介绍与安装</h2><blockquote>
+<p>What is <strong>Docker</strong>?</p>
+<p>Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development - desktop and cloud.</p>
+<p>简而言之，就是打包好的应用，可以创建Docker容器来托管一系列应用.</p>
+</blockquote>
+<p><strong>安装</strong>：</p>
+<p>(Option 1) 使用官方安装脚本自动安装即可</p>
+<p><code>curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</code></p>
+<p>(Option 2) 也可使用国内 daocloud 一键安装：</p>
+<p><code>curl -sSL https://get.daocloud.io/docker | sh</code></p>
+<blockquote>
+<p>但是在这里 c7w ran into problems.</p>
+<p>详情可以看这里. 针对 armhf ubuntu 20.04: <a target="_blank" rel="noopener" href="https://github.com/docker/for-linux/issues/1035">https://github.com/docker/for-linux/issues/1035</a></p>
+<p>如果一键安装成功，请略过此处.</p>
+<p><s><strong>想不到吧 爷去装arm64了 不伺候您armhf了</strong> <strong>只不过是从头再来</strong> <strong>停更一天</strong></s></p>
+<p>大家就当无事发生过，这里 Nana 已经变成 arm64 了.</p>
+</blockquote>
+<p>(Option 3) 也可以使用 Tsinghua 源.</p>
+<p>可以参考 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a> 手动安装.</p>
+<h2 id="数据库安装与配置"><a href="#数据库安装与配置" class="headerlink" title="数据库安装与配置"></a>数据库安装与配置</h2><h3 id="MariaDB"><a href="#MariaDB" class="headerlink" title="MariaDB"></a>MariaDB</h3><blockquote>
+<p>什么是 <strong>MariaDB</strong>?</p>
+<p>MariaDB Server is one of the most popular database servers in the world. It’s made by the original developers of MySQL and guaranteed to stay open source. </p>
+<p>MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可。 开发这个分支的原因之一是：甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险，因此社区采用分支的方式来避开这个风险。 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。</p>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1635038">https://cloud.tencent.com/developer/article/1635038</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/mariadb">https://hub.docker.com/_/mariadb</a></li>
+</ul>
+</blockquote>
+<p><strong>安装</strong></p>
+<p><code>sudo apt install mariadb-server</code></p>
+<p><strong>查看字符集</strong></p>
+<ul>
+<li><code>sudo mysql</code> 进入控制台</li>
+</ul>
+<pre class="language-none"><code class="language-none"> ubuntu@ubuntu &gt; &#x2F;etc&#x2F;mysql &gt; sudo mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 52
+Server version: 10.3.31-MariaDB-0ubuntu0.20.04.1 Ubuntu 20.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+MariaDB [(none)]&gt; </code></pre>
+<ul>
+<li><code>show variables like &quot;%character%&quot;;show variables like &quot;%collation%&quot;;</code> 查看当前字符集</li>
+</ul>
+<pre class="language-none"><code class="language-none">+--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8mb4                    |
+| character_set_connection | utf8mb4                    |
+| character_set_database   | utf8mb4                    |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8mb4                    |
+| character_set_server     | utf8mb4                    |
+| character_set_system     | utf8                       |
+| character_sets_dir       | &#x2F;usr&#x2F;share&#x2F;mysql&#x2F;charsets&#x2F; |
++--------------------------+----------------------------+
+8 rows in set (0.004 sec)
+
++----------------------+--------------------+
+| Variable_name        | Value              |
++----------------------+--------------------+
+| collation_connection | utf8mb4_general_ci |
+| collation_database   | utf8mb4_general_ci |
+| collation_server     | utf8mb4_general_ci |
++----------------------+--------------------+
+3 rows in set (0.003 sec)</code></pre>
+<p>这里已经是 <code>utf8mb4</code> 了，无须再更多配置.</p>
+<p><strong>安全性配置</strong></p>
+<p><code>sudo mysql_secure_installation</code> 进行安全性配置.</p>
+<pre class="language-none"><code class="language-none">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we&#39;ll need the current
+password for the root user.  If you&#39;ve just installed MariaDB, and
+you haven&#39;t set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+Set root password? [Y&#x2F;n] Y
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y&#x2F;n] Y
+ ... Success!
+
+Normally, root should only be allowed to connect from &#39;localhost&#39;.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y&#x2F;n] Y
+ ... Success!
+
+By default, MariaDB comes with a database named &#39;test&#39; that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y&#x2F;n] Y
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y&#x2F;n] Y
+ ... Success!
+
+Cleaning up...
+
+All done!  If you&#39;ve completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!</code></pre>
+<p><strong>新建管理员用户</strong></p>
+<p>先 <code>sudo mysql</code> 进入控制台.</p>
+<ul>
+<li><code>CREATE USER &#39;&lt;USERNAME&gt;&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;YOUR PASSWORD&gt;&#39;;</code> 创建用户</li>
+<li><code>GRANT ALL PRIVILEGES ON *.* TO &#39;&lt;USERNAME&gt;&#39;@&#39;%&#39; WITH GRANT OPTION;</code> 给予管理员权限</li>
+</ul>
+<h3 id="phpMyAdmin"><a href="#phpMyAdmin" class="headerlink" title="phpMyAdmin"></a>phpMyAdmin</h3><p><strong>安装</strong></p>
+<p><code>sudo apt install phpmyadmin</code></p>
+<p>在询问是否需要帮助创建数据库时，选择取消.</p>
+<p>在询问选择哪个软件作为管理 phpmyadmin server 的工具时，选择 apache2.</p>
+<p><strong>更改配置</strong></p>
+<ul>
+<li>把 phpmyadmin 提供的默认的 apache2 配置文件移动到 apache2 目录下:</li>
+</ul>
+<p><code>sudo mv /etc/phpmyadmin/apache.conf /etc/apache2/conf-enabled</code></p>
+<ul>
+<li>然后更改 apache2 监听的端口：</li>
+</ul>
+<p><code>sudo vi /etc/apache2/ports.conf</code></p>
+<p>把 80 端口改为没有被占用的端口.</p>
+<ul>
+<li>重启 apache2 服务：<code>sudo systemctl apache2 restart</code></li>
+<li>尝试访问 <a href="http://IP_ADDRESS:PORT/phpmyadmin，然后使用上述新建的管理员账户密码完成登录">http://IP_ADDRESS:PORT/phpmyadmin，然后使用上述新建的管理员账户密码完成登录</a>.</li>
+</ul>
+<p><img src="https://i.loli.net/2021/08/25/NsUTCOdzWXnYmSu.png" alt="image-20210825202754563"></p>
+<h2 id="Node-的安装"><a href="#Node-的安装" class="headerlink" title="Node 的安装"></a>Node 的安装</h2><p>我们直接使用已完成编译的包.</p>
+<ul>
+<li><p>先下载安装文件 <code>wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-arm64.tar.xz</code></p>
+</li>
+<li><p>解压 <code>tar xf node-v14.17.5-linux-arm64.tar.xz</code></p>
+</li>
+<li>进入目录 <code>cd node-v14.17.5-linux-arm64/</code></li>
+<li>执行 node 查看版本 <code>./bin/node -v</code></li>
+</ul>
+<blockquote>
+<p>这里 c7w 强迫症，还去搜索了这个文件应该放哪里比较好.</p>
+<pre><code>有时候需要配置ubuntu安装的软件，一般安装软件都是使用apt-get install。那么安装完后，软件的安装目录在哪里呢，可执行文件又放在哪里呢。
+
+A、下载的软件的存放位置：/var/cache/apt/archives
+
+B、安装后软件的默认位置：/usr/share
+
+C、可执行文件位置：/usr/bin
+
+D、配置文件位置：/etc
+
+E、lib文件位置：/usr/lib
+</code></pre><p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013276277/article/details/81033129">https://blog.csdn.net/u013276277/article/details/81033129</a></li>
+</ul>
+</blockquote>
+<ul>
+<li>移动文件： <code>sudo mv node-v14.17.5-linux-arm64 /usr/share</code></li>
+<li>建立软链接</li>
+</ul>
+<pre class="language-none"><code class="language-none">ubuntu@ubuntu  &#x2F;usr&#x2F;bin  sudo ln -s &#x2F;usr&#x2F;share&#x2F;node-v14.17.5-linux-arm64&#x2F;bin&#x2F;npm &#x2F;usr&#x2F;local&#x2F;bin
+ ubuntu@ubuntu  &#x2F;usr&#x2F;bin  sudo ln -s &#x2F;usr&#x2F;share&#x2F;node-v14.17.5-linux-arm64&#x2F;bin&#x2F;node &#x2F;usr&#x2F;local&#x2F;bin
+ ubuntu@ubuntu  &#x2F;usr&#x2F;bin  node
+Welcome to Node.js v14.17.5.
+Type &quot;.help&quot; for more information.
+&gt;</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/dear-memory-with-nana-1/" rel="prev" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)">
+      <i class="fa fa-chevron-left"></i> 与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/NanaChat/" rel="next" title="Nana Chat —— QQ Bot 模块">
+      Nana Chat —— QQ Bot 模块 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Docker 的介绍与安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">数据库安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB"><span class="nav-number">2.1.</span> <span class="nav-text">MariaDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phpMyAdmin"><span class="nav-number">2.2.</span> <span class="nav-text">phpMyAdmin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">Node 的安装</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">c7w</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">c7w</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
