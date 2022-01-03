@@ -1,1467 +1,436 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.jpg">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="c7w 的破站 v2.0">
-<meta property="og:url" content="https://cc7w.cf/index.html">
-<meta property="og:site_name" content="c7w 的破站 v2.0">
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>c7w 的博客 - 是一只 c7w 的博客</title><meta name="keywords" content="c7w,博客,Computer Science,日志,日常,OOP,图形学"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="是一只 c7w 的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="c7w 的博客">
+<meta property="og:url" content="https://c7w.tech/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="是一只 c7w 的博客">
 <meta property="og:locale">
+<meta property="og:image" content="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg">
 <meta property="article:author" content="c7w">
+<meta property="article:tag" content="c7w">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="日志">
+<meta property="article:tag" content="日常">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="图形学">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://cc7w.cf/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh'
-  };
-</script>
-
-  <title>c7w 的破站 v2.0</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://c7w.tech/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'c7w 的博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-01-03 11:56:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-</head>
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">c7w 的破站 v2.0</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/12/games101/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/games101/" class="post-title-link" itemprop="url">GAMES 101 现代计算机图形学基础 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-12-09 09:48:20 / Modified: 09:49:39" itemprop="dateCreated datePublished" datetime="2021-12-09T09:48:20+08:00">2021-12-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-    
-    <div class="post-body" itemprop="articleBody">
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s4.ax1x.com/2022/01/03/T7zpL9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">c7w 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/update-2022/" title="Continue blogging, 2022!">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Continue blogging, 2022!"></a></div><div class="recent-post-info"><a class="article-title" href="/update-2022/" title="Continue blogging, 2022!">Continue blogging, 2022!</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2022-01-03T03:50:13.000Z" title="Created 2022-01-03 11:50:13">2022-01-03</time></span></div><div class="content">写于 2022/1/3，考完 DSA 之后的一天。
+既然氪金买了自己的服务器，虽然博客还是放在 GitHub Pages 上，但是想了想还是好好整整自己的博客吧。
+（这两句话之前好像没有什么因果关系
 
-      
-          <span id="more"></span>
-<h2 id="变换-Transformation"><a href="#变换-Transformation" class="headerlink" title="变换 Transformation"></a>变换 Transformation</h2><h3 id="为什么要学习变换？"><a href="#为什么要学习变换？" class="headerlink" title="为什么要学习变换？"></a>为什么要学习变换？</h3><p>变换分为模型变换和视图变换。</p>
-<p>模型变换的例子：</p>
-<ul>
-<li>跳舞机器人的运动</li>
-<li>PIXAR 的开场动画</li>
-</ul>
-<p>视图变换：</p>
-<ul>
-<li>3D 空间到 2D 的投影</li>
-</ul>
-<h3 id="二维变换"><a href="#二维变换" class="headerlink" title="二维变换"></a>二维变换</h3><h4 id="缩放变换（Scale）"><a href="#缩放变换（Scale）" class="headerlink" title="缩放变换（Scale）"></a>缩放变换（Scale）</h4><script type="math/tex; mode=display">
+初步规划
+魔改页面模板的源码
+修改文章的摘要摘取机制
+增加背景图片
+
+
+翻一遍站点的配置文件
+SEO
+侧边栏管理
+友链
+社交链接
+分类
+
+
+更改文章的标签和分类机制，对所有文章做一遍清洗，适当拆分/合并
+分类应有一级分类 “/技术” “/日常” 和其下的二级分类 “/技术/Linux” “/技术/Python应用”
+标签应侧重于体现文章的关键词
+
+
+写一些新博客
+将一些总结性的内容放到博客上
+写一些新内容
+
+
+
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/games101/" title="GAMES 101 现代计算机图形学基础 笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES 101 现代计算机图形学基础 笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/games101/" title="GAMES 101 现代计算机图形学基础 笔记">GAMES 101 现代计算机图形学基础 笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-12-09T01:48:20.000Z" title="Created 2021-12-09 09:48:20">2021-12-09</time></span></div><div class="content">
+变换 Transformation为什么要学习变换？变换分为模型变换和视图变换。
+模型变换的例子：
+
+跳舞机器人的运动
+PIXAR 的开场动画
+
+视图变换：
+
+3D 空间到 2D 的投影
+
+二维变换缩放变换（Scale）
 x'=s_xx \\
 y'=s_yy \\
 \begin{bmatrix}x' \\ y' \end{bmatrix}
 =
 \begin{bmatrix} s_x & 0 \\ 0 & s_y\end{bmatrix}
-\begin{bmatrix}x \\ y \end{bmatrix}</script><h4 id="反射变换（Reflection）"><a href="#反射变换（Reflection）" class="headerlink" title="反射变换（Reflection）"></a>反射变换（Reflection）</h4><script type="math/tex; mode=display">
+\begin{bmatrix}x \\ y \end{bmatrix}反射变换（Reflection）
 x'=-x \\
 y'=y \\
 \begin{bmatrix}x' \\ y' \end{bmatrix}
 =
 \begin{bmatrix} -1 & 0 \\ 0 & 1\end{bmatrix}
-\begin{bmatrix}x \\ y \end{bmatrix}</script><h4 id="切变变换（Shear）"><a href="#切变变换（Shear）" class="headerlink" title="切变变换（Shear）"></a>切变变换（Shear）</h4><script type="math/tex; mode=display">
+\begin{bmatrix}x \\ y \end{bmatrix}切变变换（Shear）
 x'=x+a y \\
 y'=y \\
 \begin{bmatrix}x' \\ y' \end{bmatrix}
 =
-\begin{bmatrix} 1 & a \\ 0 & 1\end{bmatrix}
-\begin{bmatrix}x \\ y \end{bmatrix}</script><h4 id="旋转（Rotation"><a href="#旋转（Rotation" class="headerlink" title="旋转（Rotation)"></a>旋转（Rotation)</h4><p>About (0,0), CCW(Counter clockwise) by default.</p>
-<script type="math/tex; mode=display">
-R_\theta =
-\begin{bmatrix}
-\cos\theta & -\sin \theta \\
-\sin\theta & \cos \theta
-\end{bmatrix}</script><h4 id="线性变换（Linear）"><a href="#线性变换（Linear）" class="headerlink" title="线性变换（Linear）"></a>线性变换（Linear）</h4><script type="math/tex; mode=display">
-\begin{bmatrix}x' \\ y' \end{bmatrix}
-=
-\begin{bmatrix} a & b \\ c & d\end{bmatrix}
-\begin{bmatrix}x \\ y \end{bmatrix}</script><h3 id="齐次坐标-Homogeneous-Coordinates"><a href="#齐次坐标-Homogeneous-Coordinates" class="headerlink" title="齐次坐标 (Homogeneous Coordinates)"></a>齐次坐标 (Homogeneous Coordinates)</h3><p><strong>平移</strong>不能有上述的矩阵表示。</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}x' \\ y' \end{bmatrix}
-=
-\begin{bmatrix} a & b \\ c & d\end{bmatrix}
-\begin{bmatrix}x \\ y \end{bmatrix}
-+
-\begin{bmatrix}T_x \\ T_y \end{bmatrix}</script><p>但是我们希望使用简单的表示方法。有无能将上述变换统一的表示方式？</p>
-<p>增加坐标的第三维度！(w-coordinate)</p>
-<ul>
-<li>2D Point: $(x,y,1)^T$</li>
-<li>2D Vector: $(x, y, 0)^T$</li>
-</ul>
-<script type="math/tex; mode=display">
-\begin{bmatrix}x' \\ y' \\ w' \end{bmatrix}
-=
-\begin{bmatrix} 1 & 0 & t_x \\ 
-0 & 1 & t_y \\
-0 & 0 & 1\end{bmatrix}
-\begin{bmatrix}x \\ y \\ 1 \end{bmatrix}
-=\begin{bmatrix}x+t_x \\ y+t_y \\ 1 \end{bmatrix}</script><ul>
-<li>Valid Operations on w-coordinate<ul>
-<li>Vec + Vec = Vec</li>
-<li>Point - Point = Vec</li>
-<li>Point + Vec = Point</li>
-<li>Point + Point = ?<ul>
-<li>Let $(x,y,w)^T := (\frac x w, \frac y w, 1), w\ne 0$</li>
-<li>几何意义是 n 等分点</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>这样我们就能将仿射变换转换成统一的矩阵表示了。</p>
-<h3 id="逆变换（Inverse-Transform）"><a href="#逆变换（Inverse-Transform）" class="headerlink" title="逆变换（Inverse Transform）"></a>逆变换（Inverse Transform）</h3><p>$M^{-1}$ is the inverse of transform $M$ in both a matrix and geometric sense.</p>
-<h3 id="变换的合成（Composing-Transforms）"><a href="#变换的合成（Composing-Transforms）" class="headerlink" title="变换的合成（Composing Transforms）"></a>变换的合成（Composing Transforms）</h3><p>复杂的变换可以通过简单的变换得到;在变换的复合过程中，先后次序很重要.</p>
-<h3 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h3><p>可按照上述的思路，构造出 4x4 矩阵表示的三维空间中的齐次坐标。</p>
-<p>特别的，三维空间中的旋转需要固定旋转轴。</p>
-<p>欧拉角 $R_{xyz}(\alpha, \beta,\gamma)=R_x(\alpha)R_y(\beta)R_z(\gamma)$​</p>
-<h3 id="观测变换（Viewing-Transformation）"><a href="#观测变换（Viewing-Transformation）" class="headerlink" title="观测变换（Viewing Transformation）"></a>观测变换（Viewing Transformation）</h3><h4 id="视图变换（View-Camera-Transformation）"><a href="#视图变换（View-Camera-Transformation）" class="headerlink" title="视图变换（View/Camera Transformation）"></a>视图变换（View/Camera Transformation）</h4><p>什么是视图变换？我们可以与拍照过程进行类比。拍照的第一步是模型变换，也就是把模型放在合适的位置上。第二步是找好角度放相机（View Transformation），也就是本节要介绍的视图变换。第三步是做投影变换，将照片定格。</p>
-<p>如何执行视图变换？首先要定义<strong>相机</strong>的概念：</p>
-<ul>
-<li>位置 $\vec e$</li>
-<li>看向 $\hat g$</li>
-<li>相机的向上方向 $\hat t$</li>
-</ul>
-<p>约定俗成地，我们在视图变换时令 $\vec e = \vec 0, \hat g = -\hat z, \hat t = \hat y \ (*)$。</p>
-<p>定义 $M_{view}$ 变换相机，使得经过该变换满足上述 $(*)$。</p>
-<ul>
-<li>Translates $\vec e$ to origin.</li>
-<li>Rotate $\hat g$ to $-\hat z$.</li>
-<li>Rotate $\hat t$ to $\hat y$.</li>
-<li>Then naturally $\hat g \times \hat y = \hat x$.</li>
-</ul>
-<p>Then the calculation process:</p>
-<script type="math/tex; mode=display">
-M_{view} = R_{view}T_{view} \ (**)\\
-
-T_{view} = \begin{bmatrix} 1&0&0&-x_e\\
-0&1&0&-y_e\\
-0&0&1&-z_e\\
-0&0&0&1\end{bmatrix}\\
-
-R_{view}^{-1} = \begin{bmatrix} x_{\hat g \times \hat t}&x_{\hat t}&x_{-\hat g}&0\\
-y_{\hat g \times \hat t}&y_{\hat t}&y_{-\hat g}&0\\
-z_{\hat g \times \hat t}&z_{\hat t}&z_{-\hat g}&0\\
-0&0&0&1\end{bmatrix}\\
-
-R_{view} = (R_{view}^{-1})^T =
-\begin{bmatrix} x_{\hat g \times \hat t}&y_{\hat g \times \hat t}&z_{\hat g \times \hat t}&0\\
-x_{\hat t}&y_{\hat t}&z_{\hat t}&0\\
-x_{-\hat g}&y_{-\hat g}&z_{-\hat g}&0\\
-0&0&0&1\end{bmatrix}\\</script><p>我们要做的，是把所有物体都应用这个变换，保证相机与物体的相对运动性质不变。</p>
-<p>视图变换也被称为 ModelView Transformation.</p>
-<h4 id="投影变换（Projection-Transformation）"><a href="#投影变换（Projection-Transformation）" class="headerlink" title="投影变换（Projection Transformation）"></a>投影变换（Projection Transformation）</h4><p>计算机图形学中的投影：是将 3D 模型形成二维图像，有两种投影方式，正交投影与透视投影。正交投影（Orthographic projection）原来平行的线仍然平行；透视投影（Perspective projection）平行线不再平行，会有近大远小的现象。</p>
-<h5 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a>正交投影</h5><p>首先我们需要将相机摆在合适的位置（具体来说是满足上述 $(*)$​ 的条件），然后我们可以直接无视掉 Z 坐标，将剩余的物体直接平移并缩放到 $[-1, 1]^2$​​。</p>
-<p>正交变换实际上是把空间立方体 $[l, r] \times [b,t] \times [f,n]$ 映射到标准正方体 $[-1,1]^3$​ 的过程。</p>
-<p><img src="https://i.loli.net/2021/11/06/GjCdAz8hv9PtQle.png" alt="image-20211106214250684"></p>
-<center>正交投影的过程</center>
-
-<p>具体来说，我们有：</p>
-<script type="math/tex; mode=display">
-M_{\text {ortho }}=\left[\begin{array}{cccc}
-\frac{2}{r-l} & 0 & 0 & 0 \\
-0 & \frac{2}{t-b} & 0 & 0 \\
-0 & 0 & \frac{2}{n-f} & 0 \\
-0 & 0 & 0 & 1
-\end{array}\right]\left[\begin{array}{cccc}
-1 & 0 & 0 & -\frac{r+l}{2} \\
-0 & 1 & 0 & -\frac{t+b}{2} \\
-0 & 0 & 1 & -\frac{n+f}{2} \\
-0 & 0 & 0 & 1
-\end{array}\right]</script><h5 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h5><p>透视投影的特性是平行线相交于一点，近大远小。</p>
-<p>回忆：$(x,y,z,1), (kx,ky,kz,k\ne0), (xz,yz,z^2,z\ne0)$​ 都代表同一点</p>
-<ul>
-<li>做透视投影的步骤：<ul>
-<li>首先将视锥压成正方体 $M_{persp\rightarrow ortho}$</li>
-<li>然后进行正交投影 $M_{ortho}$</li>
-</ul>
-</li>
-</ul>
-<p><img src="C:/Users/c7w/AppData/Roaming/Typora/typora-user-images/image-20211016010006341.png" alt="image-20211016010006341"></p>
-<center> 做透视投影的步骤 </center>
-
-<p>这里我们略去透视投影矩阵的推导，直接给出透视投影转换为正交投影矩阵的表示形式。具体的推导可以通过考虑以下特殊点，代入特殊值来决定矩阵的元素。</p>
-<ul>
-<li>近平面的坐标不改变</li>
-<li>远平面的 $x,y$ 坐标被压缩至与近平面相同</li>
-<li>近平面中心点与远平面中心点的位置不变</li>
-</ul>
-<script type="math/tex; mode=display">
-M_{persp\rightarrow ortho} = 
-\begin{bmatrix}
-n & 0 & 0 & 0 \\
-0 & n & 0 & 0 \\
-0 & 0 & n+f & -nf \\
-0 & 0 & 1 & 0
-\end{bmatrix} \\\\
-M_{persp} = M_{ortho}M_{persp \rightarrow ortho}</script><p>值得注意的是，在我们平常的应用中，我们并不是直接使用 $l, r, b,t$ 来描述一个近平面的位置，而是更倾向于使用 $fovY$​(<strong>field-of-view</strong>, 垂直视角) 和 <strong>aspect ratio</strong> 这两个量来描述一个近平面。</p>
-<p>使用这两个量我们可以轻松地计算出 $l,r,b,t$ 四个近平面参数。</p>
-<p><img src="https://i.loli.net/2021/11/06/NZbxWisdEH78plf.png" alt="image-20211106214646265"></p>
-<h2 id="光栅化-Rasterization"><a href="#光栅化-Rasterization" class="headerlink" title="光栅化 Rasterization"></a>光栅化 Rasterization</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>在我们进行完 MVP（模型变换，视图变换，投影变换）之后，我们将三维的模型转化成了 $[-1,1]^3$​​ 上的正规立方体。在那之后，我们就要将这个立方体投影到我们的屏幕上，绘出图像了。而这图像的绘制过程，我们便将其称为<strong>光栅化</strong>。</p>
-<p>在此之前，我们必须先给出<strong>屏幕</strong>的定义：</p>
-<p>我们可以将屏幕视为是像素点的二维数组，其中每个像素点由 R, G, B 三种颜色构成。像素点的维数与分辨率相同。进行坐标表示时我们使用 $(x,y)$ 表示 $[x, x+1]\times[y,y+1]$ 这一个像素点，这里 x,y 是整数。</p>
-<p>要将正规立方体绘制到屏幕上，这个过程与 z 是无关的，我们需要首先对 xOy 平面做变换 $[-1,1]^2\rightarrow [0, width] \times [0, height]$，这个过程我们称为<strong>视口变换</strong>。而这里用到的变换矩阵是：</p>
-<script type="math/tex; mode=display">
-M_{\text {viewport }}=\left(\begin{array}{cccc}
-\frac{\text { width }}{2} & 0 & 0 & \frac{\text { width }}{2} \\
-0 & \frac{\text { height }}{2} & 0 & \frac{h e i g h t}{2} \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1
-\end{array}\right)</script><p>该怎么把 $[0, width] \times [0, height]$​ 中的内容画到屏幕上呢？这就要用到<strong>光栅化</strong>了。</p>
-<h3 id="三角形的光栅化"><a href="#三角形的光栅化" class="headerlink" title="三角形的光栅化"></a>三角形的光栅化</h3><p>我们接下来要考虑如何将三维空间中的一个三角形光栅化成像素。</p>
-<p>为什么选择三角形？因为三角形是最基础的多边形，任何其它多边形都可以用三角形来表示。同时，三角形的三个顶点一定在同一个平面内。三角形的内部和外部区分的十分清楚，而且可以用叉积来判断点是否在三角形中。</p>
-<p>那么，如果我们得到了三角形的三个顶点在二维平面中的表示 $(x_1, y_1), (x_2, y_2), (x_3, y_3)$​ 之后，我们该如何估计这个三角形所包围的像素点的集合呢？也就是说，该如何判断一个像素（的中心点）和一个三角形的位置关系呢？</p>
-<p>我们可以通过<strong>采样</strong>（Sampling）的方法来实现。采样，实际是将一个函数离散化的过程，这是图形学中的一个核心概念。</p>
-<p>我们再明确一下我们的采样目标：判断某个像素的中心点是否在给定的三角形 $(x_1, y_1), (x_2, y_2), (x_3, y_3)$​​ 内部。即我们要尝试去实现如下的函数：</p>
-<script type="math/tex; mode=display">
-inside(t, x, y) = 
-\begin{cases} 
-1, & if \ Point (x,y) \ inside \ triangle \ t, \\
-0, & otherwise.
-\end{cases}</script><pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Sampling</span>
-<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> xmax<span class="token punctuation">;</span> <span class="token operator">++</span>x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> ymax<span class="token punctuation">;</span> <span class="token operator">++</span>y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        image<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">inside</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> x<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">,</span> y<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre>
-<p>那么该如何实现 <code>inside(t, x, y)</code> 函数呢？</p>
-<p><img src="https://i.loli.net/2021/11/06/Qx9SjUgGACRuBta.png" alt="image-20211106223216259"></p>
-<p>我们考虑如下的三个叉积。$\overrightarrow {P_0P_1} \times \overrightarrow {P_0Q}$, $\overrightarrow {P_1P_2} \times \overrightarrow {P_1Q}$, $\overrightarrow {P_2P_0} \times \overrightarrow {P_2Q}$ 如果 z 坐标的符号相同，那么点 Q 就一定在三角形内。如果点正好落在边界上，可自行定义解决方案。</p>
-<p><img src="https://i.loli.net/2021/11/06/XLsJyofHK3p9zOn.png" alt="image-20211106225745932"></p>
-<center>光栅化加速：包围盒</center> 
-
-<p>但是，如果对屏幕的所有元素采样，造成了没有必要的资源浪费。我们使用<strong>包围盒</strong>（Bounding Box）的概念，取三角形边界点的 x, y 坐标分别的最小值或最大值，作为包围盒 x, y 坐标的最小值与最大值。这样我们就能得到一张带锯齿的图像了。</p>
-<p><img src="https://i.loli.net/2021/11/06/sh3uLpPWTYroKQz.png" alt="image-20211106232712939"></p>
-<center>带锯齿的图像</center>
-
-<p>图像之所以带锯齿（Jaggies）是因为，我们的采样率并不够高，并不足以描述原来的信号，因此就发生了走样（Aliasing）的问题。</p>
-<h3 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h3><p>首先我们简单介绍一下采样理论。采样瑕疵（Sampling Artifacts）包括多种，在图形学中包括锯齿，摩尔纹等等。采样瑕疵背后都是因为信号的变化太快，以至于采样的速度跟不上信号的变化。而解决办法，便是通过首先对原图进行<strong>模糊</strong>（滤波, pre-filtering then sampling），然后再对其进行采样。</p>
-<h4 id="频域的概念"><a href="#频域的概念" class="headerlink" title="频域的概念"></a>频域的概念</h4><p>频率的概念我们已经熟知，如 $\cos 2\pi fx$ 中频率为 $f$​。用频率可以定义函数周期性变化的快慢。</p>
-<p>我们可以使用傅里叶级数将一个函数（从它的时域）表示成正弦函数和余弦函数的加权和的形式（转换到频域），也可以使用逆傅里叶变换将其从频域转化回时域。</p>
-<p><img src="https://i.loli.net/2021/11/06/XSeh2kvlg97x6UE.png" alt="image-20211106235002520"></p>
-<center>傅里叶变换和逆傅里叶变换</center>
-
-<p>而<strong>走样</strong>是指，使用同样的采样方式，在高频信号和低频信号两个不同的信号上，得到了相同的采样结果。如下图所示：</p>
-<p><img src="https://i.loli.net/2021/11/08/qPJ81KrkMgR3uoG.png" alt="image-20211108153046165"></p>
-<center>走样的例子</center>
-
-<h4 id="滤波-Filtering"><a href="#滤波-Filtering" class="headerlink" title="滤波 Filtering"></a>滤波 Filtering</h4><p>滤波是指对于某个特定的信号，仅保留其特定频率的信息。以图像为例，一个图的低通滤波等价于对这个图作用模糊效果，而一个图的高通滤波等价于描绘出这个图像的细节边界。</p>
-<p>我们接下来要说明，对一张图做滤波，等价于对这张图做卷积（分 Box 加权平均）。</p>
-<p><img src="https://i.loli.net/2021/11/08/txp4Ta7ugkn2IZ1.png" alt="image-20211108155427029"></p>
-<center>卷积定理</center>
-
-<p><strong>卷积定理</strong>是说，对时域的卷积，等价于对频域的乘积；在时域上的乘积，等价于在频域上的卷积。也就是说，如果我们想得到一张图像的滤波，有以下两种选择：</p>
-<ul>
-<li>在时域中对图像做卷积</li>
-<li>先使用傅里叶变换将图像转化到频域，将其与 Box Filter 的频域相乘之后再做逆傅里叶变换</li>
-</ul>
-<p>事实上，这里的 Box Function 就相当于是一个低通滤波器，可以用来将图像模糊化。而这里 Box 越宽，所接受的频率就越低，所得到的图像也就越模糊。</p>
-<h4 id="采样：重复频域上的内容"><a href="#采样：重复频域上的内容" class="headerlink" title="采样：重复频域上的内容"></a>采样：重复频域上的内容</h4><p><img src="https://i.loli.net/2021/11/08/1AHSzyQBpvDseNY.png" alt="image-20211108160150741"></p>
-<p>卷积定理指出，在时域上的乘积，等价于在频域上的卷积。我们将原函数 $X<em>a(t)$​ 与冲激函数 $P</em>\delta(t)$ 做乘积，也就等价于将二者都使用 FFT 化归到频域后，将二者做卷积。而这结果表明，采样就是在重复一个原始信号的频谱。</p>
-<p><img src="https://i.loli.net/2021/11/08/MC5PEF42YIJZDmR.png" alt="image-20211108160830500"></p>
-<center>对走样的解释</center>
-
-<p>而为什么会发生走样呢？采样的不同间隔，会引起频谱以不同的间隔去移动。如果我们采样的不够快，那么信号在频域上就产生了混叠现象。</p>
-<h4 id="反走样的方法"><a href="#反走样的方法" class="headerlink" title="反走样的方法"></a>反走样的方法</h4><p>该怎么才能减少走样错误呢？</p>
-<ul>
-<li>增大采样率 （But very costly &amp; may need high resolution）</li>
-<li>进行反走样操作：让图像的频谱的频宽变窄！如何做到？在采样前去掉高频信号！</li>
-</ul>
-<p>回到我们的问题上来，我们要解决现在存在的锯齿问题，也就是要先对原三角形进行模糊，然后再对其采样。那么该怎么对原来的三角形进行模糊呢？我们使用一个低通滤波器对其进行卷积即可。</p>
-<p><img src="https://i.loli.net/2021/11/08/lCz2uI3KpdNhsiX.png" alt="image-20211108161654357"></p>
-<center>通过计算像素点落在三角形中的平均面积来做滤波</center>
-
-<p>而在我们具体解决问题的时候，我们选择 Supersampling 的方式，也就是将某个像素分为 $N\times N$ 个采样点，然后对这些采样点的像素值取平均。</p>
-<p><img src="https://i.loli.net/2021/11/10/dlZQAvIWpihb67C.png" alt="image-20211110134128999"></p>
-<p><img src="https://i.loli.net/2021/11/10/OabvGcD1oJsdrwP.png" alt="image-20211110134145650"></p>
-<h3 id="深度缓冲"><a href="#深度缓冲" class="headerlink" title="深度缓冲"></a>深度缓冲</h3><p>本节我们主要立足于解决可见性/遮挡问题，解决方法就是<strong>深度缓存/深度缓冲</strong>（Z-Buffering）。</p>
-<p>只有将模型按照一定的顺序放在屏幕上，才能达到正确的效果。直观的想法是，先画远处的，再画近处的，这样才能让近处的物体覆盖远处的物体。这样的算法叫做画家算法。而如果假设有 $n$ 个物体，进行 $O(n \log n)$​ 的排序后便可将其画出。但是这种算法的缺陷是，如何定义“远近”，即定义物体离相机所在处的深度，并不容易。</p>
-<p><img src="https://i.loli.net/2021/11/10/K6cD4pCLA5aZSXd.png" alt="image-20211110135626091"></p>
-<center>相互遮挡的例子</center>
-
-<p>为了解决这个问题，图形学引入了深度缓存的概念。想法就是对屏幕的所有像素额外记录其当前显示物体的最浅深度（深度取正值，表示距离相机的远近）。这样类似于动态规划的算法最终复杂度是 $O(n)$ 的。而且如果我们假设在同一深度处不会出现两个模型，那么不同模型的着色顺序对结果是没有影响的。</p>
-<p><img src="https://i.loli.net/2021/11/10/vkn5R7zfhoNZTjC.png" alt="image-20211110140334554"></p>
-<center> 深度缓存算法 </center>
-
-<h2 id="Shading-着色"><a href="#Shading-着色" class="headerlink" title="Shading 着色"></a>Shading 着色</h2><h3 id="Blinn-Phong-着色模型"><a href="#Blinn-Phong-着色模型" class="headerlink" title="Blinn-Phong 着色模型"></a>Blinn-Phong 着色模型</h3><p>着色是指引入明暗和颜色不同的过程，但在这里我们定义为对物体应用不同材质的过程。</p>
-<p>于是我们在这里介绍一个简单的着色模型，Blinn-Phong Reflectance Model，其中包括高光，漫反射以及环境光照三部分。值得注意的是这个模型是 OpenGL 和 Direct3D 的默认着色模型。具体来说，其定义的参数如下：</p>
-<p><img src="https://i.loli.net/2021/11/10/hjsMQS1zJblKIOa.png" alt="image-20211110141545558"></p>
-<center> 概念的定义</center>
-
-<p>着色是具有局部性的，即每次只考虑单个点，不考虑其他物体的存在。这样是无法表现阴影的。</p>
-<h4 id="漫反射-Diffuse-Reflection"><a href="#漫反射-Diffuse-Reflection" class="headerlink" title="漫反射 Diffuse Reflection"></a>漫反射 Diffuse Reflection</h4><p>光线的接收：单位面积上接收到的光照强度为 $\cos \theta = I \cdot n$。</p>
-<p>光线的反射：$I’ = \frac I {r^2}$​</p>
-<p>漫反射后：$L_d = k_d(I/r^2)\max(0,\vec n \cdot \vec l)$​，其中 $k_d$ 是三维的 (R,G,B)，表示漫反射系数。</p>
-<h4 id="高光-Specular-Term"><a href="#高光-Specular-Term" class="headerlink" title="高光 Specular Term"></a>高光 Specular Term</h4><p>基于如果 $v$ 视线方向和镜面方向相近，那么半程向量就跟平面法向相近的事实，我们定义半程向量 $h := bisector(v,l) = \frac {v+l} {||v+l||}$。</p>
-<p>然后令 $L_s = k_s (I/r^2)max(0, \cos \alpha)^p=k_s (I/r^2)max(0, n \cdot h)^p$ 即可，其中 $k_s$ 为高光反射系数。</p>
-<p>为什么要带有 $p$ 次方呢？这是因为我们想让产生高光的夹角处于一个相对较小的范围。</p>
-<p><img src="https://i.loli.net/2021/11/10/lL5AVnJi8DhTZPb.png" alt="image-20211110200642332"></p>
-<h4 id="环境光照-Ambientbu-Term"><a href="#环境光照-Ambientbu-Term" class="headerlink" title="环境光照 Ambientbu Term"></a>环境光照 Ambientbu Term</h4><p>环境光照的强度不取决于物体，我们在这里大胆假设每个地方、每个方向的环境光照的大小都相同。也就是说，这一项会填充图中的黑色区域，将图像整体提升某个光照强度。$L_a := k_aI_a$。</p>
-<h3 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h3><p>不同的着色单位会有不同的着色效果，具体来说，可分为以下几种：</p>
-<ul>
-<li><p>逐三角形着色（Flat shading）：将每个三角形视作一个平面，但着色效果不够光滑。</p>
-</li>
-<li><p>逐顶点着色（Gourand shading）：使用插值的方法计算三角形内部的颜色值，但问题在于如何求顶点的法向。</p>
-</li>
-<li>逐像素着色（Phong shading）：对每个像素点进行模型计算。</li>
-</ul>
-<p><img src="https://i.loli.net/2021/11/10/rkst1SbMTCq9c7O.png" alt="image-20211110202506874"></p>
-<p>值得注意的是，着色频率越低并不一定代表着效果越差。若几何体足够复杂，则可能区别甚小。</p>
-<p>接下来就侧重于解决上述着色频率留下的问题：</p>
-<p><img src="https://i.loli.net/2021/11/10/AldyF6mRwpCvb5a.png" alt="image-20211110202753142"></p>
-<center>定义逐顶点的法线</center>
-
-<p><img src="https://i.loli.net/2021/11/10/GJhlmoHwv2dMWaj.png" alt="image-20211110202853817"></p>
-<center>定义逐像素法线</center>
-
-<h3 id="图形管线-Graphic-Pipeline"><a href="#图形管线-Graphic-Pipeline" class="headerlink" title="图形管线 Graphic Pipeline"></a>图形管线 Graphic Pipeline</h3><p>从图形到场景的过程描述为图形管线。</p>
-<p><img src="https://i.loli.net/2021/11/10/wmXdbSKyiNF95PJ.png" alt="image-20211110203343148"></p>
-<h3 id="纹理映射-Texture-Mapping"><a href="#纹理映射-Texture-Mapping" class="headerlink" title="纹理映射 Texture Mapping"></a>纹理映射 Texture Mapping</h3><p>纹理映射，事实上是为每个三角形分配一个材质平面的坐标 $(u, v)$。</p>
-<p><img src="https://i.loli.net/2021/11/11/hLBROgEdHIyfrkC.png" alt="image-20211111231357192"></p>
-<p>其中那种拼接起来可以无限重复的材质我们称为 <strong>tiled</strong> texture.</p>
-<h3 id="重心坐标插值"><a href="#重心坐标插值" class="headerlink" title="重心坐标插值"></a>重心坐标插值</h3><p>当我们知道了三角形的三个顶点的属性的时候，如果我们想要实现在三角形内部属性的平滑过渡，就要引入重心坐标的概念。</p>
-<p><img src="https://i.loli.net/2021/11/11/iGVW3jLvqsERew8.png" alt="image-20211111231532132"></p>
-<p>对于一个三角形 ABC 来说，其中 $(x,y) = \alpha A + \beta B + \gamma C$，若 $\alpha + \beta + \gamma = 1$，则称 $(\alpha, \beta, \gamma)$ 为该三角形内的 $(x,y)$ 点的重心坐标，其中 $\alpha, \beta, \gamma \ge 0$。</p>
-<p><img src="https://i.loli.net/2021/11/11/U4jEISXchwARgZV.png" alt="image-20211111231732485"></p>
-<p>而由此推导下去，在 $xOy$ 平面中我们有：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\alpha &=\frac{-\left(x-x_{B}\right)\left(y_{C}-y_{B}\right)+\left(y-y_{B}\right)\left(x_{C}-x_{B}\right)}{-\left(x_{A}-x_{B}\right)\left(y_{C}-y_{B}\right)+\left(y_{A}-y_{B}\right)\left(x_{C}-x_{B}\right)} \\
-\beta &=\frac{-\left(x-x_{C}\right)\left(y_{A}-y_{C}\right)+\left(y-y_{C}\right)\left(x_{A}-x_{C}\right)}{-\left(x_{B}-x_{C}\right)\left(y_{A}-y_{C}\right)+\left(y_{B}-y_{C}\right)\left(x_{A}-x_{C}\right)} \\
-\gamma &=1-\alpha-\beta
-\end{aligned}</script><p>使用重心坐标可以方便我们做插值。具体来说，对于三角形 ABC，对于其内部点 $(x,y)=(\alpha, \beta, \gamma)$​，有 $V = \alpha V_A + \beta V_B + \gamma V_C$​。</p>
-<p>但是值得注意的是，重心坐标在投影操作中可能会变化。这就会导致一些插值操作只能在三维空间中计算，比如计算深度插值，应该使用原始的三角形三维坐标来计算，而不应使用投影后的平面坐标。</p>
-<h3 id="纹理应用-Applying-Texture"><a href="#纹理应用-Applying-Texture" class="headerlink" title="纹理应用 Applying Texture"></a>纹理应用 Applying Texture</h3><p>我们可以将纹理的颜色值设置为模型对应位置的漫反射系数，从而达到应用纹理的效果。</p>
-<p>而一个像素对应的纹理的颜色值，则可以通过插值的方式计算得出。</p>
-<p>这里我们可能遇到问题：</p>
-<ul>
-<li>如果材质对应的图像过小怎么办？</li>
-<li>如果材质对应的图像过大怎么办？</li>
-</ul>
-<p>对于前者，我们可以使用双线性插值的方法来缓解。</p>
-<p><img src="https://i.loli.net/2021/11/15/HqSbWhcoGAE8rsK.png" alt="image-20211115164939643"></p>
-<p>而对于后者，我们可以使用 Mipmap / 各向异性过滤的方法来解决。</p>
-<p>事实上，我们可以将纹理视为是内存中的一个数据结构，提供了便捷的查询接口，而非将纹理视为是一张图片。</p>
-<h3 id="用纹理做环境光反射效果"><a href="#用纹理做环境光反射效果" class="headerlink" title="用纹理做环境光反射效果"></a>用纹理做环境光反射效果</h3><p>纹理可以用来做环境光反射的效果。实际上，如果我们将来自环境的光照组织成纹理：</p>
-<p><img src="https://i.loli.net/2021/11/27/8CwUR6qT5uvHSyt.png" alt="image-20211127173639430"></p>
-<center>犹他茶壶</center>
-
-<p>环境光可以通过记录在球面上，然后将球面展开，就可以得到环境光照对应的纹理。但是这样做在纹理上下会有明显的扭曲现象。</p>
-<p><img src="https://i.loli.net/2021/11/27/xv2lRyBA1a8PDG6.png" alt="image-20211127174058860"></p>
-<p>为了解决这个扭曲的问题，我们使用如下的方案：</p>
-<p><img src="https://i.loli.net/2021/11/27/TmiStDkjVz3IsNA.png" alt="image-20211127174158530"></p>
-<p>将球面上的每个点映射到恰好包围球的包围盒的表面上（沿球面法向）。然后将包围盒展开成六个表面。</p>
-<h3 id="用纹理做凹凸贴图"><a href="#用纹理做凹凸贴图" class="headerlink" title="用纹理做凹凸贴图"></a>用纹理做凹凸贴图</h3><p>事实上，我们的纹理不只是可以用来替换 Blinn-Phong 反射模型中的 $k_d$ 值。我们可以用纹理来描述表面的“属性”，比如待渲染表面的凹凸感，便可以用纹理来记录表面的相对高度。</p>
-<p>其实我们可以用足够多的三角形来模拟出凹凸效果，但是这样势必会导致性能上的衰减。使用纹理来做凹凸贴图可以在不改变原模型的几何复杂程度的情况之下，达到渲染出带有凹凸感的图像的目的。</p>
-<h4 id="凹凸贴图的推导"><a href="#凹凸贴图的推导" class="headerlink" title="凹凸贴图的推导"></a>凹凸贴图的推导</h4><p>计算过程：修改高度值 -&gt; 重新计算法向量值 -&gt; 着色。</p>
-<p><img src="https://i.loli.net/2021/12/01/FfaVTe4LkvhR9u2.png" alt="image-20211201185543817"></p>
-<center> Local Coordinate : 换基 </center>
-
-<h4 id="位移贴图"><a href="#位移贴图" class="headerlink" title="位移贴图"></a>位移贴图</h4><p>凹凸贴图并没有改变自己的几何，所以在边缘上看不出凹凸感。同时在阴影上也体现不出来凹凸感。而位移贴图实际上改变了模型几何的位置。但我们需要要求模型足够细致。</p>
-<h2 id="Geometry-几何"><a href="#Geometry-几何" class="headerlink" title="Geometry 几何"></a>Geometry 几何</h2><h3 id="几何的表示"><a href="#几何的表示" class="headerlink" title="几何的表示"></a>几何的表示</h3><p>几何的分类：Implicit 的几何和 Explicit 的几何。</p>
-<p>Implicit 的几何是说，满足某些特定关系的点构成的几何，即 $f(x,y,z)=0$；Implicit 对于找出集合中的所有点很困难，但是要想判断某个点在不在其中很容易。</p>
-<p>Explicit 的表示是说，通过参数映射的方法来定义表面，即将平面上的点 $(u,v)$ 映射到三维坐标 $(x,y,z)$​​​. 想找出几何体表面集合中的所有点，只需变化 $u,v$ 的值即可。但是不容易判断某个点在不在其中。</p>
-<p>不同的表示方法，需要根据需要来选择。</p>
-<p>此外，隐式表示还可以用 CSG(Constructive Solid Geometry) 的方法来构造，如 $A \cup B, A\cap B, A\backslash B$.</p>
-<p><img src="https://i.loli.net/2021/12/01/PfKUJDwvi4FC6ZQ.png" alt="image-20211201192043523"></p>
-<center> CSG 的例子 </center>
-
-<p>隐式表示还可以用距离函数、水平集、分形等等方法来定义。</p>
-<p>显式表示可以用点云，多边形面（obj 文件）等等表示。</p>
-<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a>曲线</h3><h4 id="贝塞尔曲线"><a href="#贝塞尔曲线" class="headerlink" title="贝塞尔曲线"></a>贝塞尔曲线</h4><p>用一系列的控制点定义出满足某些性质的曲线。</p>
-<p>曲线的起点为控制点的起点，终点为控制点的终点，起始点处与终点处的切线分别为 $\overrightarrow {P<em>0P_1}, \overrightarrow{P</em>{n-1}P_n}$.</p>
-<p><strong>如何画贝塞尔曲线：de Casteljau Algorithm</strong></p>
-<p>（1）先考虑三个控制点，生成二次贝塞尔曲线。</p>
-<p><img src="https://i.loli.net/2021/12/01/fE6FrtaL2sDQIGT.png" alt="image-20211201194418429"></p>
-<p>（2）再考虑四个控制点，生成三次贝塞尔曲线。</p>
-<p><img src="https://i.loli.net/2021/12/01/wR7VDnSPCrLxkKY.png" alt="image-20211201194528603"></p>
-<p>(3) 代数形式：插值！</p>
-<p><img src="https://i.loli.net/2021/12/01/pmW5vVa61urdbxI.png" alt="image-20211201194639946"></p>
-<p>给定 $n+1$ 个控制点，有贝塞尔曲线如下：</p>
-<script type="math/tex; mode=display">
-b^n(t) = b^n_0(t) = \sum_{j=0}^nb_jB_j^n(t) \\
-B_{i}^{n}(t)=\left(\begin{array}{l}
-n\\
-i
-\end{array}\right) t^{i}(1-t)^{n-i}</script><p>贝塞尔曲线的性质：</p>
-<script type="math/tex; mode=display">
-(1) \ \ b(0) = b_0; \ b(1)=b_{n}\\
-(2) \ \ b'(0)=3(b_1-b_0); \ b'(1) = 3(b_3-b_2) \ (For \ cubic \ cases) \\</script><p>(3) 在仿射变换下不变；</p>
-<p>(4) 曲线包含在控制点的凸包（包含所有控制点的最小凸多边形）内。</p>
-<p><strong>逐段形成贝塞尔曲线</strong>：每四个控制点形成一段贝塞尔曲线，并将其连接。</p>
-<p>保证切线光滑？导数连续！保证性质(2)成立即可。</p>
-<p>两段贝塞尔曲线的连续： $C^0$ 连续指点重合，$C^1$ 连续指导数连续，以此类推。</p>
-<h4 id="其它曲线"><a href="#其它曲线" class="headerlink" title="其它曲线"></a>其它曲线</h4><p>样条（Spline），B-样条（basis splines），具有好的局部性。</p>
-<h3 id="曲面"><a href="#曲面" class="headerlink" title="曲面"></a>曲面</h3><h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a>贝塞尔曲面</h4><p><img src="https://i.loli.net/2021/12/01/SbHh4tNQ7RKZWTy.png" alt="image-20211201201257424"></p>
-<h4 id="面上的操作"><a href="#面上的操作" class="headerlink" title="面上的操作"></a>面上的操作</h4><ul>
-<li>Subdivision</li>
-<li>Simplification</li>
-<li>Regularization</li>
-</ul>
-<h5 id="细分"><a href="#细分" class="headerlink" title="细分"></a>细分</h5><p>(1) 分出更多三角形 (2) 将新的三角形的位置改变，使得原模型更加光滑</p>
-<p><strong>Loop Subdivision</strong></p>
-<p><img src="https://i.loli.net/2021/12/01/5BsOmrFeHV29QaI.png" alt="image-20211201202358001"></p>
-<p><img src="https://i.loli.net/2021/12/01/YmIofNMZ3GVULzd.png" alt="image-20211201202518340"></p>
-<p><strong>Catmull-Clark Subdivision</strong></p>
-<p>针对于一般的曲面，而非三角形作为图源。</p>
-<p>定义：非四边形面，奇异点（度不为 4 的点）</p>
-<p>细分的方式：引入点的操作十分简单，取每面的中点和该面的边的中点，并将其连接。</p>
-<p>调整位置的方法：分为三种。</p>
-<p><img src="https://i.loli.net/2021/12/01/uMlYoxDHJwWpq8B.png" alt="image-20211201204717217"></p>
-<h5 id="简化"><a href="#简化" class="headerlink" title="简化"></a>简化</h5><p><strong>边坍缩</strong> Edge Collapse</p>
-<p>Quadric Error Metrics 二次误差度量 寻找去 Collapse 某条边后新顶点的位置。</p>
-<p><img src="https://i.loli.net/2021/12/01/fW8sR1ntNzoLdHa.png" alt="image-20211201205342215"></p>
-<p>将所有边按二次误差测量排序，坍缩最小值所在边，更新受影响的其他边的权重。用堆来维护！</p>
-<h2 id="光线追踪-Ray-Tracing"><a href="#光线追踪-Ray-Tracing" class="headerlink" title="光线追踪 Ray Tracing"></a>光线追踪 Ray Tracing</h2><h3 id="从问题出发"><a href="#从问题出发" class="headerlink" title="从问题出发"></a>从问题出发</h3><p>如何用光栅化的手法解决阴影的问题？</p>
-<p>重要思想：点不在阴影中，当且仅当点必须同时被光源和摄像机看到。</p>
-<ol>
-<li>从光源看向场景（用 Z-buffer’ 记录深度）</li>
-<li>从摄像机看向场景</li>
-<li>如果两深度相同，则无需阴影；若两深度不同，则在阴影中。</li>
-</ol>
-<p>这样做存在的问题：</p>
-<ul>
-<li>Hard shadows</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/10/tensorflow-application/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/tensorflow-application/" class="post-title-link" itemprop="url">【机器学习】TensorFlow</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-13 21:54:16" itemprop="dateCreated datePublished" datetime="2021-10-13T21:54:16+08:00">2021-10-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-30 21:26:38" itemprop="dateModified" datetime="2021-10-30T21:26:38+08:00">2021-10-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><s>好，它跑起来了，跑起来了啊，只不过 Loss 飞到 Nan 去了.</s></p>
-<p>这篇文章 c7w 将把自己使用 TensorFlow 的过程分案例记录下来，旨在<s>写下踩的所有坑供人观赏</s>。<s>我下次一定记得加 sigmoid。</s></p>
-<ul>
-<li>Hello World! (Fashion MNIST)</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/tensorflow-application/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/10/ml-self-supervised/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/ml-self-supervised/" class="post-title-link" itemprop="url">自监督式学习（Self-supervised Learning）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-03 22:05:39" itemprop="dateCreated datePublished" datetime="2021-10-03T22:05:39+08:00">2021-10-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-05 08:52:56" itemprop="dateModified" datetime="2021-10-05T08:52:56+08:00">2021-10-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>以 BERT 和 GPT 为例分析自监督式学习的架构。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/ml-self-supervised/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/10/ml-self-attention/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/ml-self-attention/" class="post-title-link" itemprop="url">【机器学习】自注意力机制 (Self-attention) 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-03 11:39:36" itemprop="dateCreated datePublished" datetime="2021-10-03T11:39:36+08:00">2021-10-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-05 09:19:44" itemprop="dateModified" datetime="2021-10-05T09:19:44+08:00">2021-10-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>$Seq2seq$，自注意力机制模型的介绍。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/ml-self-attention/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/10/ml-transformer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/ml-transformer/" class="post-title-link" itemprop="url">【机器学习】Transformer 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-03 11:39:36" itemprop="dateCreated datePublished" datetime="2021-10-03T11:39:36+08:00">2021-10-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-05 08:54:16" itemprop="dateModified" datetime="2021-10-05T08:54:16+08:00">2021-10-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>$Transformer$ 模型的介绍。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/ml-transformer/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/09/ml-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/ml-notes/" class="post-title-link" itemprop="url">《机器学习笔记》笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-07 22:33:15" itemprop="dateCreated datePublished" datetime="2021-09-07T22:33:15+08:00">2021-09-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-03 01:15:08" itemprop="dateModified" datetime="2021-10-03T01:15:08+08:00">2021-10-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Notes for LeeML-Notes</strong></p>
-<p>正如篇名，是机器学习笔记的笔记。</p>
-<p>主要还是记录一些重要概念和思考的过程吧。</p>
-<p>笔记的笔记中，第一个笔记的链接：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/leeml-notes/#/">https://datawhalechina.github.io/leeml-notes/#/</a></li>
-</ul>
-<p>对应视频的链接：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ht411g7Ef">https://www.bilibili.com/video/BV1Ht411g7Ef</a></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/ml-notes/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/09/python-asyncio-websocket/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/python-asyncio-websocket/" class="post-title-link" itemprop="url">Python asyncio, thread 与 websocket 库初探</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-06 09:50:26 / Modified: 15:26:07" itemprop="dateCreated datePublished" datetime="2021-09-06T09:50:26+08:00">2021-09-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在写 Nanachat-core 的时候打算写事件循环，还要使用到 websocket，于是想参考下相关的设计模式。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/python-asyncio-websocket/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/09/implementing-MNIST-classifier/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/implementing-MNIST-classifier/" class="post-title-link" itemprop="url">实现 MNIST 鉴别手写数字过程手记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-03 23:52:50" itemprop="dateCreated datePublished" datetime="2021-09-03T23:52:50+08:00">2021-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-04 22:33:52" itemprop="dateModified" datetime="2021-09-04T22:33:52+08:00">2021-09-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在学习了相关的<a href="https://cc7w.cf/but-what-is-a-neural-network/">理论基础</a>之后，我们自然是要投入到实践之中，完成这项机器学习领域的 Hello World 任务.</p>
-<p>本篇文章会用来记录 c7w 操作的全过程，以及他试图使用 python3 来拟合一篇 python2 教程的痛苦.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/implementing-MNIST-classifier/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/09/but-what-is-a-neural-network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/but-what-is-a-neural-network/" class="post-title-link" itemprop="url">但是什么是神经网络？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-03 14:37:19" itemprop="dateCreated datePublished" datetime="2021-09-03T14:37:19+08:00">2021-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-04 16:34:13" itemprop="dateModified" datetime="2021-09-04T16:34:13+08:00">2021-09-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Notes taken from watching <strong>3Blue1Brown series: Nerual networks</strong>.</p>
-<ul>
-<li>But what is a nerual network?</li>
-<li>Gradient Descent</li>
-<li>Back Propagation</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/but-what-is-a-neural-network/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/python-numpy-matplotlib/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/python-numpy-matplotlib/" class="post-title-link" itemprop="url">Python Numpy + Matplotlib 再探</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-30 14:22:44" itemprop="dateCreated datePublished" datetime="2021-08-30T14:22:44+08:00">2021-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-03 22:27:06" itemprop="dateModified" datetime="2021-09-03T22:27:06+08:00">2021-09-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>为什么是再探？因为之前咕了不知道多少次了，看了忘忘了看.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/python-numpy-matplotlib/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
+\begin{bmatrix} 1 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/tensorflow-application/" title="【机器学习】TensorFlow">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【机器学习】TensorFlow"></a></div><div class="recent-post-info"><a class="article-title" href="/tensorflow-application/" title="【机器学习】TensorFlow">【机器学习】TensorFlow</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-10-13T13:54:16.000Z" title="Created 2021-10-13 21:54:16">2021-10-13</time></span></div><div class="content">好，它跑起来了，跑起来了啊，只不过 Loss 飞到 Nan 去了.
+这篇文章 c7w 将把自己使用 TensorFlow 的过程分案例记录下来，旨在写下踩的所有坑供人观赏。我下次一定记得加 sigmoid。
+
+Hello World! (Fashion MNIST)
+
+
+Hello World!Overview
+
+数据集：Fashion MNIST
+
+主要技术要点：新手教程，Fully Connected NN
+
+目标任务：图片分类
+
+数据集介绍与数据预处理So let’s get started. 首先我们并不知道 TensorFlow 的代码究竟该怎么写，只是久仰 Keras 的大名。
+所以我们自然按照机器学习的基本流程开始（喂这根本没有因果逻辑联系吧），先进行数据预处理，然后 Declare 一个 Model，然后进行 Feedforward，然后进行 Backprops.
+首先，我们的数据集可以极为方便的在 keras 中调用。具体而言，我们只需要：
+# TensorFlow and tf.keras
+import tensorflow as tf
+from tensorflo ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/ml-self-supervised/" title="自监督式学习（Self-supervised Learning）">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自监督式学习（Self-supervised Learning）"></a></div><div class="recent-post-info"><a class="article-title" href="/ml-self-supervised/" title="自监督式学习（Self-supervised Learning）">自监督式学习（Self-supervised Learning）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-10-03T14:05:39.000Z" title="Created 2021-10-03 22:05:39">2021-10-03</time></span></div><div class="content">以 BERT 和 GPT 为例分析自监督式学习的架构。
+
+BERTIntroduction
+BERT is a kind of transformer encoder.
+
+Basic Steps
+Mask
+Randomly masking some tokens.
+Randomly replacing some tokens.
+
+
+
+
+
+Train goal:
+
+
+
+Next sentence prediction
+
+
+Fine-tuning for downstream-tasks
+GLUE: General Language Understanding Evaluation
+How to use BERT
+Case 1
+Input a sequence, output a class.
+Sentimental Analysis
+
+
+
+
+
+
+
+Case 2
+Input a sequence and output a sequence of the same length.
+POS tagging
+
+
+
+
+
+
+
+Case 3
+
+Input two sequences and outpu ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/ml-transformer/" title="【机器学习】Transformer 笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【机器学习】Transformer 笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/ml-transformer/" title="【机器学习】Transformer 笔记">【机器学习】Transformer 笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-10-03T03:39:36.000Z" title="Created 2021-10-03 11:39:36">2021-10-03</time></span></div><div class="content">$Transformer$ 模型的介绍。
+
+Introduction
+Transformer is a sequence to sequence model. $Seq2seq$
+Application…
+Speech Recognition
+Machine Translation
+Speech Translation
+Syntactic Parsing（文法剖析）
+Multi-label Classification
+
+
+Most NLP applications could be considered as Question Answering
+比起单纯用 seq2seq，Task-specific model 对于某些任务更合适
+Architecture
+
+
+
+
+Encoder
+Given a set of vectors and output another set of vectors.
+
+Self-attention, CNN, RNN… All of them could realize this!
+
+
+
+
+
+Residual Connection
+
+
+
+
+Decoder ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/ml-self-attention/" title="【机器学习】自注意力机制 (Self-attention) 笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【机器学习】自注意力机制 (Self-attention) 笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/ml-self-attention/" title="【机器学习】自注意力机制 (Self-attention) 笔记">【机器学习】自注意力机制 (Self-attention) 笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-10-03T03:39:36.000Z" title="Created 2021-10-03 11:39:36">2021-10-03</time></span></div><div class="content">$Seq2seq$，自注意力机制模型的介绍。
+
+Self-attentionIntroduction
+Input: vector set
+将其中每一个向量称为一个 frame
+
+
+Output: three possibilities
+Each vector has a label. $len(input) = len(output)$
+POS tagging （词性标注）
+
+
+The whole sequence has a label. $len(output) = 1$
+Sentiment Analysis
+语者辨认
+预测分子的性质
+
+
+Model decides the number of labels itself. $seq2seq$
+机器翻译
+语音辨识
+
+
+
+
+
+Sequence Labeling
+
+Basic StepsHow to find $b^1$ according to $a$?
+
+Find the vectors relevant to $a^1$​ in a sequence
+let $\alpha$​ (attention score) denote t ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/ml-notes/" title="《机器学习笔记》笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《机器学习笔记》笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/ml-notes/" title="《机器学习笔记》笔记">《机器学习笔记》笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-09-07T14:33:15.000Z" title="Created 2021-09-07 22:33:15">2021-09-07</time></span></div><div class="content">Notes for LeeML-Notes
+正如篇名，是机器学习笔记的笔记。
+主要还是记录一些重要概念和思考的过程吧。
+笔记的笔记中，第一个笔记的链接：
+
+https://datawhalechina.github.io/leeml-notes/#/
+
+对应视频的链接：
+
+https://www.bilibili.com/video/BV1Ht411g7Ef
+
+
+机器学习介绍发展历程及基础概念
+在存在深度学习之前，通过 hand-crafted rules 来设定过滤规则
+机器学习的过程
+Training
+Define a set of functions as Model
+Evaluate the goodness of these functions
+Pick the best function $f^$ from the *Model
+
+
+Testing
+Using $f^*$
+
+
+
+
+
+
+相关技术
+监督学习 Supervised learning
+Tasks
+Regression
+The output of the target function $f$ is scalar.
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/python-asyncio-websocket/" title="Python asyncio, thread 与 websocket 库初探">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python asyncio, thread 与 websocket 库初探"></a></div><div class="recent-post-info"><a class="article-title" href="/python-asyncio-websocket/" title="Python asyncio, thread 与 websocket 库初探">Python asyncio, thread 与 websocket 库初探</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-09-06T01:50:26.000Z" title="Created 2021-09-06 09:50:26">2021-09-06</time></span></div><div class="content">在写 Nanachat-core 的时候打算写事件循环，还要使用到 websocket，于是想参考下相关的设计模式。
+
+异步 I/O异步IO模型需要一个消息循环，在消息循环中，主线程不断地重复“读取消息-处理消息”这一过程，我们称其为消息模型：
+loop = get_event_loop()
+while True:
+    event = loop.get_event()
+    process_event(event)
+消息模型是如何解决同步IO必须等待IO操作这一问题的呢？
+
+当遇到IO操作时，代码只负责发出IO请求，不等待IO结果，然后直接结束本轮消息处理，进入下一轮消息处理过程。
+
+当IO操作完成后，将收到一条“IO完成”的消息，处理该消息时就可以直接获取IO操作结果。
+
+
+Coroutine 协程协程看上去也是子程序，但执行过程中，在子程序内部可中断，然后转而执行别的子程序，在适当的时候再返回来接着执行。
+注意，在一个子程序中中断，去执行其他子程序，不是函数调用，有点类似CPU的中断。比如子程序A、B：
+def A():
+    print('1')
+    print('2 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/implementing-MNIST-classifier/" title="实现 MNIST 鉴别手写数字过程手记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="实现 MNIST 鉴别手写数字过程手记"></a></div><div class="recent-post-info"><a class="article-title" href="/implementing-MNIST-classifier/" title="实现 MNIST 鉴别手写数字过程手记">实现 MNIST 鉴别手写数字过程手记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-09-03T15:52:50.000Z" title="Created 2021-09-03 23:52:50">2021-09-03</time></span></div><div class="content">在学习了相关的理论基础之后，我们自然是要投入到实践之中，完成这项机器学习领域的 Hello World 任务.
+本篇文章会用来记录 c7w 操作的全过程，以及他试图使用 python3 来拟合一篇 python2 教程的痛苦.
+
+MNIST Classifier ImplementionFetch datasetDownload下载数据包，前往 MNIST 官方网站，把 Trainset 和 Testset 的两组数据全部下载。然后去摸鱼
+
+数据格式
+
+TRAINING SET LABEL FILE (train-labels-idx1-ubyte):&gt;[offset] [type]     [value]     [description]&#96;
+&gt;&#96;0000   32 bit integer 0x00000801(2049) magic number (MSB first)&#96;
+&gt;&#96;0004   32 bit integer 60000      number of items&#96;
+&gt;&#96;0008   unsigned  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/but-what-is-a-neural-network/" title="但是什么是神经网络？">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="但是什么是神经网络？"></a></div><div class="recent-post-info"><a class="article-title" href="/but-what-is-a-neural-network/" title="但是什么是神经网络？">但是什么是神经网络？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-09-03T06:37:19.000Z" title="Created 2021-09-03 14:37:19">2021-09-03</time></span></div><div class="content">Notes taken from watching 3Blue1Brown series: Nerual networks.
+
+But what is a nerual network?
+Gradient Descent
+Back Propagation
+
+
+Chapter 1: OverviewConsider Nerual network:
+
+What are the neurons?
+Functions, which take several numbers as input and give a number as output
+
+
+How are they linked together? 
+
+Layers (Each layer made up of neurons):
+
+The activations of one layer determines the activations of the next layer.
+
+What those middle layers might be doing?
+
+It may be holding subcomponents of  ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 1.1em; color: #999">Android</a> <a href="/tags/Backend/" style="font-size: 1.1em; color: #999">Backend</a> <a href="/tags/C/" style="font-size: 1.18em; color: #999ca1">C#</a> <a href="/tags/Calculus/" style="font-size: 1.1em; color: #999">Calculus</a> <a href="/tags/Computer-Graphics/" style="font-size: 1.1em; color: #999">Computer Graphics</a> <a href="/tags/Data-Analysis/" style="font-size: 1.1em; color: #999">Data Analysis</a> <a href="/tags/Data-Structure/" style="font-size: 1.34em; color: #99a3b0">Data Structure</a> <a href="/tags/Hash-Table/" style="font-size: 1.1em; color: #999">Hash Table</a> <a href="/tags/Heap/" style="font-size: 1.1em; color: #999">Heap</a> <a href="/tags/Java/" style="font-size: 1.26em; color: #999fa8">Java</a> <a href="/tags/Linux/" style="font-size: 1.34em; color: #99a3b0">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 1.5em; color: #99a9bf">Machine Learning</a> <a href="/tags/OOP/" style="font-size: 1.42em; color: #99a6b7">OOP</a> <a href="/tags/Python/" style="font-size: 1.42em; color: #99a6b7">Python</a> <a href="/tags/React/" style="font-size: 1.18em; color: #999ca1">React</a> <a href="/tags/SQL/" style="font-size: 1.1em; color: #999">SQL</a> <a href="/tags/WSL/" style="font-size: 1.1em; color: #999">WSL</a> <a href="/tags/code/" style="font-size: 1.1em; color: #999">code</a> <a href="/tags/dp/" style="font-size: 1.1em; color: #999">dp</a> <a href="/tags/luogu/" style="font-size: 1.1em; color: #999">luogu</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.26em; color: #999fa8">多线程</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.1em; color: #999">数学</a> <a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">日志</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.18em; color: #999ca1">爬虫</a> <a href="/tags/%E8%83%8C%E5%8C%85/" style="font-size: 1.1em; color: #999">背包</a> <a href="/tags/%E9%80%86%E5%85%83/" style="font-size: 1.1em; color: #999">逆元</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">2022-01</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">2021-12</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">2021-10</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">2021-09</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">2021-08</span><span class="card-archive-list-count">13</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">2021-07</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">45</div></div><div class="webinfo-item"><div class="item-name">Total Count :</div><div class="item-count">53.3k</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-03T03:56:50.410Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
   }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="c7w"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">c7w</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">44</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">c7w</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-
-</body>
-</html>
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

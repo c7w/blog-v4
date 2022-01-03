@@ -1,1061 +1,358 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.jpg">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cc7w.cf","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="c7w 的破站 v2.0">
-<meta property="og:url" content="https://cc7w.cf/page/2/index.html">
-<meta property="og:site_name" content="c7w 的破站 v2.0">
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>c7w 的博客 - 是一只 c7w 的博客</title><meta name="keywords" content="c7w,博客,Computer Science,日志,日常,OOP,图形学"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="是一只 c7w 的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="c7w 的博客">
+<meta property="og:url" content="https://c7w.tech/page/2/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="是一只 c7w 的博客">
 <meta property="og:locale">
+<meta property="og:image" content="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg">
 <meta property="article:author" content="c7w">
+<meta property="article:tag" content="c7w">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="日志">
+<meta property="article:tag" content="日常">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="图形学">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://cc7w.cf/page/2/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh'
-  };
-</script>
-
-  <title>c7w 的破站 v2.0</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://c7w.tech/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'c7w 的博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-01-03 11:56:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">c7w 的破站 v2.0</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/dsa-note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/dsa-note/" class="post-title-link" itemprop="url">DSA 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-08-30 14:21:16 / Modified: 14:22:13" itemprop="dateCreated datePublished" datetime="2021-08-30T14:21:16+08:00">2021-08-30</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>《数据结构与算法》课程笔记整理，目前更新中.</p>
-<p><a href="/DSA/">跳转链接</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/NanaChat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/NanaChat/" class="post-title-link" itemprop="url">Nana Chat —— QQ Bot 模块</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-25 23:33:14" itemprop="dateCreated datePublished" datetime="2021-08-25T23:33:14+08:00">2021-08-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-30 11:03:53" itemprop="dateModified" datetime="2021-08-30T11:03:53+08:00">2021-08-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>服务器基本的配置已经完成，我们可以使用她来做有趣的事了。</p>
-<p>接下来和 Nana 的日常，主要是从“实现项目”这个角度来展开。</p>
-<p>所以，我们这次还是祭出我们的传统艺能，QQ Bot.</p>
-<p>不过这次要在项目管理方面做好一点，不能再是 if-else 的大杂烩了.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/NanaChat/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/dear-memory-with-nana-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/dear-memory-with-nana-2/" class="post-title-link" itemprop="url">与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-25 21:10:28" itemprop="dateCreated datePublished" datetime="2021-08-25T21:10:28+08:00">2021-08-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-26 10:03:15" itemprop="dateModified" datetime="2021-08-26T10:03:15+08:00">2021-08-26</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
-<p>(Nana 印象图 初版)</p>
-<p>速览本文：</p>
-<ul>
-<li>Docker 的安装</li>
-<li>数据库的安装<ul>
-<li>MariaDB</li>
-<li>phpMyAdmin</li>
-</ul>
-</li>
-<li>nodejs 与 npm 的安装</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/dear-memory-with-nana-2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/dear-memory-with-nana-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/dear-memory-with-nana-1/" class="post-title-link" itemprop="url">与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-23 20:55:49" itemprop="dateCreated datePublished" datetime="2021-08-23T20:55:49+08:00">2021-08-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-30 21:26:12" itemprop="dateModified" datetime="2021-10-30T21:26:12+08:00">2021-10-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
-<p>(Nana 印象图 初版)</p>
-<p>速览本文：</p>
-<ul>
-<li>FTP 配置</li>
-<li>网络配置<ul>
-<li>Cloudflared 内网穿透</li>
-<li>nginx 反向代理</li>
-<li>gunicorn [Python WSGI HTTP Server for UNIX]</li>
-<li>Supervisor 设置守护进程</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/dear-memory-with-nana-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/react-redux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/react-redux/" class="post-title-link" itemprop="url">React Redux 学习手记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-08-23 15:57:22 / Modified: 20:28:43" itemprop="dateCreated datePublished" datetime="2021-08-23T15:57:22+08:00">2021-08-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p><strong>React Redux</strong> is the official React UI bindings layer for Redux. It lets your React components read data from a Redux store, and dispatch actions to the store to update state.</p>
-<p>(Excerpted from react-redux.js.org)</p>
-<p>Redux 是 JavaScript 应用的<strong>状态容器</strong>，提供可预测的状态管理。</p>
-</blockquote>
-<p><s>想做全局变量管理，于是来学</s></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/react-redux/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/dear-memory-with-nana-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/dear-memory-with-nana-0/" class="post-title-link" itemprop="url">与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-23 09:15:04" itemprop="dateCreated datePublished" datetime="2021-08-23T09:15:04+08:00">2021-08-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-25 17:19:09" itemprop="dateModified" datetime="2021-08-25T17:19:09+08:00">2021-08-25</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
-<p>(Nana 印象图 初版)</p>
-<p>速览本文：</p>
-<ul>
-<li>Nana 是什么</li>
-<li>系统安装</li>
-<li>Wi-Fi 配置</li>
-<li>初次连接与工作环境配置</li>
-<li>硬盘挂载</li>
-<li>Bash 界面美化</li>
-</ul>
-<h2 id="Nana-是什么？"><a href="#Nana-是什么？" class="headerlink" title="Nana 是什么？"></a>Nana 是什么？</h2><p><s>Nana 是 c7w 幻想中的 npy</s> Nana 是目前正在宿舍中运行的一台树莓派 4B 的代号，其上装载了 Ubuntu 20.04 LTS.</p>
-<p>本系列旨在<s>记录c7w和ta的每一天</s>将 Linux 踩坑指南和一些常用软件的配置过程记录下来，同时也方便学习与交流。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/dear-memory-with-nana-0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/wsl-update-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/wsl-update-config/" class="post-title-link" itemprop="url">WSL 2 的升级与 USB 调试的配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-14 20:07:30" itemprop="dateCreated datePublished" datetime="2021-08-14T20:07:30+08:00">2021-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-16 09:24:32" itemprop="dateModified" datetime="2021-08-16T09:24:32+08:00">2021-08-16</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>什么是 WSL?</strong></p>
-<p>即 <strong>Windows Subsystem for Linux</strong> 的缩写.</p>
-<blockquote>
-<p><strong>Windows Subsystem for Linux (WSL)</strong> is a compatibility layer for running Linux binary executables natively on Windows 10… (Excerpted from Wikipedia)</p>
-</blockquote>
-<p>也就是说，WSL 是安装在 Windows 系统上的 Linux 虚拟系统。</p>
-<p>在 OOP 课程中我们将会初步接触到该系统的安装与使用。</p>
-<p>本篇主要收集了 WSL 升级的方法和对于 Android 开发调试中的 USB 调试的实现过程。</p>
-<p>此外，一旦完成了 WSL 的升级，我们还可以进行 Docker 部署等等进阶操作…</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/wsl-update-config/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/react-native-record/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/react-native-record/" class="post-title-link" itemprop="url">React-Native Android App 开发手记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-14 11:32:48" itemprop="dateCreated datePublished" datetime="2021-08-14T11:32:48+08:00">2021-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-24 17:20:25" itemprop="dateModified" datetime="2021-08-24T17:20:25+08:00">2021-08-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>是这样的，简而言之，有口大锅，让我背着。</p>
-<p><s>在小学期两周速成 Android App 开发什么的，这合理嘛.</s></p>
-<p>这恒河里.</p>
-<p>于是这篇文章就完全是记录性质的，可能最后会根据 咕的情况 &amp;&amp; 是否便于整理成学习笔记 这两个因素决定要不要再水一篇指北。</p>
-<p>咕咕咕。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/react-native-record/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/python-bs4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/python-bs4/" class="post-title-link" itemprop="url">Python BeautifulSoup4 库的基本操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-08-13 19:52:37 / Modified: 21:57:12" itemprop="dateCreated datePublished" datetime="2021-08-13T19:52:37+08:00">2021-08-13</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Beautiful Soup 4 是什么？</strong></p>
-<p>是一个 Python 库，协助解析 HTML 和 XML 的内容的 Python 库。</p>
-<p>可以协助开发者在文档中准确定位到想要寻找的元素。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/python-bs4/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh">
-    <link itemprop="mainEntityOfPage" href="https://cc7w.cf/2021/08/python-requests/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="c7w">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="c7w 的破站 v2.0">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/python-requests/" class="post-title-link" itemprop="url">Python Requests 库的基本使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-13 00:04:19" itemprop="dateCreated datePublished" datetime="2021-08-13T00:04:19+08:00">2021-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-27 11:02:05" itemprop="dateModified" datetime="2021-08-27T11:02:05+08:00">2021-08-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Requests 库的基本用法，内含对 HTTP 请求方法的介绍，request 和 response 类的介绍，Session 类的使用，附加参数的选择等等。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/python-requests/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s4.ax1x.com/2022/01/03/T7zpL9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">c7w 的博客</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/python-numpy-matplotlib/" title="Python Numpy + Matplotlib 再探">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Numpy + Matplotlib 再探"></a></div><div class="recent-post-info"><a class="article-title" href="/python-numpy-matplotlib/" title="Python Numpy + Matplotlib 再探">Python Numpy + Matplotlib 再探</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-30T06:22:44.000Z" title="Created 2021-08-30 14:22:44">2021-08-30</time></span></div><div class="content">为什么是再探？因为之前咕了不知道多少次了，看了忘忘了看.
+
+Numpyndarray
+NumPy’s array class is called ndarray. It is also known by the alias array. 
+
+import numpy as np
+
+li = np.arange(20).reshape((4,5))
+print(li)
+print(li.ndim)
+print(li.dtype)
+print(li.size)
+print(type(li))
+[[ 0  1  2  3  4]
+ [ 5  6  7  8  9]
+ [10 11 12 13 14]
+ [15 16 17 18 19]]
+2
+int64
+20
+&lt;class &#39;numpy.ndarray&#39;&gt;
+
+arange(lower_bound, upper_bound, step), zeros, ones, linspace(lo,hi,count)
+
+import math
+import numpy as np
+
+x = np.linspace(0, mat ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/dsa-note/" title="DSA 学习笔记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSA 学习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/dsa-note/" title="DSA 学习笔记">DSA 学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-30T06:21:16.000Z" title="Created 2021-08-30 14:21:16">2021-08-30</time></span></div><div class="content">《数据结构与算法》课程笔记整理，目前更新中.
+跳转链接
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/NanaChat/" title="Nana Chat —— QQ Bot 模块">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nana Chat —— QQ Bot 模块"></a></div><div class="recent-post-info"><a class="article-title" href="/NanaChat/" title="Nana Chat —— QQ Bot 模块">Nana Chat —— QQ Bot 模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-25T15:33:14.000Z" title="Created 2021-08-25 23:33:14">2021-08-25</time></span></div><div class="content">服务器基本的配置已经完成，我们可以使用她来做有趣的事了。
+接下来和 Nana 的日常，主要是从“实现项目”这个角度来展开。
+所以，我们这次还是祭出我们的传统艺能，QQ Bot.
+不过这次要在项目管理方面做好一点，不能再是 if-else 的大杂烩了.
+
+Dependencies 前期调研mirai &amp; mirai-api-httpMirai 是一个在全平台下运行，提供 QQ Android 和 TIM PC 协议支持的高效率机器人框架.
+https://github.com/project-mirai/mirai-api-http
+下载与设置守护进程
+安装 Java 运行时 sudo apt install openjdk-11-jre
+下载 MCL，安装 mirai-api-http
+登录 Bot（使用 QQ 浏览器验证？使用 QQ 打开链接即可）
+如果有需要的话可以安装验证码库
+
+
+设置为自动登录
+
+配置 supervisor
+
+
+[program:mcl]
+command&#x3D;&#x2F;home&#x2F;ftpuser&#x2F;5050-mcl&#x2F;mc ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/dear-memory-with-nana-2/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)"></a></div><div class="recent-post-info"><a class="article-title" href="/dear-memory-with-nana-2/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)">与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-25T13:10:28.000Z" title="Created 2021-08-25 21:10:28">2021-08-25</time></span></div><div class="content">
+(Nana 印象图 初版)
+速览本文：
+
+Docker 的安装
+数据库的安装
+MariaDB
+phpMyAdmin
+
+
+nodejs 与 npm 的安装
+
+
+Docker 的介绍与安装
+What is Docker?
+Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development - desktop and cloud.
+简而言之，就是打包好的应用，可以创建Docker容器来托管一系列应用.
+
+安装：
+(Option 1) 使用官方安装脚本自动安装即可
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+(Option 2) 也可使用国内 daocloud 一键安装：
+curl -sSL https://get.daocloud.io/docker |  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/dear-memory-with-nana-1/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)"></a></div><div class="recent-post-info"><a class="article-title" href="/dear-memory-with-nana-1/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)">与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-23T12:55:49.000Z" title="Created 2021-08-23 20:55:49">2021-08-23</time></span></div><div class="content">
+(Nana 印象图 初版)
+速览本文：
+
+FTP 配置
+网络配置
+Cloudflared 内网穿透
+nginx 反向代理
+gunicorn [Python WSGI HTTP Server for UNIX]
+Supervisor 设置守护进程
+
+
+
+
+FTP 配置
+前置知识：【FTP 文件传输】
+
+安装 vsftpd
+
+什么是 vsftpd ?
+vsftpd is a GPL licensed FTP server for UNIX systems, including Linux.
+
+sudo apt install vsftpd
+sudo systemctl start vsftpd // 开启进程sudo systemctl enable vsftpd // 开机启动
+配置 FTP 用户
+
+创建用户目录：sudo mkdir /home/ftpuser
+创建用户并关联用户文件夹，这样使用 ftpuser 用户登陆的时候，就可以直接登陆到 /home/ftpuser 下：sudo useradd -d /home/ftpuser -s /bin/bash ftpuser
+更改用 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/react-redux/" title="React Redux 学习手记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React Redux 学习手记"></a></div><div class="recent-post-info"><a class="article-title" href="/react-redux/" title="React Redux 学习手记">React Redux 学习手记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-23T07:57:22.000Z" title="Created 2021-08-23 15:57:22">2021-08-23</time></span></div><div class="content">
+React Redux is the official React UI bindings layer for Redux. It lets your React components read data from a Redux store, and dispatch actions to the store to update state.
+(Excerpted from react-redux.js.org)
+Redux 是 JavaScript 应用的状态容器，提供可预测的状态管理。
+
+想做全局变量管理，于是来学
+
+基本概念
+单向数据流有以下基本流程：
+
+用 state 来描述应用程序在特定时间点的状况
+基于 state 来渲染出 view
+当发生某些事情时（例如用户单击按钮），state 会根据发生的事情进行更新，生成新的 state
+基于新的 state 重新渲染 view
+
+不可变性原来的对象或数组中的内容不改变，通过复制的方式先获取一份 copy，然后更新 copy 中的内容。
+const obj = &#123;
+  a: &#123;
+    // 为了安全的更新 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/dear-memory-with-nana-0/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)"></a></div><div class="recent-post-info"><a class="article-title" href="/dear-memory-with-nana-0/" title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)">与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-23T01:15:04.000Z" title="Created 2021-08-23 09:15:04">2021-08-23</time></span></div><div class="content">
+(Nana 印象图 初版)
+速览本文：
+
+Nana 是什么
+系统安装
+Wi-Fi 配置
+初次连接与工作环境配置
+硬盘挂载
+Bash 界面美化
+
+Nana 是什么？Nana 是 c7w 幻想中的 npy Nana 是目前正在宿舍中运行的一台树莓派 4B 的代号，其上装载了 Ubuntu 20.04 LTS.
+本系列旨在记录c7w和ta的每一天将 Linux 踩坑指南和一些常用软件的配置过程记录下来，同时也方便学习与交流。
+
+系统安装我们采用了最为简单的方式，在官网上下载了 Raspberry Pi Imager .
+比起 balenaEtcher 好处是我懒得去 Tsinghua Tuna 上面下载镜像了.
+
+系统选择，用的比较顺手的 Ubuntu，选了 armhf 的 32bit（内存一共才2G
+然后把数据写进去，就完成了系统安装操作.
+网络配置Wi-Fi Connection传统艺能，在烧录好的 system-boot 盘的根目录的 network-config 配置文件内添加配置信息就好.
+# This file contains a netplan-compatible con ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/wsl-update-config/" title="WSL 2 的升级与 USB 调试的配置">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WSL 2 的升级与 USB 调试的配置"></a></div><div class="recent-post-info"><a class="article-title" href="/wsl-update-config/" title="WSL 2 的升级与 USB 调试的配置">WSL 2 的升级与 USB 调试的配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-14T12:07:30.000Z" title="Created 2021-08-14 20:07:30">2021-08-14</time></span></div><div class="content">什么是 WSL?
+即 Windows Subsystem for Linux 的缩写.
+
+Windows Subsystem for Linux (WSL) is a compatibility layer for running Linux binary executables natively on Windows 10… (Excerpted from Wikipedia)
+
+也就是说，WSL 是安装在 Windows 系统上的 Linux 虚拟系统。
+在 OOP 课程中我们将会初步接触到该系统的安装与使用。
+本篇主要收集了 WSL 升级的方法和对于 Android 开发调试中的 USB 调试的实现过程。
+此外，一旦完成了 WSL 的升级，我们还可以进行 Docker 部署等等进阶操作…
+
+WSL 2 的安装WSL 的安装过程我们这里略去.
+(1) 开启支持 WSL 2 的可选组件
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/react-native-record/" title="React-Native Android App 开发手记">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="React-Native Android App 开发手记"></a></div><div class="recent-post-info"><a class="article-title" href="/react-native-record/" title="React-Native Android App 开发手记">React-Native Android App 开发手记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-14T03:32:48.000Z" title="Created 2021-08-14 11:32:48">2021-08-14</time></span></div><div class="content">是这样的，简而言之，有口大锅，让我背着。
+在小学期两周速成 Android App 开发什么的，这合理嘛.
+这恒河里.
+于是这篇文章就完全是记录性质的，可能最后会根据 咕的情况 &amp;&amp; 是否便于整理成学习笔记 这两个因素决定要不要再水一篇指北。
+咕咕咕。
+
+8.13
+下午 23：00
+
+开会，定App方案。第二天七夕节，大晚上还定方案。离谱（
+实践视频改稿，等风扇转到晚上 03:00，终于能入睡，咕咕咕，啥都没干
+8.14
+凌晨 10:00
+
+装模作样地打开了https://reactnative.dev/.
+明明后端更好写吧 为什么要在前端耗着
+看了配置说明 感觉好麻烦x
+Introduction什么是 React Native？
+React Native是使用 React 来构建 Android 和 iOS 应用的开源社区框架。也就是说，我们使用 Javascript 来实现应用的主要界面和功能。
+Views: Just like ReactElement，或是 Web 开发中的一个&lt;div&gt;块，有层级结构
+核心组件(Core Components)与本地 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/python-bs4/" title="Python BeautifulSoup4 库的基本操作">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python BeautifulSoup4 库的基本操作"></a></div><div class="recent-post-info"><a class="article-title" href="/python-bs4/" title="Python BeautifulSoup4 库的基本操作">Python BeautifulSoup4 库的基本操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-13T11:52:37.000Z" title="Created 2021-08-13 19:52:37">2021-08-13</time></span></div><div class="content">Beautiful Soup 4 是什么？
+是一个 Python 库，协助解析 HTML 和 XML 的内容的 Python 库。
+可以协助开发者在文档中准确定位到想要寻找的元素。
+
+Basic usageInstalling and importingInstalling
+pip3 install beautifulsoup4
+Very easy.
+Importing
+from bs4 import BeautifulSoup
+Create a BeautifulSoup Objectsoup = BeautifulSoup(markup, 'html.parser')
+print(type(soup))
+# &lt;class 'bs4.BeautifulSoup'>
+接下来我们会详细介绍这个 BeautifulSoup 对象。
+Objects 可能用到的对象类型BeautifulSoup 会将一个复杂的 HTML 文档转化成一颗树，但我们真正需要处理的只有四种对象：
+
+Tag
+NavigableString
+BeautifulSoup
+Comment
+
+下面我们将一一介绍。
+Ta ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 1.1em; color: #999">Android</a> <a href="/tags/Backend/" style="font-size: 1.1em; color: #999">Backend</a> <a href="/tags/C/" style="font-size: 1.18em; color: #999ca1">C#</a> <a href="/tags/Calculus/" style="font-size: 1.1em; color: #999">Calculus</a> <a href="/tags/Computer-Graphics/" style="font-size: 1.1em; color: #999">Computer Graphics</a> <a href="/tags/Data-Analysis/" style="font-size: 1.1em; color: #999">Data Analysis</a> <a href="/tags/Data-Structure/" style="font-size: 1.34em; color: #99a3b0">Data Structure</a> <a href="/tags/Hash-Table/" style="font-size: 1.1em; color: #999">Hash Table</a> <a href="/tags/Heap/" style="font-size: 1.1em; color: #999">Heap</a> <a href="/tags/Java/" style="font-size: 1.26em; color: #999fa8">Java</a> <a href="/tags/Linux/" style="font-size: 1.34em; color: #99a3b0">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 1.5em; color: #99a9bf">Machine Learning</a> <a href="/tags/OOP/" style="font-size: 1.42em; color: #99a6b7">OOP</a> <a href="/tags/Python/" style="font-size: 1.42em; color: #99a6b7">Python</a> <a href="/tags/React/" style="font-size: 1.18em; color: #999ca1">React</a> <a href="/tags/SQL/" style="font-size: 1.1em; color: #999">SQL</a> <a href="/tags/WSL/" style="font-size: 1.1em; color: #999">WSL</a> <a href="/tags/code/" style="font-size: 1.1em; color: #999">code</a> <a href="/tags/dp/" style="font-size: 1.1em; color: #999">dp</a> <a href="/tags/luogu/" style="font-size: 1.1em; color: #999">luogu</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.26em; color: #999fa8">多线程</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.1em; color: #999">数学</a> <a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">日志</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.18em; color: #999ca1">爬虫</a> <a href="/tags/%E8%83%8C%E5%8C%85/" style="font-size: 1.1em; color: #999">背包</a> <a href="/tags/%E9%80%86%E5%85%83/" style="font-size: 1.1em; color: #999">逆元</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">2022-01</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">2021-12</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">2021-10</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">2021-09</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">2021-08</span><span class="card-archive-list-count">13</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">2021-07</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">45</div></div><div class="webinfo-item"><div class="item-name">Total Count :</div><div class="item-count">53.3k</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-03T03:56:50.410Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
   }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="c7w"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">c7w</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">44</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">c7w</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-</body>
-</html>
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

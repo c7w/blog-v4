@@ -1,0 +1,603 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《机器学习笔记》笔记 | c7w 的博客</title><meta name="keywords" content="Machine Learning"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Notes for LeeML-Notes 正如篇名，是机器学习笔记的笔记。 主要还是记录一些重要概念和思考的过程吧。 笔记的笔记中，第一个笔记的链接：  https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;leeml-notes&#x2F;#&#x2F;  对应视频的链接：  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1Ht411g7Ef">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《机器学习笔记》笔记">
+<meta property="og:url" content="https://c7w.tech/ml-notes/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="Notes for LeeML-Notes 正如篇名，是机器学习笔记的笔记。 主要还是记录一些重要概念和思考的过程吧。 笔记的笔记中，第一个笔记的链接：  https:&#x2F;&#x2F;datawhalechina.github.io&#x2F;leeml-notes&#x2F;#&#x2F;  对应视频的链接：  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1Ht411g7Ef">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-09-07T14:33:15.000Z">
+<meta property="article:modified_time" content="2021-10-02T17:15:08.228Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://c7w.tech/ml-notes/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《机器学习笔记》笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-03 01:15:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《机器学习笔记》笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-09-07T14:33:15.000Z" title="Created 2021-09-07 22:33:15">2021-09-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-10-02T17:15:08.228Z" title="Updated 2021-10-03 01:15:08">2021-10-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>9min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《机器学习笔记》笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>Notes for LeeML-Notes</strong></p>
+<p>正如篇名，是机器学习笔记的笔记。</p>
+<p>主要还是记录一些重要概念和思考的过程吧。</p>
+<p>笔记的笔记中，第一个笔记的链接：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/leeml-notes/#/">https://datawhalechina.github.io/leeml-notes/#/</a></li>
+</ul>
+<p>对应视频的链接：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ht411g7Ef">https://www.bilibili.com/video/BV1Ht411g7Ef</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="机器学习介绍"><a href="#机器学习介绍" class="headerlink" title="机器学习介绍"></a>机器学习介绍</h2><h3 id="发展历程及基础概念"><a href="#发展历程及基础概念" class="headerlink" title="发展历程及基础概念"></a>发展历程及基础概念</h3><ul>
+<li>在存在深度学习之前，通过 hand-crafted rules 来设定过滤规则</li>
+<li>机器学习的过程<ul>
+<li>Training<ul>
+<li>Define a set of functions as <strong>Model</strong></li>
+<li>Evaluate the goodness of these functions</li>
+<li>Pick the best function $f^<em>$ from the <em>*Model</em></em></li>
+</ul>
+</li>
+<li>Testing<ul>
+<li>Using $f^*$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://datawhalechina.github.io/leeml-notes/chapter1/res/chapter1-21.png" alt="img"></p>
+<h3 id="相关技术"><a href="#相关技术" class="headerlink" title="相关技术"></a>相关技术</h3><ul>
+<li>监督学习 Supervised learning<ul>
+<li>Tasks<ul>
+<li>Regression<ul>
+<li>The output of the target function $f$ is scalar.</li>
+</ul>
+</li>
+<li>Classification<ul>
+<li>Binary classification (Output: yes/no)</li>
+<li>Multi-class classification</li>
+</ul>
+</li>
+<li>Structured Learning<ul>
+<li>The output is well-structured.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How to select function set?<ul>
+<li>Non-linear model, the most famous of which is <strong>Deep Learning</strong></li>
+<li>Other non-linear models, like SVM…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>半监督学习 Semi-supervised Learning<ul>
+<li>non-labelled data</li>
+</ul>
+</li>
+<li>迁移学习 Transfer Learning<ul>
+<li>Pictures that are not related to the topic could help…?</li>
+</ul>
+</li>
+<li>无监督学习 Unsupervised Learning</li>
+<li>强化学习 Reinforcement Learning<ul>
+<li>我们没有告诉机器正确的答案是什么，机器所拥有的只有一个分数，就是他做的好还是不好</li>
+</ul>
+</li>
+</ul>
+<h2 id="Regression"><a href="#Regression" class="headerlink" title="Regression"></a>Regression</h2><p>找到函数$f$，使得对于任意给定特征$x$，输出数值$scalar$.</p>
+<h3 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h3><ul>
+<li>模型假设，选择模型框架（线性模型）</li>
+<li>模型评估，如何判断众多模型的好坏（损失函数）</li>
+<li>模型优化，如何筛选最优的模型（梯度下降）</li>
+</ul>
+<h3 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h3><ul>
+<li>过拟合</li>
+<li>Customize learning rate</li>
+</ul>
+<h3 id="步骤优化"><a href="#步骤优化" class="headerlink" title="步骤优化"></a>步骤优化</h3><ul>
+<li>合并多个线性模型，使用 $\delta$ 函数</li>
+<li>给予更多参数</li>
+<li>正则化 Regularization<ul>
+<li>$L=\sum_n (y-(b+\sum_iw_ix_i)) + \lambda\sum w_i^2$</li>
+<li>使得 Loss function 更加平滑</li>
+</ul>
+</li>
+</ul>
+<h2 id="分析误差"><a href="#分析误差" class="headerlink" title="分析误差"></a>分析误差</h2><p>通过分析误差的来源，以期达到改善模型时有着手点的效果.</p>
+<h3 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h3><ul>
+<li>Average Error = error due to “bias” + error due to variance</li>
+<li>Notation<ul>
+<li>$\hat f$ := the actual function</li>
+<li>$f^*$:= the best function picked from the model trained from the training data</li>
+<li>$f^*$ is an $estimator$ of $\hat f$​ </li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/08/eqEIoViJlbtsuyj.png" alt="image-20210908141646887"></p>
+<p><img src="https://i.loli.net/2021/09/08/jmIgTdBbVQr9Al5.jpg" alt="img"></p>
+<ul>
+<li>Conclusion<ul>
+<li>Simple Model<ul>
+<li>Large Bias</li>
+<li>Small Variance</li>
+</ul>
+</li>
+<li>Complex Model<ul>
+<li>Small Bias</li>
+<li>Large Variance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/08/lXDf6xgFKIP3HZs.png" alt="image-20210908143937650"></p>
+<p><strong>How to diagnose?</strong></p>
+<ul>
+<li>If your model cannot fit the training data, then you have large bias. (Underfitting)<ul>
+<li>Redesign your model.<ul>
+<li>Add more features…</li>
+<li>A more complex model…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If your model can fit the training data, but has large error on the testing data, then you have the large variance. (Overfitting)<ul>
+<li>More data.<ul>
+<li>Effective but not always practical.</li>
+</ul>
+</li>
+<li>Regularization. (May do harm to bias)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Cross-Validation"><a href="#Cross-Validation" class="headerlink" title="Cross Validation"></a>Cross Validation</h3><ul>
+<li>In each epoch, divide your training set into <strong>training set</strong> and <strong>validation set</strong>.</li>
+<li>Use <strong>training set</strong> to train your model, and use <strong>validation set</strong> to pick the best one.</li>
+<li>Then by this way, the average error of <strong>testing set</strong> could represent the real error when the model is applied.</li>
+<li>What if the <strong>validation set</strong> has its biases? <strong>N-fold Cross Validation</strong></li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/08/B5v8uoTOKUFHEMD.png" alt="image-20210908145850518"></p>
+<ul>
+<li>Firstly pick the best model using the validation approach, then train it using the whole training set.</li>
+</ul>
+<h2 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><h3 id="Tuning-learning-rates"><a href="#Tuning-learning-rates" class="headerlink" title="Tuning learning rates"></a>Tuning learning rates</h3><p>Visualize the figure of <strong>the loss</strong> and <strong>the turn of parameters updated</strong></p>
+<p><img src="https://i.loli.net/2021/09/08/j64LqduhrsWzeTa.png" alt="image-20210908153835553"></p>
+<h4 id="Adaptive-learning-rates"><a href="#Adaptive-learning-rates" class="headerlink" title="Adaptive learning rates"></a>Adaptive learning rates</h4><ul>
+<li>Popular &amp; Simple Idea: Reduce the learning rate by some factor every few epochs.<ul>
+<li>(E.g.) $\frac 1 t \ Decay$: $\eta^{(t)} = \frac {\eta^{(0)}} {\sqrt {t+1}}$</li>
+<li>But tuning learning rate cannot be one-size for all parameters. That is to say, we need to <strong>give different parameters different learning rates</strong>.</li>
+</ul>
+</li>
+<li><p>Adagrad</p>
+<ul>
+<li>Divide the learning rate of each parameter by the root mean square of its previous derivatives.</li>
+<li>Vanilla gradient descent: $w^{(t+1)} \leftarrow w^{(t)} - \eta^{(t)}g^{(t)}$​​​, $t\ge0$.<ul>
+<li>$g$​​​ is partial derivatives</li>
+</ul>
+</li>
+<li>Adagrad: $w^{(t+1)} \leftarrow w^{(t)} - \frac {\eta^{(t)}}{\sigma^{(t)}}g^{(t)}$, $t\ge0$.<ul>
+<li>$\sigma^{(t)} = \sqrt{\frac 1 {t+1} \sum_{i=0}^t[(g^{(i)})^2]}$</li>
+</ul>
+</li>
+<li>If we use $\frac 1 t\ Decay$ and $Adagrad$ together, we could easily have:<ul>
+<li>$w^{(t+1)} = w^{(t)}-\frac{\eta^{(0)}}{\sqrt {\sum_{i=0}^t[(g^{(i)})^2]}}g^{(t)}$​</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The best step is $\frac{|一阶偏导|}{二阶偏导}$</p>
+</li>
+</ul>
+<h3 id="Stochastic-Gradient-Descent"><a href="#Stochastic-Gradient-Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent</h3><p>随机梯度下降法. Make your training faster.</p>
+<ul>
+<li>每处理一个例子就更新.</li>
+</ul>
+<h3 id="Feature-Scaling-特征缩放"><a href="#Feature-Scaling-特征缩放" class="headerlink" title="Feature Scaling 特征缩放"></a>Feature Scaling 特征缩放</h3><p><img src="https://i.loli.net/2021/09/08/dz9XaEv26imuFY3.png" alt="image-20210908161121857"></p>
+<ul>
+<li>两个输入的分布的范围很不一样，建议把他们的范围缩放，使得不同输入的范围是一样的.</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/08/hruapvB7snqGtPk.png" alt="image-20210908161952204"></p>
+<h3 id="Possible-Problems"><a href="#Possible-Problems" class="headerlink" title="Possible Problems"></a>Possible Problems</h3><p><img src="https://datawhalechina.github.io/leeml-notes/chapter6/res/chapter6-23.png" alt="img"></p>
+<h2 id="Classification-概率分类模型"><a href="#Classification-概率分类模型" class="headerlink" title="Classification 概率分类模型"></a>Classification 概率分类模型</h2><h3 id="回归模型与概率模型"><a href="#回归模型与概率模型" class="headerlink" title="回归模型与概率模型"></a>回归模型与概率模型</h3><ul>
+<li>回归模型有其缺陷.</li>
+<li>Ideal Alternatives<ul>
+<li><img src="https://datawhalechina.github.io/leeml-notes/chapter10/res/chapter10-7.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+<h3 id="Generative-Model"><a href="#Generative-Model" class="headerlink" title="Generative Model"></a>Generative Model</h3><p><img src="https://datawhalechina.github.io/leeml-notes/chapter10/res/chapter10-9.png" alt="img"></p>
+<ul>
+<li>如何进行问题的转化?<ul>
+<li>两个盒子中抽一个球，抽到的是盒子1中蓝色球的概率是多少？</li>
+<li>相当于两个类别中抽一个 x，抽到的是类别1中 x 的概率是多少？</li>
+<li>可以转化成，随机给出一个 x，那么它属于哪一个类别（属于<strong>概率相对比较大</strong>的类别）？<ul>
+<li>If $P(C_1|x) \ge 0.5$, then output $C_1$​.</li>
+<li>Else output $C_2$​.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Prior<ul>
+<li>计算 $P(C_1), P(C_2)$: $P(C_1) = N(C_1)/N(All)$</li>
+</ul>
+</li>
+<li>Probability from Class?<ul>
+<li>我们假设 Training Data 中的数据全部是从一个 Gaussian Distribution 中 sample 出来.</li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83">https://zh.wikipedia.org/zh-hans/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83</a></li>
+<li>$f_{\mu, \Sigma}(x) = \frac 1 {(2\pi)^{D/2}}\frac 1 {|\Sigma|^{1/2}} exp{-\frac 1 2 (x-\mu)^T\Sigma^{-1}(x-\mu)}$</li>
+</ul>
+</li>
+<li>那么如何找 $\mu$ 与 $\Sigma$ ？<strong>Maximum Likelihood</strong>, 最大似然估计.<ul>
+<li>Likelihood of a <em>Gaussian</em> with mean $\mu$ and covariance matrix $\Sigma$:</li>
+<li>$L(\mu, \Sigma) = \Pi<em>{i=1}^n f</em>{\mu, \Sigma}(x^{(i)})$</li>
+<li>Assume that $\mu^<em>, \Sigma^</em>$ is the argument of the Gaussian Distribution with the maximum likelihood.</li>
+<li>And the solution…<ul>
+<li>$\mu^* = \frac 1 n \sum_{i=1}^nx^{(i)}$</li>
+<li>$\Sigma ^{<em>} = \frac 1 n \sum_{i=1}^n (x^{(i)}-\mu^</em>)(x^{(i)}-\mu^*)^T$​}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Modifying Model</p>
+<ul>
+<li>Using the same Covariant Matrix</li>
+<li>$L(\mu^1, \mu^2, \Sigma)$ <ul>
+<li>Where $\Sigma = \frac {N(C_1)} {N(All)}\Sigma^1 + \frac {N(C_2)} {N(All)}\Sigma^2$ ​</li>
+</ul>
+</li>
+<li>经过推导，我们的 Model 可以写成 $P_{w,b}(C_1|x) = \sigma(z), z=w \cdot x + b$</li>
+</ul>
+</li>
+<li><p>假设所有的feature都是相互独立产生的，这种分类叫做 <strong>Naive Bayes Classifier</strong>（朴素贝叶斯分类器）</p>
+</li>
+</ul>
+<h3 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h3><ul>
+<li>Review<ul>
+<li>Step 1: Function Set<ul>
+<li>We want to find $P_{w,b}(C_1|x)$​.<ul>
+<li>If $P_{w,b}(C_1|x) \ge 0.5$ then output $C_1$, else output $C_2$.</li>
+</ul>
+</li>
+<li>$f<em>{w,b}(x):=P</em>{w,b}(C_1|x) = \sigma(z)$, where $z=w\cdot x + b$​</li>
+</ul>
+</li>
+<li>Step 2: Goodness of the function<ul>
+<li><img src="https://i.loli.net/2021/09/09/dT4isEYZSD5QGnH.png" alt="image-20210909203309727"></li>
+<li><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-5.png" alt="img"></li>
+<li><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-6.png" alt="img"></li>
+<li>Cross Entropy</li>
+</ul>
+</li>
+<li>Step 3: Find the best<ul>
+<li><img src="https://i.loli.net/2021/09/09/I2isBxThM9nrNV4.png" alt="image-20210909205827591"></li>
+<li>The partial derivatives are the same as those in linear regression.</li>
+<li>The logistic regression is called discriminative method.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Discriminative-v-s-Generative"><a href="#Discriminative-v-s-Generative" class="headerlink" title="Discriminative v.s. Generative"></a>Discriminative v.s. Generative</h3><ul>
+<li>Same model. $P(C_1|x) = \sigma(w\cdot x + b)$<ul>
+<li>Logistic Regression: Directly find $w$ and $b$</li>
+<li>Generative Model: Find $\mu^1$, $\mu^2$, $\Sigma^{-1}$</li>
+<li>But we won’t obtain the same set of $w$ and $b$.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multi-class-Classification"><a href="#Multi-class-Classification" class="headerlink" title="Multi-class Classification"></a>Multi-class Classification</h3><h4 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h4><p><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-18.png" alt="img"></p>
+<ul>
+<li>Definition of the target</li>
+</ul>
+<p><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-19.png" alt="img"></p>
+<h3 id="Limitation-of-logistic-regression"><a href="#Limitation-of-logistic-regression" class="headerlink" title="Limitation of logistic regression"></a>Limitation of logistic regression</h3><h4 id="Feature-Transformation"><a href="#Feature-Transformation" class="headerlink" title="Feature Transformation"></a>Feature Transformation</h4><p><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-23.png" alt="img"></p>
+<ul>
+<li>Middle Layer!<ul>
+<li>可以将很多的逻辑回归接到一起，就可以进行特征转换.</li>
+<li><img src="https://datawhalechina.github.io/leeml-notes/chapter11/res/chapter11-26.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+<h2 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h2><p><strong>Step 1: Neural Network</strong></p>
+<ul>
+<li>Fully Connect Feedforward Network<ul>
+<li>Why call it deep? <strong>Deep = Many Hidden Layers</strong></li>
+<li>本质：通过 Hidden Layers 进行 Feature Transformation</li>
+</ul>
+</li>
+</ul>
+<p><strong>Step 2: Loss Function</strong></p>
+<ul>
+<li>Cross Entropy</li>
+</ul>
+<p><strong>Step 3: Find the best function</strong></p>
+<ul>
+<li>Gradient Descent</li>
+</ul>
+<h3 id="Why-deep"><a href="#Why-deep" class="headerlink" title="Why deep?"></a>Why deep?</h3><ul>
+<li>More parameters, better performance</li>
+<li><p>Universality Theorem</p>
+<ul>
+<li>Any continuous function $f:R^N \rightarrow R^M$​ can be realized by a network with one hidden layer with enough neurons.</li>
+<li>So why <strong>Deep Learning</strong>, not <strong>Fat Learning</strong>?</li>
+</ul>
+<h2 id="CNN-Convolutional-Neuronal-Network）"><a href="#CNN-Convolutional-Neuronal-Network）" class="headerlink" title="CNN (Convolutional Neuronal Network）"></a>CNN (Convolutional Neuronal Network）</h2></li>
+</ul>
+<h3 id="Why-CNN-for-image"><a href="#Why-CNN-for-image" class="headerlink" title="Why CNN for image"></a>Why CNN for image</h3><ul>
+<li>Some patterns are much smaller than the whole image. That is to say, a neuron only need to have connection with a small region of the image, but not the whole image.</li>
+<li>But the same pattern may appear in different regions in different images.<ul>
+<li>We could let these neurons share their parameters…</li>
+</ul>
+</li>
+<li>Subsampling the pixels will not change the object.</li>
+</ul>
+<h3 id="The-whole-CNN-architecture"><a href="#The-whole-CNN-architecture" class="headerlink" title="The whole CNN architecture"></a>The whole CNN architecture</h3><p>Image -&gt; (Convolution -&gt; Max Pooling)$^{+}$ -&gt; Flatten -(as input)-&gt; Fully Connected Feedforward Network </p>
+<h4 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h4><ul>
+<li>Calculation approaches</li>
+<li>Feature Map</li>
+<li>Colorful Image</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/02/Y3GhrSRlVWsnofc.png" alt="image-20211002101802253"></p>
+<ul>
+<li><strong>Channel</strong>: 颜色通道</li>
+<li>What does CNN learn? 使用 gradient ascent 寻找 input $x^{*} = arg \max_x{a^k}$</li>
+<li>Deep Dream: let CNN exaggerate what it sees</li>
+<li>以 Alpha Go 为例讲解 Architecture 的可选择性</li>
+</ul>
+<h2 id="RNN-Recurrent-Neural-Network"><a href="#RNN-Recurrent-Neural-Network" class="headerlink" title="RNN (Recurrent Neural Network)"></a>RNN (Recurrent Neural Network)</h2><ul>
+<li>Example Application<ul>
+<li>Slot filling: Nerual Network needs memory!</li>
+<li><img src="https://i.loli.net/2021/10/02/eJHzUvSWnOcTtBD.png" alt="image-20211002120218869"></li>
+<li>Bidirectional RNN<ul>
+<li><img src="https://i.loli.net/2021/10/02/r4fRUpxLKGBbnyc.png" alt="image-20211002120401629"></li>
+<li>Why? Have a broader view of context. 正向只看前面，反向只看后面.</li>
+</ul>
+</li>
+<li>Long Short-term Memory (LSTM)<ul>
+<li>Input signal and output signal are learned by the network itself.</li>
+<li><img src="https://i.loli.net/2021/10/02/FQIxTbOJPH25DvY.png" alt="image-20211002120742395"></li>
+<li><img src="https://i.loli.net/2021/10/02/Z1V2qWHmAg354ku.png" alt="image-20211002121407528"></li>
+</ul>
+</li>
+<li>How to train RNN?<ul>
+<li>Loss function? Sum over cross entropy.</li>
+<li>Learning? Gradient descent. <ul>
+<li>How to calc partial derivative? BPTT (Back propagation through time).</li>
+<li>The error surface may be very flat or very steep. Clipping…</li>
+<li>LSTM may deal with gradient vanishing, but not with gradient explode.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Applications</li>
+</ul>
+</li>
+</ul>
+<h2 id="Semi-supervised-Learning-半监督学习"><a href="#Semi-supervised-Learning-半监督学习" class="headerlink" title="Semi-supervised Learning 半监督学习"></a>Semi-supervised Learning 半监督学习</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
+<li>Semi-supervised learning ${(x^r, \hat y^r)}<em>{r=1}^R, {x^u}</em>{u=R}^{R+U}$<ul>
+<li>A set of unlabeled data, usually $U\gg R$</li>
+</ul>
+</li>
+<li>Classification 半监督学习的分类<ul>
+<li>Transductive learning: unlabelled data is the testing data</li>
+<li>Inductive learning: unlabelled data is not in the testing data</li>
+</ul>
+</li>
+<li>Why semi-supervised learning?<ul>
+<li>Collecting data is easy, but collecting “labelled” data is expensive</li>
+<li>We do semi-supervised learning in our lives</li>
+</ul>
+</li>
+</ul>
+<h3 id="Semi-supervised-learning-for-Generative-Model"><a href="#Semi-supervised-learning-for-Generative-Model" class="headerlink" title="Semi-supervised learning for Generative Model"></a>Semi-supervised learning for Generative Model</h3><p><img src="https://i.loli.net/2021/10/03/WhAsVmULjZCRGMq.png" alt="image-20211003005516326"></p>
+<h3 id="Low-density-separation-assumption"><a href="#Low-density-separation-assumption" class="headerlink" title="Low-density separation assumption"></a><strong>Low-density separation assumption</strong></h3><ul>
+<li>Assumption<ul>
+<li>两个 Class 之间非黑即白 (Black or white)</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/03/nWAefx6phy41tUK.png" alt="image-20211003010157597"></p>
+<p><img src="https://i.loli.net/2021/10/03/YEya7komzgsGPM6.png" alt="image-20211003011038595"></p>
+<h3 id="Smoothness-assumption"><a href="#Smoothness-assumption" class="headerlink" title="Smoothness assumption"></a>Smoothness assumption</h3><ul>
+<li>近朱者赤 近墨者黑<ul>
+<li>“similar” x has the same $\hat y$</li>
+<li>More precisely:<ul>
+<li>x is not uniform.</li>
+<li>if $x^1$ and $x^2$​ are close in a high density region (connected by a high density path)</li>
+<li>then $y^1$ and $y^2$ are the same</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://c7w.tech/ml-notes/">https://c7w.tech/ml-notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Machine-Learning/">Machine Learning</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/ml-self-attention/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【机器学习】自注意力机制 (Self-attention) 笔记</div></div></a></div><div class="next-post pull-right"><a href="/python-asyncio-websocket/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Python asyncio, thread 与 websocket 库初探</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/but-what-is-a-neural-network/" title="但是什么是神经网络？"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">但是什么是神经网络？</div></div></a></div><div><a href="/implementing-MNIST-classifier/" title="实现 MNIST 鉴别手写数字过程手记"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-03</div><div class="title">实现 MNIST 鉴别手写数字过程手记</div></div></a></div><div><a href="/ml-self-supervised/" title="自监督式学习（Self-supervised Learning）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-03</div><div class="title">自监督式学习（Self-supervised Learning）</div></div></a></div><div><a href="/ml-transformer/" title="【机器学习】Transformer 笔记"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-03</div><div class="title">【机器学习】Transformer 笔记</div></div></a></div><div><a href="/ml-self-attention/" title="【机器学习】自注意力机制 (Self-attention) 笔记"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-03</div><div class="title">【机器学习】自注意力机制 (Self-attention) 笔记</div></div></a></div><div><a href="/tensorflow-application/" title="【机器学习】TensorFlow"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-13</div><div class="title">【机器学习】TensorFlow</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">机器学习介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B%E5%8F%8A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">发展历程及基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF"><span class="toc-number">1.2.</span> <span class="toc-text">相关技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Regression"><span class="toc-number">2.</span> <span class="toc-text">Regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Steps"><span class="toc-number">2.1.</span> <span class="toc-text">Steps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.</span> <span class="toc-text">可能出现的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E4%BC%98%E5%8C%96"><span class="toc-number">2.3.</span> <span class="toc-text">步骤优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E8%AF%AF%E5%B7%AE"><span class="toc-number">3.</span> <span class="toc-text">分析误差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Concept"><span class="toc-number">3.1.</span> <span class="toc-text">Concept</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cross-Validation"><span class="toc-number">3.2.</span> <span class="toc-text">Cross Validation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient-Descent"><span class="toc-number">4.</span> <span class="toc-text">Gradient Descent</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tuning-learning-rates"><span class="toc-number">4.1.</span> <span class="toc-text">Tuning learning rates</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Adaptive-learning-rates"><span class="toc-number">4.1.1.</span> <span class="toc-text">Adaptive learning rates</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stochastic-Gradient-Descent"><span class="toc-number">4.2.</span> <span class="toc-text">Stochastic Gradient Descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature-Scaling-%E7%89%B9%E5%BE%81%E7%BC%A9%E6%94%BE"><span class="toc-number">4.3.</span> <span class="toc-text">Feature Scaling 特征缩放</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Possible-Problems"><span class="toc-number">4.4.</span> <span class="toc-text">Possible Problems</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classification-%E6%A6%82%E7%8E%87%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.</span> <span class="toc-text">Classification 概率分类模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%A6%82%E7%8E%87%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.1.</span> <span class="toc-text">回归模型与概率模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generative-Model"><span class="toc-number">5.2.</span> <span class="toc-text">Generative Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logistic-Regression"><span class="toc-number">5.3.</span> <span class="toc-text">Logistic Regression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discriminative-v-s-Generative"><span class="toc-number">5.4.</span> <span class="toc-text">Discriminative v.s. Generative</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-class-Classification"><span class="toc-number">5.5.</span> <span class="toc-text">Multi-class Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Softmax"><span class="toc-number">5.5.1.</span> <span class="toc-text">Softmax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Limitation-of-logistic-regression"><span class="toc-number">5.6.</span> <span class="toc-text">Limitation of logistic regression</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Feature-Transformation"><span class="toc-number">5.6.1.</span> <span class="toc-text">Feature Transformation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep-Learning"><span class="toc-number">6.</span> <span class="toc-text">Deep Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-deep"><span class="toc-number">6.1.</span> <span class="toc-text">Why deep?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CNN-Convolutional-Neuronal-Network%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">CNN (Convolutional Neuronal Network）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-CNN-for-image"><span class="toc-number">7.1.</span> <span class="toc-text">Why CNN for image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-whole-CNN-architecture"><span class="toc-number">7.2.</span> <span class="toc-text">The whole CNN architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Convolution"><span class="toc-number">7.2.1.</span> <span class="toc-text">Convolution</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN-Recurrent-Neural-Network"><span class="toc-number">8.</span> <span class="toc-text">RNN (Recurrent Neural Network)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Semi-supervised-Learning-%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-number">9.</span> <span class="toc-text">Semi-supervised Learning 半监督学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">9.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semi-supervised-learning-for-Generative-Model"><span class="toc-number">9.2.</span> <span class="toc-text">Semi-supervised learning for Generative Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Low-density-separation-assumption"><span class="toc-number">9.3.</span> <span class="toc-text">Low-density separation assumption</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Smoothness-assumption"><span class="toc-number">9.4.</span> <span class="toc-text">Smoothness assumption</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
