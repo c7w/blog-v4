@@ -468,28 +468,7 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/tags/C/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://c7w.tech/tags/Machine-Learning/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/tags/Data-Structure/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/tags/Heap/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -510,6 +489,27 @@
   </url>
   
   <url>
+    <loc>https://c7w.tech/tags/Data-Structure/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/Heap/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/C/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://c7w.tech/tags/Hash-Table/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -517,28 +517,7 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/tags/code/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/tags/luogu/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://c7w.tech/tags/%E6%97%A5%E5%BF%97/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/tags/Java/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -553,6 +532,27 @@
   
   <url>
     <loc>https://c7w.tech/tags/%E9%80%86%E5%85%83/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/Java/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/code/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/luogu/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -587,13 +587,6 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/tags/Data-Analysis/</loc>
-    <lastmod>2022-01-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://c7w.tech/tags/React/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -608,7 +601,7 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/tags/Calculus/</loc>
+    <loc>https://c7w.tech/tags/Data-Analysis/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -623,6 +616,13 @@
   
   <url>
     <loc>https://c7w.tech/tags/Backend/</loc>
+    <lastmod>2022-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/tags/Calculus/</loc>
     <lastmod>2022-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
