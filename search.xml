@@ -3769,6 +3769,13 @@ UserGroupAssociation <span class="token operator">=</span> Table<span class="tok
 <li>应该差不多啦w</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>日志</category>
+        <category>日志/更新记录</category>
+      </categories>
+      <tags>
+        <tag>站点日志</tag>
+      </tags>
   </entry>
   <entry>
     <title>Python Numpy + Matplotlib 再探</title>
