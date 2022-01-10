@@ -124,25 +124,6 @@
   </entry>
   
   <entry>
-    <title>【机器学习】Transformer 笔记</title>
-    <link href="https://c7w.tech/ml-transformer/"/>
-    <id>https://c7w.tech/ml-transformer/</id>
-    <published>2021-10-03T03:39:36.000Z</published>
-    <updated>2021-10-05T00:54:16.870Z</updated>
-    
-    <content type="html"><![CDATA[<p>$Transformer$ 模型的介绍。</p><a id="more"></a><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul><li><em>Transformer</em> is a <em>sequence to sequence</em> model. $Seq2seq$</li><li>Application…<ul><li>Speech Recognition</li><li>Machine Translation</li><li>Speech Translation</li><li>Syntactic Parsing（文法剖析）</li><li>Multi-label Classification</li></ul></li><li>Most NLP applications could be considered as <strong>Question Answering</strong></li><li>比起单纯用 seq2seq，Task-specific model 对于某些任务更合适</li><li>Architecture<ul><li><img src="https://i.loli.net/2021/10/03/QJFbND5rkBjZli6.png" alt="image-20211003151722794"></li></ul></li></ul><h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><ul><li><p>Given a set of vectors and output another set of vectors.</p><ul><li>Self-attention, CNN, RNN… All of them could realize this!</li><li><img src="https://i.loli.net/2021/10/03/fIVaFX65TWJcOl1.png" alt="image-20211003151915990"></li></ul></li><li><p><img src="https://i.loli.net/2021/10/03/rSqZC57w2jfveAk.png" alt="image-20211003152146306"></p></li><li>Residual Connection<ul><li><img src="https://i.loli.net/2021/10/03/KnYwBAroMfI5dFV.png" alt="image-20211003152616828"></li></ul></li></ul><h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><h3 id="1-Autoregressive-AT"><a href="#1-Autoregressive-AT" class="headerlink" title="(1) Autoregressive (AT)"></a>(1) Autoregressive (AT)</h3><p><img src="https://i.loli.net/2021/10/03/QTnXwExY2VjkLlR.png" alt="image-20211003153626358"></p><p><img src="https://i.loli.net/2021/10/03/zkqyt6LX2ZEcIJ3.png" alt="image-20211003153834166"></p><ul><li>Architecture</li></ul><p><img src="https://i.loli.net/2021/10/03/RimUkCW6bKHMXVe.png" alt="image-20211003153922255"></p><ul><li>Masked Multi-head Attention?<ul><li>Like RNN…</li><li><img src="https://i.loli.net/2021/10/03/eRHTsgjEmAay3WO.png" alt="image-20211003154121360"></li></ul></li><li>Adding “Stop Token”</li></ul><h3 id="2-Non-autoregressive-NAT"><a href="#2-Non-autoregressive-NAT" class="headerlink" title="(2) Non-autoregressive (NAT)"></a>(2) Non-autoregressive (NAT)</h3><p><img src="https://i.loli.net/2021/10/03/EY3eAv68mshjZVO.png" alt="image-20211003155032111"></p><h2 id="Encoder-Decoder"><a href="#Encoder-Decoder" class="headerlink" title="Encoder-Decoder"></a>Encoder-Decoder</h2><p><img src="https://i.loli.net/2021/10/03/Xao8lTPvudAC7j5.png" alt="image-20211003155352197"></p><p><img src="https://i.loli.net/2021/10/03/bTLuX5Ve9ExRirH.png" alt="image-20211003155455569"></p><h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><ul><li>Minimize the cross entropy<ul><li>The input of the decoder is the ground truth.</li></ul></li></ul><p><img src="https://i.loli.net/2021/10/03/zQgEb4YLiA6ceV9.png" alt="image-20211003160151665"></p><h2 id="Tips-for-training"><a href="#Tips-for-training" class="headerlink" title="Tips for training"></a>Tips for training</h2><ul><li>Copy Mechanism<ul><li>Chat-bot</li></ul></li><li><p>Guided Attention</p><ul><li>Monotonic attention</li><li>Location-aware attention</li></ul></li><li><p>Beam Search</p></li></ul><p><img src="https://i.loli.net/2021/10/03/v74KjoIAMQuDT1F.png" alt="image-20211003161025399"></p><p><img src="https://i.loli.net/2021/10/03/8oCmEM2dxJeujFs.png" alt="image-20211003161307181"></p><ul><li>Scheduled Sampling</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://www.youtube.com/watch?v=n9TlOhRjYoc">https://www.youtube.com/watch?v=n9TlOhRjYoc</a></li><li><a href="https://www.youtube.com/watch?v=N6aRv06iv2g">https://www.youtube.com/watch?v=N6aRv06iv2g</a></li></ul>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;$Transformer$ 模型的介绍。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="Machine Learning" scheme="https://c7w.tech/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>【机器学习】自注意力机制 (Self-attention) 笔记</title>
     <link href="https://c7w.tech/ml-self-attention/"/>
     <id>https://c7w.tech/ml-self-attention/</id>
@@ -153,6 +134,25 @@
     
     
     <summary type="html">&lt;p&gt;$Seq2seq$，自注意力机制模型的介绍。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Machine Learning" scheme="https://c7w.tech/tags/Machine-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【机器学习】Transformer 笔记</title>
+    <link href="https://c7w.tech/ml-transformer/"/>
+    <id>https://c7w.tech/ml-transformer/</id>
+    <published>2021-10-03T03:39:36.000Z</published>
+    <updated>2022-01-10T07:53:55.913Z</updated>
+    
+    <content type="html"><![CDATA[<p>$Transformer$ 模型的介绍。</p><a id="more"></a><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul><li><em>Transformer</em> is a <em>sequence to sequence</em> model. $Seq2seq$</li><li>Application…<ul><li>Speech Recognition</li><li>Machine Translation</li><li>Speech Translation</li><li>Syntactic Parsing（文法剖析）</li><li>Multi-label Classification</li></ul></li><li>Most NLP applications could be considered as <strong>Question Answering</strong></li><li>比起单纯用 seq2seq，Task-specific model 对于某些任务更合适</li><li>Architecture<ul><li><img src="https://i.loli.net/2021/10/03/QJFbND5rkBjZli6.png" alt="image-20211003151722794"></li></ul></li></ul><h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><ul><li><p>Given a set of vectors and output another set of vectors.</p><ul><li>Self-attention, CNN, RNN… All of them could realize this!</li><li><img src="https://i.loli.net/2021/10/03/fIVaFX65TWJcOl1.png" alt="image-20211003151915990"></li></ul></li><li><p><img src="https://i.loli.net/2021/10/03/rSqZC57w2jfveAk.png" alt="image-20211003152146306"></p></li><li>Residual Connection<ul><li><img src="https://i.loli.net/2021/10/03/KnYwBAroMfI5dFV.png" alt="image-20211003152616828"></li></ul></li></ul><h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><h3 id="1-Autoregressive-AT"><a href="#1-Autoregressive-AT" class="headerlink" title="(1) Autoregressive (AT)"></a>(1) Autoregressive (AT)</h3><p><img src="https://i.loli.net/2021/10/03/QTnXwExY2VjkLlR.png" alt="image-20211003153626358"></p><p><img src="https://i.loli.net/2021/10/03/zkqyt6LX2ZEcIJ3.png" alt="image-20211003153834166"></p><ul><li>Architecture</li></ul><p><img src="https://i.loli.net/2021/10/03/RimUkCW6bKHMXVe.png" alt="image-20211003153922255"></p><ul><li>Masked Multi-head Attention?<ul><li>Like RNN…</li><li><img src="https://i.loli.net/2021/10/03/eRHTsgjEmAay3WO.png" alt="image-20211003154121360"></li></ul></li><li>Adding “Stop Token”</li></ul><h3 id="2-Non-autoregressive-NAT"><a href="#2-Non-autoregressive-NAT" class="headerlink" title="(2) Non-autoregressive (NAT)"></a>(2) Non-autoregressive (NAT)</h3><p><img src="https://i.loli.net/2021/10/03/EY3eAv68mshjZVO.png" alt="image-20211003155032111"></p><h2 id="Encoder-Decoder"><a href="#Encoder-Decoder" class="headerlink" title="Encoder-Decoder"></a>Encoder-Decoder</h2><p><img src="https://i.loli.net/2021/10/03/Xao8lTPvudAC7j5.png" alt="image-20211003155352197"></p><p><img src="https://i.loli.net/2021/10/03/bTLuX5Ve9ExRirH.png" alt="image-20211003155455569"></p><h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><ul><li>Minimize the cross entropy<ul><li>The input of the decoder is the ground truth.</li></ul></li></ul><p><img src="https://i.loli.net/2021/10/03/zQgEb4YLiA6ceV9.png" alt="image-20211003160151665"></p><h2 id="Tips-for-training"><a href="#Tips-for-training" class="headerlink" title="Tips for training"></a>Tips for training</h2><ul><li>Copy Mechanism<ul><li>Chat-bot</li></ul></li><li><p>Guided Attention</p><ul><li>Monotonic attention</li><li>Location-aware attention</li></ul></li><li><p>Beam Search</p></li></ul><p><img src="https://i.loli.net/2021/10/03/v74KjoIAMQuDT1F.png" alt="image-20211003161025399"></p><p><img src="https://i.loli.net/2021/10/03/8oCmEM2dxJeujFs.png" alt="image-20211003161307181"></p><ul><li>Scheduled Sampling</li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://www.youtube.com/watch?v=n9TlOhRjYoc">https://www.youtube.com/watch?v=n9TlOhRjYoc</a></li><li><a href="https://www.youtube.com/watch?v=N6aRv06iv2g">https://www.youtube.com/watch?v=N6aRv06iv2g</a></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;$Transformer$ 模型的介绍。&lt;/p&gt;</summary>
     
     
     
@@ -205,9 +205,9 @@
     
     
     
-    <category term="多线程" scheme="https://c7w.tech/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
     <category term="Python" scheme="https://c7w.tech/tags/Python/"/>
+    
+    <category term="多线程" scheme="https://c7w.tech/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
