@@ -44,9 +44,9 @@
     <link href="https://c7w.tech/update-2022/"/>
     <id>https://c7w.tech/update-2022/</id>
     <published>2022-01-03T03:50:13.000Z</published>
-    <updated>2022-01-10T08:09:11.389Z</updated>
+    <updated>2022-01-10T08:37:42.012Z</updated>
     
-    <content type="html"><![CDATA[<p>写于 2022/1/3，考完 DSA 之后的一天。</p><p>既然氪金买了自己的服务器，虽然博客还是放在 GitHub Pages 上，但是想了想还是好好整整自己的博客吧。</p><p>（这两句话之前好像没有什么因果关系</p><a id="more"></a><h2 id="初步规划"><a href="#初步规划" class="headerlink" title="初步规划"></a>初步规划</h2><ul><li>魔改页面模板的源码<ul><li>修改文章的摘要摘取机制</li><li>增加背景图片</li></ul></li><li>翻一遍站点的配置文件</li><li>SEO</li><li>侧边栏管理<ul><li>友链</li><li>社交链接</li><li>分类</li></ul></li><li>更改文章的标签和分类机制，对所有文章做一遍清洗，适当拆分/合并<ul><li>分类应有一级分类 “/技术” “/日常” 和其下的二级分类 “/技术/Linux” “/技术/Python应用”</li><li>标签应侧重于体现文章的关键词</li></ul></li><li>写一些新博客<ul><li>将一些总结性的内容放到博客上</li><li>写一些新内容</li></ul></li></ul><h2 id="更新实况"><a href="#更新实况" class="headerlink" title="更新实况"></a>更新实况</h2><h3 id="2022-1-10"><a href="#2022-1-10" class="headerlink" title="2022/1/10"></a>2022/1/10</h3><ul><li>洗博客的文章，进行标签和分类更改</li><li>更改了 butterfly 有 bug 的博客页面 head 生成机制</li><li></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>写于 2022/1/3，考完 DSA 之后的一天。</p><p>既然氪金买了自己的服务器，虽然博客还是放在 GitHub Pages 上，但是想了想还是好好整整自己的博客吧。</p><p>（这两句话之前好像没有什么因果关系</p><a id="more"></a><h2 id="初步规划"><a href="#初步规划" class="headerlink" title="初步规划"></a>初步规划</h2><ul><li>魔改页面模板的源码<ul><li>修改文章的摘要摘取机制</li><li>增加背景图片</li></ul></li><li>翻一遍站点的配置文件</li><li>SEO</li><li>侧边栏管理<ul><li>友链</li><li>社交链接</li><li>分类</li></ul></li><li>更改文章的标签和分类机制，对所有文章做一遍清洗，适当拆分/合并<ul><li>分类应有一级分类 “/技术” “/日常” 和其下的二级分类 “/技术/Linux” “/技术/Python应用”</li><li>标签应侧重于体现文章的关键词</li></ul></li><li>写一些新博客<ul><li>将一些总结性的内容放到博客上</li><li>写一些新内容</li></ul></li></ul><h2 id="更新实况"><a href="#更新实况" class="headerlink" title="更新实况"></a>更新实况</h2><h3 id="2022-1-10"><a href="#2022-1-10" class="headerlink" title="2022/1/10"></a>2022/1/10</h3><ul><li>洗博客的文章，进行标签和分类更改</li><li>更改了 butterfly 有 bug 的博客页面 head 生成机制</li><li>更改了摘要生成机制</li></ul>]]></content>
     
     
     <summary type="html">&lt;p&gt;写于 2022/1/3，考完 DSA 之后的一天。&lt;/p&gt;

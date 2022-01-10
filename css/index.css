@@ -197,7 +197,6 @@ template {
 .error404 #error-wrap .error-content .error-info .error_subtitle,
 .article-sort-item-title,
 #recent-posts > .recent-post-item >.recent-post-info > .article-title,
-#recent-posts > .recent-post-item >.recent-post-info > .content,
 #aside-content .aside-list > .aside-list-item .content > .name,
 #aside-content .aside-list > .aside-list-item .content > .title,
 #aside-content .aside-list > .aside-list-item .content > .comment,
@@ -2509,7 +2508,7 @@ blockquote footer cite:before {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 20em;
+  padding: 3em 2em;
   border-radius: 12px 8px 8px 12px;
   background: var(--card-bg);
   -webkit-box-shadow: var(--card-box-shadow);
