@@ -7,7 +7,7 @@
 <p>接下来和 Nana 的日常，主要是从“实现项目”这个角度来展开。</p>
 <p>所以，我们这次还是祭出我们的传统艺能，QQ Bot.</p>
 <p>不过这次要在项目管理方面做好一点，不能再是 if-else 的大杂烩了.</p>
-<a id="more"></a>
+<h1 id="Current-Status-咕了"><a href="#Current-Status-咕了" class="headerlink" title="Current Status: 咕了"></a>Current Status: 咕了</h1><a id="more"></a>
 <h2 id="Dependencies-前期调研"><a href="#Dependencies-前期调研" class="headerlink" title="Dependencies 前期调研"></a>Dependencies 前期调研</h2><h3 id="mirai-amp-mirai-api-http"><a href="#mirai-amp-mirai-api-http" class="headerlink" title="mirai &amp; mirai-api-http"></a>mirai &amp; mirai-api-http</h3><p>Mirai 是一个在全平台下运行，提供 QQ Android 和 TIM PC 协议支持的高效率机器人框架.</p>
 <p><a href="https://github.com/project-mirai/mirai-api-http">https://github.com/project-mirai/mirai-api-http</a></p>
 <h4 id="下载与设置守护进程"><a href="#下载与设置守护进程" class="headerlink" title="下载与设置守护进程"></a>下载与设置守护进程</h4><ul>
@@ -58,8 +58,12 @@ ncore --> pm</pre>
 <h2 id="Docs"><a href="#Docs" class="headerlink" title="Docs"></a>Docs</h2><h3 id="Nana-Core"><a href="#Nana-Core" class="headerlink" title="Nana-Core"></a>Nana-Core</h3><h3 id="Nana-Plugins"><a href="#Nana-Plugins" class="headerlink" title="Nana-Plugins"></a>Nana-Plugins</h3><p>注册 Nana-Core::Listener…</p>
 <p>使用 Nana-Core::Dispatcher…</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/综合</category>
+      </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>QQ Bot</tag>
       </tags>
   </entry>
   <entry>
@@ -262,12 +266,16 @@ Your public key has been saved in &#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.p
 <p>First edited by c7w, 2021-8-23 11:33:41.</p>
 <p>咕咕咕 qwq</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Linux</category>
+      </categories>
       <tags>
         <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>但是什么是神经网络？</title>
+    <title>Note for &quot;But what is a neural network?&quot;</title>
     <url>/but-what-is-a-neural-network/</url>
     <content><![CDATA[<p>Notes taken from watching <strong>3Blue1Brown series: Nerual networks</strong>.</p>
 <ul>
@@ -502,8 +510,12 @@ dot("$\cdots$") --> aELL</pre>
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
       <tags>
-        <tag>Machine Learning</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -988,6 +1000,10 @@ Welcome to Node.js v14.17.5.
 Type &quot;.help&quot; for more information.
 &gt;</code></pre>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Linux</category>
+      </categories>
       <tags>
         <tag>Linux</tag>
       </tags>
@@ -1358,6 +1374,10 @@ startretires&#x3D;3</code></pre>
 </ul>
 <p><em>TO BE CONTINUED</em></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Linux</category>
+      </categories>
       <tags>
         <tag>Linux</tag>
       </tags>
@@ -1366,13 +1386,16 @@ startretires&#x3D;3</code></pre>
     <title>Hello, World.</title>
     <url>/hello-world/</url>
     <content><![CDATA[<p>没钱结款只得把自己博客搬家的屑</p>
-<h2 id="c7w-的破站-ver-2-0"><a href="#c7w-的破站-ver-2-0" class="headerlink" title="c7w 的破站 ver 2.0"></a>c7w 的破站 ver 2.0</h2><p>​        之前用 WordPress 搭的小站快要到期了，现在也不好找免费的虚拟主机薅羊毛，遂借用 github.io + Hexo 搭建本“静态博客”，来记录今后的点滴。</p>
-<p><s>         azaz，我打点滴第一候选项是垫底，bksw</s></p>
-<p>​        然后强行安利了贵班的文艺委员也用上了这种方法建的博客，甚至还组建了班级的github organisation.</p>
-<p>​    等有空了就写博文，咕咕咕</p>
-]]></content>
+<h2 id="c7w-的破站-ver-2-0"><a href="#c7w-的破站-ver-2-0" class="headerlink" title="c7w 的破站 ver 2.0"></a>c7w 的破站 ver 2.0</h2><p>之前用 WordPress 搭的小站快要到期了，现在也不好找免费的虚拟主机薅羊毛，遂借用 github.io + Hexo 搭建本“静态博客”，来记录今后的点滴。</p>
+<p>然后强行安利了贵班的文艺委员也用上了这种方法建的博客，甚至还组建了班级的github organisation.</p>
+<p>等有空了就写博文，咕咕咕</p>
+<a id="more"></a>]]></content>
+      <categories>
+        <category>日志</category>
+        <category>日志/杂谈</category>
+      </categories>
       <tags>
-        <tag>日志</tag>
+        <tag>杂谈</tag>
       </tags>
   </entry>
   <entry>
@@ -1796,8 +1819,12 @@ dot("$\cdots$") --> aELL</pre>
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/机器学习实现</category>
+      </categories>
       <tags>
-        <tag>Machine Learning</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1993,7 +2020,7 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
       </tags>
   </entry>
   <entry>
-    <title>《机器学习笔记》笔记</title>
+    <title>《机器学习》笔记</title>
     <url>/ml-notes/</url>
     <content><![CDATA[<p><strong>Notes for LeeML-Notes</strong></p>
 <p>正如篇名，是机器学习笔记的笔记。</p>
@@ -2007,7 +2034,7 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
 <li><a href="https://www.bilibili.com/video/BV1Ht411g7Ef">https://www.bilibili.com/video/BV1Ht411g7Ef</a></li>
 </ul>
 <a id="more"></a>
-<h2 id="机器学习介绍"><a href="#机器学习介绍" class="headerlink" title="机器学习介绍"></a>机器学习介绍</h2><h3 id="发展历程及基础概念"><a href="#发展历程及基础概念" class="headerlink" title="发展历程及基础概念"></a>发展历程及基础概念</h3><ul>
+<h1 id="机器学习笔记"><a href="#机器学习笔记" class="headerlink" title="机器学习笔记"></a>机器学习笔记</h1><h2 id="机器学习介绍"><a href="#机器学习介绍" class="headerlink" title="机器学习介绍"></a>机器学习介绍</h2><h3 id="发展历程及基础概念"><a href="#发展历程及基础概念" class="headerlink" title="发展历程及基础概念"></a>发展历程及基础概念</h3><ul>
 <li>在存在深度学习之前，通过 hand-crafted rules 来设定过滤规则</li>
 <li>机器学习的过程<ul>
 <li>Training<ul>
@@ -2391,106 +2418,89 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
 </ul>
 </li>
 </ul>
-]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【机器学习】自注意力机制 (Self-attention) 笔记</title>
-    <url>/ml-self-attention/</url>
-    <content><![CDATA[<p>$Seq2seq$，自注意力机制模型的介绍。</p>
-<a id="more"></a>
-<h2 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
-<li>Input: vector set<ul>
-<li>将其中每一个向量称为一个 frame</li>
+<h1 id="自监督学习"><a href="#自监督学习" class="headerlink" title="自监督学习"></a>自监督学习</h1><p>以 BERT 和 GPT 为例分析自监督式学习的架构。</p>
+<!--more-->
+<h2 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h2><h3 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
+<li>BERT is a kind of <strong>transformer encoder</strong>.</li>
 </ul>
-</li>
-<li>Output: three possibilities<ul>
-<li>Each vector has a label. $len(input) = len(output)$<ul>
-<li>POS tagging （词性标注）</li>
-</ul>
-</li>
-<li>The whole sequence has a label. $len(output) = 1$<ul>
-<li>Sentiment Analysis</li>
-<li>语者辨认</li>
-<li>预测分子的性质</li>
-</ul>
-</li>
-<li>Model decides the number of labels itself. $seq2seq$<ul>
-<li>机器翻译</li>
-<li>语音辨识</li>
+<h3 id="Basic-Steps"><a href="#Basic-Steps" class="headerlink" title="Basic Steps"></a>Basic Steps</h3><ul>
+<li>Mask<ul>
+<li>Randomly masking some tokens.</li>
+<li>Randomly replacing some tokens.</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<h2 id="Sequence-Labeling"><a href="#Sequence-Labeling" class="headerlink" title="Sequence Labeling"></a>Sequence Labeling</h2><p><img src="https://i.loli.net/2021/10/03/eGAKFEL3doTvXh9.png" alt="image-20211003114720496"></p>
-<p><img src="https://i.loli.net/2021/10/03/8OVmctukgGzfS4i.png" alt="image-20211003115024375"></p>
-<h3 id="Basic-Steps"><a href="#Basic-Steps" class="headerlink" title="Basic Steps"></a>Basic Steps</h3><p>How to find $b^1$ according to $a$?</p>
+<p><img src="https://i.loli.net/2021/10/03/5qAycs8TR7zm9LM.png" alt="image-20211003222046934"></p>
 <ul>
-<li>Find the vectors relevant to $a^1$​ in a sequence<ul>
-<li>let $\alpha$​ (attention score) denote the relevance between $a^i$​ and $a^j$​</li>
-<li>We can use dot-product to calc the relevance</li>
-<li>方案一 $q:=W^q a^i, k:=W^k a^j, \alpha := q \cdot k$​​</li>
-<li>方案二 $q:=W^q a^i, k:=W^k a^j, \alpha:=W \tanh(q+k)$</li>
+<li>Train goal:</li>
 </ul>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/XUo5MGEvk7wm68K.png" alt="image-20211003115822530"></p>
-<p><img src="https://i.loli.net/2021/10/03/xZinBGON4RFlH9a.png" alt="image-20211003115939363"></p>
+<p><img src="https://i.loli.net/2021/10/03/Lh5lZuBDadc2gFT.png" alt="image-20211003222105101"></p>
 <ul>
-<li>使用线性代数，写成矩阵表示</li>
+<li>Next sentence prediction</li>
 </ul>
-<p><img src="https://i.loli.net/2021/10/03/bp9dkUsKoxACquS.png" alt="image-20211003144405767"></p>
+<p><img src="https://i.loli.net/2021/10/03/3cfvb2VBtqKrCdo.png" alt="image-20211003222412031"></p>
+<h3 id="Fine-tuning-for-downstream-tasks"><a href="#Fine-tuning-for-downstream-tasks" class="headerlink" title="Fine-tuning for downstream-tasks"></a>Fine-tuning for downstream-tasks</h3><p><img src="https://i.loli.net/2021/10/03/EekjwNaRW1DyCt3.png" alt="image-20211003223325577"></p>
+<h3 id="GLUE-General-Language-Understanding-Evaluation"><a href="#GLUE-General-Language-Understanding-Evaluation" class="headerlink" title="GLUE: General Language Understanding Evaluation"></a>GLUE: General Language Understanding Evaluation</h3><p><img src="https://i.loli.net/2021/10/03/gvQtEZ3ORVxUk5n.png" alt="image-20211003234413065"></p>
+<h3 id="How-to-use-BERT"><a href="#How-to-use-BERT" class="headerlink" title="How to use BERT"></a>How to use BERT</h3><ul>
+<li>Case 1<ul>
+<li>Input a sequence, output a class.<ul>
+<li>Sentimental Analysis</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/03/KUyO9mFxqHpvST5.png" alt="image-20211003234839607"></p>
 <ul>
-<li><p>Multi-head self-attention</p>
+<li>Case 2<ul>
+<li>Input a sequence and output a sequence of the same length.<ul>
+<li>POS tagging</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/03/m2OFX7sVIWC6zd4.png" alt="image-20211003235251180"></p>
 <ul>
-<li>“相关性”有很多不同的形式，不同的定义。</li>
-<li>不同的 $W^q$​ 负责不同的相关性.</li>
-<li><img src="https://i.loli.net/2021/10/03/t7wsBjF5pHIh6cx.png" alt="image-20211003144758794"></li>
-<li>不同的 Head 分别计算</li>
-</ul>
-</li>
-<li><p>但是缺少了“相对位置”这一重要的 info..</p>
-</li>
-</ul>
-<h3 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h3><ul>
-<li>Each position has a unique positional vector $e^i$<ul>
-<li>$a^i \leftarrow a^i+e^i$</li>
-<li>hand-craft rules? generated from data?</li>
+<li><p>Case 3</p>
+<ul>
+<li>Input two sequences and output a class<ul>
+<li>Natural Language Inference (NLI)</li>
 </ul>
 </li>
 </ul>
-<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><ul>
-<li>Self-attention has a broad usage in NLP, such as <em>Transformer</em>, <em>BERT</em>…</li>
-<li>Self-attention for speech<ul>
-<li>Truncated self-attention 看一个小的 window</li>
-</ul>
 </li>
-<li>Self-attention for image<ul>
-<li>Self-attention v.s. CNN<ul>
-<li><img src="https://i.loli.net/2021/10/03/kcLiRl3S7pQsmF6.png" alt="image-20211003150120112"></li>
-</ul>
-</li>
-<li>Self-attention v.s. RNN<ul>
-<li>RNN 仅考虑了左边的输入. biRNN?</li>
-<li>中间的门逻辑可能会让数据遗忘</li>
-<li>the latter is non-parallel 不适用于并发处理</li>
-</ul>
-</li>
-<li>Self-attention for Graph</li>
+<li><p>Case 4</p>
+<ul>
+<li>Input a sequence and output a sequence<ul>
+<li>Extraction-based Question Answering</li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/10/04/rLO5AnoRiYN1tF2.png" alt="image-20211004215647151"></p>
+<p><img src="https://i.loli.net/2021/10/04/qUB2oTwpGdKNbcj.png" alt="image-20211004220019462"></p>
+<h3 id="Why-does-BERT-work"><a href="#Why-does-BERT-work" class="headerlink" title="Why does BERT work?"></a>Why does BERT work?</h3><ul>
+<li>The tokens with similar meanings have similar embeddings.</li>
+<li>You shall know a word by the company it keeps.</li>
+</ul>
+<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><h3 id="Predict-Next-Token"><a href="#Predict-Next-Token" class="headerlink" title="Predict Next Token"></a>Predict Next Token</h3><p><img src="https://i.loli.net/2021/10/04/akuvyBx9AD6XS8c.png" alt="image-20211004225110571"></p>
+<p>架构像是 Transformer 的 Decoder，取消 cross attention.</p>
+<h3 id="How-to-use-GPT"><a href="#How-to-use-GPT" class="headerlink" title="How to use GPT?"></a>How to use GPT?</h3><p><img src="https://i.loli.net/2021/10/04/mQjp7eLRnaWdM21.png" alt="image-20211004230723769"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=hYdO9CscNes">https://www.youtube.com/watch?v=hYdO9CscNes</a></li>
-<li><a href="https://www.youtube.com/watch?v=gmsMY5kc-zw">https://www.youtube.com/watch?v=gmsMY5kc-zw</a></li>
-<li><a href="https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html">https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html</a></li>
+<li><p><a href="https://www.youtube.com/watch?v=gh0hewYkjgo">https://www.youtube.com/watch?v=gh0hewYkjgo</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v=WY_E0Sd4K80">https://www.youtube.com/watch?v=WY_E0Sd4K80</a></p>
+</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
       <tags>
-        <tag>Machine Learning</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -2864,88 +2874,9 @@ process <span class="token function">writer_i</span><span class="token punctuati
       </tags>
   </entry>
   <entry>
-    <title>自监督式学习（Self-supervised Learning）</title>
+    <title></title>
     <url>/ml-self-supervised/</url>
-    <content><![CDATA[<p>以 BERT 和 GPT 为例分析自监督式学习的架构。</p>
-<a id="more"></a>
-<h2 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
-<li>BERT is a kind of <strong>transformer encoder</strong>.</li>
-</ul>
-<h3 id="Basic-Steps"><a href="#Basic-Steps" class="headerlink" title="Basic Steps"></a>Basic Steps</h3><ul>
-<li>Mask<ul>
-<li>Randomly masking some tokens.</li>
-<li>Randomly replacing some tokens.</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/5qAycs8TR7zm9LM.png" alt="image-20211003222046934"></p>
-<ul>
-<li>Train goal:</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/Lh5lZuBDadc2gFT.png" alt="image-20211003222105101"></p>
-<ul>
-<li>Next sentence prediction</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/3cfvb2VBtqKrCdo.png" alt="image-20211003222412031"></p>
-<h3 id="Fine-tuning-for-downstream-tasks"><a href="#Fine-tuning-for-downstream-tasks" class="headerlink" title="Fine-tuning for downstream-tasks"></a>Fine-tuning for downstream-tasks</h3><p><img src="https://i.loli.net/2021/10/03/EekjwNaRW1DyCt3.png" alt="image-20211003223325577"></p>
-<h3 id="GLUE-General-Language-Understanding-Evaluation"><a href="#GLUE-General-Language-Understanding-Evaluation" class="headerlink" title="GLUE: General Language Understanding Evaluation"></a>GLUE: General Language Understanding Evaluation</h3><p><img src="https://i.loli.net/2021/10/03/gvQtEZ3ORVxUk5n.png" alt="image-20211003234413065"></p>
-<h3 id="How-to-use-BERT"><a href="#How-to-use-BERT" class="headerlink" title="How to use BERT"></a>How to use BERT</h3><ul>
-<li>Case 1<ul>
-<li>Input a sequence, output a class.<ul>
-<li>Sentimental Analysis</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/KUyO9mFxqHpvST5.png" alt="image-20211003234839607"></p>
-<ul>
-<li>Case 2<ul>
-<li>Input a sequence and output a sequence of the same length.<ul>
-<li>POS tagging</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/03/m2OFX7sVIWC6zd4.png" alt="image-20211003235251180"></p>
-<ul>
-<li><p>Case 3</p>
-<ul>
-<li>Input two sequences and output a class<ul>
-<li>Natural Language Inference (NLI)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Case 4</p>
-<ul>
-<li>Input a sequence and output a sequence<ul>
-<li>Extraction-based Question Answering</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/10/04/rLO5AnoRiYN1tF2.png" alt="image-20211004215647151"></p>
-<p><img src="https://i.loli.net/2021/10/04/qUB2oTwpGdKNbcj.png" alt="image-20211004220019462"></p>
-<h3 id="Why-does-BERT-work"><a href="#Why-does-BERT-work" class="headerlink" title="Why does BERT work?"></a>Why does BERT work?</h3><ul>
-<li>The tokens with similar meanings have similar embeddings.</li>
-<li>You shall know a word by the company it keeps.</li>
-</ul>
-<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><h3 id="Predict-Next-Token"><a href="#Predict-Next-Token" class="headerlink" title="Predict Next Token"></a>Predict Next Token</h3><p><img src="https://i.loli.net/2021/10/04/akuvyBx9AD6XS8c.png" alt="image-20211004225110571"></p>
-<p>架构像是 Transformer 的 Decoder，取消 cross attention.</p>
-<h3 id="How-to-use-GPT"><a href="#How-to-use-GPT" class="headerlink" title="How to use GPT?"></a>How to use GPT?</h3><p><img src="https://i.loli.net/2021/10/04/mQjp7eLRnaWdM21.png" alt="image-20211004230723769"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><p><a href="https://www.youtube.com/watch?v=gh0hewYkjgo">https://www.youtube.com/watch?v=gh0hewYkjgo</a></p>
-</li>
-<li><p><a href="https://www.youtube.com/watch?v=WY_E0Sd4K80">https://www.youtube.com/watch?v=WY_E0Sd4K80</a></p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
-      </tags>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Python asyncio, thread 与 websocket 库初探</title>
@@ -3218,9 +3149,13 @@ asyncio<span class="token punctuation">.</span>get_event_loop<span class="token 
 <li><a href="https://websockets.readthedocs.io/en/stable/intro.html">https://websockets.readthedocs.io/en/stable/intro.html</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python应用</category>
+      </categories>
       <tags>
         <tag>多线程</tag>
-        <tag>Python</tag>
+        <tag>Websocket</tag>
       </tags>
   </entry>
   <entry>
@@ -3439,8 +3374,12 @@ myfunc2<span class="token punctuation">(</span><span class="token punctuation">)
 <li><a href="https://www.runoob.com/w3cnote/python-func-decorators.html">https://www.runoob.com/w3cnote/python-func-decorators.html</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python</category>
+      </categories>
       <tags>
-        <tag>Python</tag>
+        <tag>函数装饰器</tag>
       </tags>
   </entry>
   <entry>
@@ -3584,8 +3523,11 @@ soup <span class="token operator">=</span> BeautifulSoup<span class="token punct
 <li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python应用</category>
+      </categories>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
       </tags>
   </entry>
@@ -3687,8 +3629,11 @@ s<span class="token punctuation">.</span>close<span class="token punctuation">(<
 <li><a href="https://docs.python-requests.org/en/latest/api/">https://docs.python-requests.org/en/latest/api/</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python</category>
+      </categories>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
       </tags>
   </entry>
@@ -4008,9 +3953,12 @@ plt<span class="token punctuation">.</span>savefig<span class="token punctuation
 <li><a href="https://www.runoob.com/matplotlib/matplotlib-pie.html">https://www.runoob.com/matplotlib/matplotlib-pie.html</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python应用</category>
+      </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>Data Analysis</tag>
+        <tag>数据分析</tag>
       </tags>
   </entry>
   <entry>
@@ -4167,9 +4115,13 @@ List of devices attached
 <p>但是就这么一个破 App 似乎没有重构的必要.</p>
 <p><em>TO BE CONTINUED</em></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/安卓开发</category>
+      </categories>
       <tags>
         <tag>React</tag>
-        <tag>Android</tag>
+        <tag>安卓开发</tag>
       </tags>
   </entry>
   <entry>
@@ -4425,10 +4377,13 @@ UserGroupAssociation <span class="token operator">=</span> Table<span class="tok
 <li><a href="https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates">https://stackoverflow.com/questions/39869793/when-do-i-need-to-use-sqlalchemy-back-populates</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/后端</category>
+      </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>SQL</tag>
-        <tag>Backend</tag>
+        <tag>数据库</tag>
+        <tag>对象关系</tag>
       </tags>
   </entry>
   <entry>
@@ -4658,148 +4613,13 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li><a href="https://redux-toolkit.js.org/api/createslice">https://redux-toolkit.js.org/api/createslice</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/前端</category>
+      </categories>
       <tags>
         <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【机器学习】TensorFlow</title>
-    <url>/tensorflow-application/</url>
-    <content><![CDATA[<p><s>好，它跑起来了，跑起来了啊，只不过 Loss 飞到 Nan 去了.</s></p>
-<p>这篇文章 c7w 将把自己使用 TensorFlow 的过程分案例记录下来，旨在<s>写下踩的所有坑供人观赏</s>。<s>我下次一定记得加 sigmoid。</s></p>
-<ul>
-<li>Hello World! (Fashion MNIST)</li>
-</ul>
-<a id="more"></a>
-<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World!"></a>Hello World!</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p><img src="https://tensorflow.google.cn/images/fashion-mnist-sprite.png?hl=zh_cn" alt="Fashion MNIST sprite"></p>
-<ul>
-<li><p>数据集：Fashion MNIST</p>
-</li>
-<li><p>主要技术要点：新手教程，Fully Connected NN</p>
-</li>
-<li>目标任务：图片分类</li>
-</ul>
-<h3 id="数据集介绍与数据预处理"><a href="#数据集介绍与数据预处理" class="headerlink" title="数据集介绍与数据预处理"></a>数据集介绍与数据预处理</h3><p>So let’s get started. 首先我们并不知道 TensorFlow 的代码究竟该怎么写，只是久仰 Keras 的大名。</p>
-<p>所以我们自然按照机器学习的基本流程开始（喂这根本没有因果逻辑联系吧），先进行数据预处理，然后 Declare 一个 Model，然后进行 Feedforward，然后进行 Backprops.</p>
-<p>首先，我们的数据集可以极为方便的在 <strong>keras</strong> 中调用。具体而言，我们只需要：</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># TensorFlow and tf.keras</span>
-<span class="token keyword">import</span> tensorflow <span class="token keyword">as</span> tf
-<span class="token keyword">from</span> tensorflow <span class="token keyword">import</span> keras
-
-<span class="token comment"># Helper libraries</span>
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-
-fashion_mnist <span class="token operator">=</span> keras<span class="token punctuation">.</span>datasets<span class="token punctuation">.</span>fashion_mnist
-
-<span class="token punctuation">(</span>train_images<span class="token punctuation">,</span> train_labels<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>test_images<span class="token punctuation">,</span> test_labels<span class="token punctuation">)</span> <span class="token operator">=</span> fashion_mnist<span class="token punctuation">.</span>load_data<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-class_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'T-shirt/top'</span><span class="token punctuation">,</span> <span class="token string">'Trouser'</span><span class="token punctuation">,</span> <span class="token string">'Pullover'</span><span class="token punctuation">,</span> <span class="token string">'Dress'</span><span class="token punctuation">,</span> <span class="token string">'Coat'</span><span class="token punctuation">,</span> <span class="token string">'Sandal'</span><span class="token punctuation">,</span> <span class="token string">'Shirt'</span><span class="token punctuation">,</span> <span class="token string">'Sneaker'</span><span class="token punctuation">,</span> <span class="token string">'Bag'</span><span class="token punctuation">,</span> <span class="token string">'Ankle boot'</span><span class="token punctuation">]</span></code></pre>
-<p>不妨先看看这里面都是什么东西。</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>train_images<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>train_images<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>train_labels<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>train_labels<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>train_images<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>train_labels<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'numpy.ndarray'</span><span class="token operator">></span>
-<span class="token punctuation">(</span><span class="token number">60000</span><span class="token punctuation">,</span> <span class="token number">28</span><span class="token punctuation">,</span> <span class="token number">28</span><span class="token punctuation">)</span>
-<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'numpy.ndarray'</span><span class="token operator">></span>
-<span class="token punctuation">(</span><span class="token number">60000</span><span class="token punctuation">,</span><span class="token punctuation">)</span>
-<span class="token punctuation">[</span><span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">26</span>
-    <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">189</span> <span class="token number">206</span> <span class="token number">187</span>  <span class="token number">32</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">26</span> <span class="token number">217</span> <span class="token number">226</span>
-  <span class="token number">196</span>  <span class="token number">11</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">192</span> <span class="token number">227</span> <span class="token number">234</span> <span class="token number">243</span> <span class="token number">230</span> <span class="token number">147</span> <span class="token number">239</span> <span class="token number">242</span> <span class="token number">234</span> <span class="token number">218</span>
-  <span class="token number">209</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">173</span> <span class="token number">225</span> <span class="token number">215</span> <span class="token number">233</span> <span class="token number">254</span>   <span class="token number">0</span> <span class="token number">194</span> <span class="token number">240</span> <span class="token number">217</span> <span class="token number">221</span>
-  <span class="token number">190</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">139</span> <span class="token number">229</span> <span class="token number">212</span> <span class="token number">226</span> <span class="token number">255</span>   <span class="token number">0</span> <span class="token number">162</span> <span class="token number">255</span> <span class="token number">213</span> <span class="token number">226</span>
-  <span class="token number">200</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">98</span> <span class="token number">232</span> <span class="token number">211</span> <span class="token number">215</span> <span class="token number">249</span>  <span class="token number">46</span> <span class="token number">162</span> <span class="token number">246</span> <span class="token number">214</span> <span class="token number">230</span>
-  <span class="token number">186</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">70</span> <span class="token number">228</span> <span class="token number">213</span> <span class="token number">220</span> <span class="token number">224</span> <span class="token number">252</span> <span class="token number">239</span> <span class="token number">219</span> <span class="token number">217</span> <span class="token number">231</span>
-  <span class="token number">171</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">45</span> <span class="token number">222</span> <span class="token number">214</span> <span class="token number">218</span> <span class="token number">216</span> <span class="token number">210</span> <span class="token number">215</span> <span class="token number">217</span> <span class="token number">202</span> <span class="token number">224</span>
-  <span class="token number">172</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">24</span> <span class="token number">254</span> <span class="token number">214</span> <span class="token number">210</span> <span class="token number">211</span> <span class="token number">214</span> <span class="token number">215</span> <span class="token number">212</span> <span class="token number">203</span> <span class="token number">221</span>
-  <span class="token number">167</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">254</span> <span class="token number">216</span> <span class="token number">215</span> <span class="token number">217</span> <span class="token number">217</span> <span class="token number">216</span> <span class="token number">216</span> <span class="token number">206</span> <span class="token number">225</span>
-  <span class="token number">150</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">247</span> <span class="token number">216</span> <span class="token number">214</span> <span class="token number">217</span> <span class="token number">216</span> <span class="token number">214</span> <span class="token number">212</span> <span class="token number">203</span> <span class="token number">226</span>
-  <span class="token number">136</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">245</span> <span class="token number">216</span> <span class="token number">214</span> <span class="token number">216</span> <span class="token number">217</span> <span class="token number">215</span> <span class="token number">211</span> <span class="token number">204</span> <span class="token number">225</span>
-  <span class="token number">125</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">247</span> <span class="token number">216</span> <span class="token number">214</span> <span class="token number">217</span> <span class="token number">220</span> <span class="token number">217</span> <span class="token number">213</span> <span class="token number">203</span> <span class="token number">222</span>
-  <span class="token number">147</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">248</span> <span class="token number">216</span> <span class="token number">215</span> <span class="token number">218</span> <span class="token number">222</span> <span class="token number">216</span> <span class="token number">214</span> <span class="token number">207</span> <span class="token number">218</span>
-  <span class="token number">179</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">249</span> <span class="token number">216</span> <span class="token number">217</span> <span class="token number">219</span> <span class="token number">222</span> <span class="token number">217</span> <span class="token number">214</span> <span class="token number">210</span> <span class="token number">215</span>
-  <span class="token number">211</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">38</span> <span class="token number">255</span> <span class="token number">214</span> <span class="token number">218</span> <span class="token number">219</span> <span class="token number">224</span> <span class="token number">218</span> <span class="token number">215</span> <span class="token number">211</span> <span class="token number">211</span>
-  <span class="token number">231</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">79</span> <span class="token number">227</span> <span class="token number">209</span> <span class="token number">219</span> <span class="token number">219</span> <span class="token number">227</span> <span class="token number">219</span> <span class="token number">215</span> <span class="token number">213</span> <span class="token number">206</span>
-  <span class="token number">254</span>  <span class="token number">58</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">146</span> <span class="token number">226</span> <span class="token number">211</span> <span class="token number">220</span> <span class="token number">219</span> <span class="token number">228</span> <span class="token number">218</span> <span class="token number">215</span> <span class="token number">216</span> <span class="token number">205</span>
-  <span class="token number">219</span> <span class="token number">163</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">202</span> <span class="token number">221</span> <span class="token number">214</span> <span class="token number">221</span> <span class="token number">219</span> <span class="token number">231</span> <span class="token number">218</span> <span class="token number">215</span> <span class="token number">218</span> <span class="token number">213</span>
-  <span class="token number">212</span> <span class="token number">220</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">234</span> <span class="token number">217</span> <span class="token number">216</span> <span class="token number">220</span> <span class="token number">219</span> <span class="token number">234</span> <span class="token number">217</span> <span class="token number">215</span> <span class="token number">218</span> <span class="token number">216</span>
-  <span class="token number">223</span> <span class="token number">247</span>   <span class="token number">7</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">17</span> <span class="token number">254</span> <span class="token number">212</span> <span class="token number">219</span> <span class="token number">219</span> <span class="token number">220</span> <span class="token number">233</span> <span class="token number">214</span> <span class="token number">216</span> <span class="token number">219</span> <span class="token number">222</span>
-  <span class="token number">153</span> <span class="token number">238</span>  <span class="token number">58</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">66</span> <span class="token number">255</span> <span class="token number">208</span> <span class="token number">220</span> <span class="token number">219</span> <span class="token number">222</span> <span class="token number">241</span> <span class="token number">220</span> <span class="token number">218</span> <span class="token number">218</span> <span class="token number">218</span>
-  <span class="token number">192</span> <span class="token number">242</span>  <span class="token number">99</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">142</span> <span class="token number">235</span> <span class="token number">203</span> <span class="token number">218</span> <span class="token number">216</span> <span class="token number">231</span> <span class="token number">242</span> <span class="token number">225</span> <span class="token number">233</span> <span class="token number">219</span> <span class="token number">214</span>
-  <span class="token number">216</span> <span class="token number">238</span> <span class="token number">144</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">177</span> <span class="token number">248</span> <span class="token number">227</span> <span class="token number">229</span> <span class="token number">211</span> <span class="token number">255</span>  <span class="token number">76</span>   <span class="token number">0</span> <span class="token number">247</span> <span class="token number">243</span> <span class="token number">230</span>
-  <span class="token number">230</span> <span class="token number">249</span> <span class="token number">187</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">101</span> <span class="token number">241</span> <span class="token number">228</span> <span class="token number">228</span> <span class="token number">220</span> <span class="token number">255</span>  <span class="token number">64</span>   <span class="token number">0</span> <span class="token number">243</span> <span class="token number">237</span> <span class="token number">230</span>
-  <span class="token number">227</span> <span class="token number">241</span> <span class="token number">142</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span> <span class="token number">255</span> <span class="token number">242</span> <span class="token number">222</span> <span class="token number">218</span> <span class="token number">255</span>  <span class="token number">62</span>   <span class="token number">0</span> <span class="token number">223</span> <span class="token number">238</span> <span class="token number">225</span>
-  <span class="token number">238</span> <span class="token number">255</span>  <span class="token number">31</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">45</span> <span class="token number">255</span> <span class="token number">242</span> <span class="token number">235</span> <span class="token number">255</span>  <span class="token number">84</span>   <span class="token number">0</span> <span class="token number">246</span> <span class="token number">255</span> <span class="token number">242</span>
-  <span class="token number">255</span>  <span class="token number">70</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span>
- <span class="token punctuation">[</span>  <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>  <span class="token number">61</span> <span class="token number">102</span> <span class="token number">168</span>  <span class="token number">25</span>   <span class="token number">0</span> <span class="token number">139</span> <span class="token number">161</span>  <span class="token number">74</span>
-    <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span>   <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-<span class="token number">0</span></code></pre>
-<p>看起来只是 numpy 的 ndarray 嘛，我们已经很熟练了（关掉 numpy tutorial 网页）。</p>
-<p>然后我们试着把这第 4 张图片画出来看看。</p>
-<pre class="language-python" data-language="python"><code class="language-python">plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>train_images<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>colorbar<span class="token punctuation">(</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>grid<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="https://i.loli.net/2021/10/13/hRKQqLtM4CXxrv6.png" alt="image-20211013220656496"></p>
-<p>似乎看起来确实是 “T-shirt/top”。 （像个鬼啊喂</p>
-<p>于是我们考虑先对输入做 Normalization，方便我们后续的处理。</p>
-<pre class="language-python" data-language="python"><code class="language-python">train_images <span class="token operator">=</span> train_images <span class="token operator">/</span> <span class="token number">255.0</span>
-test_images <span class="token operator">=</span> test_images <span class="token operator">/</span> <span class="token number">255.0</span></code></pre>
-<p>然后随便再画几张图看一看。</p>
-<pre class="language-python" data-language="python"><code class="language-python">plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span>figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">49</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    plt<span class="token punctuation">.</span>subplot<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-    plt<span class="token punctuation">.</span>xticks<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    plt<span class="token punctuation">.</span>yticks<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    plt<span class="token punctuation">.</span>grid<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-    plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>train_images<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> cmap<span class="token operator">=</span>plt<span class="token punctuation">.</span>cm<span class="token punctuation">.</span>binary<span class="token punctuation">)</span>
-    plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span>class_names<span class="token punctuation">[</span>train_labels<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="https://i.loli.net/2021/10/13/2UQ1DmabWZ7pSIx.png" alt="image-20211013220902591"></p>
-<p>好，现在我们已经打开理解了这个训练数据集中都是什么东西了，该开始抄代码环节了（明明上面也在抄吧喂，变量名都没改</p>
-<h2 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h2><p>我们要构建最简单的 Fully Connected Nerual Network。</p>
-<p>因为过于简单就用 mspaint 画图了。</p>
-<p><img src="https://i.loli.net/2021/10/13/Kxc3S8pIwzFbMrB.png" alt="image-20211013222601931"></p>
-<p>我们要知道，我们要描述这么一种线性的 Layer 结构。</p>
-<p><code>Sequential</code> groups a linear stack of layers into a <a href="https://www.tensorflow.org/api_docs/python/tf/keras/Model?hl=zh_cn"><code>tf.keras.Model</code></a>.</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="https://www.tensorflow.org/tutorials/keras/classification?hl=zh_cn">https://www.tensorflow.org/tutorials/keras/classification?hl=zh_cn</a></li>
-</ul>
-<p>后面又咕了</p>
-]]></content>
-      <tags>
-        <tag>Machine Learning</tag>
+        <tag>全局数据流</tag>
       </tags>
   </entry>
   <entry>
@@ -4836,10 +4656,14 @@ plt<span class="token punctuation">.</span>show<span class="token punctuation">(
 </li>
 </ul>
 <h2 id="更新实况"><a href="#更新实况" class="headerlink" title="更新实况"></a>更新实况</h2><h3 id="2022-1-10"><a href="#2022-1-10" class="headerlink" title="2022/1/10"></a>2022/1/10</h3><ul>
-<li>洗博客的文章，进行标签和分类更改</li>
+<li>洗了一部分博客的文章，进行标签和分类更改</li>
 <li>更改了 butterfly 有 bug 的博客页面 head 生成机制</li>
 <li>更改了摘要生成机制</li>
 <li>更改页面字体大小</li>
+</ul>
+<p>晚上：</p>
+<ul>
+<li>博客文章分类基本整理完成</li>
 </ul>
 ]]></content>
   </entry>
@@ -4893,6 +4717,10 @@ wsl --list -v</code></pre>
 <li><a href="https://developer.android.com/studio/command-line/adb">https://developer.android.com/studio/command-line/adb</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Linux</category>
+      </categories>
       <tags>
         <tag>WSL</tag>
       </tags>
@@ -5287,8 +5115,12 @@ i
 <li>Hard shadows</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/计算机图形学</category>
+      </categories>
       <tags>
-        <tag>Computer Graphics</tag>
+        <tag>图形学</tag>
       </tags>
   </entry>
   <entry>
