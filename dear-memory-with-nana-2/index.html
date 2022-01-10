@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>与 Nana 的日常 —— 从零开始的 Linux 调教指北(2) | c7w 的博客</title><meta name="keywords" content="Linux"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="(Nana 印象图 初版) 速览本文：  Docker 的安装 数据库的安装 MariaDB phpMyAdmin   nodejs 与 npm 的安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)">
+<meta property="og:url" content="https://c7w.tech/dear-memory-with-nana-2/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="(Nana 印象图 初版) 速览本文：  Docker 的安装 数据库的安装 MariaDB phpMyAdmin   nodejs 与 npm 的安装">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-25T13:10:28.000Z">
+<meta property="article:modified_time" content="2021-08-26T02:03:15.771Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://c7w.tech/dear-memory-with-nana-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-26 10:03:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-25T13:10:28.000Z" title="发表于 2021-08-25 21:10:28">2021-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-26T02:03:15.771Z" title="更新于 2021-08-26 10:03:15">2021-08-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(2)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
+<p>(Nana 印象图 初版)</p>
+<p>速览本文：</p>
+<ul>
+<li>Docker 的安装</li>
+<li>数据库的安装<ul>
+<li>MariaDB</li>
+<li>phpMyAdmin</li>
+</ul>
+</li>
+<li>nodejs 与 npm 的安装</li>
+</ul>
+<a id="more"></a>
+<h2 id="Docker-的介绍与安装"><a href="#Docker-的介绍与安装" class="headerlink" title="Docker 的介绍与安装"></a>Docker 的介绍与安装</h2><blockquote>
+<p>What is <strong>Docker</strong>?</p>
+<p>Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development - desktop and cloud.</p>
+<p>简而言之，就是打包好的应用，可以创建Docker容器来托管一系列应用.</p>
+</blockquote>
+<p><strong>安装</strong>：</p>
+<p>(Option 1) 使用官方安装脚本自动安装即可</p>
+<p><code>curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</code></p>
+<p>(Option 2) 也可使用国内 daocloud 一键安装：</p>
+<p><code>curl -sSL https://get.daocloud.io/docker | sh</code></p>
+<blockquote>
+<p>但是在这里 c7w ran into problems.</p>
+<p>详情可以看这里. 针对 armhf ubuntu 20.04: <a target="_blank" rel="noopener" href="https://github.com/docker/for-linux/issues/1035">https://github.com/docker/for-linux/issues/1035</a></p>
+<p>如果一键安装成功，请略过此处.</p>
+<p><s><strong>想不到吧 爷去装arm64了 不伺候您armhf了</strong> <strong>只不过是从头再来</strong> <strong>停更一天</strong></s></p>
+<p>大家就当无事发生过，这里 Nana 已经变成 arm64 了.</p>
+</blockquote>
+<p>(Option 3) 也可以使用 Tsinghua 源.</p>
+<p>可以参考 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a> 手动安装.</p>
+<h2 id="数据库安装与配置"><a href="#数据库安装与配置" class="headerlink" title="数据库安装与配置"></a>数据库安装与配置</h2><h3 id="MariaDB"><a href="#MariaDB" class="headerlink" title="MariaDB"></a>MariaDB</h3><blockquote>
+<p>什么是 <strong>MariaDB</strong>?</p>
+<p>MariaDB Server is one of the most popular database servers in the world. It’s made by the original developers of MySQL and guaranteed to stay open source. </p>
+<p>MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可。 开发这个分支的原因之一是：甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险，因此社区采用分支的方式来避开这个风险。 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。</p>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1635038">https://cloud.tencent.com/developer/article/1635038</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/mariadb">https://hub.docker.com/_/mariadb</a></li>
+</ul>
+</blockquote>
+<p><strong>安装</strong></p>
+<p><code>sudo apt install mariadb-server</code></p>
+<p><strong>查看字符集</strong></p>
+<ul>
+<li><code>sudo mysql</code> 进入控制台</li>
+</ul>
+<pre class="language-none"><code class="language-none"> ubuntu@ubuntu &gt; &#x2F;etc&#x2F;mysql &gt; sudo mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 52
+Server version: 10.3.31-MariaDB-0ubuntu0.20.04.1 Ubuntu 20.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+MariaDB [(none)]&gt; </code></pre>
+<ul>
+<li><code>show variables like &quot;%character%&quot;;show variables like &quot;%collation%&quot;;</code> 查看当前字符集</li>
+</ul>
+<pre class="language-none"><code class="language-none">+--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8mb4                    |
+| character_set_connection | utf8mb4                    |
+| character_set_database   | utf8mb4                    |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8mb4                    |
+| character_set_server     | utf8mb4                    |
+| character_set_system     | utf8                       |
+| character_sets_dir       | &#x2F;usr&#x2F;share&#x2F;mysql&#x2F;charsets&#x2F; |
++--------------------------+----------------------------+
+8 rows in set (0.004 sec)
+
++----------------------+--------------------+
+| Variable_name        | Value              |
++----------------------+--------------------+
+| collation_connection | utf8mb4_general_ci |
+| collation_database   | utf8mb4_general_ci |
+| collation_server     | utf8mb4_general_ci |
++----------------------+--------------------+
+3 rows in set (0.003 sec)</code></pre>
+<p>这里已经是 <code>utf8mb4</code> 了，无须再更多配置.</p>
+<p><strong>安全性配置</strong></p>
+<p><code>sudo mysql_secure_installation</code> 进行安全性配置.</p>
+<pre class="language-none"><code class="language-none">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we&#39;ll need the current
+password for the root user.  If you&#39;ve just installed MariaDB, and
+you haven&#39;t set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+Set root password? [Y&#x2F;n] Y
+New password:
+Re-enter new password:
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y&#x2F;n] Y
+ ... Success!
+
+Normally, root should only be allowed to connect from &#39;localhost&#39;.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y&#x2F;n] Y
+ ... Success!
+
+By default, MariaDB comes with a database named &#39;test&#39; that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y&#x2F;n] Y
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y&#x2F;n] Y
+ ... Success!
+
+Cleaning up...
+
+All done!  If you&#39;ve completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!</code></pre>
+<p><strong>新建管理员用户</strong></p>
+<p>先 <code>sudo mysql</code> 进入控制台.</p>
+<ul>
+<li><code>CREATE USER &#39;&lt;USERNAME&gt;&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;YOUR PASSWORD&gt;&#39;;</code> 创建用户</li>
+<li><code>GRANT ALL PRIVILEGES ON *.* TO &#39;&lt;USERNAME&gt;&#39;@&#39;%&#39; WITH GRANT OPTION;</code> 给予管理员权限</li>
+</ul>
+<h3 id="phpMyAdmin"><a href="#phpMyAdmin" class="headerlink" title="phpMyAdmin"></a>phpMyAdmin</h3><p><strong>安装</strong></p>
+<p><code>sudo apt install phpmyadmin</code></p>
+<p>在询问是否需要帮助创建数据库时，选择取消.</p>
+<p>在询问选择哪个软件作为管理 phpmyadmin server 的工具时，选择 apache2.</p>
+<p><strong>更改配置</strong></p>
+<ul>
+<li>把 phpmyadmin 提供的默认的 apache2 配置文件移动到 apache2 目录下:</li>
+</ul>
+<p><code>sudo mv /etc/phpmyadmin/apache.conf /etc/apache2/conf-enabled</code></p>
+<ul>
+<li>然后更改 apache2 监听的端口：</li>
+</ul>
+<p><code>sudo vi /etc/apache2/ports.conf</code></p>
+<p>把 80 端口改为没有被占用的端口.</p>
+<ul>
+<li>重启 apache2 服务：<code>sudo systemctl apache2 restart</code></li>
+<li>尝试访问 <a href="http://IP_ADDRESS:PORT/phpmyadmin，然后使用上述新建的管理员账户密码完成登录">http://IP_ADDRESS:PORT/phpmyadmin，然后使用上述新建的管理员账户密码完成登录</a>.</li>
+</ul>
+<p><img src="https://i.loli.net/2021/08/25/NsUTCOdzWXnYmSu.png" alt="image-20210825202754563"></p>
+<h2 id="Node-的安装"><a href="#Node-的安装" class="headerlink" title="Node 的安装"></a>Node 的安装</h2><p>我们直接使用已完成编译的包.</p>
+<ul>
+<li><p>先下载安装文件 <code>wget https://nodejs.org/dist/v14.17.5/node-v14.17.5-linux-arm64.tar.xz</code></p>
+</li>
+<li><p>解压 <code>tar xf node-v14.17.5-linux-arm64.tar.xz</code></p>
+</li>
+<li>进入目录 <code>cd node-v14.17.5-linux-arm64/</code></li>
+<li>执行 node 查看版本 <code>./bin/node -v</code></li>
+</ul>
+<blockquote>
+<p>这里 c7w 强迫症，还去搜索了这个文件应该放哪里比较好.</p>
+<pre><code>有时候需要配置ubuntu安装的软件，一般安装软件都是使用apt-get install。那么安装完后，软件的安装目录在哪里呢，可执行文件又放在哪里呢。
+
+A、下载的软件的存放位置：/var/cache/apt/archives
+
+B、安装后软件的默认位置：/usr/share
+
+C、可执行文件位置：/usr/bin
+
+D、配置文件位置：/etc
+
+E、lib文件位置：/usr/lib
+</code></pre><p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013276277/article/details/81033129">https://blog.csdn.net/u013276277/article/details/81033129</a></li>
+</ul>
+</blockquote>
+<ul>
+<li>移动文件： <code>sudo mv node-v14.17.5-linux-arm64 /usr/share</code></li>
+<li>建立软链接</li>
+</ul>
+<pre class="language-none"><code class="language-none">ubuntu@ubuntu  &#x2F;usr&#x2F;bin  sudo ln -s &#x2F;usr&#x2F;share&#x2F;node-v14.17.5-linux-arm64&#x2F;bin&#x2F;npm &#x2F;usr&#x2F;local&#x2F;bin
+ ubuntu@ubuntu  &#x2F;usr&#x2F;bin  sudo ln -s &#x2F;usr&#x2F;share&#x2F;node-v14.17.5-linux-arm64&#x2F;bin&#x2F;node &#x2F;usr&#x2F;local&#x2F;bin
+ ubuntu@ubuntu  &#x2F;usr&#x2F;bin  node
+Welcome to Node.js v14.17.5.
+Type &quot;.help&quot; for more information.
+&gt;</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://c7w.tech/dear-memory-with-nana-2/">https://c7w.tech/dear-memory-with-nana-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://c7w.tech" target="_blank">c7w 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/NanaChat/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Nana Chat —— QQ Bot 模块</div></div></a></div><div class="next-post pull-right"><a href="/dear-memory-with-nana-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">与 Nana 的日常 —— 从零开始的 Linux 调教指北(1)</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">Docker 的介绍与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">数据库安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MariaDB"><span class="toc-number">2.1.</span> <span class="toc-text">MariaDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#phpMyAdmin"><span class="toc-number">2.2.</span> <span class="toc-text">phpMyAdmin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">Node 的安装</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
