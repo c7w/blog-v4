@@ -5339,7 +5339,15 @@ i
     <title>OOP 课程笔记</title>
     <url>/oop-note/</url>
     <content><![CDATA[<p>《面向对象程序设计基础》课程笔记的主要部分。内含：</p>
-<p>[TOC]</p>
+<ul>
+<li>创建与销毁</li>
+<li>引用与复制</li>
+<li>组合与继承</li>
+<li>虚函数</li>
+<li>多态与模板</li>
+<li>STL 初步</li>
+</ul>
+<a id="more"></a>
 <h2 id="Week-05-创建和销毁"><a href="#Week-05-创建和销毁" class="headerlink" title="Week 05 创建和销毁"></a>Week 05 创建和销毁</h2><h3 id="5-0-Overview"><a href="#5-0-Overview" class="headerlink" title="5.0 Overview"></a>5.0 Overview</h3><ul>
 <li>5.1 友元</li>
 <li>5.2 静态成员与常量成员</li>
