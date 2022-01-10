@@ -69,7 +69,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-01-10 12:06:11'
+  postUpdate: '2022-01-10 15:35:52'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -159,244 +159,21 @@
     }
     detectApple()
     })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
-</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s4.ax1x.com/2022/01/03/Tb7YUU.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">c7w 的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/oop-09/" title="OOP 课程笔记 Week 09 虚函数">OOP 课程笔记 Week 09 虚函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-18T16:00:00.000Z" title="发表于 2021-04-19 00:00:00">2021-04-19</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/OOP/">OOP</a></span></div><div class="content">Week 09 虚函数9.0 Overview
-向上类型转换
-对象切片
-函数调用捆绑
-虚函数和虚函数表
-虚函数和构造函数、析构函数
-重写覆盖，override和final
-
-9.1 向上类型转换
-派生类对象/引用/指针转换成基类对象/引用/指针，称为向上类型转换。只对public继承有效，在继承图上是上升的；对private、protected继承无效。
-向上类型转换（派生类到基类）可以由编译器自动完成，是一种隐式类型转换。
-凡是接受基类对象/引用/指针的地方（如函数参数），都可以使用派生类对象/引用/指针，编译器会自动将派生类对象转换为基类对象以便使用。
-
-9.2 对象切片
-当派生类的对象(不是指针或引用)被通过传参或赋值的方式转换为基类的对象时，派生类的对象被切片为对应基类的子对象。
-
-
-派生类的新数据和新方法丢失（图 9.2.1）
-
-
-当派生类的指针（引用）被通过传参或赋值的方式转换为基类指针（引用）时，不会创建新的对象，但只保留基类的接口。
-
-
-// Example 9.2.2 私有继承“照此实现”
-#include &lt;iostream>
-using namespace  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/oop-08/" title="OOP 课程笔记 Week 08 组合与继承">OOP 课程笔记 Week 08 组合与继承</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-04-11T16:00:00.000Z" title="发表于 2021-04-12 00:00:00">2021-04-12</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/OOP/">OOP</a></span></div><div class="content">Week 08 组合与继承§ 8.0 Overview
-组合
-继承
-成员访问权限
-重写隐藏与重载
-多重继承
-
-§ 8.1 组合
-对象组合的两种实现方法：
-已有类的对象作为新类的公有数据成员，这样通过允许直接访问子对象而“提供”旧类接口
-已有类的对象作为新类的私有数据成员。新类可以调整旧类的对外接口，可以不使用旧类原有的接口（相当于对接口作了转换）
-
-
-对象拷贝与赋值运算
-如果调用拷贝构造函数且没有给类显式定义拷贝构造函数，编译器将自动合成：
-对有显式定义拷贝构造函数的子对象调用该拷贝构造函数
-对无显式定义拷贝构造函数的子对象采用位拷贝
-
-
-赋值的默认操作类似
-
-
-
-§ 8.2 继承
-基本概念
-
-被继承的已有类，被称为基类 base class，也称“父类”。
-通过继承得到的新类，被为派生类 derived class，也称“子类”、“扩展类”。
-
-
-继承方式
-
-常见的继承方式：public, private
-class Derived : [private] Base &#123; .. &#125;; 缺省继承方式
-class Derived : public Base &#123; ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/oop-06/" title="OOP 课程笔记 Week 06 引用与复制">OOP 课程笔记 Week 06 引用与复制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-03-28T16:00:00.000Z" title="发表于 2021-03-29 00:00:00">2021-03-29</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/OOP/">OOP</a></span></div><div class="content">§ 6 引用与复制§ 6.0 Overview
-6.1 常量引用
-6.2 拷贝构造函数
-6.3 右值引用
-6.4 移动构造函数
-6.5 赋值运算符
-6.6 类型转换
-
-§ 6.1 常量引用
-最小特权原则：给函数足够的权限去完成相应的任务，但不要给予他多余的权限。
-例如函数void add(int&amp; a, int&amp; b)，如果将参数类型定义为int&amp;，则给予该函数在函数体内修改a和b的值的权限
-如果我们不想给予函数修改权限，则可以在参数中使用常量/常量引用
-void add(const int&amp; a, const int&amp; b)
-此时函数中仅能读取a和b的值，无法对a, b进行任何修改操作。
-
-
-
-§ 6.2 拷贝构造函数
-拷贝构造函数是一种特殊的构造函数，它的参数是语言规定的，是同类对象的常量引用
-MyClass(const MyClass&amp;) &#123;&#125;
-拷贝构造函数被调用的三种常见情况
-用一个类对象定义另一个新的类对象
-函数调用时以类的对象为形参
-函数返回类对象
-
-
-
-// Example 6.2.1
-
-// a
-Tes ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/oop-05/" title="OOP 课程笔记 Week 05 创建和销毁">OOP 课程笔记 Week 05 创建和销毁</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-03-21T16:00:00.000Z" title="发表于 2021-03-22 00:00:00">2021-03-22</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/OOP/">OOP</a></span></div><div class="content">Week 05 创建和销毁5.0 Overview
-5.1 友元
-5.2 静态成员与常量成员
-5.3 常量/静态/参数对象的构造与析构时机
-5.4 对象的new和delete
-
-5.1 友元
-友元
-
-被声明为友元的函数或类，具有对出现友元声明的类的private及protected成员的访问权限，即可以访问该类的一切成员。
-友元的声明只能在类内进行。
-
-
-可以声明别的类的成员函数，包括构造和析构函数，为当前类的友元。
-
-友元的声明与当前所在域是否为private或public无关。
-
-5.2 静态成员与常量成员5.2.1 static
-静态变量与静态函数
-
-
-静态变量：使用static修饰的变量
-初始化：初次定义时需要初始化，且只能初始化一次。
-静态局部变量存储在静态存储区，生命周期将持续到整个程序结束
-静态全局变量是内部可链接的，作用域仅限其声明的文件，不能被其他文件所用，可以避免和其他文件中的同名变量冲突
-
-
-静态函数：使用static修饰的函数
-静态函数是内部可链接的，作用域仅限其声明的文件，不能被其他文件所用，可以避免和其他文件中的同名函数冲突
-
-
-
-
-静态数据成员与静态成员函 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/data-discreatization/" title="数据的离散化">数据的离散化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-31T06:50:14.000Z" title="发表于 2020-12-31 14:50:14">2020-12-31</time></span></div><div class="content">数据的离散化处理什么是离散化？
-离散化，把无限空间中有限的个体映射到有限的空间中去，以此提高算法的时空效率。
-通俗的说，离散化是在不改变数据相对大小的条件下，对数据进行相应的缩小。例如：
-
-原数据：1,999,100000,15；处理后：1,3,4,2；
-
-原数据：{100,200}，{20,50000}，{1,400}；处理后：{3,4}，{2,6}，{1,5}；
-
-
-例子：洛谷P1908，树状数组求逆序对时的应用
-
-https://www.luogu.com.cn/problem/P1908
-
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/luogu-P1908/" title="洛谷 P1908 求逆序对">洛谷 P1908 求逆序对</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-31T06:48:21.000Z" title="发表于 2020-12-31 14:48:21">2020-12-31</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/code/">code</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/luogu/">luogu</a></span></div><div class="content">归并排序求逆序对数目#include &lt;iostream&gt;
-#include &lt;cstdio&gt;
-using namespace std;
-
-unsigned long long result &#x3D; 0;
-int a[500001] &#x3D; &#123;0&#125;;
-int cache[500001] &#x3D; &#123;0&#125;;
-
-void sort(int l, int r)&#123;
-    if (r &lt;&#x3D; l) return;
-    if(r-l&#x3D;&#x3D;1)&#123;
-        if(a[l]&gt;a[r])&#123;
-            int temp &#x3D; a[l];
-            a[l] &#x3D; a[r];
-            a[r] &#x3D; temp;
-            result++;
-        &#125;
-        return;
-    &#125;
-    int mid &#x3D; (l + ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/matrix-congruence-and-similarity/" title="合同矩阵与相似矩阵">合同矩阵与相似矩阵</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-26T09:41:07.000Z" title="发表于 2020-12-26 17:41:07">2020-12-26</time></span></div><div class="content">合同矩阵定义称两矩阵$A,B$合同，当且仅当存在可逆矩阵$C$，使得
-
-A=C^TBC性质
-合同关系是等价关系.
-
-
-自反性: $A$与$A$本身合同
-对称性: $A$合同于$B$, 则$B$合同于$A$
-传递性: $A$合同于$B$, $B$合同于$C$, 则$A$合同于$C$.
-
-
-合同矩阵的秩相同。
-
-相似矩阵定义称两矩阵$A,B$相似，当且仅当存在可逆矩阵$C$，使得
-
-A=C^{-1}BC性质
-相似关系是等价关系.
-
-
-自反性: $A$与$A$本身相似
-对称性: $A$相似于$B$, 则$B$相似于$A$
-传递性: $A$相似于$B$, $B$相似于$C$, 则$A$相似于$C$.
-
-
-相似矩阵具有一系列相同的特点.
-
-
-两者的秩相等；
-两者的行列式值相等；
-两者的迹相等；
-两者拥有同样的特征值，但相应的特征向量一般不同；
-两者拥有同样的特征多项式；（我们可以利用这些必要条件来判断两个矩阵是否相似）
-
-
-相似矩阵具有相同的可逆性，当它们可逆时，则它们的逆矩阵也相似。
-
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/dp-backpack/" title="动态规划的背包问题">动态规划的背包问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-09T09:20:29.000Z" title="发表于 2020-12-09 17:20:29">2020-12-09</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/dp/">dp</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E8%83%8C%E5%8C%85/">背包</a></span></div><div class="content">所以为什么要找一个背包图片当头图啊喂
-0/1 背包问题有$N$件物品和一个容量为$V$的背包。每种物品仅有一件，可以选择放或不放。 第$i$件物品的费用是$w[i]$，价值是$c[i]$。求解将哪些物品装入背包可使这些物品的费用总和不超过背包容量，且价值总和最大。 
-设$f[i][v]$表示前$i$件物品(部分或全部)恰放入一个容量为$v$的背包可以获得的最大价值。则其状态转移方程便是：
-
-f[i][v]=\max(f[i-1][v],f[i-1][v-w[i]]+c[i])0/1背包的空间优化我们可以将二维数组存储优化为一维数组存储。
-在每次主循环中，如果我们以$v=V…0$的逆序推$f[v]$，这样就能保证推$f[v]$时$f[v-w[i]]$保存的是状态$f[i-1][v-w[i]]$的值。
-伪代码如下：
-for i = 1...N 
-	for v = V...0 
-        f[v] = max(f[v], f[v-w[i]]+c[i]); 
-　　其中$f[v]=max(f[v],f[v-w[i]]+c[i])$便与原转移方程等价。
-完全背包问题有$N$种物品和一个容量为 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/inverse-element/" title="同余 逆元 费马小定理">同余 逆元 费马小定理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-12-02T11:15:00.000Z" title="发表于 2020-12-02 19:15:00">2020-12-02</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6/">数学</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E9%80%86%E5%85%83/">逆元</a></span></div><div class="content">　　　如果会数学就好了　　　　
-前言菜鸡不会打【P7108】，来补数学知识
-同余​        给定一个正整数$m$，如果两个整数$a$和$b$满足$a-b$能够被$m$整除，即$(a-b)/m$得到一个整数，那么就称整数$a$与$b$对模$m$同余，记作a≡b(mod m)。
-​        对模$m$同余是整数的一个等价关系。
-费马小定理​        如果$p$是一个质数，而整数$a$不是$p$的倍数，则有a^{p-1}≡1（mod p）。
-逆元
-1\%p=a^{p-1}\%p \\
-=> \frac 1 a \% p = a^{p-2}\%p​        因此，在计算$\frac{b^h-1}{b-1}$时，我们可以将其转化成$(b^h-1)*inverse(b-1)$计算。
-最后有用的代码long long invEl(int x)
-&#123;
-    return qpow(x, M - 2, M);
-&#125;
-【黑人问号脸.jpeg】
-Reference
-https://www.cnblogs.com/kongbursi-2292702937/p/1058 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/hash-table/" title="Hash Table（散列表）">Hash Table（散列表）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-11-25T00:58:50.000Z" title="发表于 2020-11-25 08:58:50">2020-11-25</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E6%95%A3%E5%88%97/">散列</a></span></div><div class="content">　　散列表的相关概念和内容　　
-​        散列表（Hash table，也叫哈希表），是根据键（Key）而直接访问在内存储存位置的数据结构。
-​        也就是说，它通过计算一个关于键值的函数，将所需查询的数据映射到表中一个位置来访问记录，这加快了查找速度。
-​        这个映射函数称做散列函数，存放记录的数组称做散列表。
-基本概念
-关键字为$k$的值存储在$f(k)$的存储位置中，称映射$f$为散列函数，按照这个思想建立的表称为散列表。
-对不同的关键字可能得到同一散列地址，即$k_1 \neq k_2$，而$f(k_1) = f(k_2)$，这种现象称为冲突（Collision）。具有相同函数值的关键字对该散列函数来说称做同义词。
-若对于关键字集合中的任一个关键字，经散列函数映象到地址集合中任何一个地址的概率是相等的，则称此类散列函数为均匀散列函数，这就使关键字经过散列函数得到一个“随机的地址”，从而减少冲突。
-
-构造散列函数的方法​        若采用求余的方法，采用质数可以在一定程度上解决冲突问题。
-处理冲突的方法
-开放定址法
-避免聚集：
-单独链表法
-再散列 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="item-headline">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s4.ax1x.com/2022/01/03/Tb7YUU.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-link"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">c7w 的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/hello-world/" title="Hello, World.">Hello, World.</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-11-20T14:00:00.000Z" title="发表于 2020-11-20 22:00:00">2020-11-20</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%A5%E5%BF%97/">日志</a></span></div><div class="content">没钱结款只得把自己博客搬家的屑
+c7w 的破站 ver 2.0​        之前用 WordPress 搭的小站快要到期了，现在也不好找免费的虚拟主机薅羊毛，遂借用 github.io + Hexo 搭建本“静态博客”，来记录今后的点滴。
+         azaz，我打点滴第一候选项是垫底，bksw
+​        然后强行安利了贵班的文艺委员也用上了这种方法建的博客，甚至还组建了班级的github organisation.
+​    等有空了就写博文，咕咕咕
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
-            
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
             </div>
             <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%97%A5%E5%BF%97/"><span class="card-category-list-name">日志</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%90%86%E8%AE%BA/"><span class="card-category-list-name">理论</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E5%BE%AE%E7%A7%AF%E5%88%86/"><span class="card-category-list-name">理论/微积分</span><span class="card-category-list-count">1</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 1.1em; color: #999">Android</a> <a href="/tags/Backend/" style="font-size: 1.1em; color: #999">Backend</a> <a href="/tags/C/" style="font-size: 1.18em; color: #999ca1">C#</a> <a href="/tags/Computer-Graphics/" style="font-size: 1.1em; color: #999">Computer Graphics</a> <a href="/tags/Data-Analysis/" style="font-size: 1.1em; color: #999">Data Analysis</a> <a href="/tags/Java/" style="font-size: 1.26em; color: #999fa8">Java</a> <a href="/tags/Linux/" style="font-size: 1.34em; color: #99a3b0">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 1.5em; color: #99a9bf">Machine Learning</a> <a href="/tags/OOP/" style="font-size: 1.42em; color: #99a6b7">OOP</a> <a href="/tags/Python/" style="font-size: 1.42em; color: #99a6b7">Python</a> <a href="/tags/React/" style="font-size: 1.18em; color: #999ca1">React</a> <a href="/tags/SQL/" style="font-size: 1.1em; color: #999">SQL</a> <a href="/tags/WSL/" style="font-size: 1.1em; color: #999">WSL</a> <a href="/tags/code/" style="font-size: 1.1em; color: #999">code</a> <a href="/tags/dp/" style="font-size: 1.1em; color: #999">dp</a> <a href="/tags/luogu/" style="font-size: 1.1em; color: #999">luogu</a> <a href="/tags/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">三角函数的积分</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.26em; color: #999fa8">多线程</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">微积分</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.1em; color: #999">总结</a> <a href="/tags/%E6%95%A3%E5%88%97/" style="font-size: 1.1em; color: #999">散列</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.1em; color: #999">数学</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.1em; color: #999">数据结构</a> <a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">日志</a> <a href="/tags/%E6%9B%B2%E7%BA%BF%E5%9B%BE%E5%83%8F/" style="font-size: 1.1em; color: #999">曲线图像</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.18em; color: #999ca1">爬虫</a> <a href="/tags/%E8%83%8C%E5%8C%85/" style="font-size: 1.1em; color: #999">背包</a> <a href="/tags/%E9%80%86%E5%85%83/" style="font-size: 1.1em; color: #999">逆元</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">2022-01</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">2021-12</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">2021-10</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">2021-09</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">2021-08</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">2021-07</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">42</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">60.4k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-10T04:06:11.331Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">2</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-C/"><span class="card-category-list-name">技术/C#</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Java/"><span class="card-category-list-name">技术/Java</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%97%A5%E5%BF%97/"><span class="card-category-list-name">日志</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%BF%97-%E6%80%BB%E7%BB%93/"><span class="card-category-list-name">日志/总结</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%90%86%E8%AE%BA/"><span class="card-category-list-name">理论</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E5%BE%AE%E7%A7%AF%E5%88%86/"><span class="card-category-list-name">理论/微积分</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"><span class="card-category-list-name">理论/线性代数</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/0-1%E8%83%8C%E5%8C%85/" style="font-size: 1.1em; color: #999">0/1背包</a> <a href="/tags/Android/" style="font-size: 1.1em; color: #999">Android</a> <a href="/tags/Backend/" style="font-size: 1.1em; color: #999">Backend</a> <a href="/tags/C/" style="font-size: 1.1em; color: #999">C#</a> <a href="/tags/Computer-Graphics/" style="font-size: 1.1em; color: #999">Computer Graphics</a> <a href="/tags/Data-Analysis/" style="font-size: 1.1em; color: #999">Data Analysis</a> <a href="/tags/Java/" style="font-size: 1.1em; color: #999">Java</a> <a href="/tags/Linux/" style="font-size: 1.3em; color: #99a1ac">Linux</a> <a href="/tags/Machine-Learning/" style="font-size: 1.5em; color: #99a9bf">Machine Learning</a> <a href="/tags/OOP/" style="font-size: 1.1em; color: #999">OOP</a> <a href="/tags/Python/" style="font-size: 1.4em; color: #99a5b6">Python</a> <a href="/tags/React/" style="font-size: 1.2em; color: #999da3">React</a> <a href="/tags/SQL/" style="font-size: 1.1em; color: #999">SQL</a> <a href="/tags/WSL/" style="font-size: 1.1em; color: #999">WSL</a> <a href="/tags/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">三角函数的积分</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 1.1em; color: #999">动态规划</a> <a href="/tags/%E5%90%88%E5%90%8C%E7%9F%A9%E9%98%B5/" style="font-size: 1.1em; color: #999">合同矩阵</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.2em; color: #999da3">多线程</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 1.1em; color: #999">并发</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">微积分</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.1em; color: #999">总结</a> <a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">日志</a> <a href="/tags/%E6%9B%B2%E7%BA%BF%E5%9B%BE%E5%83%8F/" style="font-size: 1.1em; color: #999">曲线图像</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.2em; color: #999da3">爬虫</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5/" style="font-size: 1.1em; color: #999">相似矩阵</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.1em; color: #999">线性代数</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">2022-01</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">2021-12</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">2021-10</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">2021-09</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">2021-08</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">2021-07</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">31</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">59k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-01-10T07:35:52.138Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
   endLoading: () => {
     document.body.style.overflow = 'auto';
     document.getElementById('loading-box').classList.add("loaded")
