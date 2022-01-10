@@ -124,25 +124,6 @@
   </entry>
   
   <entry>
-    <title>【机器学习】自注意力机制 (Self-attention) 笔记</title>
-    <link href="https://c7w.tech/ml-self-attention/"/>
-    <id>https://c7w.tech/ml-self-attention/</id>
-    <published>2021-10-03T03:39:36.000Z</published>
-    <updated>2021-10-05T01:19:44.461Z</updated>
-    
-    <content type="html"><![CDATA[<p>$Seq2seq$，自注意力机制模型的介绍。</p><a id="more"></a><h2 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul><li>Input: vector set<ul><li>将其中每一个向量称为一个 frame</li></ul></li><li>Output: three possibilities<ul><li>Each vector has a label. $len(input) = len(output)$<ul><li>POS tagging （词性标注）</li></ul></li><li>The whole sequence has a label. $len(output) = 1$<ul><li>Sentiment Analysis</li><li>语者辨认</li><li>预测分子的性质</li></ul></li><li>Model decides the number of labels itself. $seq2seq$<ul><li>机器翻译</li><li>语音辨识</li></ul></li></ul></li></ul><h2 id="Sequence-Labeling"><a href="#Sequence-Labeling" class="headerlink" title="Sequence Labeling"></a>Sequence Labeling</h2><p><img src="https://i.loli.net/2021/10/03/eGAKFEL3doTvXh9.png" alt="image-20211003114720496"></p><p><img src="https://i.loli.net/2021/10/03/8OVmctukgGzfS4i.png" alt="image-20211003115024375"></p><h3 id="Basic-Steps"><a href="#Basic-Steps" class="headerlink" title="Basic Steps"></a>Basic Steps</h3><p>How to find $b^1$ according to $a$?</p><ul><li>Find the vectors relevant to $a^1$​ in a sequence<ul><li>let $\alpha$​ (attention score) denote the relevance between $a^i$​ and $a^j$​</li><li>We can use dot-product to calc the relevance</li><li>方案一 $q:=W^q a^i, k:=W^k a^j, \alpha := q \cdot k$​​</li><li>方案二 $q:=W^q a^i, k:=W^k a^j, \alpha:=W \tanh(q+k)$</li></ul></li></ul><p><img src="https://i.loli.net/2021/10/03/XUo5MGEvk7wm68K.png" alt="image-20211003115822530"></p><p><img src="https://i.loli.net/2021/10/03/xZinBGON4RFlH9a.png" alt="image-20211003115939363"></p><ul><li>使用线性代数，写成矩阵表示</li></ul><p><img src="https://i.loli.net/2021/10/03/bp9dkUsKoxACquS.png" alt="image-20211003144405767"></p><ul><li><p>Multi-head self-attention</p><ul><li>“相关性”有很多不同的形式，不同的定义。</li><li>不同的 $W^q$​ 负责不同的相关性.</li><li><img src="https://i.loli.net/2021/10/03/t7wsBjF5pHIh6cx.png" alt="image-20211003144758794"></li><li>不同的 Head 分别计算</li></ul></li><li><p>但是缺少了“相对位置”这一重要的 info..</p></li></ul><h3 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h3><ul><li>Each position has a unique positional vector $e^i$<ul><li>$a^i \leftarrow a^i+e^i$</li><li>hand-craft rules? generated from data?</li></ul></li></ul><h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><ul><li>Self-attention has a broad usage in NLP, such as <em>Transformer</em>, <em>BERT</em>…</li><li>Self-attention for speech<ul><li>Truncated self-attention 看一个小的 window</li></ul></li><li>Self-attention for image<ul><li>Self-attention v.s. CNN<ul><li><img src="https://i.loli.net/2021/10/03/kcLiRl3S7pQsmF6.png" alt="image-20211003150120112"></li></ul></li><li>Self-attention v.s. RNN<ul><li>RNN 仅考虑了左边的输入. biRNN?</li><li>中间的门逻辑可能会让数据遗忘</li><li>the latter is non-parallel 不适用于并发处理</li></ul></li><li>Self-attention for Graph</li></ul></li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://www.youtube.com/watch?v=hYdO9CscNes">https://www.youtube.com/watch?v=hYdO9CscNes</a></li><li><a href="https://www.youtube.com/watch?v=gmsMY5kc-zw">https://www.youtube.com/watch?v=gmsMY5kc-zw</a></li><li><a href="https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html">https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html</a></li></ul>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;$Seq2seq$，自注意力机制模型的介绍。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="Machine Learning" scheme="https://c7w.tech/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
     <title>【机器学习】Transformer 笔记</title>
     <link href="https://c7w.tech/ml-transformer/"/>
     <id>https://c7w.tech/ml-transformer/</id>
@@ -153,6 +134,25 @@
     
     
     <summary type="html">&lt;p&gt;$Transformer$ 模型的介绍。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Machine Learning" scheme="https://c7w.tech/tags/Machine-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【机器学习】自注意力机制 (Self-attention) 笔记</title>
+    <link href="https://c7w.tech/ml-self-attention/"/>
+    <id>https://c7w.tech/ml-self-attention/</id>
+    <published>2021-10-03T03:39:36.000Z</published>
+    <updated>2021-10-05T01:19:44.461Z</updated>
+    
+    <content type="html"><![CDATA[<p>$Seq2seq$，自注意力机制模型的介绍。</p><a id="more"></a><h2 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul><li>Input: vector set<ul><li>将其中每一个向量称为一个 frame</li></ul></li><li>Output: three possibilities<ul><li>Each vector has a label. $len(input) = len(output)$<ul><li>POS tagging （词性标注）</li></ul></li><li>The whole sequence has a label. $len(output) = 1$<ul><li>Sentiment Analysis</li><li>语者辨认</li><li>预测分子的性质</li></ul></li><li>Model decides the number of labels itself. $seq2seq$<ul><li>机器翻译</li><li>语音辨识</li></ul></li></ul></li></ul><h2 id="Sequence-Labeling"><a href="#Sequence-Labeling" class="headerlink" title="Sequence Labeling"></a>Sequence Labeling</h2><p><img src="https://i.loli.net/2021/10/03/eGAKFEL3doTvXh9.png" alt="image-20211003114720496"></p><p><img src="https://i.loli.net/2021/10/03/8OVmctukgGzfS4i.png" alt="image-20211003115024375"></p><h3 id="Basic-Steps"><a href="#Basic-Steps" class="headerlink" title="Basic Steps"></a>Basic Steps</h3><p>How to find $b^1$ according to $a$?</p><ul><li>Find the vectors relevant to $a^1$​ in a sequence<ul><li>let $\alpha$​ (attention score) denote the relevance between $a^i$​ and $a^j$​</li><li>We can use dot-product to calc the relevance</li><li>方案一 $q:=W^q a^i, k:=W^k a^j, \alpha := q \cdot k$​​</li><li>方案二 $q:=W^q a^i, k:=W^k a^j, \alpha:=W \tanh(q+k)$</li></ul></li></ul><p><img src="https://i.loli.net/2021/10/03/XUo5MGEvk7wm68K.png" alt="image-20211003115822530"></p><p><img src="https://i.loli.net/2021/10/03/xZinBGON4RFlH9a.png" alt="image-20211003115939363"></p><ul><li>使用线性代数，写成矩阵表示</li></ul><p><img src="https://i.loli.net/2021/10/03/bp9dkUsKoxACquS.png" alt="image-20211003144405767"></p><ul><li><p>Multi-head self-attention</p><ul><li>“相关性”有很多不同的形式，不同的定义。</li><li>不同的 $W^q$​ 负责不同的相关性.</li><li><img src="https://i.loli.net/2021/10/03/t7wsBjF5pHIh6cx.png" alt="image-20211003144758794"></li><li>不同的 Head 分别计算</li></ul></li><li><p>但是缺少了“相对位置”这一重要的 info..</p></li></ul><h3 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h3><ul><li>Each position has a unique positional vector $e^i$<ul><li>$a^i \leftarrow a^i+e^i$</li><li>hand-craft rules? generated from data?</li></ul></li></ul><h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><ul><li>Self-attention has a broad usage in NLP, such as <em>Transformer</em>, <em>BERT</em>…</li><li>Self-attention for speech<ul><li>Truncated self-attention 看一个小的 window</li></ul></li><li>Self-attention for image<ul><li>Self-attention v.s. CNN<ul><li><img src="https://i.loli.net/2021/10/03/kcLiRl3S7pQsmF6.png" alt="image-20211003150120112"></li></ul></li><li>Self-attention v.s. RNN<ul><li>RNN 仅考虑了左边的输入. biRNN?</li><li>中间的门逻辑可能会让数据遗忘</li><li>the latter is non-parallel 不适用于并发处理</li></ul></li><li>Self-attention for Graph</li></ul></li></ul><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://www.youtube.com/watch?v=hYdO9CscNes">https://www.youtube.com/watch?v=hYdO9CscNes</a></li><li><a href="https://www.youtube.com/watch?v=gmsMY5kc-zw">https://www.youtube.com/watch?v=gmsMY5kc-zw</a></li><li><a href="https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html">https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html</a></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;$Seq2seq$，自注意力机制模型的介绍。&lt;/p&gt;</summary>
     
     
     
