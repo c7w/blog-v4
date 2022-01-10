@@ -210,7 +210,6 @@ figure.gallery-group .gallery-group-name {
 }
 .fontawesomeIcon,
 hr:before,
-#post .post-copyright:before,
 #post .post-outdate-notice:before,
 .note:not(.no-icon)::before {
   display: inline-block;
@@ -4512,7 +4511,7 @@ blockquote footer cite:before {
   top: 0.1rem;
   right: 0.6rem;
   color: #49b1f5;
-  content: '\f1f9';
+  content: '';
   font-size: 1rem;
 }
 #post .post-copyright:hover {
