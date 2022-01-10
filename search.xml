@@ -2863,11 +2863,6 @@ process <span class="token function">writer_i</span><span class="token punctuati
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/ml-self-supervised/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Python asyncio, thread 与 websocket 库初探</title>
     <url>/python-asyncio-websocket/</url>
     <content><![CDATA[<p>在写 Nanachat-core 的时候打算写事件循环，还要使用到 websocket，于是想参考下相关的设计模式。</p>
