@@ -2022,9 +2022,7 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
   <entry>
     <title>《机器学习》笔记</title>
     <url>/ml-notes/</url>
-    <content><![CDATA[<p><strong>Notes for LeeML-Notes</strong></p>
-<p>正如篇名，是机器学习笔记的笔记。</p>
-<p>主要还是记录一些重要概念和思考的过程吧。</p>
+    <content><![CDATA[<p>正如篇名，是机器学习笔记的笔记。主要还是记录一些重要概念和思考的过程吧。</p>
 <p>笔记的笔记中，第一个笔记的链接：</p>
 <ul>
 <li><a href="https://datawhalechina.github.io/leeml-notes/#/">https://datawhalechina.github.io/leeml-notes/#/</a></li>
@@ -2033,6 +2031,7 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
 <ul>
 <li><a href="https://www.bilibili.com/video/BV1Ht411g7Ef">https://www.bilibili.com/video/BV1Ht411g7Ef</a></li>
 </ul>
+<p>此外，本文中还收录了部分自监督学习的模型，如 BERT 和 GPT 的运作模式。本文还记录了学习 Transformer 模型的过程。</p>
 <a id="more"></a>
 <h1 id="机器学习笔记"><a href="#机器学习笔记" class="headerlink" title="机器学习笔记"></a>机器学习笔记</h1><h2 id="机器学习介绍"><a href="#机器学习介绍" class="headerlink" title="机器学习介绍"></a>机器学习介绍</h2><h3 id="发展历程及基础概念"><a href="#发展历程及基础概念" class="headerlink" title="发展历程及基础概念"></a>发展历程及基础概念</h3><ul>
 <li>在存在深度学习之前，通过 hand-crafted rules 来设定过滤规则</li>
@@ -2494,21 +2493,7 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
 <li><p><a href="https://www.youtube.com/watch?v=WY_E0Sd4K80">https://www.youtube.com/watch?v=WY_E0Sd4K80</a></p>
 </li>
 </ul>
-]]></content>
-      <categories>
-        <category>理论</category>
-        <category>理论/机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【机器学习】Transformer 笔记</title>
-    <url>/ml-transformer/</url>
-    <content><![CDATA[<p>$Transformer$ 模型的介绍。</p>
-<a id="more"></a>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<h1 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h1><h2 id="Introduction-2"><a href="#Introduction-2" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
 <li><em>Transformer</em> is a <em>sequence to sequence</em> model. $Seq2seq$</li>
 <li>Application…<ul>
 <li>Speech Recognition</li>
@@ -2582,13 +2567,17 @@ A=C^{-1}BC</script><h3 id="性质-1"><a href="#性质-1" class="headerlink" titl
 <ul>
 <li>Scheduled Sampling</li>
 </ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<h2 id="Reference-1"><a href="#Reference-1" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://www.youtube.com/watch?v=n9TlOhRjYoc">https://www.youtube.com/watch?v=n9TlOhRjYoc</a></li>
 <li><a href="https://www.youtube.com/watch?v=N6aRv06iv2g">https://www.youtube.com/watch?v=N6aRv06iv2g</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
       <tags>
-        <tag>Machine Learning</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
