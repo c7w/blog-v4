@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python BeautifulSoup4 库的基本操作 | c7w 的博客</title><meta name="keywords" content="爬虫"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Beautiful Soup 4 是什么？ 是一个 Python 库，协助解析 HTML 和 XML 的内容的 Python 库。 可以协助开发者在文档中准确定位到想要寻找的元素。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python BeautifulSoup4 库的基本操作">
+<meta property="og:url" content="https://c7w.tech/python-bs4/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="Beautiful Soup 4 是什么？ 是一个 Python 库，协助解析 HTML 和 XML 的内容的 Python 库。 可以协助开发者在文档中准确定位到想要寻找的元素。">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-13T11:52:37.000Z">
+<meta property="article:modified_time" content="2022-01-10T11:25:01.711Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://c7w.tech/python-bs4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python BeautifulSoup4 库的基本操作',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 19:25:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python BeautifulSoup4 库的基本操作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-13T11:52:37.000Z" title="发表于 2021-08-13 19:52:37">2021-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T11:25:01.711Z" title="更新于 2022-01-10 19:25:01">2022-01-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Python%E5%BA%94%E7%94%A8/">技术/Python应用</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python BeautifulSoup4 库的基本操作"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>Beautiful Soup 4 是什么？</strong></p>
+<p>是一个 Python 库，协助解析 HTML 和 XML 的内容的 Python 库。</p>
+<p>可以协助开发者在文档中准确定位到想要寻找的元素。</p>
+<a id="more"></a>
+<h2 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h2><h3 id="Installing-and-importing"><a href="#Installing-and-importing" class="headerlink" title="Installing and importing"></a>Installing and importing</h3><p><strong>Installing</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">pip3 <span class="token function">install</span> beautifulsoup4</code></pre>
+<p>Very easy.</p>
+<p><strong>Importing</strong></p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup</code></pre>
+<h3 id="Create-a-BeautifulSoup-Object"><a href="#Create-a-BeautifulSoup-Object" class="headerlink" title="Create a BeautifulSoup Object"></a>Create a <code>BeautifulSoup</code> Object</h3><pre class="language-python" data-language="python"><code class="language-python">soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>markup<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>soup<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># &lt;class 'bs4.BeautifulSoup'></span></code></pre>
+<p>接下来我们会详细介绍这个 <code>BeautifulSoup</code> 对象。</p>
+<h2 id="Objects-可能用到的对象类型"><a href="#Objects-可能用到的对象类型" class="headerlink" title="Objects 可能用到的对象类型"></a>Objects 可能用到的对象类型</h2><p>BeautifulSoup 会将一个复杂的 HTML 文档转化成一颗树，但我们真正需要处理的只有四种对象：</p>
+<ul>
+<li>Tag</li>
+<li>NavigableString</li>
+<li>BeautifulSoup</li>
+<li>Comment</li>
+</ul>
+<p>下面我们将一一介绍。</p>
+<h3 id="Tag"><a href="#Tag" class="headerlink" title="Tag"></a>Tag</h3><pre class="language-python" data-language="python"><code class="language-python">soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span><span class="token string">'&lt;b class="boldest">Extremely bold&lt;/b>'</span><span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+tag <span class="token operator">=</span> soup<span class="token punctuation">.</span>b
+<span class="token builtin">type</span><span class="token punctuation">(</span>tag<span class="token punctuation">)</span>
+<span class="token comment"># &lt;class 'bs4.element.Tag'></span></code></pre>
+<blockquote>
+<p>Tag 的基本属性：</p>
+<p><code>&lt;b class=&quot;boldest&quot;&gt;Extremely bold&lt;/b&gt;</code> 中：</p>
+<ul>
+<li>Name: <code>b</code>  # <code>tag.name</code> == b</li>
+<li>Attributes:<ul>
+<li>class # <code>tag[&#39;class&#39;]</code> == “boldest”</li>
+<li>// Use <code>tag.attrs</code> to get all attributes</li>
+</ul>
+</li>
+</ul>
+<p>特别说明：对于多值属性，查询时会返回列表.</p>
+</blockquote>
+<h3 id="NavigableString"><a href="#NavigableString" class="headerlink" title="NavigableString"></a>NavigableString</h3><p><code>NavigableString</code>类存储了 HTML 中可以被划分出来的 Tag 中的<code>文本内容</code>，如<code>&lt;div&gt;bulabula&lt;/div&gt;</code>.</p>
+<pre class="language-python" data-language="python"><code class="language-python">soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span><span class="token string">'&lt;b class="boldest">Extremely bold&lt;/b>'</span><span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+tag <span class="token operator">=</span> soup<span class="token punctuation">.</span>b
+tag<span class="token punctuation">.</span>string
+<span class="token comment"># 'Extremely bold'</span>
+<span class="token builtin">type</span><span class="token punctuation">(</span>tag<span class="token punctuation">.</span>string<span class="token punctuation">)</span>
+<span class="token comment"># &lt;class 'bs4.element.NavigableString'></span></code></pre>
+<p><code>NavigableString</code> 对象大可当做普通的 <code>str</code> 来使用，只是在其上又实现了在文档中定位和搜索的功能而已。</p>
+<ul>
+<li>要想把<code>NavigableString</code>转换成<code>str</code>，自然可以使用<code>str()</code>强制类型转换。</li>
+<li>要想修改<code>NavigableString</code>内存储的文本内容的话，可以使用<code>replace_with()</code> 函数</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">tag<span class="token punctuation">.</span>string<span class="token punctuation">.</span>replace_with<span class="token punctuation">(</span><span class="token string">"No longer bold"</span><span class="token punctuation">)</span>
+tag
+<span class="token comment"># &lt;b class="boldest">No longer bold&lt;/b></span></code></pre>
+<h3 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h3><p><code>BeautifulSoup</code> 对象将整个文档解析成了一个整体。</p>
+<p>大多数情况下，我们可以把 <code>BeautifulSoup</code> 对象看作是 <code>Tag</code> 对象。</p>
+<p>它的 <code>.name</code> 字段返回 <code>[document]</code>，无其它附加属性<code>attrs</code>.</p>
+<h3 id="Comments-and-other-special-strings"><a href="#Comments-and-other-special-strings" class="headerlink" title="Comments and other special strings"></a>Comments and other special strings</h3><p><code>Comment</code> 对象是一种特殊的 <code>NavigableString</code> 对象。</p>
+<pre class="language-python" data-language="python"><code class="language-python">markup <span class="token operator">=</span> <span class="token string">"&lt;b>&lt;!--Hey, buddy. Want to buy a used parser?-->&lt;/b>"</span>
+soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>markup<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+comment <span class="token operator">=</span> soup<span class="token punctuation">.</span>b<span class="token punctuation">.</span>string
+<span class="token builtin">type</span><span class="token punctuation">(</span>comment<span class="token punctuation">)</span>
+<span class="token comment"># &lt;class 'bs4.element.Comment'></span></code></pre>
+<p>除了<code>Comment</code>之外，<code>BS4</code>还提供了<code>Stylesheet</code>, <code>Script</code>, <code>TemplateString</code> 等类。</p>
+<h2 id="Navigating-the-tree-逐级导航"><a href="#Navigating-the-tree-逐级导航" class="headerlink" title="Navigating the tree 逐级导航"></a>Navigating the tree 逐级导航</h2><pre class="language-python" data-language="python"><code class="language-python">html_doc <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+&lt;html>
+&lt;head>&lt;title>The Dormouse's story&lt;/title>&lt;/head>
+&lt;body>
+&lt;p class="title">&lt;b>The Dormouse's story&lt;/b>&lt;/p>
+
+&lt;p class="story">Once upon a time there were three little sisters; and their names were
+&lt;a href="http://example.com/elsie" class="sister" id="link1">Elsie&lt;/a>,
+&lt;a href="http://example.com/lacie" class="sister" id="link2">Lacie&lt;/a> and
+&lt;a href="http://example.com/tillie" class="sister" id="link3">Tillie&lt;/a>;
+and they lived at the bottom of a well.&lt;/p>
+
+&lt;p class="story">...&lt;/p>
+&lt;/body>
+&lt;/html>
+"""</span>
+
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>html_doc<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span></code></pre>
+<p>示例 HTML 文件如上。</p>
+<h3 id="Going-down-向下一级"><a href="#Going-down-向下一级" class="headerlink" title="Going down 向下一级"></a>Going down 向下一级</h3><p>一个 <code>Tag</code> 的子元素可能包括 <code>string</code> 和其他 <code>Tag</code>.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>head
+<span class="token comment"># &lt;head>&lt;title>The Dormouse's story&lt;/title>&lt;/head></span>
+<span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>title
+<span class="token comment"># &lt;title>The Dormouse's story&lt;/title></span>
+<span class="token operator">>></span><span class="token operator">></span>
+<span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>body
+<span class="token comment">#&lt;body></span>
+<span class="token comment">#&lt;p class="title">&lt;b>The Dormouse's story&lt;/b>&lt;/p></span>
+<span class="token comment">#&lt;p class="story">Once upon a time there were three little sisters; and their names were</span>
+<span class="token comment">#&lt;a class="sister" href="http://example.com/elsie" id="link1">Elsie&lt;/a>,</span>
+<span class="token comment">#&lt;a class="sister" href="http://example.com/lacie" id="link2">Lacie&lt;/a> and</span>
+<span class="token comment">#&lt;a class="sister" href="http://example.com/tillie" id="link3">Tillie&lt;/a>;</span>
+<span class="token comment">#and they lived at the bottom of a well.&lt;/p></span>
+<span class="token comment">#&lt;p class="story">...&lt;/p></span>
+<span class="token comment">#&lt;/body></span>
+<span class="token operator">>></span><span class="token operator">></span>
+<span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>body<span class="token punctuation">.</span>b
+<span class="token comment">#&lt;b>The Dormouse's story&lt;/b></span>
+<span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>a
+<span class="token comment">#&lt;a class="sister" href="http://example.com/elsie" id="link1">Elsie&lt;/a></span>
+<span class="token comment"># Only returns the first matched tag.</span>
+<span class="token operator">>></span><span class="token operator">></span>
+<span class="token operator">>></span><span class="token operator">></span> soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+<span class="token comment">#[&lt;a class="sister" href="http://example.com/elsie" id="link1">Elsie&lt;/a>, &lt;a class="sister" href="http://example.com/lacie" id="link2">Lacie&lt;/a>, &lt;a class="sister" href="http://example.com/tillie" id="link3">Tillie&lt;/a>]</span>
+<span class="token comment"># Use find_all() if you need all matched tags.</span></code></pre>
+<h4 id="contents-and-children"><a href="#contents-and-children" class="headerlink" title=".contents and .children"></a><code>.contents</code> and <code>.children</code></h4><ul>
+<li><p><code>tag.contents</code> 返回一个tag下的所有子元素 List.</p>
+</li>
+<li><p><code>tag.children</code> 返回一个tag下的所有子元素的集合的迭代器.</p>
+</li>
+</ul>
+<h4 id="descendants"><a href="#descendants" class="headerlink" title=".descendants"></a>.descendants</h4><p><code>.contents</code> 和 <code>.children</code> 只能用于获取某个 tag 下<strong>一级</strong>的子元素。而 <code>.descendants</code> 可以返回某个 tag 下属的所有子元素的迭代器。</p>
+<h4 id="string"><a href="#string" class="headerlink" title=".string"></a>.string</h4><p>返回某个只有一个 <code>NavigableString</code> 作为子元素的元素的该子元素的文本内容。</p>
+<h4 id="strings-and-stripped-strings"><a href="#strings-and-stripped-strings" class="headerlink" title=".strings and stripped_strings"></a>.strings and stripped_strings</h4><p>返回所有子元素中字符的迭代器。</p>
+<h3 id="Going-up-向上一级"><a href="#Going-up-向上一级" class="headerlink" title="Going up 向上一级"></a>Going up 向上一级</h3><h4 id="parent"><a href="#parent" class="headerlink" title=".parent"></a>.parent</h4><p>返回上层元素.</p>
+<h4 id="parents"><a href="#parents" class="headerlink" title=".parents"></a>.parents</h4><p>返回上层元素的迭代器.</p>
+<h3 id="Going-sideways-找同级别"><a href="#Going-sideways-找同级别" class="headerlink" title="Going sideways 找同级别"></a>Going sideways 找同级别</h3><h4 id="next-sibling-and-previous-sibling"><a href="#next-sibling-and-previous-sibling" class="headerlink" title=".next_sibling and .previous_sibling"></a>.next_sibling and .previous_sibling</h4><h4 id="next-siblings-and-previous-siblings"><a href="#next-siblings-and-previous-siblings" class="headerlink" title=".next_siblings and .previous_siblings"></a>.next_siblings and .previous_siblings</h4><h2 id="Searching-the-tree-查询搜索"><a href="#Searching-the-tree-查询搜索" class="headerlink" title="Searching the tree 查询搜索"></a>Searching the tree 查询搜索</h2><p>本节主要介绍两个主要方法：</p>
+<ul>
+<li>find()</li>
+<li>find_all()</li>
+</ul>
+<h3 id="Filters-过滤器类型"><a href="#Filters-过滤器类型" class="headerlink" title="Filters 过滤器类型"></a>Filters 过滤器类型</h3><h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>过滤出所有 <code>tag.name == (Input)</code> 的 tag.</p>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>过滤出满足 <code>tag.name</code> matches <code>pattern</code> 的tag.</p>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p>List 是上述两个项目的组合，过滤结果是并集。</p>
+<h4 id="True"><a href="#True" class="headerlink" title="True"></a>True</h4><p>返回所有内容.</p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h4><p>回调函数，接受一个参数 tag，如果返回True则过滤出来.</p>
+<h3 id="find-all-name-attrs-recursive-True-string-kwargs"><a href="#find-all-name-attrs-recursive-True-string-kwargs" class="headerlink" title="find_all(name, attrs, recursive=True, string, **kwargs)"></a>find_all(name, attrs, recursive=True, string, **kwargs)</h3><p>注意：keyword arguments 也可以帮助 attrs 查找.</p>
+<pre class="language-python" data-language="python"><code class="language-python">soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span>href<span class="token operator">=</span>re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">"elsie"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token operator">=</span><span class="token string">'link1'</span><span class="token punctuation">)</span>
+<span class="token comment"># [&lt;a class="sister" href="http://example.com/elsie" id="link1">Elsie&lt;/a>]</span></code></pre>
+<h3 id="Searching-by-CSS-class"><a href="#Searching-by-CSS-class" class="headerlink" title="Searching by CSS class"></a>Searching by CSS class</h3><p>Usage:  <code>soup.find_ll(&quot;p&quot;, class_=&quot;body&quot;)</code></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://c7w.tech/python-bs4/">https://c7w.tech/python-bs4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://c7w.tech" target="_blank">c7w 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/react-native-record/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">React-Native Android App 开发手记</div></div></a></div><div class="next-post pull-right"><a href="/python-requests/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python Requests 库的基本使用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-usage"><span class="toc-number">1.</span> <span class="toc-text">Basic usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Installing-and-importing"><span class="toc-number">1.1.</span> <span class="toc-text">Installing and importing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-BeautifulSoup-Object"><span class="toc-number">1.2.</span> <span class="toc-text">Create a BeautifulSoup Object</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Objects-%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">Objects 可能用到的对象类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tag"><span class="toc-number">2.1.</span> <span class="toc-text">Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NavigableString"><span class="toc-number">2.2.</span> <span class="toc-text">NavigableString</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BeautifulSoup"><span class="toc-number">2.3.</span> <span class="toc-text">BeautifulSoup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comments-and-other-special-strings"><span class="toc-number">2.4.</span> <span class="toc-text">Comments and other special strings</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Navigating-the-tree-%E9%80%90%E7%BA%A7%E5%AF%BC%E8%88%AA"><span class="toc-number">3.</span> <span class="toc-text">Navigating the tree 逐级导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Going-down-%E5%90%91%E4%B8%8B%E4%B8%80%E7%BA%A7"><span class="toc-number">3.1.</span> <span class="toc-text">Going down 向下一级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#contents-and-children"><span class="toc-number">3.1.1.</span> <span class="toc-text">.contents and .children</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#descendants"><span class="toc-number">3.1.2.</span> <span class="toc-text">.descendants</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#string"><span class="toc-number">3.1.3.</span> <span class="toc-text">.string</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#strings-and-stripped-strings"><span class="toc-number">3.1.4.</span> <span class="toc-text">.strings and stripped_strings</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Going-up-%E5%90%91%E4%B8%8A%E4%B8%80%E7%BA%A7"><span class="toc-number">3.2.</span> <span class="toc-text">Going up 向上一级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#parent"><span class="toc-number">3.2.1.</span> <span class="toc-text">.parent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#parents"><span class="toc-number">3.2.2.</span> <span class="toc-text">.parents</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Going-sideways-%E6%89%BE%E5%90%8C%E7%BA%A7%E5%88%AB"><span class="toc-number">3.3.</span> <span class="toc-text">Going sideways 找同级别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#next-sibling-and-previous-sibling"><span class="toc-number">3.3.1.</span> <span class="toc-text">.next_sibling and .previous_sibling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#next-siblings-and-previous-siblings"><span class="toc-number">3.3.2.</span> <span class="toc-text">.next_siblings and .previous_siblings</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Searching-the-tree-%E6%9F%A5%E8%AF%A2%E6%90%9C%E7%B4%A2"><span class="toc-number">4.</span> <span class="toc-text">Searching the tree 查询搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Filters-%E8%BF%87%E6%BB%A4%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">Filters 过滤器类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#String"><span class="toc-number">4.1.1.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#List"><span class="toc-number">4.1.3.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#True"><span class="toc-number">4.1.4.</span> <span class="toc-text">True</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Function"><span class="toc-number">4.1.5.</span> <span class="toc-text">Function</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-all-name-attrs-recursive-True-string-kwargs"><span class="toc-number">4.2.</span> <span class="toc-text">find_all(name, attrs, recursive&#x3D;True, string, **kwargs)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Searching-by-CSS-class"><span class="toc-number">4.3.</span> <span class="toc-text">Searching by CSS class</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
