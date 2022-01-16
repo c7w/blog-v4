@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>与 Nana 的日常 —— 从零开始的 Linux 调教指北(0) | c7w 的博客</title><meta name="keywords" content="Linux"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="(Nana 印象图 初版) 速览本文：  Nana 是什么 系统安装 Wi-Fi 配置 初次连接与工作环境配置 硬盘挂载 Bash 界面美化  Nana 是什么？Nana 是 c7w 幻想中的 npy Nana 是目前正在宿舍中运行的一台树莓派 4B 的代号，其上装载了 Ubuntu 20.04 LTS. 本系列旨在记录c7w和ta的每一天将 Linux 踩坑指南和一些常用软件的配置过程记录下来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)">
+<meta property="og:url" content="https://www.c7w.tech/dear-memory-with-nana-0/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="(Nana 印象图 初版) 速览本文：  Nana 是什么 系统安装 Wi-Fi 配置 初次连接与工作环境配置 硬盘挂载 Bash 界面美化  Nana 是什么？Nana 是 c7w 幻想中的 npy Nana 是目前正在宿舍中运行的一台树莓派 4B 的代号，其上装载了 Ubuntu 20.04 LTS. 本系列旨在记录c7w和ta的每一天将 Linux 踩坑指南和一些常用软件的配置过程记录下来">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-23T01:15:04.000Z">
+<meta property="article:modified_time" content="2022-01-10T11:28:11.929Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/dear-memory-with-nana-0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 19:28:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-23T01:15:04.000Z" title="发表于 2021-08-23 09:15:04">2021-08-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T11:28:11.929Z" title="更新于 2022-01-10 19:28:11">2022-01-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Linux/">技术/Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="与 Nana 的日常 —— 从零开始的 Linux 调教指北(0)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://i.loli.net/2021/08/23/78DGrYSMnVgKkwE.jpg" alt="QQ图片20210823091857"></p>
+<p>(Nana 印象图 初版)</p>
+<p>速览本文：</p>
+<ul>
+<li>Nana 是什么</li>
+<li>系统安装</li>
+<li>Wi-Fi 配置</li>
+<li>初次连接与工作环境配置</li>
+<li>硬盘挂载</li>
+<li>Bash 界面美化</li>
+</ul>
+<h2 id="Nana-是什么？"><a href="#Nana-是什么？" class="headerlink" title="Nana 是什么？"></a>Nana 是什么？</h2><p><s>Nana 是 c7w 幻想中的 npy</s> Nana 是目前正在宿舍中运行的一台树莓派 4B 的代号，其上装载了 Ubuntu 20.04 LTS.</p>
+<p>本系列旨在<s>记录c7w和ta的每一天</s>将 Linux 踩坑指南和一些常用软件的配置过程记录下来，同时也方便学习与交流。</p>
+<a id="more"></a>
+<h2 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h2><p>我们采用了最为简单的方式，在官网上下载了 <a target="_blank" rel="noopener" href="https://www.raspberrypi.org/software/">Raspberry Pi Imager</a> .</p>
+<p>比起 balenaEtcher 好处是我懒得去 Tsinghua Tuna 上面下载镜像了.</p>
+<p><img src="https://i.loli.net/2021/08/23/EOedo5ZnClFKT4J.png" alt="image-20210823093223369"></p>
+<p>系统选择，用的比较顺手的 Ubuntu，选了 armhf 的 32bit（内存一共才2G</p>
+<p>然后把数据写进去，就完成了系统安装操作.</p>
+<h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><h3 id="Wi-Fi-Connection"><a href="#Wi-Fi-Connection" class="headerlink" title="Wi-Fi Connection"></a>Wi-Fi Connection</h3><p>传统艺能，在烧录好的 <code>system-boot</code> 盘的根目录的 network-config 配置文件内添加配置信息就好.</p>
+<pre class="language-none"><code class="language-none"># This file contains a netplan-compatible configuration which cloud-init
+# will apply on first-boot. Please refer to the cloud-init documentation and
+# the netplan reference for full details:
+#
+# https:&#x2F;&#x2F;cloudinit.readthedocs.io&#x2F;
+# https:&#x2F;&#x2F;netplan.io&#x2F;reference
+#
+# Some additional examples are commented out below
+
+version: 2
+ethernets:
+  eth0:
+    dhcp4: true
+    optional: true
+wifis:
+  wlan0:
+    dhcp4: true
+    optional: true
+    access-points:
+      &quot;iLovePKU&quot;:
+        password: &quot;1145141919810&quot;
+      &quot;Peking-Visitor&quot;:
+        password: &quot;c7w,yyds&quot;
+#      myworkwifi:
+#        password: &quot;correct battery horse staple&quot;
+#      workssid:
+#        auth:
+#          key-management: eap
+#          method: peap
+#          identity: &quot;me@example.com&quot;
+#          password: &quot;passw0rd&quot;
+#          ca-certificate: &#x2F;etc&#x2F;my_ca.pem
+# :)
+</code></pre>
+<h2 id="初次连接及配置"><a href="#初次连接及配置" class="headerlink" title="初次连接及配置"></a>初次连接及配置</h2><p>初次连接, ssh 到对应 ip 就好，用户名和密码都是 ubuntu.</p>
+<p>然后会提示修改密码，完成操作即可.</p>
+<p><img src="https://i.loli.net/2021/08/23/RZir5LadNWCUmcK.png" alt="image-20210823095803256"></p>
+<h3 id="切换软件安装源"><a href="#切换软件安装源" class="headerlink" title="切换软件安装源"></a>切换软件安装源</h3><p>我们当然推出 Tsinghua Tuna.</p>
+<p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
+<p><img src="https://i.loli.net/2021/08/23/CGsyKxtMdqZDWHT.png" alt="image-20210823095949515"></p>
+<p>按照提示把文件内容替换即可.（这里我们不对 Linux 指令做过多介绍，默认读者已经对 Linux 系统的命令有了基本的了解与认知）</p>
+<p>注意到我们的树莓派是 arm64 架构，所以要将链接末尾的 <em>ubuntu</em> 替换为 <strong>ubuntu-ports</strong>.</p>
+<p>然后我们就可以 <strong>sudo apt update</strong> 获取软件包链接缓存了.(然后是愉快的系统升级，不过 c7w 输入 <code>sudo apt upgrade &amp;</code> 之后就去睡觉了)</p>
+<h3 id="公钥私钥配置"><a href="#公钥私钥配置" class="headerlink" title="公钥私钥配置"></a>公钥私钥配置</h3><p><s>由于这台机器的所有权与使用者都仅有 c7w 一人，所以 c7w 可以放心的将自己一直在用的私钥上传.</s></p>
+<p>想了想还是重新配一个新的吧，万一真丢了就不好办了x</p>
+<pre class="language-none"><code class="language-none">ubuntu@ubuntu:~$ ssh-keygen -o
+Generating public&#x2F;private rsa key pair.
+Enter file in which to save the key (&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in &#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa
+Your public key has been saved in &#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.pub</code></pre>
+<p>敲回车的功夫就搞定了.</p>
+<p>然后首先让我们把公钥取回本地. <s>vim 打开复制就好</s></p>
+<p>然后我们把本地的公钥配置到远端.</p>
+<p>Reference: <a target="_blank" rel="noopener" href="https://blog.csdn.net/alifrank/article/details/48241699">https://blog.csdn.net/alifrank/article/details/48241699</a></p>
+<p><img src="https://i.loli.net/2021/08/23/YgqyQ1M2fBARVFo.png" alt="image-20210823100955900"></p>
+<p><img src="https://i.loli.net/2021/08/23/HAujmDEfBeLdNtl.png" alt="image-20210823101140515"></p>
+<p>免密登录完成.</p>
+<h3 id="Zerotier"><a href="#Zerotier" class="headerlink" title="Zerotier"></a>Zerotier</h3><p><strong>什么是 Zerotier ?</strong></p>
+<blockquote>
+<h4 id="Connect-team-members-from-anywhere-in-the-world-on-any-device-ZeroTier-creates-secure-networks-between-on-premise-cloud-desktop-and-mobile-devices"><a href="#Connect-team-members-from-anywhere-in-the-world-on-any-device-ZeroTier-creates-secure-networks-between-on-premise-cloud-desktop-and-mobile-devices" class="headerlink" title="Connect team members from anywhere in the world on any device. ZeroTier creates secure networks between on-premise, cloud, desktop, and mobile devices."></a>Connect team members from anywhere in the world on any device. ZeroTier creates secure networks between on-premise, cloud, desktop, and mobile devices.</h4><p>(Excerpted from zerotier.com)</p>
+</blockquote>
+<p>简而言之，跟过去的 Hamachi 这种东西差不多（应该现在的人没多少人知道这是什么东西了吧），加入到同一个虚拟网络中的设备可以在<strong>虚拟局域网</strong>中互相通信，对于 c7w 这种喜欢在外面(必须在机房)进行摸大鱼<s>和 Nana 贴贴</s>的人来说基本是必需品.</p>
+<p><strong>如何安装？</strong></p>
+<p>不用动脑子，反正一条命令的事.</p>
+<p><a target="_blank" rel="noopener" href="https://www.zerotier.com/download/">https://www.zerotier.com/download/</a></p>
+<p><code>curl -s https://install.zerotier.com | sudo bash</code></p>
+<p><img src="https://i.loli.net/2021/08/23/JzxMELeOf49Hb83.png" alt="image-20210823095301599"></p>
+<p><strong>如何配置？</strong></p>
+<p><code>sudo zerotier-cli join &lt;Network ID&gt;</code></p>
+<p>其中 网络ID 自行注册账号后创建.</p>
+<p>join 后记得到控制台点击验证通过.</p>
+<p><img src="https://i.loli.net/2021/08/23/Us7j5tvZnRHEKia.png" alt="image-20210823095614878"></p>
+<p>这样就配置好了.</p>
+<h2 id="硬盘挂载"><a href="#硬盘挂载" class="headerlink" title="硬盘挂载"></a>硬盘挂载</h2><p><s>为了显示我对 Nana 的诚意，</s>特别地配置了一块1T硬盘.</p>
+<p>我们 <code>sudo fdisk -l</code> 来查看当前的所有硬盘.</p>
+<p><img src="https://i.loli.net/2021/08/23/YAXjEk1mT43fsqp.png" alt="image-20210823102142524"></p>
+<p>由于这块硬盘之前我在 Windows 上格式化过，是可以正确显示类型的.</p>
+<p>然后我们创建好想要挂载的目录，比如 <code>mkdir /mnt/data</code></p>
+<p><img src="https://i.loli.net/2021/08/23/lCO4azUJPHy8VAx.png" alt="image-20210823102540274"></p>
+<p>这样就挂载好了，甚至还能看到我一个月前写的 this.txt</p>
+<h3 id="开机自动挂载"><a href="#开机自动挂载" class="headerlink" title="开机自动挂载"></a>开机自动挂载</h3><p>我们没法保证服务器运行过程中不关机，<s>事实上紫荆宿舍的断电也没让我失望过</s>.</p>
+<p>于是我们需要添加开机自动挂载功能.</p>
+<p><img src="https://i.loli.net/2021/08/23/MbiUeAxYuaqf1mC.png" alt="image-20210823103213405"></p>
+<p>这里由于 c7w 的硬盘是 exfat 格式，于是将 ext3 写为 exfat.</p>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1746763">https://cloud.tencent.com/developer/article/1746763</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/zkxfoo/1758529">https://blog.51cto.com/zkxfoo/1758529</a></li>
+</ul>
+<h2 id="美化-Bash"><a href="#美化-Bash" class="headerlink" title="美化 Bash"></a>美化 Bash</h2><p>先呈现最终效果.</p>
+<p><img src="https://i.loli.net/2021/08/23/yHqfpJ2rkX4CQmI.png" alt="image-20210823112959044"></p>
+<p>这里我们使用了 zsh + oh my zsh 进行配置.</p>
+<h3 id="安装与配置流程"><a href="#安装与配置流程" class="headerlink" title="安装与配置流程"></a>安装与配置流程</h3><p><strong>zsh</strong></p>
+<blockquote>
+<p><strong>什么是 shell ？</strong></p>
+<p>In computing, a shell is a computer program which exposes an operating system’s services to a human user or other program. </p>
+<p>In general, operating system shells use either a command-line interface (<strong>CLI</strong>) or graphical user interface (<strong>GUI</strong>), depending on a computer’s role and particular operation. </p>
+<p>It is named a shell because it is the <strong>outermost layer </strong>around the operating system.</p>
+<p>(Excerpeted from Wikipedia)</p>
+<p>也就是说，shell 是给人用的，用来和 操作系统 交互的工具.</p>
+<p>我们 Windows 采用的默认的 shell 便是我们的这个图形界面.</p>
+<p><img src="https://i.loli.net/2021/08/23/Llsk9A7brdg1826.png" alt="image-20210823104413290"></p>
+<p>我们应该能够理解，shell 是一种<strong>软件</strong>，是可以被更改配置，甚至整个换掉的<strong>软件</strong>。</p>
+<p>比如，我们也可以用 Windows 带有的 cmd 这个 shell.</p>
+<p><img src="https://i.loli.net/2021/08/23/sNWHr3qAKQ25uZF.png" alt="image-20210823104538789"></p>
+<p> 只是看起来好丑（x 而且操作也不方便.</p>
+<hr>
+<p>如何查看自己 Linux <strong>目前</strong>用的是什么 shell ？如何查看自己都有哪些<strong>shell</strong>？</p>
+<p><code>cat /etc/shells</code></p>
+<p><img src="https://i.loli.net/2021/08/23/qExZXcGlYPrDgiQ.png" alt="image-20210823105242514"></p>
+<p><code>echo $SHELL</code></p>
+<p><img src="https://i.loli.net/2021/08/23/5gjSYGxfWO9IluC.png" alt="image-20210823105305619"></p>
+<p>可以看到，我们现在正在使用 <code>/bin/bash</code> 这个软件作为 shell.</p>
+<p><s>没错就是这个丑不拉几的界面</s></p>
+<p>说了这么多，我们接下来就要换 shell，然后换界面主题了.</p>
+</blockquote>
+<p><strong>什么是 zsh ？</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.zsh.org/">https://www.zsh.org/</a></p>
+<blockquote>
+<p>Zsh is a shell designed for interactive use, although it is also a powerful scripting language.</p>
+<p>按照介绍，是 shell 的一种.</p>
+</blockquote>
+<p>为什么我们必须安装 zsh ？<s>废话，因为我想装的主题只支持 zsh</s></p>
+<p>自动补全 好用！（x</p>
+<p><strong>如何安装zsh？</strong></p>
+<p><img src="https://i.loli.net/2021/08/23/mlnRi8VbaQoFvMT.png" alt="image-20210823111207852"></p>
+<ol>
+<li>传统艺能 <code>sudo apt install zsh</code></li>
+<li>运行 <code>zsh --version</code> 检查版本</li>
+<li>设为默认 shell. <code>chsh -s $(which zsh)</code></li>
+<li><p>重新登录.</p>
+</li>
+<li><p>提示配置 zsh 时我们暂且先 (q) quit.</p>
+</li>
+</ol>
+<p>基本差不多了，我们接下来安装 <code>oh my zsh</code>.</p>
+<p><strong>什么是 oh my zsh?</strong></p>
+<blockquote>
+<p>shell的类型有很多种，linux下默认的是bash，虽然bash的功能已经很强大，但对于以懒惰为美德的程序员来说，bash的提示功能不够强大，界面也不够炫，并非理想工具。</p>
+<p>而zsh的功能极其强大，只是<strong>配置过于复杂</strong>，起初只有极客才在用。后来，有个穷极无聊的程序员可能是实在看不下去广大猿友一直只能使用单调的bash, 于是他创建了一个名为<code>oh-my-zsh</code>的开源项目…</p>
+<p>(Excerpted from <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d194d29e488c">https://www.jianshu.com/p/d194d29e488c</a>)</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/08/23/VuAr3vmbST8tIxX.png" alt="image-20210823111944157"></p>
+<p>然后是安装，复制粘贴命令就好.</p>
+<p><code>sh -c &quot;$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</code></p>
+<p><img src="https://i.loli.net/2021/08/23/QZVqsB5tCgdSi3c.png" alt="image-20210823112219705"></p>
+<p>会自动帮我们写入刚刚 quit 掉的配置文件.</p>
+<p>然后我们重新登入，oh my zsh 就已经配置好了.</p>
+<p><img src="https://i.loli.net/2021/08/23/6OD7IHGPbTLWzqZ.png" alt="image-20210823112321731"></p>
+<p><strong>切换主题</strong></p>
+<p>目前这个样子吧，还是好丑.</p>
+<p>默认的配置文件位于 <code>~/.zshrc</code> 这里. </p>
+<p>其中 ~ 代表用户的家目录，如<code>/home/ubuntu</code></p>
+<p><img src="https://i.loli.net/2021/08/23/xMSeVDYoQ76hNZs.png" alt="image-20210823112824697"></p>
+<p><s>好，改他。</s>个人比较习惯使用 <code>agnoster</code>，也就是最初展示的那个效果。</p>
+<p><img src="https://i.loli.net/2021/08/23/yHqfpJ2rkX4CQmI.png" alt="image-20210823112959044"></p>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Settings">https://github.com/ohmyzsh/ohmyzsh/wiki/Settings</a></li>
+</ul>
+<p><strong>本地适配</strong></p>
+<p>如果读到这里也做到这里，Windows 选手可能还有一个问题。</p>
+<p>那就是这么好看的箭头符号展示出来是乱码。</p>
+<p>问题不大，我们还有最后一步，安装字体文件。</p>
+<p>可以参考如下链接。</p>
+<p>Reference:</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qiphon3650/article/details/109165495">https://blog.csdn.net/qiphon3650/article/details/109165495</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/powerline/fonts">https://github.com/powerline/fonts</a></p>
+</li>
+</ul>
+<p>First edited by c7w, 2021-8-23 11:33:41.</p>
+<p>咕咕咕 qwq</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/dear-memory-with-nana-0/">https://www.c7w.tech/dear-memory-with-nana-0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.c7w.tech" target="_blank">c7w 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/react-redux/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">React Redux 学习手记</div></div></a></div><div class="next-post pull-right"><a href="/wsl-update-config/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">WSL 2 的升级与 USB 调试的配置</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nana-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Nana 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">系统安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">网络配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wi-Fi-Connection"><span class="toc-number">3.1.</span> <span class="toc-text">Wi-Fi Connection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E6%AC%A1%E8%BF%9E%E6%8E%A5%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">初次连接及配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E6%BA%90"><span class="toc-number">4.1.</span> <span class="toc-text">切换软件安装源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">4.2.</span> <span class="toc-text">公钥私钥配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zerotier"><span class="toc-number">4.3.</span> <span class="toc-text">Zerotier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Connect-team-members-from-anywhere-in-the-world-on-any-device-ZeroTier-creates-secure-networks-between-on-premise-cloud-desktop-and-mobile-devices"><span class="toc-number">4.3.1.</span> <span class="toc-text">Connect team members from anywhere in the world on any device. ZeroTier creates secure networks between on-premise, cloud, desktop, and mobile devices.</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="toc-number">5.</span> <span class="toc-text">硬盘挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="toc-number">5.1.</span> <span class="toc-text">开机自动挂载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%8E%E5%8C%96-Bash"><span class="toc-number">6.</span> <span class="toc-text">美化 Bash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B"><span class="toc-number">6.1.</span> <span class="toc-text">安装与配置流程</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
