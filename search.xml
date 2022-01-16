@@ -5257,7 +5257,7 @@ M_{\text {ortho }}=\left[\begin{array}{cccc}
 </ul>
 </li>
 </ul>
-<p><img src="C:/Users/c7w/AppData/Roaming/Typora/typora-user-images/image-20211016010006341.png" alt="image-20211016010006341"></p>
+<p><img src="https://s2.loli.net/2022/01/16/K8cDzW3Nu4XjBLi.png" alt="image-20211016010006341"></p>
 <center> 做透视投影的步骤 </center>
 
 <p>这里我们略去透视投影矩阵的推导，直接给出透视投影转换为正交投影矩阵的表示形式。具体的推导可以通过考虑以下特殊点，代入特殊值来决定矩阵的元素。</p>
