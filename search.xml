@@ -7182,7 +7182,9 @@ L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}
 <li>遇到漫反射平面便停止</li>
 </ul>
 <p>使用渲染方程，我们可以有以下推导过程：</p>
-<p>对于非光源表面 $dA$，我们有 $L<em>{o}\left(p, \omega</em>{o}\right)=\int<em>{\Omega^{+}} L</em>{i}\left(p, \omega<em>{i}\right) f</em>{r}\left(p, \omega<em>{i}, \omega</em>{o}\right)\left(n \cdot \omega<em>{i}\right) \mathrm{d} \omega</em>{i}$​，​我们对 $w_i$ 进行 Sample，且 Sample 均匀分布于 $[0, 2\pi]$。于是我们可以得出：</p>
+<p>对于非光源表面 $dA$​​​，我们有：</p>
+<script type="math/tex; mode=display">
+L_{o}\left(p, \omega_{o}\right)=\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}</script><p>对 $w_i$​​ 进行 Sample，且 Sample 均匀分布于 $[0, 2\pi]$​​。于是我们可以得出：</p>
 <script type="math/tex; mode=display">
 L_{o}\left(p, \omega_{o}\right) \approx \frac{1}{N} \sum_{i=1}^{N} \frac{L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)}{p\left(\omega_{i}\right)}</script><p>进而，我们可以提出一种着色算法：</p>
 <p><img src="https://s2.loli.net/2022/01/16/QVLKN1BoPISCDZE.png" alt="image-20220116164125480"></p>
@@ -7217,33 +7219,33 @@ L_{o}\left(x, \omega_{o}\right) &=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\rig
 <p>此外，我们还需要考虑光源发出的光束是否可能被障碍物遮挡…</p>
 <p><img src="https://s2.loli.net/2022/01/16/OEXG9d2tikuHncl.png" alt="image-20220116190917657"></p>
 <p>最后，路径追踪的伪代码整理如下：</p>
-<pre class="language-none"><code class="language-none">def ray_generation(camPos, pixel):
-	Uniformly choose N samples from the pixel
-	pixel_radiance &#x3D; 0.0
-	for sample in the pixel:
-		Shoot a ray r(camPos, cam_to_sample)
-		if ray r hit the scene at p:
-			pixel_radiance +&#x3D; 1 &#x2F; N * shade(p, sample_to_cam)
-    return pixel_radiance
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">ray_generation</span><span class="token punctuation">(</span>camPos<span class="token punctuation">,</span> pixel<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	Uniformly choose N samples <span class="token keyword">from</span> the pixel
+	pixel_radiance <span class="token operator">=</span> <span class="token number">0.0</span>
+	<span class="token keyword">for</span> sample <span class="token keyword">in</span> the pixel<span class="token punctuation">:</span>
+		Shoot a ray r<span class="token punctuation">(</span>camPos<span class="token punctuation">,</span> cam_to_sample<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> ray r hit the scene at p<span class="token punctuation">:</span>
+			pixel_radiance <span class="token operator">+=</span> <span class="token number">1</span> <span class="token operator">/</span> N <span class="token operator">*</span> shade<span class="token punctuation">(</span>p<span class="token punctuation">,</span> sample_to_cam<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> pixel_radiance
 
-def shade(p, wo):
+<span class="token keyword">def</span> <span class="token function">shade</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> wo<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-	# Contributions from the light source
-	L_dir &#x3D; 0.0
-	Uniformly sample the light at x&#39; (pdf_light &#x3D; 1&#x2F;A)
-	Shoot a ray from p to x&#39;
-	if the ray is not blocked in the middle:
-		L_dir &#x3D; L_i * f_r * cos \theta * cos \theta&#39; &#x2F; |x&#39;-p|^2 &#x2F; pdf_light
+	<span class="token comment"># Contributions from the light source</span>
+	L_dir <span class="token operator">=</span> <span class="token number">0.0</span>
+	Uniformly sample the light at x' <span class="token punctuation">(</span>pdf_light <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">/</span>A<span class="token punctuation">)</span>
+	Shoot a ray <span class="token keyword">from</span> p to x'
+	<span class="token keyword">if</span> the ray <span class="token keyword">is</span> <span class="token keyword">not</span> blocked <span class="token keyword">in</span> the middle<span class="token punctuation">:</span>
+		L_dir <span class="token operator">=</span> L_i <span class="token operator">*</span> f_r <span class="token operator">*</span> cos \theta <span class="token operator">*</span> cos \theta<span class="token string">' / |x'</span><span class="token operator">-</span>p<span class="token operator">|</span><span class="token operator">^</span><span class="token number">2</span> <span class="token operator">/</span> pdf_light
     
-    # Contributions from other places
-    L_indir &#x3D; 0.0
-    If test Russian Roulette with probability P_RR :
-        Uniformly sample the hemisphere toward wi (pdf_hemi &#x3D; 1 &#x2F; 2pi)
-        Trace a ray r(p, wi)
-        If ray r hit a non-emitting object at q:
-            L_indir &#x3D; shade(q, -wi) * f_r * cos \theta &#x2F; pdf_hemi &#x2F; P_RR
+    <span class="token comment"># Contributions from other places</span>
+    L_indir <span class="token operator">=</span> <span class="token number">0.0</span>
+    If test Russian Roulette <span class="token keyword">with</span> probability P_RR <span class="token punctuation">:</span>
+        Uniformly sample the hemisphere toward wi <span class="token punctuation">(</span>pdf_hemi <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">/</span> 2pi<span class="token punctuation">)</span>
+        Trace a ray r<span class="token punctuation">(</span>p<span class="token punctuation">,</span> wi<span class="token punctuation">)</span>
+        If ray r hit a non<span class="token operator">-</span>emitting <span class="token builtin">object</span> at q<span class="token punctuation">:</span>
+            L_indir <span class="token operator">=</span> shade<span class="token punctuation">(</span>q<span class="token punctuation">,</span> <span class="token operator">-</span>wi<span class="token punctuation">)</span> <span class="token operator">*</span> f_r <span class="token operator">*</span> cos \theta <span class="token operator">/</span> pdf_hemi <span class="token operator">/</span> P_RR
     
-    Return L_dir + L_indir</code></pre>
+    Return L_dir <span class="token operator">+</span> L_indir</code></pre>
 ]]></content>
       <categories>
         <category>理论</category>
