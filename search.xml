@@ -5487,10 +5487,10 @@ i
 <p>定义：非四边形面，奇异点（度不为 4 的点）</p>
 <p>细分的方式：引入点的操作十分简单，取每面的中点和该面的边的中点，并将其连接。</p>
 <p>调整位置的方法：分为三种。</p>
-<p><img src="https://i.loli.net/2021/12/01/uMlYoxDHJwWpq8B.png" alt="image-20211201204717217"></p>
+<p><img src="https://s2.loli.net/2022/01/16/WSt491CxVjMGNHr.png" alt="image-20211201204717217"></p>
 <h5 id="简化"><a href="#简化" class="headerlink" title="简化"></a>简化</h5><p><strong>边坍缩</strong> Edge Collapse</p>
 <p>Quadric Error Metrics 二次误差度量 寻找去 Collapse 某条边后新顶点的位置。</p>
-<p><img src="https://i.loli.net/2021/12/01/fW8sR1ntNzoLdHa.png" alt="image-20211201205342215"></p>
+<p><img src="https://s2.loli.net/2022/01/16/qOX5RmUnkLvfhTJ.png" alt="image-20211201205342215"></p>
 <p>将所有边按二次误差测量排序，坍缩最小值所在边，更新受影响的其他边的权重。用堆来维护！</p>
 <h2 id="光线追踪-Ray-Tracing"><a href="#光线追踪-Ray-Tracing" class="headerlink" title="光线追踪 Ray Tracing"></a>光线追踪 Ray Tracing</h2><h3 id="从问题出发"><a href="#从问题出发" class="headerlink" title="从问题出发"></a>从问题出发</h3><p>如何用光栅化的手法解决阴影的问题？</p>
 <p>重要思想：点不在阴影中，当且仅当点必须同时被光源和摄像机看到。</p>
@@ -5672,7 +5672,7 @@ b_{2}
 <li>Radiance is intensity per projected unit area;</li>
 <li>Radiance is irradiance per solid angle, 也就是说，irradiance 是一个表面 $dA \cos \theta$接收到的能量，radiance 是该表面朝着某个 $\omega$ 立体角方向辐射出去或接收到的能量，后者具有表明方向的能力。</li>
 </ul>
-<h5 id="双向反射分布函数（BRDF）"><a href="#双向反射分布函数（BRDF）" class="headerlink" title="双向反射分布函数（BRDF）"></a>双向反射分布函数（BRDF）</h5><ul>
+<h4 id="双向反射分布函数（BRDF）"><a href="#双向反射分布函数（BRDF）" class="headerlink" title="双向反射分布函数（BRDF）"></a>双向反射分布函数（BRDF）</h4><ul>
 <li>BRDF := Bidirectional Reflectance Distribution Function</li>
 </ul>
 <p>什么是反射？反射可以看做是物体表面吸收了照射到该处的所有能量，然后再辐射出去的一个过程。</p>
@@ -5681,6 +5681,88 @@ b_{2}
 <p>使用 BRDF 可以用来定义镜面反射和漫反射。此外，BRDF 还可以用来定义物体表面的材质。</p>
 <p>于是，借助于 BRDF 的定义，我们考虑真实的光线传播。从某个点 $dA$ 向 $\omega_r$ 方向出射的 radiance，可以通过考虑所有 $w_i$ 到达这个点的照度乘以其对应的 BRDF 占比，然后求和得到。</p>
 <p><img src="https://s2.loli.net/2022/01/16/xbeovLICaJnK7sj.png" alt="image-20220116115205963"></p>
+<p>问题：我们考虑的入射 Radiance 可能不仅仅由光源发出，也可能是由其他物体先经过若干次反射得到…</p>
+<h4 id="Rendering-Equation"><a href="#Rendering-Equation" class="headerlink" title="Rendering Equation"></a>Rendering Equation</h4><script type="math/tex; mode=display">
+L_{o}\left(p, \omega_{o}\right)=L_{e}\left(p, \omega_{o}\right)+\int_{\Omega^{+}} L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right) \mathrm{d} \omega_{i}</script><p>经过推导之后，我们得出：</p>
+<p><img src="https://s2.loli.net/2022/01/16/gFjCZGfP3VmcYTs.png" alt="image-20220116151021069"></p>
+<p>全局光照 L = 直接光照 E 和间接光照的集合，其中 K 是反射算符。</p>
+<h4 id="路径追踪"><a href="#路径追踪" class="headerlink" title="路径追踪"></a>路径追踪</h4><blockquote>
+<p><strong>蒙特卡洛积分</strong></p>
+<p>目的是为了解决定积分 $\int_a^bf(x)dx$ 问题。</p>
+<p>做法是在 $[a,b]$​ 间随机采样足够多次，然后将足够多次的结果进行平均后作为函数均值积分。</p>
+<p>例如，我们使用均匀采样的方式：</p>
+<p><img src="https://s2.loli.net/2022/01/16/4MltFzimgEdkbVR.png" alt="image-20220116153649942"></p>
+<p>更一般地，我们有：</p>
+<script type="math/tex; mode=display">
+\int f(x) \mathrm{d} x=\frac{1}{N} \sum_{i=1}^{N} \frac{f\left(X_{i}\right)}{p\left(X_{i}\right)} \quad X_{i} \sim p(x)</script></blockquote>
+<p>回忆 Whitted-style ray tracing:</p>
+<ul>
+<li>可以做镜面反射和折射的效果</li>
+<li>遇到漫反射平面便停止</li>
+</ul>
+<p>使用渲染方程，我们可以有以下推导过程：</p>
+<p>对于非光源表面 $dA$，我们有 $L<em>{o}\left(p, \omega</em>{o}\right)=\int<em>{\Omega^{+}} L</em>{i}\left(p, \omega<em>{i}\right) f</em>{r}\left(p, \omega<em>{i}, \omega</em>{o}\right)\left(n \cdot \omega<em>{i}\right) \mathrm{d} \omega</em>{i}$​，​我们对 $w_i$ 进行 Sample，且 Sample 均匀分布于 $[0, 2\pi]$。于是我们可以得出：</p>
+<script type="math/tex; mode=display">
+L_{o}\left(p, \omega_{o}\right) \approx \frac{1}{N} \sum_{i=1}^{N} \frac{L_{i}\left(p, \omega_{i}\right) f_{r}\left(p, \omega_{i}, \omega_{o}\right)\left(n \cdot \omega_{i}\right)}{p\left(\omega_{i}\right)}</script><p>进而，我们可以提出一种着色算法：</p>
+<p><img src="https://s2.loli.net/2022/01/16/QVLKN1BoPISCDZE.png" alt="image-20220116164125480"></p>
+<p>然而，我们如何继续引入全局光照的概念呢？很简单，只需要考虑如果光线 $r$ 命中某个物体时的情况。也就是说，将该物体表面视为新的光源：</p>
+<p><img src="https://s2.loli.net/2022/01/16/qEcxeKGIJSw1lLb.png" alt="image-20220116164724144"></p>
+<p>我们只需要计算 $q$ 处，$-w_i$ 方向发射的 Radiance，便可以得到渲染结果。</p>
+<p>但是这样做带来的问题是，光线的数目会发生指数爆炸，于是我们只能在采样时取 N=1，即在计算蒙特卡洛积分时取 N=1，然后仅追踪一根光线的情况。</p>
+<p><img src="https://s2.loli.net/2022/01/16/rxEkeSplq6doBgQ.png" alt="image-20220116164911441"></p>
+<p>我们便将这种 N=1 的处理方式称为“路径追踪”。</p>
+<p>为了降低 Noise，我们可以对像平面上的每个像素都追踪多条这样的“路径”，然后将这些路径计算得到的 Radiance 取平均值即可。</p>
+<p><img src="https://s2.loli.net/2022/01/16/gbk2BK9LGTjZ1PV.png" alt="image-20220116165143374"></p>
+<p>此外，我们还需要设置 shade 过程的递归基。为此，我们可以设置最大光线弹射次数，但这样取得的效果不如使用 <code>Russian Roulette</code>（俄罗斯轮盘赌）。也就是说，对于某个点的着色结果，我们给定 $p$ 的概率返回 $result<em>{old} / p$，$1-p$ 的概率返回 $0$​，这样做我们着色结果的期望仍是 $result</em>{old}$！</p>
+<p><img src="https://s2.loli.net/2022/01/16/7g4DHb8rNKmeC1M.png" alt="image-20220116165744374"></p>
+<p>目前我们就得到了路径追踪算法的正确版本，即对于每个像平面上的像素点调用 ray_generation 过程，而 shade 过程则加入了这样的几何分布方式来确定光线是否能够继续生存。但是目前来说，我们的算法可能在效率上并不高，在低采样率（SPP, Samples per pixel）的情况下效果并不好：</p>
+<p><img src="https://s2.loli.net/2022/01/16/1M76Bj8Q9lnav3K.png" alt="image-20220116170133804"></p>
+<p>这是因为，如果我们的光源过小，我们需要足够多次采样，才有可能将“追踪用光线”最终命中光源。也就是说，大部分的追踪路径都是无效的：</p>
+<p><img src="https://s2.loli.net/2022/01/16/1j7Tk6HnRyMsVD5.png" alt="image-20220116170327150"></p>
+<p>或许我们能找到更合适的采样概率分布…比如，<strong>对光源采样</strong>！</p>
+<p><img src="https://s2.loli.net/2022/01/16/s8yVDHI3JiXBFeU.png" alt="image-20220116190243440"></p>
+<p>于是：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_{o}\left(x, \omega_{o}\right) &=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \cos \theta \mathrm{d} \omega_{i} \\
+&=\int_{A} L_{i}\left(x, \omega_{i}\right) f_{r}\left(x, \omega_{i}, \omega_{o}\right) \frac{\cos \theta \cos \theta^{\prime}}{\left\|x^{\prime}-x\right\|^{2}} \mathrm{~d} A
+\end{aligned}</script><p>在之前我们假设光线可以在采样半球面上均匀射出，而现在我们将点 $dA$ 处的 Radiance 分两部分来考虑：</p>
+<ol>
+<li>光源的直接贡献（不需要 RR 计算）</li>
+<li>其他表面的反射光的贡献（使用 RR）</li>
+</ol>
+<p>这样考虑后，我们得出改进版的路径追踪伪代码如下：</p>
+<p><img src="https://s2.loli.net/2022/01/16/zMDhcL3almKIr6t.png" alt="image-20220116190636646"></p>
+<p>此外，我们还需要考虑光源发出的光束是否可能被障碍物遮挡…</p>
+<p><img src="https://s2.loli.net/2022/01/16/OEXG9d2tikuHncl.png" alt="image-20220116190917657"></p>
+<p>最后，路径追踪的伪代码整理如下：</p>
+<pre class="language-none"><code class="language-none">def ray_generation(camPos, pixel):
+	Uniformly choose N samples from the pixel
+	pixel_radiance &#x3D; 0.0
+	for sample in the pixel:
+		Shoot a ray r(camPos, cam_to_sample)
+		if ray r hit the scene at p:
+			pixel_radiance +&#x3D; 1 &#x2F; N * shade(p, sample_to_cam)
+    return pixel_radiance
+
+def shade(p, wo):
+
+	# Contributions from the light source
+	L_dir &#x3D; 0.0
+	Uniformly sample the light at x&#39; (pdf_light &#x3D; 1&#x2F;A)
+	Shoot a ray from p to x&#39;
+	if the ray is not blocked in the middle:
+		L_dir &#x3D; L_i * f_r * cos \theta * cos \theta&#39; &#x2F; |x&#39;-p|^2 &#x2F; pdf_light
+    
+    # Contributions from other places
+    L_indir &#x3D; 0.0
+    If test Russian Roulette with probability P_RR :
+        Uniformly sample the hemisphere toward wi (pdf_hemi &#x3D; 1 &#x2F; 2pi)
+        Trace a ray r(p, wi)
+        If ray r hit a non-emitting object at q:
+            L_indir &#x3D; shade(q, -wi) * f_r * cos \theta &#x2F; pdf_hemi &#x2F; P_RR
+    
+    Return L_dir + L_indir</code></pre>
 ]]></content>
       <categories>
         <category>理论</category>
