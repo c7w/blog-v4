@@ -7254,7 +7254,7 @@ b_{2}
 <p><img src="https://s2.loli.net/2022/01/14/gtSeZD1FWrcXQCs.png" alt="image-20220114163023985"></p>
 <p>我们将长方体理解成三个对面所分划出的空间的交集。我们一般使用的包围体积便是长方体，且长方体是与坐标轴平行的，即轴对齐包围盒（AABB）。选用 AABB 式包围盒有利于加速计算。判断光线和 AABB 类包围盒的求交方法如下：</p>
 <p><img src="https://s2.loli.net/2022/01/14/5rMlAnIw3gQBVNL.png" alt="image-20220114163501816"></p>
-<p>核心思想：只有当光线进入所有三个对面后，光线才进入了包围盒；若光线从某一个对面出射，则光线便从包围盒中射出。于是我们可以计算三个对面分别对应的 $t<em>{min}$ 和 $t</em>{max}$，然后对其求交。当且仅当 $t<em>{enter} &lt; t</em>{exit}$ 且 $t_{exit} \ge0$，光线才可能与包围盒有交点。</p>
+<p>核心思想：只有当光线进入所有三个对面后，光线才进入了包围盒；若光线从某一个对面出射，则光线便从包围盒中射出。于是我们可以计算三个对面分别对应的 $t<em>{min}$​​ 和 $t</em>{max}$​​，然后对其求交。当且仅当 $t<em>{enter} \lt t</em>{exit}$​​ 且 $t_{exit} \ge 0$​​，光线才可能与包围盒有交点。</p>
 <h4 id="使用包围盒加速光线追踪"><a href="#使用包围盒加速光线追踪" class="headerlink" title="使用包围盒加速光线追踪"></a>使用包围盒加速光线追踪</h4><h5 id="Uniform-Grids"><a href="#Uniform-Grids" class="headerlink" title="Uniform Grids"></a>Uniform Grids</h5><p>① 预处理</p>
 <p><img src="https://s2.loli.net/2022/01/14/Ggt2BDyranQYdCh.png" alt="image-20220114165308910"></p>
 <p>一般来说，取格子数 #cells = #objs * 27.</p>
