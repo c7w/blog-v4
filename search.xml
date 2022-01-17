@@ -7155,6 +7155,7 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
     <content><![CDATA[<p>GAMES 101 现代计算机图形学基础 笔记（下篇）.</p>
 <ul>
 <li>光线追踪（Whitted-style，求交算法，加速结构，辐射度量学，路径追踪）</li>
+<li>材质与外观</li>
 </ul>
 <a id="more"></a>
 <h2 id="光线追踪-Ray-Tracing"><a href="#光线追踪-Ray-Tracing" class="headerlink" title="光线追踪 Ray Tracing"></a>光线追踪 Ray Tracing</h2><h3 id="从问题出发"><a href="#从问题出发" class="headerlink" title="从问题出发"></a>从问题出发</h3><p>如何用光栅化的手法解决阴影的问题？</p>
@@ -7430,6 +7431,66 @@ L_{o}\left(x, \omega_{o}\right) &=\int_{\Omega^{+}} L_{i}\left(x, \omega_{i}\rig
             L_indir <span class="token operator">=</span> shade<span class="token punctuation">(</span>q<span class="token punctuation">,</span> <span class="token operator">-</span>wi<span class="token punctuation">)</span> <span class="token operator">*</span> f_r <span class="token operator">*</span> cos \theta <span class="token operator">/</span> pdf_hemi <span class="token operator">/</span> P_RR
     
     Return L_dir <span class="token operator">+</span> L_indir</code></pre>
+<h2 id="材质与外观-Materials-and-Appearance"><a href="#材质与外观-Materials-and-Appearance" class="headerlink" title="材质与外观 Materials and Appearance"></a>材质与外观 Materials and Appearance</h2><ul>
+<li>Material == BRDF!</li>
+</ul>
+<h3 id="一些材质的例子"><a href="#一些材质的例子" class="headerlink" title="一些材质的例子"></a>一些材质的例子</h3><h4 id="漫反射材料-Diffuse-Lambertian-Material"><a href="#漫反射材料-Diffuse-Lambertian-Material" class="headerlink" title="漫反射材料 Diffuse/Lambertian Material"></a>漫反射材料 Diffuse/Lambertian Material</h4><p>假设入射光的 Radiance 均匀分布：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_{o}\left(\omega_{o}\right) &=\int_{H^{2}} f_{r} L_{i}\left(\omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i} \\
+&=f_{r} L_{i} \int_{H^{2}}\left(\omega_{i}\right) \cos \theta_{i} \mathrm{~d} \omega_{i} \\
+&=\pi f_{r} L_{i} \\
+f_{r}=\frac{\rho}{\pi} &-\text { albedo (color) }
+\end{aligned}</script><p>这里 $\rho$ 可以是常数（单通道），也可以是针对不同通道定义了不同数值的向量。</p>
+<h4 id="抛光的金属-Glossy-Material"><a href="#抛光的金属-Glossy-Material" class="headerlink" title="抛光的金属 Glossy Material"></a>抛光的金属 Glossy Material</h4><p><img src="https://s2.loli.net/2022/01/17/9xZHgA8u6icXKyo.png" alt="image-20220117103604496"></p>
+<h4 id="理想反射-折射材质"><a href="#理想反射-折射材质" class="headerlink" title="理想反射/折射材质"></a>理想反射/折射材质</h4><p><img src="https://s2.loli.net/2022/01/17/RgoxIXL2qr3MaD7.png" alt="image-20220117103654766"></p>
+<ul>
+<li>反射：反射定律</li>
+<li>折射：折射定律 Snell’s Law，注意全反射的情况</li>
+<li>能量分配：菲涅尔公式 Fresnel Term</li>
+</ul>
+<blockquote>
+<p>精确的菲涅尔公式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+
+&R_{\mathrm{s}}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \cos \theta_{\mathrm{t}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \cos \theta_{\mathrm{t}}}\right|^{2}=\left|\frac{n_{1} \cos \theta_{\mathrm{i}}-n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}{n_{1} \cos \theta_{\mathrm{i}}+n_{2} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}}\right|^{2} \\
+
+&R_{\mathrm{p}}=\left|\frac{n_{1} \cos \theta_{\mathrm{t}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \cos \theta_{\mathrm{t}}+n_{2} \cos \theta_{\mathrm{i}}}\right|^{2}=\left|\frac{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}-n_{2} \cos \theta_{\mathrm{i}}}{n_{1} \sqrt{1-\left(\frac{n_{1}}{n_{2}} \sin \theta_{\mathrm{i}}\right)^{2}}+n_{2} \cos \theta_{\mathrm{i}}}\right|^{2} \\
+
+& R_{eff} = \frac 1 2 (R_s + R_p)
+\end{aligned}</script></blockquote>
+<p>近似后：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+R(\theta) &=R_{0}+\left(1-R_{0}\right)(1-\cos \theta)^{5} \\
+R_{0} &=\left(\frac{n_{1}-n_{2}}{n_{1}+n_{2}}\right)^{2}
+\end{aligned}</script><h4 id="微表面模型-Microfacet-Material"><a href="#微表面模型-Microfacet-Material" class="headerlink" title="微表面模型 Microfacet Material"></a>微表面模型 Microfacet Material</h4><p>虽然物体的表面是粗糙的，但是若从远处看，则可以将物体表面视为是平的。即对于粗糙表面来说：</p>
+<ul>
+<li>从远处看可以视为是平的粗糙表面</li>
+<li>从近处看看到的是高低起伏的高光表面</li>
+</ul>
+<p>从远处看看到的是材质，从近处看看到的是几何。</p>
+<p><img src="https://s2.loli.net/2022/01/17/8ESojAlrTM1sptY.png" alt="image-20220117110551868"></p>
+<p>我们考虑这些微表面的法线的分布情况。如果其分布方差较小，则表面是 Glossy 的；而如果其分布方差较大，我们可以视其表面为 Diffuse 型。</p>
+<p><img src="https://s2.loli.net/2022/01/17/n8QueMgHco16W5R.png" alt="image-20220117111415698"></p>
+<h4 id="各向同性与各向异性材质"><a href="#各向同性与各向异性材质" class="headerlink" title="各向同性与各向异性材质"></a>各向同性与各向异性材质</h4><p>这是一种分类材质的方式。各向同性材质的微表面的法线分布并不具有明确的方向性，而各向异性材质的法线分布却具有，因而后者具有一些特殊的性质。</p>
+<p>从定义上来说，后者的 BRDF 与其绝对方位角 $\Phi$ 有关。</p>
+<h3 id="BRDF-的性质与其测量"><a href="#BRDF-的性质与其测量" class="headerlink" title="BRDF 的性质与其测量"></a>BRDF 的性质与其测量</h3><blockquote>
+<p>BRDF 的性质：</p>
+<ul>
+<li>Non-negativity</li>
+<li>Linearity</li>
+<li>Reciprocity principle： $f_r(w_r \rightarrow w_i) = f_r(w_i \rightarrow w_r)$</li>
+<li>Energy conservation</li>
+<li>Isotropic or anisotropic</li>
+</ul>
+</blockquote>
+<p>测量方法：</p>
+<p><img src="https://s2.loli.net/2022/01/17/cegxist9jRBoTdb.png" alt="image-20220117112601733"></p>
+<ul>
+<li>MERL BRDF Database</li>
+</ul>
 ]]></content>
       <categories>
         <category>理论</category>
