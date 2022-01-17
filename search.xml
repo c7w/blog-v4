@@ -7156,6 +7156,7 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 <ul>
 <li>光线追踪（Whitted-style，求交算法，加速结构，辐射度量学，路径追踪）</li>
 <li>材质与外观</li>
+<li>动画与模拟</li>
 </ul>
 <a id="more"></a>
 <h2 id="光线追踪-Ray-Tracing"><a href="#光线追踪-Ray-Tracing" class="headerlink" title="光线追踪 Ray Tracing"></a>光线追踪 Ray Tracing</h2><h3 id="从问题出发"><a href="#从问题出发" class="headerlink" title="从问题出发"></a>从问题出发</h3><p>如何用光栅化的手法解决阴影的问题？</p>
@@ -7491,6 +7492,48 @@ R_{0} &=\left(\frac{n_{1}-n_{2}}{n_{1}+n_{2}}\right)^{2}
 <ul>
 <li>MERL BRDF Database</li>
 </ul>
+<h2 id="知识补完"><a href="#知识补完" class="headerlink" title="知识补完"></a>知识补完</h2><h3 id="相机、棱镜与光场"><a href="#相机、棱镜与光场" class="headerlink" title="相机、棱镜与光场"></a>相机、棱镜与光场</h3><ul>
+<li>成像 Imaging = Synthesis 合成 + Capture 捕捉</li>
+</ul>
+<h4 id="FOV"><a href="#FOV" class="headerlink" title="FOV"></a>FOV</h4><ul>
+<li>小孔成像：针孔相机</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/01/17/NtqCuUidJ1kSafb.png" alt="image-20220117162312506"></p>
+<p>视场 $FOV = 2 \arctan(\frac {h} {2f})$​，一般我们取 $h=36 * 24mm$ 时 $f$ 的大小作为 $FOV$ 的大小。</p>
+<h4 id="Exposure"><a href="#Exposure" class="headerlink" title="Exposure"></a>Exposure</h4><ul>
+<li>曝光 Exposure = Time * Irradiance</li>
+</ul>
+<p>其中 Time 由快门控制，能量由光圈的大小和焦距决定。此外，ISO 感光度可以视为是后期处理，给感光的多少进行倍增。这些因素都能影响成像的亮度。</p>
+<p><img src="https://s2.loli.net/2022/01/17/73moA5gzpaDlFU9.png" alt="image-20220117163652644"></p>
+<p>原理：ISO 作为后期处理，对于含有噪声的信号，同时将信号放大，噪声也随之被放大，因此会显得 Noisy；F-Number(F-Stop) 一般写作 F<strong>N</strong> 或 F/<strong>N</strong>。这里的 N 可以近似理解为光圈直径的倒数。快门速度变快也会降低 Exposure，而变慢会产生模糊。</p>
+<h4 id="薄透镜-Thin-lens"><a href="#薄透镜-Thin-lens" class="headerlink" title="薄透镜 Thin lens"></a>薄透镜 Thin lens</h4><p>平行光入射，出射光过焦点；过焦点光入射，出射光平行；焦距可任意改变；$\frac 1 f = \frac 1 {z_i} + \frac 1 {z_o}$​。</p>
+<p>利用薄透镜可以解释景深的问题：</p>
+<p><img src="https://s2.loli.net/2022/01/17/r8hei9FOAUZWb7P.png" alt="image-20220117165250088"></p>
+<h4 id="光场-Light-Field-Lumigraph"><a href="#光场-Light-Field-Lumigraph" class="headerlink" title="光场 Light Field / Lumigraph"></a>光场 Light Field / Lumigraph</h4><ul>
+<li>全光函数：我们看到的世界是七维函数</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/01/17/OWevpzGJ1g7kVf4.png" alt="image-20220117171128615"></p>
+<ul>
+<li>光场是全光函数在位置集合上的限制，给定任何一个位置和任何一个方向，输出光线的强度。<ul>
+<li>要想描述一个发光物体对于任何位置任何方向的辐射贡献，我们可以考虑用一个包围盒罩住这个物体，只需要知道这个包围盒上任意一点对于任意方向的辐射贡献，就可以用于替代这个物体的辐射贡献。</li>
+<li>也就是说，对于任何一个物体，我们作全光函数在其包围盒上的限制，只要弄清楚其包围盒上任意一点对于任意方向的光照辐射，就可以用于替代这个发光物体。这样做方便我们进行 Query.</li>
+<li>U-V 平面与 S-T 平面</li>
+<li>光场照相机</li>
+</ul>
+</li>
+</ul>
+<h3 id="颜色与感知"><a href="#颜色与感知" class="headerlink" title="颜色与感知"></a>颜色与感知</h3><ul>
+<li>谱功率密度（SPD），具有线性可加性；</li>
+<li><strong>颜色</strong>事实上是人的一种感知，它并不是光的一种属性；</li>
+<li>人感光的生物基础：视网膜上的 Cone 型细胞</li>
+<li>同色异谱现象的存在</li>
+<li>颜色的混合与匹配<ul>
+<li>加色系统</li>
+</ul>
+</li>
+<li>颜色空间与色域，RGB, XYZ, HSV, Lab, CMYK</li>
+</ul>
+<h2 id="动画与模拟"><a href="#动画与模拟" class="headerlink" title="动画与模拟"></a>动画与模拟</h2><p>// TODO</p>
 ]]></content>
       <categories>
         <category>理论</category>
