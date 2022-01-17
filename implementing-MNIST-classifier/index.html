@@ -249,10 +249,10 @@ network <span class="token operator">=</span> Network<span class="token punctuat
 <p>为什么要这么构造？我们回忆…</p>
 <ul>
 <li>Our notations are: $a^{(2)} = \sigma(W^{(2)}a^{(1)}+b^{(2)})$</li>
-<li>Namely $\begin {bmatrix} a<em>1^{(2)}\ a_2^{(2)}\ \vdots\ a_k^{(2)}\ \end {bmatrix}= \sigma( \begin {bmatrix} w^{(2)}</em>{1,1} &amp; w^{(2)}<em>{1,2} &amp; \cdots &amp; w^{(2)}</em>{1,n} \ w^{(2)}<em>{2,1} &amp; w^{(2)}</em>{2,2} &amp; \cdots &amp; w^{(2)}<em>{2,n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ w^{(2)}</em>{k,1} &amp; w^{(2)}<em>{k,2} &amp; \cdots &amp; w^{(2)}</em>{k,n}  \end {bmatrix}\begin {bmatrix} a_1^{(1)}\ a_2^{(1)}\ \vdots\ a_n^{(1)}\ \end {bmatrix} + \begin {bmatrix} b_1^{(2)}\ b_2^{(2)}\ \vdots\ b_k^{(2)}\ \end {bmatrix})$</li>
+<li>Namely $\begin {bmatrix} a_1^{(2)}\\ a_2^{(2)}\\ \vdots\\ a_k^{(2)}\\ \end {bmatrix}= \sigma( \begin {bmatrix} w^{(2)}_{1,1} &amp; w^{(2)}_{1,2} &amp; \cdots &amp; w^{(2)}_{1,n} \\ w^{(2)}_{2,1} &amp; w^{(2)}_{2,2} &amp; \cdots &amp; w^{(2)}_{2,n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ w^{(2)}_{k,1} &amp; w^{(2)}_{k,2} &amp; \cdots &amp; w^{(2)}_{k,n}  \end {bmatrix}\begin {bmatrix} a_1^{(1)}\\ a_2^{(1)}\\ \vdots\\ a_n^{(1)}\\ \end {bmatrix} + \begin {bmatrix} b_1^{(2)}\\ b_2^{(2)}\\ \vdots\\ b_k^{(2)}\\ \end {bmatrix})$</li>
 <li>Suppose Layer $m-1$​ has $n$​​ neurons and layer $m$ has $k$ neurons.<ul>
 <li>Layer $m$ has $k$​ biases because each neuron in layer $m$ has its own bias.</li>
-<li>Each neuron in layer $m$​ has $n$ related weights in layer $m-1$​, namely neuron $i$ in layer $m$ has its weights $w<em>{i, 1}, w</em>{i, 2}, \cdots, w_{1, n}$</li>
+<li>Each neuron in layer $m$​ has $n$ related weights in layer $m-1$​, namely neuron $i$ in layer $m$ has its weights $w_{i, 1}, w_{i, 2}, \cdots, w_{1, n}$</li>
 </ul>
 </li>
 </ul>
@@ -386,17 +386,17 @@ dot("$\cdots$") --> aELL</pre>
 <ul>
 <li>Then the core equations of back propagation…<ul>
 <li>$\frac {\partial C} {\partial z_i^L} = \frac {\partial C} {\partial a_i^L}\frac {\partial a_i^L} {\partial z_i^L} = (a_i^L-y)\sigma’(z_i^L)$​​ (Initialize)​</li>
-<li>According to $z^{(L)}<em>i = \sum_jw^{(L)}</em>{i, j}a_j^{(L-1)}+ b_i^{(L)}$​​​​, suppose we have calculated $\frac {\partial C} {\partial z^M_i}$​​​ for all neuron $i$​​​ in layer $M$​​​.<ul>
+<li>According to $z^{(L)}_i = \sum_jw^{(L)}_{i, j}a_j^{(L-1)}+ b_i^{(L)}$​​​​, suppose we have calculated $\frac {\partial C} {\partial z^M_i}$​​​ for all neuron $i$​​​ in layer $M$​​​.<ul>
 <li>How can we get $\frac {\partial C} {\partial w^M_{i, j}}$​​​ for all neuron $i$​​​ in layer $M$​​ and $j$​​ in layer $M-1$​​​​?<ul>
-<li>$\frac {\partial C} {\partial w^M<em>{i, j}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial w^M</em>{i, j}} = \frac {\partial C} {\partial z^M_i} a_j^{M-1}$​​</li>
+<li>$\frac {\partial C} {\partial w^M_{i, j}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial w^M_{i, j}} = \frac {\partial C} {\partial z^M_i} a_j^{M-1}$​​</li>
 </ul>
 </li>
 <li>How can we get $\frac {\partial C} {\partial b^M_i} $​​ for all neuron $i$​​ in layer $M$​?<ul>
-<li>$\frac {\partial C} {\partial b^M<em>{i}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial b^M</em>{i}} = \frac {\partial C} {\partial z^M_i}$​​​</li>
+<li>$\frac {\partial C} {\partial b^M_{i}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial b^M_{i}} = \frac {\partial C} {\partial z^M_i}$​​​</li>
 </ul>
 </li>
 <li>How can we get $\frac {\partial C} {\partial a^{M-1}_j} $ and $\frac {\partial C} {\partial z^{M-1}_j} $ for all neuron $j$ in layer $M-1$?<ul>
-<li>$\frac {\partial C} {\partial a^{M-1}<em>j}  = \sum_i \frac {\partial C}{\partial z^M_i} \frac {\partial z^M_i} {a_j^{M-1}} = \sum_i \frac {\partial C}{\partial z^M_i} w</em>{i,j}^M$</li>
+<li>$\frac {\partial C} {\partial a^{M-1}_j}  = \sum_i \frac {\partial C}{\partial z^M_i} \frac {\partial z^M_i} {a_j^{M-1}} = \sum_i \frac {\partial C}{\partial z^M_i} w_{i,j}^M$</li>
 <li>Then $\frac {\partial C} {\partial z^{M-1}_j} = \frac {\partial C} {\partial a^{M-1}_j} \sigma’(z^{M-1}_j)$</li>
 </ul>
 </li>

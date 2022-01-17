@@ -155,7 +155,7 @@
     }
     detectApple()
     })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
-</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Note for &quot;But what is a neural network?&quot;</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-03T06:37:19.000Z" title="发表于 2021-09-03 14:37:19">2021-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T11:34:51.207Z" title="更新于 2022-01-10 19:34:51">2022-01-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">理论/机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Note for &quot;But what is a neural network?&quot;"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Notes taken from watching <strong>3Blue1Brown series: Nerual networks</strong>.</p>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Note for &quot;But what is a neural network?&quot;</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-03T06:37:19.000Z" title="发表于 2021-09-03 14:37:19">2021-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T11:34:51.207Z" title="更新于 2022-01-10 19:34:51">2022-01-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">理论/机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Note for &quot;But what is a neural network?&quot;"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Notes taken from watching <strong>3Blue1Brown series: Nerual networks</strong>.</p>
 <ul>
 <li>But what is a nerual network?</li>
 <li>Gradient Descent</li>
@@ -209,18 +209,18 @@
 </ul>
 <p><strong>Notations and linear algebra</strong></p>
 <ul>
-<li><p>Let activations from one layer be a column vector: $\begin {bmatrix} a_1^{(0)}\ a_2^{(0)}\ \vdots\ a_n^{(0)}\ \end {bmatrix}$​​​​​​</p>
+<li><p>Let activations from one layer be a column vector: $\begin {bmatrix} a_1^{(0)}\\ a_2^{(0)}\\ \vdots\\ a_n^{(0)}\\ \end {bmatrix}$​​​​​​</p>
 </li>
-<li><p>Let weights of connection between two adjacent layers be a matrix: $\begin {bmatrix} w<em>{1,1} &amp; w</em>{1,2} &amp; \cdots &amp; w<em>{1,n} \ w</em>{2,1} &amp; w<em>{2,2} &amp; \cdots &amp; w</em>{2,n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ w<em>{k,1} &amp; w</em>{k,2} &amp; \cdots &amp; w_{k,n}  \end {bmatrix}$​​</p>
+<li><p>Let weights of connection between two adjacent layers be a matrix: $\begin {bmatrix} w_{1,1} &amp; w_{1,2} &amp; \cdots &amp; w_{1,n} \\ w_{2,1} &amp; w_{2,2} &amp; \cdots &amp; w_{2,n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ w_{k,1} &amp; w_{k,2} &amp; \cdots &amp; w_{k,n}  \end {bmatrix}$​​</p>
 <ul>
 <li>Row $i$ of the matrix represents the connection weight between neuron $i$ with the neurons from the last layer.</li>
 </ul>
 </li>
 </ul>
 <ul>
-<li><p>Let the biases be in a column vector: $\begin {bmatrix} b_1\ b_2\ \vdots\ b_n\ \end {bmatrix}$​​​​</p>
+<li><p>Let the biases be in a column vector: $\begin {bmatrix} b_1\\ b_2\\ \vdots\\ b_n\\ \end {bmatrix}$​​​​</p>
 </li>
-<li><p>And let $\sigma(\begin {bmatrix} x\ y\ \vdots\ z\ \end {bmatrix}) \ := \ \begin {bmatrix} \sigma(x)\ \sigma(y)\ \vdots\ \sigma(z)\ \end {bmatrix}$</p>
+<li><p>And let $\sigma(\begin {bmatrix} x\\ y\\ \vdots\\ z\\ \end {bmatrix}) \ := \ \begin {bmatrix} \sigma(x)\\ \sigma(y)\\ \vdots\\ \sigma(z)\\ \end {bmatrix}$</p>
 </li>
 <li><p>So we get our notation now: $a^{(2)} = \sigma(W^{(2)}a^{(1)}+b^{(2)})$​​​</p>
 <ul>
@@ -251,7 +251,7 @@
 </ul>
 </li>
 <li>Notation<ul>
-<li>$C(w<em>1, w_2, \cdots, w</em>{13002}) := \frac 1 {2n} \sum_x|| y(x)-a ||^2$​</li>
+<li>$C(w_1, w_2, \cdots, w_{13002}) := \frac 1 {2n} \sum_x|| y(x)-a ||^2$​</li>
 <li>Now we can just try to solve this problem: how to find the minimum of $C$ and the corresponding set of $w$​!</li>
 </ul>
 </li>
@@ -316,8 +316,8 @@ B1 --> C1
 B2 --> C2</pre>
 
 <ul>
-<li>We remember $\begin {bmatrix} a<em>1^{(2)}\ a_2^{(2)}\ \vdots\ a_k^{(2)}\ \end {bmatrix}= \sigma (\begin {bmatrix} w^{(2)}</em>{1,1} &amp; w^{(2)}<em>{1,2} &amp; \cdots &amp; w^{(2)}</em>{1,n} \ w^{(2)}<em>{2,1} &amp; w^{(2)}</em>{2,2} &amp; \cdots &amp; w^{(2)}<em>{2,n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ w^{(2)}</em>{k,1} &amp; w^{(2)}<em>{k,2} &amp; \cdots &amp; w^{(2)}</em>{k,n}  \end {bmatrix}\begin {bmatrix} a_1^{(1)}\ a_2^{(1)}\ \vdots\ a_n^{(1)}\ \end {bmatrix} + \begin {bmatrix} b_1^{(2)}\ b_2^{(2)}\ \vdots\ b_k^{(2)}\ \end {bmatrix})$<ul>
-<li>Namely $a^{(L)}<em>i  = \sigma( \sum_jw^{(L)}</em>{i, j}a_j^{(L-1)}+ b^{(L)})$​​​​​.​</li>
+<li>We remember $\begin {bmatrix} a_1^{(2)}\\ a_2^{(2)}\\ \vdots\\ a_k^{(2)}\\ \end {bmatrix}= \sigma (\begin {bmatrix} w^{(2)}_{1,1} &amp; w^{(2)}_{1,2} &amp; \cdots &amp; w^{(2)}_{1,n} \\ w^{(2)}_{2,1} &amp; w^{(2)}_{2,2} &amp; \cdots &amp; w^{(2)}_{2,n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ w^{(2)}_{k,1} &amp; w^{(2)}_{k,2} &amp; \cdots &amp; w^{(2)}_{k,n}  \end {bmatrix}\begin {bmatrix} a_1^{(1)}\\ a_2^{(1)}\\ \vdots\\ a_n^{(1)}\\ \end {bmatrix} + \begin {bmatrix} b_1^{(2)}\\ b_2^{(2)}\\ \vdots\\ b_k^{(2)}\\ \end {bmatrix})$<ul>
+<li>Namely $a^{(L)}_i  = \sigma( \sum_jw^{(L)}_{i, j}a_j^{(L-1)}+ b^{(L)})$​​​​​.​</li>
 <li>We denote this by $z^l = w^la^{l-1}+b^l$​ and $a^l = \sigma(z^l)$​</li>
 </ul>
 </li>
@@ -355,23 +355,23 @@ dot("$\cdots$") --> aELL</pre>
 <li>That is $\delta := \frac {\partial C} {\partial z^L} = (a^L-y) \odot \sigma’(z^L)$​​</li>
 </ul>
 </li>
-<li>According to $z^{(L)}<em>i = \sum_jw^{(L)}</em>{i, j}a_j^{(L-1)}+ b_i^{(L)}$​​​​, suppose we have calculated $\frac {\partial C} {\partial z^M_i}$​​​ for all neuron $i$​​​ in layer $M$​​​.<ul>
+<li>According to $z^{(L)}_i = \sum_jw^{(L)}_{i, j}a_j^{(L-1)}+ b_i^{(L)}$​​​​, suppose we have calculated $\frac {\partial C} {\partial z^M_i}$​​​ for all neuron $i$​​​ in layer $M$​​​.<ul>
 <li>How can we get $\frac {\partial C} {\partial w^M_{i, j}}$​​​ for all neuron $i$​​​ in layer $M$​​ and $j$​​ in layer $M-1$​​​​?<ul>
-<li>$\frac {\partial C} {\partial w^M<em>{i, j}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial w^M</em>{i, j}} = \frac {\partial C} {\partial z^M_i} a_j^{M-1}$​<ul>
+<li>$\frac {\partial C} {\partial w^M_{i, j}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial w^M_{i, j}} = \frac {\partial C} {\partial z^M_i} a_j^{M-1}$​<ul>
 <li>$\frac {\partial C} {\partial w^M} = \frac {\partial C} {\partial z^L} (a^{M-1})^T$</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>How can we get $\frac {\partial C} {\partial b^M_i} $​​ for all neuron $i$​​ in layer $M$​?<ul>
-<li>$\frac {\partial C} {\partial b^M<em>{i}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial b^M</em>{i}} = \frac {\partial C} {\partial z^M_i}$​<ul>
+<li>$\frac {\partial C} {\partial b^M_{i}} = \frac {\partial C} {\partial z^M_i} \frac {\partial z^M_i}{\partial b^M_{i}} = \frac {\partial C} {\partial z^M_i}$​<ul>
 <li>$\frac {\partial C} {\partial b^M} = \frac {\partial C} {\partial z^M}$</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>How can we get $\frac {\partial C} {\partial a^{M-1}_j} $ and $\frac {\partial C} {\partial z^{M-1}_j} $ for all neuron $j$ in layer $M-1$?<ul>
-<li>$\frac {\partial C} {\partial a^{M-1}<em>j}  = \sum_i \frac {\partial C}{\partial z^M_i} \frac {\partial z^M_i} {a_j^{M-1}} = \sum_i \frac {\partial C}{\partial z^M_i} w</em>{i,j}^M$​<ul>
+<li>$\frac {\partial C} {\partial a^{M-1}_j}  = \sum_i \frac {\partial C}{\partial z^M_i} \frac {\partial z^M_i} {a_j^{M-1}} = \sum_i \frac {\partial C}{\partial z^M_i} w_{i,j}^M$​<ul>
 <li>$\frac {\partial C} {\partial a^{M-1}} = (w^M)^T \frac {\partial C} {\partial z^M}$​</li>
 </ul>
 </li>

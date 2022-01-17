@@ -364,12 +364,12 @@
 <li>Probability from Class?<ul>
 <li>我们假设 Training Data 中的数据全部是从一个 Gaussian Distribution 中 sample 出来.</li>
 <li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83">https://zh.wikipedia.org/zh-hans/%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83</a></li>
-<li>$f_{\mu, \Sigma}(x) = \frac 1 {(2\pi)^{D/2}}\frac 1 {|\Sigma|^{1/2}} exp{-\frac 1 2 (x-\mu)^T\Sigma^{-1}(x-\mu)}$</li>
+<li>$f_{\mu, \Sigma}(x) = \frac 1 {(2\pi)^{D/2}}\frac 1 {|\Sigma|^{1/2}} exp\{-\frac 1 2 (x-\mu)^T\Sigma^{-1}(x-\mu)\}$</li>
 </ul>
 </li>
 <li>那么如何找 $\mu$ 与 $\Sigma$ ？<strong>Maximum Likelihood</strong>, 最大似然估计.<ul>
 <li>Likelihood of a <em>Gaussian</em> with mean $\mu$ and covariance matrix $\Sigma$:</li>
-<li>$L(\mu, \Sigma) = \Pi<em>{i=1}^n f</em>{\mu, \Sigma}(x^{(i)})$</li>
+<li>$L(\mu, \Sigma) = \Pi_{i=1}^n f_{\mu, \Sigma}(x^{(i)})$</li>
 <li>Assume that $\mu^<em>, \Sigma^</em>$ is the argument of the Gaussian Distribution with the maximum likelihood.</li>
 <li>And the solution…<ul>
 <li>$\mu^* = \frac 1 n \sum_{i=1}^nx^{(i)}$</li>
@@ -398,7 +398,7 @@
 <li>If $P_{w,b}(C_1|x) \ge 0.5$ then output $C_1$, else output $C_2$.</li>
 </ul>
 </li>
-<li>$f<em>{w,b}(x):=P</em>{w,b}(C_1|x) = \sigma(z)$, where $z=w\cdot x + b$​</li>
+<li>$f_{w,b}(x):=P_{w,b}(C_1|x) = \sigma(z)$, where $z=w\cdot x + b$​</li>
 </ul>
 </li>
 <li>Step 2: Goodness of the function<ul>
@@ -514,7 +514,7 @@
 </li>
 </ul>
 <h2 id="Semi-supervised-Learning-半监督学习"><a href="#Semi-supervised-Learning-半监督学习" class="headerlink" title="Semi-supervised Learning 半监督学习"></a>Semi-supervised Learning 半监督学习</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><ul>
-<li>Semi-supervised learning ${(x^r, \hat y^r)}<em>{r=1}^R, {x^u}</em>{u=R}^{R+U}$<ul>
+<li>Semi-supervised learning $\{(x^r, \hat y^r)\}_{r=1}^R, \{x^u\}_{u=R}^{R+U}$<ul>
 <li>A set of unlabeled data, usually $U\gg R$</li>
 </ul>
 </li>

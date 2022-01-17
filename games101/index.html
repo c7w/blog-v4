@@ -382,7 +382,7 @@ inside(t, x, y) =
 </ul>
 <p>事实上，这里的 Box Function 就相当于是一个低通滤波器，可以用来将图像模糊化。而这里 Box 越宽，所接受的频率就越低，所得到的图像也就越模糊。</p>
 <h4 id="采样：重复频域上的内容"><a href="#采样：重复频域上的内容" class="headerlink" title="采样：重复频域上的内容"></a>采样：重复频域上的内容</h4><p><img src="https://i.loli.net/2021/11/08/1AHSzyQBpvDseNY.png" alt="image-20211108160150741"></p>
-<p>卷积定理指出，在时域上的乘积，等价于在频域上的卷积。我们将原函数 $X<em>a(t)$​ 与冲激函数 $P</em>\delta(t)$ 做乘积，也就等价于将二者都使用 FFT 化归到频域后，将二者做卷积。而这结果表明，采样就是在重复一个原始信号的频谱。</p>
+<p>卷积定理指出，在时域上的乘积，等价于在频域上的卷积。我们将原函数 $X_a(t)$​ 与冲激函数 $P_\delta(t)$ 做乘积，也就等价于将二者都使用 FFT 化归到频域后，将二者做卷积。而这结果表明，采样就是在重复一个原始信号的频谱。</p>
 <p><img src="https://i.loli.net/2021/11/08/MC5PEF42YIJZDmR.png" alt="image-20211108160830500"></p>
 <center>对走样的解释</center>
 
@@ -494,7 +494,7 @@ inside(t, x, y) =
 <p>隐式表示还可以用距离函数、水平集、分形等等方法来定义。</p>
 <p>显式表示可以用点云，多边形面（obj 文件）等等表示。</p>
 <h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a>曲线</h3><h4 id="贝塞尔曲线"><a href="#贝塞尔曲线" class="headerlink" title="贝塞尔曲线"></a>贝塞尔曲线</h4><p>用一系列的控制点定义出满足某些性质的曲线。</p>
-<p>曲线的起点为控制点的起点，终点为控制点的终点，起始点处与终点处的切线分别为 $\overrightarrow {P<em>0P_1}, \overrightarrow{P</em>{n-1}P_n}$.</p>
+<p>曲线的起点为控制点的起点，终点为控制点的终点，起始点处与终点处的切线分别为 $\overrightarrow {P_0P_1}, \overrightarrow{P_{n-1}P_n}$.</p>
 <p><strong>如何画贝塞尔曲线：de Casteljau Algorithm</strong></p>
 <p>（1）先考虑三个控制点，生成二次贝塞尔曲线。</p>
 <p><img src="https://i.loli.net/2021/12/01/fE6FrtaL2sDQIGT.png" alt="image-20211201194418429"></p>
