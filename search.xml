@@ -7744,7 +7744,10 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 <li>《动手学深度学习》原书地址：<a href="https://github.com/d2l-ai/d2l-zh">https://github.com/d2l-ai/d2l-zh</a></li>
 <li>《动手学深度学习》(Pytorch ver.)：<a href="https://tangshusen.me/Dive-into-DL-PyTorch/#/">https://tangshusen.me/Dive-into-DL-PyTorch/#/</a></li>
 </ul>
+<p>知识架构：</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/book-org.svg" alt="封面"></p>
 <p>本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学习。希望阅读本书能带来更多的收获吧。</p>
+<p>与前面的一些笔记相比，本文更加侧重于「实践」。也就是说切实地提升自己的代码能力。</p>
 <a id="more"></a>
 <h2 id="深度学习简介"><a href="#深度学习简介" class="headerlink" title="深度学习简介"></a>深度学习简介</h2><ul>
 <li><strong>机器学习与深度学习的关系</strong></li>
@@ -7973,7 +7976,294 @@ tensor<span class="token punctuation">(</span><span class="token punctuation">[<
 <span class="token boolean">False</span>
 tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
-<h2 id="深度学习基础"><a href="#深度学习基础" class="headerlink" title="深度学习基础"></a>深度学习基础</h2>]]></content>
+<h2 id="深度学习基础"><a href="#深度学习基础" class="headerlink" title="深度学习基础"></a>深度学习基础</h2><h3 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h3><p>首先，回归问题的输出是连续值，而分类问题的输出是离散值，这是二者的区别。</p>
+<ul>
+<li><strong>模型定义</strong>：假设我们采集的样本数为 $n$​，索引为 $i$​ 的样本的特征为 $x_1^{(i)}$​ 和 $x_2^{(i)}$​，标签为 $y^{(i)}$​。对于索引为 $i$​ 的房屋，线性回归模型的房屋价格预测表达式为 <script type="math/tex">\hat{y}^{(i)} = x_1^{(i)} w_1 + x_2^{(i)} w_2 + b</script>​</li>
+<li><strong>损失函数</strong>：$\ell^{(i)}(w_1, w_2, b) = \frac{1}{2} \left(\hat{y}^{(i)} - y^{(i)}\right)^2$​, $ \ell(w_1, w_2, b) =\frac{1}{n} \sum_{i=1}^n \ell^{(i)}(w_1, w_2, b) =\frac{1}{n} \sum_{i=1}^n \frac{1}{2}\left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right)^2$​</li>
+</ul>
+<p>在模型训练中，我们希望找出一组模型参数，记为 $w_1^<em>, w_2^</em>, b^<em>$，来使训练样本平均损失最小：$ w_1^</em>, w_2^<em>, b^</em> = \underset{w_1, w_2, b}{\arg\min} \ell(w_1, w_2, b) $</p>
+<ul>
+<li><strong>优化算法</strong></li>
+</ul>
+<p>当模型和损失函数形式较为简单时，上面的误差最小化问题的解可以直接用公式表达出来。这类解叫作<strong>解析解</strong>。本节使用的线性回归和平方误差刚好属于这个范畴。然而，大多数深度学习模型并没有解析解，只能通过优化算法有限次迭代模型参数来尽可能降低损失函数的值。这类解叫作<strong>数值解</strong>。</p>
+<p>在求数值解的优化算法中，<strong>小批量随机梯度下降</strong>（Mini-batch SGD, mini-batch stochastic gradient descent）在深度学习中被广泛使用。它的算法很简单：先选取一组模型参数的初始值，如随机选取；接下来对参数进行多次迭代，使每次迭代都可能降低损失函数的值。在每次迭代中，先随机均匀采样一个由固定数目训练数据样本所组成的小批量（mini-batch）$\mathcal{B}$​，然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后用此结果与预先设定的一个正数 learning_rate $\eta$ 的乘积作为模型参数在本次迭代的减小量。</p>
+<p>在训练本节讨论的线性回归模型的过程中，模型的每个参数将作如下迭代：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} w_1 &\leftarrow w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial w_1} = w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_1^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right), \\
+w_2 &\leftarrow w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial w_2} = w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_2^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right), \\
+b &\leftarrow b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial b} = b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}\left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right). \end{aligned}</script><p>在上式中，$|\mathcal{B}|$ 代表每个小批量中的样本个数（批量大小，batch size），$\eta$ 称作学习率（learning rate）并取正数。需要强调的是，这里的批量大小和学习率的值是人为设定的，并不是通过模型训练学出的，因此叫作超参数（hyperparameter）。我们通常所说的“调参”指的正是调节超参数，例如通过反复试错来找到超参数合适的值。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><ul>
+<li>生成数据集</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">num_inputs <span class="token operator">=</span> <span class="token number">2</span>
+num_examples <span class="token operator">=</span> <span class="token number">1000</span>
+true_w <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4</span><span class="token punctuation">]</span>
+true_b <span class="token operator">=</span> <span class="token number">4.2</span>
+features <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>normal<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>num_examples<span class="token punctuation">,</span> num_inputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span>
+labels <span class="token operator">=</span> true_w<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> features<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> true_w<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> features<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> true_b
+labels <span class="token operator">+=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>normal<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.01</span><span class="token punctuation">,</span> size<span class="token operator">=</span>labels<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li>读取数据</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data <span class="token keyword">as</span> Data
+
+batch_size <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token comment"># 将训练数据的特征和标签组合</span>
+dataset <span class="token operator">=</span> Data<span class="token punctuation">.</span>TensorDataset<span class="token punctuation">(</span>features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span>
+<span class="token comment"># 随机读取小批量</span>
+data_iter <span class="token operator">=</span> Data<span class="token punctuation">.</span>DataLoader<span class="token punctuation">(</span>dataset<span class="token punctuation">,</span> batch_size<span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> X<span class="token punctuation">,</span> y <span class="token keyword">in</span> data_iter<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+    <span class="token keyword">break</span>
+
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2.7723</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6627</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.1058</span><span class="token punctuation">,</span>  <span class="token number">0.7688</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">0.4901</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1.2260</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.7227</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.2664</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.3390</span><span class="token punctuation">,</span>  <span class="token number">0.1162</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">1.6705</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.7930</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">0.2576</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.2928</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">2.0475</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.7440</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">1.0685</span><span class="token punctuation">,</span>  <span class="token number">1.1920</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">1.0996</span><span class="token punctuation">,</span>  <span class="token number">0.5106</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+ tensor<span class="token punctuation">(</span><span class="token punctuation">[</span> <span class="token number">0.9066</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6247</span><span class="token punctuation">,</span>  <span class="token number">9.3383</span><span class="token punctuation">,</span>  <span class="token number">3.6537</span><span class="token punctuation">,</span>  <span class="token number">3.1283</span><span class="token punctuation">,</span> <span class="token number">17.0213</span><span class="token punctuation">,</span>  <span class="token number">5.6953</span><span class="token punctuation">,</span> <span class="token number">17.6279</span><span class="token punctuation">,</span>
+         <span class="token number">2.2809</span><span class="token punctuation">,</span>  <span class="token number">4.6661</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment"># 可以看到，对迭代器进行迭代每次拿到的数据也是以 batch 的形式封装成 array</span></code></pre>
+<ul>
+<li>定义模型</li>
+</ul>
+<p>首先，导入 <code>torch.nn</code> 模块。实际上，“nn”是neural networks（神经网络）的缩写。</p>
+<p>顾名思义，该模块定义了大量神经网络的层。之前我们已经用过了 <code>autograd</code>，而 <code>nn</code> 就是利用 <code>autograd</code> 来定义模型。</p>
+<p><code>nn</code> 的核心数据结构是 <code>Module</code>，它是一个抽象概念，既可以表示神经网络中的某个层（layer），也可以表示一个包含很多层的神经网络。在实际使用中，最常见的做法是继承 <code>nn.Module</code>，撰写自己的网络/层。</p>
+<p>一个 <code>nn.Module</code> 实例应该包含一些层以及返回输出的前向传播（forward）方法。下面先来看看如何用 <code>nn.Module</code> 实现一个线性回归模型。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">LinearNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> n_feature<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>LinearNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>linear <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>n_feature<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment"># forward 定义前向传播</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> y
+
+net <span class="token operator">=</span> LinearNet<span class="token punctuation">(</span>num_inputs<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span> <span class="token comment"># 使用print可以打印出网络的结构</span>
+
+<span class="token comment"># Output:</span>
+LinearNet<span class="token punctuation">(</span>
+  <span class="token punctuation">(</span>linear<span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre>
+<p>事实上我们还可以用<code>nn.Sequential</code>来更加方便地搭建网络，<code>Sequential</code>是一个有序的容器，网络层将按照在传入<code>Sequential</code>的顺序依次被添加到计算图中。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 写法一</span>
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+    nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_inputs<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment"># 此处还可以传入其他层</span>
+    <span class="token punctuation">)</span>
+
+<span class="token comment"># 写法二</span>
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span><span class="token punctuation">)</span>
+net<span class="token punctuation">.</span>add_module<span class="token punctuation">(</span><span class="token string">'linear'</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_inputs<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># net.add_module ......</span>
+
+<span class="token comment"># 写法三</span>
+<span class="token keyword">from</span> collections <span class="token keyword">import</span> OrderedDict
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>OrderedDict<span class="token punctuation">(</span><span class="token punctuation">[</span>
+          <span class="token punctuation">(</span><span class="token string">'linear'</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_inputs<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token comment"># ......</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+Sequential<span class="token punctuation">(</span>
+  <span class="token punctuation">(</span>linear<span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<p>可以通过 <code>net.parameters()</code> 来查看模型所有的可学习参数，此函数将返回一个生成器。<br><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span></code></pre><br>输出：<br><pre class="language-none"><code class="language-none">Parameter containing:
+tensor([[-0.0277,  0.2771]], requires_grad&#x3D;True)
+Parameter containing:
+tensor([0.3395], requires_grad&#x3D;True)</code></pre></p>
+<p>注意：<code>torch.nn</code> <strong>仅支持输入一个 batch 的样本</strong>，而不支持单个样本输入，如果只有单个样本，可使用 <code>input.unsqueeze(0)</code> 来添加一维。</p>
+<p>附：<code>unsqueeze()</code> 的使用：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> a <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> a
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment"># 最外层加壳</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># 次外层元素</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">1.3125</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  File <span class="token string">"&lt;stdin>"</span><span class="token punctuation">,</span> line <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+IndexError<span class="token punctuation">:</span> Dimension out of <span class="token builtin">range</span> <span class="token punctuation">(</span>expected to be <span class="token keyword">in</span> <span class="token builtin">range</span> of <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> but got <span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># 最内层</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">1.3125</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+
+         <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span> <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 一直到最内层</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token operator">>></span><span class="token operator">></span> a<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># 某一层</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.6444</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5408</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.6239</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8880</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.7358</span><span class="token punctuation">,</span>  <span class="token number">0.7287</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span> <span class="token number">1.1660</span><span class="token punctuation">,</span>  <span class="token number">1.3125</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3.4676</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.4620</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.1572</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.4755</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+         <span class="token punctuation">[</span> <span class="token number">0.6389</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2.4514</span><span class="token punctuation">,</span>  <span class="token number">0.3339</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li>初始化模型参数</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">import</span> init
+init<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>net<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>weight<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">0.01</span><span class="token punctuation">)</span>
+init<span class="token punctuation">.</span>constant_<span class="token punctuation">(</span>net<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>bias<span class="token punctuation">,</span> val<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>  <span class="token comment"># 也可以直接修改bias的data: net[0].bias.data.fill_(0)</span></code></pre>
+<ul>
+<li>定义损失函数</li>
+</ul>
+<p>PyTorch 在 <code>nn</code> 模块中提供了各种损失函数，这些损失函数可看作是一种特殊的层，PyTorch 也将这些损失函数实现为 <code>nn.Module</code> 的子类。我们现在使用它提供的均方误差损失作为模型的损失函数。</p>
+<pre class="language-python" data-language="python"><code class="language-python">loss <span class="token operator">=</span> nn<span class="token punctuation">.</span>MSELoss<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li>定义优化算法</li>
+</ul>
+<p>同样，我们也无须自己实现小批量随机梯度下降算法。<code>torch.optim</code> 模块提供了很多常用的优化算法比如 SGD、Adam 和 RMSProp 等。下面我们创建一个用于优化 <code>net</code> 所有参数的优化器实例，并指定学习率为 0.03 的小批量随机梯度下降（SGD）为优化算法。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>optim <span class="token keyword">as</span> optim
+optimizer <span class="token operator">=</span> optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span>net<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.03</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>optimizer<span class="token punctuation">)</span></code></pre>
+<p>输出：<br><pre class="language-none"><code class="language-none">SGD (
+Parameter Group 0
+    dampening: 0
+    lr: 0.03
+    momentum: 0
+    nesterov: False
+    weight_decay: 0
+)</code></pre></p>
+<p>我们还可以为不同子网络设置不同的学习率，这在 fine-tune 时经常用到。例：<br><pre class="language-python" data-language="python"><code class="language-python">optimizer <span class="token operator">=</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span><span class="token punctuation">[</span>
+                <span class="token comment"># 如果对某个参数不指定学习率，就使用最外层的默认学习率</span>
+                <span class="token punctuation">&#123;</span><span class="token string">'params'</span><span class="token punctuation">:</span> net<span class="token punctuation">.</span>subnet1<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token comment"># lr=0.03</span>
+                <span class="token punctuation">&#123;</span><span class="token string">'params'</span><span class="token punctuation">:</span> net<span class="token punctuation">.</span>subnet2<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'lr'</span><span class="token punctuation">:</span> <span class="token number">0.01</span><span class="token punctuation">&#125;</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span> lr<span class="token operator">=</span><span class="token number">0.03</span><span class="token punctuation">)</span></code></pre></p>
+<p>有时候我们不想让学习率固定成一个常数，那如何调整学习率呢？主要有两种做法。一种是修改 <code>optimizer.param_groups</code> 中对应的学习率，另一种是更简单也是较为推荐的做法 —— <strong>新建优化器</strong>，由于optimizer十分轻量级，构建开销很小，故而可以构建新的 optimizer。但是后者对于使用动量的优化器（如 Adam），会丢失动量等状态信息，可能会造成损失函数的收敛出现震荡等情况。<br><pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 调整学习率</span>
+<span class="token keyword">for</span> param_group <span class="token keyword">in</span> optimizer<span class="token punctuation">.</span>param_groups<span class="token punctuation">:</span>
+    param_group<span class="token punctuation">[</span><span class="token string">'lr'</span><span class="token punctuation">]</span> <span class="token operator">*=</span> <span class="token number">0.1</span> <span class="token comment"># 学习率为之前的0.1倍</span></code></pre></p>
+<ul>
+<li>训练模型</li>
+</ul>
+<p>通过调用 <code>optim</code> 实例的 <code>step</code> 函数来迭代模型参数。按照小批量随机梯度下降的定义，我们在 <code>step</code> 函数中指明批量大小，从而对批量中样本梯度求平均。</p>
+<pre class="language-python" data-language="python"><code class="language-python">num_epochs <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token keyword">for</span> epoch <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> num_epochs <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> X<span class="token punctuation">,</span> y <span class="token keyword">in</span> data_iter<span class="token punctuation">:</span>
+        output <span class="token operator">=</span> net<span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+        l <span class="token operator">=</span> loss<span class="token punctuation">(</span>output<span class="token punctuation">,</span> y<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        optimizer<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 梯度清零，等价于net.zero_grad()</span>
+        l<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'epoch %d, loss: %f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>epoch<span class="token punctuation">,</span> l<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>输出：<br><pre class="language-none"><code class="language-none">epoch 1, loss: 0.000457
+epoch 2, loss: 0.000081
+epoch 3, loss: 0.000198</code></pre></p>
+<h3 id="Softmax-Regression"><a href="#Softmax-Regression" class="headerlink" title="Softmax Regression"></a>Softmax Regression</h3><p>线性回归模型适用于<strong>输出为连续值</strong>的情景。</p>
+<p>在另一类情景中，模型输出可以是一个像图像类别这样的<strong>离散值</strong>。对于这样的离散值预测问题，我们可以使用诸如 softmax 回归在内的<strong>分类模型</strong>。</p>
+<p>和线性回归不同，softmax 回归的<strong>输出单元从一个变成了多个</strong>，且引入了 softmax 运算使输出更适合离散值的预测和训练。本节以 softmax 回归模型为例，介绍神经网络中的分类模型。</p>
+<p>softmax 回归跟线性回归一样将输入特征与权重做线性叠加。与线性回归的一个主要不同在于，softmax 回归的<strong>输出值个数等于标签里的类别数</strong>。</p>
+<ul>
+<li>模型定义</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+o_1 &= x_1 w_{11} + x_2 w_{21} + x_3 w_{31} + x_4 w_{41} + b_1,\\ 
+o_2 &= x_1 w_{12} + x_2 w_{22} + x_3 w_{32} + x_4 w_{42} + b_2,\\ 
+o_3 &= x_1 w_{13} + x_2 w_{23} + x_3 w_{33} + x_4 w_{43} + b_3. \\
+\end{aligned}</script><script type="math/tex; mode=display">
+\hat{y}_1, \hat{y}_2, \hat{y}_3 = \text{softmax}(o_1, o_2, o_3)</script><p>其中：</p>
+<script type="math/tex; mode=display">
+\hat{y_1} = \frac{ \exp(o_1)}{\sum_{i=1}^3 \exp(o_i)},\quad 
+\hat{y_2} = \frac{ \exp(o_2)}{\sum_{i=1}^3 \exp(o_i)},\quad 
+\hat{y_3} = \frac{ \exp(o_3)}{\sum_{i=1}^3 \exp(o_i)}.</script><ul>
+<li>损失函数：Cross Entropy</li>
+</ul>
+<script type="math/tex; mode=display">
+H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)},</script><p>交叉熵只关心<strong>对正确类别</strong>的预测概率，因为只要其值足够大，就可以确保分类结果正确。</p>
+<p>假设训练数据集的样本数为 $n$​，交叉熵损失函数定义为 $\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) $​. 其中$\boldsymbol{\Theta}$​​代表模型参数。</p>
+<p>注意：这里的交叉熵是 H = - [ 实际值 * log(预测值) ] 的求和。而 log(预测值) 却又可以替换为是预测时的 logits $o_i$​​​，二者之间只差了一个系数。因此背后实现可以直接用 logits 参与简化计算。</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><blockquote>
+<p>数据集与相关包的介绍：Fashion-MNIST</p>
+<p>本节我们将使用 torchvision 包，它是服务于 PyTorch 深度学习框架的，主要用来构建计算机视觉模型。 torchvision 主要由以下几部分构成：</p>
+<ol>
+<li><code>torchvision.datasets</code>: 一些加载数据的函数及常用的数据集接口；</li>
+<li><code>torchvision.models</code>: 包含常用的模型结构（含预训练模型），例如 AlexNet、VGG、ResNet 等；</li>
+<li><code>torchvision.transforms</code>: 常用的图片变换，例如裁剪、旋转等；</li>
+<li><code>torchvision.utils</code>: 其他的一些有用的方法。</li>
+</ol>
+</blockquote>
+]]></content>
       <categories>
         <category>理论</category>
         <category>理论/机器学习</category>
