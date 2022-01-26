@@ -8492,7 +8492,7 @@ Sequential<span class="token punctuation">(</span>
   <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span></code></pre>
 <ul>
-<li>访问模型参数</li>
+<li><strong>访问模型参数</strong></li>
 </ul>
 <p>对于 <code>Sequential</code> 实例（派生自 <code>Module</code>）中含模型参数的层，我们可以通过 <code>Module</code> 类的 <code>parameters()</code> 或者 <code>named_parameters</code> 方法来访问所有参数（以迭代器的形式返回），后者除了返回参数 <code>Tensor</code> 外还会返回其名字。</p>
 <pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -8506,7 +8506,142 @@ Sequential<span class="token punctuation">(</span>
 <span class="token number">2.</span>weight torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token number">2.</span>bias torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>接下来访问单层的参数。对于使用 <code>Sequential</code> 类构造的神经网络，我们可以通过方括号 <code>[]</code> 来访问网络的任一层。索引 0 表示隐藏层为 <code>Sequential</code> 实例最先添加的层。</p>
-<pre class="language-python" data-language="python"><code class="language-python"></code></pre>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">type</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+weight torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'torch.nn.parameter.Parameter'</span><span class="token operator">></span>
+bias torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'torch.nn.parameter.Parameter'</span><span class="token operator">></span></code></pre>
+<p>返回的 <code>param</code> 的类型为 <code>torch.nn.parameter.Parameter</code>，其实这是 <code>Tensor</code> 的子类，和 <code>Tensor</code> 不同的是如果一个 <code>Tensor</code> 是 <code>Parameter</code>，那么它会自动被添加到模型的参数列表里。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MyModel</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>MyModel<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>weight1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>weight2 <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+n <span class="token operator">=</span> MyModel<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> n<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+    
+Output<span class="token punctuation">:</span>
+weight1</code></pre>
+<ul>
+<li><strong>初始化模型参数</strong></li>
+</ul>
+<p>PyTorch 中 <code>nn.Module</code> 的模块参数都采取了较为合理的初始化策略，但我们经常需要使用其他方法来初始化权重。</p>
+<p>PyTorch 的 <code>init</code> 模块里提供了多种预设的初始化方法。在下面的例子中，我们将权重参数初始化成均值为 0、标准差为 0.01 的正态分布随机数，并依然将偏差参数清零。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token string">'weight'</span> <span class="token keyword">in</span> name<span class="token punctuation">:</span>
+        init<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>param<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">0.01</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+<span class="token number">0.</span>weight tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0.0030</span><span class="token punctuation">,</span>  <span class="token number">0.0094</span><span class="token punctuation">,</span>  <span class="token number">0.0070</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.0010</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">0.0001</span><span class="token punctuation">,</span>  <span class="token number">0.0039</span><span class="token punctuation">,</span>  <span class="token number">0.0105</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.0126</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">[</span> <span class="token number">0.0105</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.0135</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.0047</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.0006</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token number">2.</span>weight tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.0074</span><span class="token punctuation">,</span>  <span class="token number">0.0051</span><span class="token punctuation">,</span>  <span class="token number">0.0066</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p>下面使用常数来初始化权重参数。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token string">'bias'</span> <span class="token keyword">in</span> name<span class="token punctuation">:</span>
+        init<span class="token punctuation">.</span>constant_<span class="token punctuation">(</span>param<span class="token punctuation">,</span> val<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+<span class="token number">0.</span>bias tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token number">2.</span>bias tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p>有时候我们需要的初始化方法并没有在 <code>init</code> 模块中提供。这时，可以实现一个初始化方法，从而能够像使用其他初始化方法那样使用它。</p>
+<p>首先参考 normal_ 的实现：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">normal_</span><span class="token punctuation">(</span>tensor<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> tensor<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>mean<span class="token punctuation">,</span> std<span class="token punctuation">)</span></code></pre>
+<p>类似地，我们可以实现自定义的初始化方法：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">init_weight_</span><span class="token punctuation">(</span>tensor<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        tensor<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        tensor <span class="token operator">*=</span> <span class="token punctuation">(</span>tensor<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token string">'weight'</span> <span class="token keyword">in</span> name<span class="token punctuation">:</span>
+        init_weight_<span class="token punctuation">(</span>param<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>data<span class="token punctuation">)</span></code></pre>
+<p>此外，我们还可以通过直接改变这些参数的 <code>data</code> 来达到改写模型参数值的同时不会影响梯度的效果。</p>
+<ul>
+<li><strong>共享模型参数</strong></li>
+</ul>
+<p>在有些情况下，我们希望在多个层之间共享模型参数。</p>
+<p>共享模型参数的方法: <code>Module</code> 类的 <code>forward</code> 函数里多次调用同一个层。</p>
+<p>此外，如果我们传入 <code>Sequential</code> 的模块是同一个 <code>Module</code> 实例的话参数也是共享的。</p>
+<pre class="language-python" data-language="python"><code class="language-python">linear <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>linear<span class="token punctuation">,</span> linear<span class="token punctuation">)</span> 
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+<span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    init<span class="token punctuation">.</span>constant_<span class="token punctuation">(</span>param<span class="token punctuation">,</span> val<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+Sequential<span class="token punctuation">(</span>
+  <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+<span class="token number">0.</span>weight tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># 这里只输出了一次参数列表，证明二者共享</span></code></pre>
+<p>因为模型参数里包含了梯度，所以在反向传播计算时，这些共享的参数的梯度是累加的。</p>
+<h3 id="自定义-Layer"><a href="#自定义-Layer" class="headerlink" title="自定义 Layer"></a>自定义 Layer</h3><p>本节将介绍如何使用 <code>Module</code>来自定义层，从而可以被重复调用。</p>
+<ul>
+<li><strong>不含模型参数的自定义层</strong></li>
+</ul>
+<p>事实上，自定义层和自定义模型类似，因为我们可以直接把一个 Packed 的模型视为是一个 Layer。</p>
+<p>举个例子，下面的 <code>CenteredLayer</code> 类通过继承 <code>Module</code> 类自定义了一个将输入减掉均值后输出的层，并将层的计算定义在了 <code>forward</code> 函数里。这个层里不含模型参数。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch <span class="token keyword">import</span> nn
+
+<span class="token keyword">class</span> <span class="token class-name">CenteredLayer</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>CenteredLayer<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> x <span class="token operator">-</span> x<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>然后，我们就可以实例化这个 Layer，然后做 Forward Feeding.</p>
+<pre class="language-python" data-language="python"><code class="language-python">layer <span class="token operator">=</span> CenteredLayer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+layer<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">.</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">,</span>  <span class="token number">1</span><span class="token punctuation">.</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li><strong>含模型参数的自定义层</strong></li>
+</ul>
+<p>之前我们介绍了 <code>Parameter</code> 类其实是 <code>Tensor</code> 的子类，如果一个 <code>Tensor</code> 是 <code>Parameter</code>，那么它会自动被添加到模型的参数列表里。 // 在这里可以推测这个参数列表是 <code>nn.Module</code> 的数据成员…?</p>
+<p>所以在自定义含模型参数的层时，我们应该将参数定义成 <code>Parameter</code>。</p>
+<p>除了直接定义成 <code>Parameter</code> 类外，还可以使用 <code>ParameterList</code> 和 <code>ParameterDict</code> 分别定义参数的列表和字典。</p>
+<ul>
+<li><strong><code>ParameterList</code></strong></li>
+</ul>
+<p><code>ParameterList</code>接收一个 <code>Parameter</code> 实例的列表作为输入然后得到一个参数列表，使用的时候可以用索引来访问某个参数，另外也可以使用 <code>append</code> 和 <code>extend</code> 在列表后面新增参数。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MyDense</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>MyDense<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>params <span class="token operator">=</span> nn<span class="token punctuation">.</span>ParameterList<span class="token punctuation">(</span><span class="token punctuation">[</span>nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>params<span class="token punctuation">.</span>append<span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            x <span class="token operator">=</span> torch<span class="token punctuation">.</span>mm<span class="token punctuation">(</span>x<span class="token punctuation">,</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> x
+net <span class="token operator">=</span> MyDense<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span></code></pre>
+<p>Output:</p>
+<pre class="language-none"><code class="language-none">MyDense(
+  (params): ParameterList(
+      (0): Parameter containing: [torch.FloatTensor of size 4x4]
+      (1): Parameter containing: [torch.FloatTensor of size 4x4]
+      (2): Parameter containing: [torch.FloatTensor of size 4x4]
+      (3): Parameter containing: [torch.FloatTensor of size 4x1]
+  )
+)</code></pre>
+<ul>
+<li><strong><code>ParameterDict</code></strong></li>
+</ul>
+<p><code>ParameterDict</code> 接收一个 <code>Parameter</code> 实例的字典作为输入然后得到一个参数字典，然后可以按照字典的规则使用了。</p>
+<p>例如使用 <code>update()</code> 新增参数，使用 <code>keys()</code> 返回所有键值，使用 <code>items()</code> 返回所有键值对等等。</p>
 ]]></content>
       <categories>
         <category>理论</category>
