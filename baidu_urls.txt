@@ -1,4 +1,5 @@
-https://www.c7w.tech/dive-into-dl-pytorch/
+https://www.c7w.tech/dive-into-dl-pytorch-B/
+https://www.c7w.tech/dive-into-dl-pytorch-A/
 https://www.c7w.tech/games101-pa/
 https://www.c7w.tech/games101-cont/
 https://www.c7w.tech/python-pandas/

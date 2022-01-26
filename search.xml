@@ -7737,8 +7737,37 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
       </tags>
   </entry>
   <entry>
+    <title>《动手学深度学习》 Pytorch ver. 阅读摘录 Part B</title>
+    <url>/dive-into-dl-pytorch-B/</url>
+    <content><![CDATA[<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/cover.png" alt=""></p>
+<ul>
+<li>《动手学深度学习》原书地址：<a href="https://github.com/d2l-ai/d2l-zh">https://github.com/d2l-ai/d2l-zh</a></li>
+<li>《动手学深度学习》(Pytorch ver.)：<a href="https://tangshusen.me/Dive-into-DL-PyTorch/#/">https://tangshusen.me/Dive-into-DL-PyTorch/#/</a></li>
+</ul>
+<p>知识架构：</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/book-org.svg" alt="封面"></p>
+<p>本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学习。希望阅读本书能带来更多的收获吧。</p>
+<p>与前面的一些笔记相比，本文更加侧重于「实践」。也就是说切实地提升自己的代码能力。</p>
+<p>Part B 包含：</p>
+<ul>
+<li>§ 5 CNN</li>
+<li>§ 6 RNN</li>
+<li>§ 7 优化算法</li>
+<li>§ 8 计算性能</li>
+</ul>
+<a id="more"></a>
+<h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2>]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《动手学深度学习》 Pytorch ver. 阅读摘录 Part A</title>
-    <url>/dive-into-dl-pytorch/</url>
+    <url>/dive-into-dl-pytorch-A/</url>
     <content><![CDATA[<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/cover.png" alt=""></p>
 <ul>
 <li>《动手学深度学习》原书地址：<a href="https://github.com/d2l-ai/d2l-zh">https://github.com/d2l-ai/d2l-zh</a></li>
@@ -7759,7 +7788,10 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 </li>
 <li>§ 4 深度学习计算<ul>
 <li>构造 Pytorch 模型的方式</li>
-<li></li>
+<li>模型参数的访问、初始化与共享</li>
+<li>自定义 Layer</li>
+<li>读取与存储</li>
+<li>GPU 计算</li>
 </ul>
 </li>
 </ul>
@@ -7790,43 +7822,43 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">Tensor(*sizes)</td>
+<td style="text-align:center"><code>Tensor(*sizes)</code></td>
 <td style="text-align:center">基础构造函数</td>
 </tr>
 <tr>
-<td style="text-align:center">tensor(data,)</td>
-<td style="text-align:center">类似np.array的构造函数</td>
+<td style="text-align:center"><code>tensor(data,)</code></td>
+<td style="text-align:center">类似 <code>np.array</code> 的构造函数</td>
 </tr>
 <tr>
-<td style="text-align:center">ones(*sizes)</td>
-<td style="text-align:center">全1Tensor</td>
+<td style="text-align:center"><code>ones(*sizes)</code></td>
+<td style="text-align:center">全 1 Tensor</td>
 </tr>
 <tr>
-<td style="text-align:center">zeros(*sizes)</td>
-<td style="text-align:center">全0Tensor</td>
+<td style="text-align:center"><code>zeros(*sizes)</code></td>
+<td style="text-align:center">全 0 Tensor</td>
 </tr>
 <tr>
-<td style="text-align:center">eye(*sizes)</td>
-<td style="text-align:center">对角线为1，其他为0</td>
+<td style="text-align:center"><code>eye(*sizes)</code></td>
+<td style="text-align:center">对角线为 1，其他为 0</td>
 </tr>
 <tr>
-<td style="text-align:center">arange(s,e,step)</td>
-<td style="text-align:center">从s到e，步长为step</td>
+<td style="text-align:center"><code>arange(s,e,step)</code></td>
+<td style="text-align:center">从 s 到 e，步长为 step</td>
 </tr>
 <tr>
-<td style="text-align:center">linspace(s,e,steps)</td>
-<td style="text-align:center">从s到e，均匀切分成steps份</td>
+<td style="text-align:center"><code>linspace(s,e,steps)</code></td>
+<td style="text-align:center">从 s 到 e，均匀切分成 steps 份</td>
 </tr>
 <tr>
-<td style="text-align:center">rand/randn(*sizes)</td>
+<td style="text-align:center"><code>rand/randn(*sizes)</code></td>
 <td style="text-align:center">均匀/标准分布</td>
 </tr>
 <tr>
-<td style="text-align:center">normal(mean,std)/uniform(from,to)</td>
+<td style="text-align:center"><code>normal(mean,std)/uniform(from,to)</code></td>
 <td style="text-align:center">正态分布/均匀分布</td>
 </tr>
 <tr>
-<td style="text-align:center">randperm(m)</td>
+<td style="text-align:center"><code>randperm(m)</code></td>
 <td style="text-align:center">随机排列</td>
 </tr>
 </tbody>
@@ -8642,6 +8674,131 @@ net <span class="token operator">=</span> MyDense<span class="token punctuation"
 </ul>
 <p><code>ParameterDict</code> 接收一个 <code>Parameter</code> 实例的字典作为输入然后得到一个参数字典，然后可以按照字典的规则使用了。</p>
 <p>例如使用 <code>update()</code> 新增参数，使用 <code>keys()</code> 返回所有键值，使用 <code>items()</code> 返回所有键值对等等。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MyDictDense</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>MyDictDense<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>params <span class="token operator">=</span> nn<span class="token punctuation">.</span>ParameterDict<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+                <span class="token string">'linear1'</span><span class="token punctuation">:</span> nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token string">'linear2'</span><span class="token punctuation">:</span> nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>params<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'linear3'</span><span class="token punctuation">:</span> nn<span class="token punctuation">.</span>Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment"># 新增</span>
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">,</span> choice<span class="token operator">=</span><span class="token string">'linear1'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> torch<span class="token punctuation">.</span>mm<span class="token punctuation">(</span>x<span class="token punctuation">,</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span>choice<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+net <span class="token operator">=</span> MyDictDense<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span></code></pre>
+<p>Output:</p>
+<pre class="language-none"><code class="language-none">MyDictDense(
+  (params): ParameterDict(
+      (linear1): Parameter containing: [torch.FloatTensor of size 4x4]
+      (linear2): Parameter containing: [torch.FloatTensor of size 4x1]
+      (linear3): Parameter containing: [torch.FloatTensor of size 4x2]
+  )
+)</code></pre>
+<p>于是我们可以根据不同的 key 进行不同的 forward feeding.</p>
+<pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">'linear1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">'linear2'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">'linear3'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.5082</span><span class="token punctuation">,</span> <span class="token number">1.5574</span><span class="token punctuation">,</span> <span class="token number">2.1651</span><span class="token punctuation">,</span> <span class="token number">1.2409</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> grad_fn<span class="token operator">=</span><span class="token operator">&lt;</span>MmBackward<span class="token operator">></span><span class="token punctuation">)</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.8783</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> grad_fn<span class="token operator">=</span><span class="token operator">&lt;</span>MmBackward<span class="token operator">></span><span class="token punctuation">)</span>
+tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">2.2193</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1.6539</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> grad_fn<span class="token operator">=</span><span class="token operator">&lt;</span>MmBackward<span class="token operator">></span><span class="token punctuation">)</span></code></pre>
+<h3 id="读取与存储"><a href="#读取与存储" class="headerlink" title="读取与存储"></a>读取与存储</h3><p>到目前为止，我们介绍了如何处理数据以及如何构建、训练和测试深度学习模型。</p>
+<p>然而在实际中，我们有时需要把训练好的模型部署到很多不同的设备。</p>
+<p>在这种情况下，我们可以把内存中训练好的模型参数存储在硬盘上供后续读取使用。</p>
+<ul>
+<li><strong>读写 <code>Tensor</code></strong></li>
+</ul>
+<p>我们可以直接使用 <code>save</code> 函数和 <code>load</code> 函数分别存储和读取 <code>Tensor</code>。</p>
+<p><code>save</code> 使用 Python 的 pickle 库将对象进行序列化，然后将序列化的对象保存到硬盘。</p>
+<p>使用 <code>save</code> 可以保存各种对象，包括 <code>nn.Module</code>, <code>Tensor</code>, <code>dict</code> 等等。</p>
+<p>而 <code>load</code> 使用 unpickle 工具将 pickle 的对象文件反序列化为内存。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch <span class="token keyword">import</span> nn
+
+x <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">'x.pt'</span><span class="token punctuation">)</span>
+
+x2 <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'x.pt'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x2<span class="token punctuation">)</span> <span class="token comment"># tensor([1., 1., 1.])</span>
+
+y <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">[</span>x<span class="token punctuation">,</span> y<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'xy.pt'</span><span class="token punctuation">)</span>
+xy_list <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'xy.pt'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>xy_list<span class="token punctuation">)</span> <span class="token comment"># [tensor([1., 1., 1.]), tensor([0., 0., 0., 0.])]</span>
+
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token punctuation">:</span> x<span class="token punctuation">,</span> <span class="token string">'y'</span><span class="token punctuation">:</span> y<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string">'xy_dict.pt'</span><span class="token punctuation">)</span>
+xy <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'xy_dict.pt'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>xy<span class="token punctuation">)</span> <span class="token comment"># &#123;'x': tensor([1., 1., 1.]), 'y': tensor([0., 0., 0., 0.])&#125;</span></code></pre>
+<ul>
+<li><strong>读写模型</strong></li>
+</ul>
+<p>PyTorch 中保存和加载训练模型有两种常见的方法:</p>
+<ol>
+<li>仅保存和加载模型参数(<code>state_dict</code>)；</li>
+<li>保存和加载整个模型。</li>
+</ol>
+<p><strong>保存和加载模型的 <code>state_dict()</code> 成员（Recommended）</strong></p>
+<p>保存：</p>
+<pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>model<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> PATH<span class="token punctuation">)</span> <span class="token comment"># 推荐的文件后缀名是 pt 或 pth</span></code></pre>
+<p>加载：</p>
+<pre class="language-python" data-language="python"><code class="language-python">model <span class="token operator">=</span> TheModelClass<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+model<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>PATH<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h3 id="GPU-计算"><a href="#GPU-计算" class="headerlink" title="GPU 计算"></a>GPU 计算</h3><p>到目前为止，我们一直在使用 CPU 计算。</p>
+<p>对复杂的神经网络和大规模的数据来说，使用 CPU 来计算可能不够高效。</p>
+<p>在本节中，我们将介绍如何使用单块 NVIDIA GPU 来计算。</p>
+<p>可以通过 <code>nvidia-smi</code> 命令来查看显卡信息。</p>
+<pre class="language-none"><code class="language-none">Wed Jan 26 11:48:28 2022
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 457.49       Driver Version: 457.49       CUDA Version: 11.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name            TCC&#x2F;WDDM | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage&#x2F;Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;|
+|   0  GeForce GTX 1650   WDDM  | 00000000:01:00.0 Off |                  N&#x2F;A |
+| N&#x2F;A   43C    P8     4W &#x2F;  N&#x2F;A |    359MiB &#x2F;  4096MiB |      8%      Default |
+|                               |                      |                  N&#x2F;A |
++-------------------------------+----------------------+----------------------+</code></pre>
+<ul>
+<li><strong>计算设备</strong></li>
+</ul>
+<p>PyTorch 可以指定用来存储和计算的设备，如使用内存的 CPU 或者使用显存的 GPU。</p>
+<p>默认情况下，PyTorch 会将数据创建在内存，然后利用 CPU 来计算。</p>
+<p>用 <code>torch.cuda.is_available()</code> 查看 GPU 是否可用:<br><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch <span class="token keyword">import</span> nn
+torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 输出 True</span></code></pre></p>
+<p>GPU 的相关信息查询：<br><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>device_count<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 查看 GPU 数量，输出 1</span>
+torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>current_device<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 查看当前 GPU 索引号，输出 0</span>
+torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>get_device_name<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment"># 根据索引号查看 GPU 名字，输出 'GeForce GTX 1050'</span></code></pre></p>
+<ul>
+<li><strong><code>Tensor</code> 的 GPU 计算</strong></li>
+</ul>
+<p>默认情况下，<code>Tensor</code> 会被存在内存上。因此，之前我们每次打印 <code>Tensor</code> 的时候看不到 GPU 相关标识。<br><pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment"># tensor([1, 2, 3])</span></code></pre><br>使用 <code>.cuda()</code> 可以将CPU上的 <code>Tensor</code> 转换（复制）到GPU上。</p>
+<p>如果有多块GPU，我们用 <code>.cuda(i)</code>来表示第 $i$ 块 GPU 及相应的显存（$i$ 从 0 开始）且 <code>cuda(0)</code> 和 <code>cuda()</code> 等价。</p>
+<pre class="language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> x<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment"># tensor([1, 2, 3], device='cuda:0')</span></code></pre>
+<p>可以通过 <code>Tensor</code> 的 <code>device</code> 属性来查看该 <code>Tensor</code> 所在的设备。<br><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>device<span class="token punctuation">)</span> <span class="token comment"># device(type='cuda', index=0)</span></code></pre><br>可以直接在创建的时候就指定设备。<br><pre class="language-python" data-language="python"><code class="language-python">device <span class="token operator">=</span> torch<span class="token punctuation">.</span>device<span class="token punctuation">(</span><span class="token string">'cuda'</span> <span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">'cpu'</span><span class="token punctuation">)</span>
+x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> device<span class="token operator">=</span>device<span class="token punctuation">)</span>
+<span class="token comment"># or</span>
+x <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment"># tensor([1, 2, 3], device='cuda:0')</span></code></pre><br>如果对在 GPU 上的数据进行运算，那么结果还是存放在 GPU 上。<br><pre class="language-python" data-language="python"><code class="language-python">y <span class="token operator">=</span> x<span class="token operator">**</span><span class="token number">2</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token comment"># tensor([1, 4, 9], device='cuda:0')</span></code></pre><br>需要注意的是，<strong>存储在不同位置中的数据是不可以直接进行计算的</strong>。即存放在 CPU 上的数据不可以直接与存放在 GPU 上的数据进行运算，位于不同 GPU 上的数据也是不能直接进行计算的。</p>
+<ul>
+<li><strong>模型的 GPU 计算</strong></li>
+</ul>
+<p>同 <code>Tensor</code> 类似，PyTorch 模型也可以用类似的方式转移到 GPU 上。</p>
+<ul>
+<li><code>.cuda(i)</code></li>
+<li><code>.cpu()</code></li>
+<li><code>.to(device)</code></li>
+</ul>
+<p>我们也可以通过检查模型的参数的 <code>device</code> 属性来查看存放模型的设备。</p>
+<p>同样的，需要保证模型输入的 <code>Tensor</code> 和模型都在同一设备上，否则会报错。</p>
 ]]></content>
       <categories>
         <category>理论</category>
