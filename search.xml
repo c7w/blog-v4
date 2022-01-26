@@ -7756,7 +7756,52 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 <li>§ 8 计算性能</li>
 </ul>
 <a id="more"></a>
-<h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2>]]></content>
+<h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2><h3 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h3><ul>
+<li><strong>二维互相关运算</strong></li>
+</ul>
+<p><img src="http://tangshusen.me/Dive-into-DL-PyTorch/img/chapter05/5.1_correlation.svg" alt="img"></p>
+<p>如图所示，输入是一个高和宽均为3的二维数组。我们将该数组的形状记为 $3 \times 3$ 或$（3，3）$。</p>
+<p>核数组的高和宽分别为 2。该数组在卷积计算中又称卷积核或过滤器（filter）。</p>
+<p>卷积核窗口（又称卷积窗口）的形状取决于卷积核的高和宽，即 $2 \times 2$。</p>
+<p>图中的阴影部分为第一个输出元素及其计算所使用的输入和核数组元素：</p>
+<p>$0\times0+1\times1+3\times2+4\times3=19$​​​​。</p>
+<p>在二维互相关运算中，卷积窗口从输入数组的最左上方开始，按从左往右、从上往下的顺序，按照特定的步长，依次在输入数组上滑动。</p>
+<p>当卷积窗口滑动到某一位置时，窗口中的输入子数组与核数组按元素相乘并求和，得到输出数组中相应位置的元素。</p>
+<ul>
+<li><strong>从互相关运算到卷积运算</strong></li>
+</ul>
+<p>实际上，卷积运算与互相关运算类似。<strong>为了得到卷积运算的输出，我们只需将核数组左右翻转并上下翻转，再与输入数组做互相关运算</strong>。</p>
+<ul>
+<li><strong>Feature Map 与 Receptive Field</strong></li>
+</ul>
+<p>二维卷积层输出的二维数组可以看作是输入在空间维度（宽和高）上某一级的表征，也叫特征图（feature map）。</p>
+<p>影响元素 $x$ 的前向计算的所有可能输入区域（可能大于输入的实际尺寸）叫做的 $x$ 感受野（receptive field）。</p>
+<p>以图为例，输入中阴影部分的四个元素是输出中阴影部分元素的感受野。</p>
+<p>我们将图中形状为 $2 \times 2$​​​ 的输出记为 $Y$​​，并考虑一个更深的卷积神经网络：将 $Y$ 与另一个形状为 $2 \times 2$ 的核数组做互相关运算，输出单个元素 $z$。那么，$z$ 在 $Y$ 上的 Receptive Field 为 $Y$ 的全部四个元素，在 $x$ 上的感受野包括其中全部 9 个元素。</p>
+<p>可见，我们可以<strong>通过更深的卷积神经网络使特征图中单个元素的感受野变得更加广阔，从而捕捉输入上更大尺寸的特征</strong>。</p>
+<h3 id="Padding-amp-Stride"><a href="#Padding-amp-Stride" class="headerlink" title="Padding &amp; Stride"></a>Padding &amp; Stride</h3><p>本节我们将介绍卷积层的两个超参数，即填充和步幅。它们可以对给定形状的输入和卷积核改变输出形状。</p>
+<ul>
+<li><strong>Padding</strong></li>
+</ul>
+<p>填充（padding）是指在输入高和宽的两侧填充元素（通常是 0 元素）。</p>
+<p><img src="http://tangshusen.me/Dive-into-DL-PyTorch/img/chapter05/5.2_conv_pad.svg" alt="img"></p>
+<p>图中我们在原输入高和宽的两侧分别添加了值为 0 的元素，使得输入高和宽从 3 变成了 5 ，并导致输出高和宽由 2 增加到 4。</p>
+<p>一般来说，如果在高的两侧一共填充 $p_h$ 行，在宽的两侧一共填充 $p_w$ 列，在很多情况下，我们会设置 $p_h=k_h-1$ 和 $p_w=k_w-1$ 来使输入和输出具有相同的高和宽，其中 $k_h\times k_w$ 是卷积核窗口形状。这样会方便在构造网络时推测每个层的输出形状。</p>
+<p>假设这里 $k_h$ 是奇数，我们会在高的两侧分别填充 $p_h/2$ 行。如果 $k_h$ 是偶数，一种可能是在输入的顶端一侧填充 $\lceil p_h/2\rceil$ 行，而在底端一侧填充 $\lfloor p_h/2\rfloor$​ 行。在宽的两侧填充同理。卷积神经网络经常使用<strong>奇数高宽的卷积核</strong> $k_h \times k_w$，如 1、3、5 和 7，所以两端上的填充个数相等。</p>
+<p>对任意的二维数组 <code>X</code>，设它的第 <code>i</code> 行第 <code>j</code> 列的元素为 <code>X[i,j]</code>。当两端上的填充个数相等，并使输入和输出具有相同的高和宽时，我们就知道输出 <code>Y[i,j]</code> 是由输入以 <code>X[i,j]</code> 为中心的窗口同卷积核进行互相关计算得到的。</p>
+<ul>
+<li><strong>Stride</strong></li>
+</ul>
+<p>在上一节里我们介绍了二维互相关运算。卷积窗口从输入数组的最左上方开始，按从左往右、从上往下的顺序，依次在输入数组上滑动。我们将每次滑动的行数和列数称为步幅（stride）。</p>
+<p><img src="http://tangshusen.me/Dive-into-DL-PyTorch/img/chapter05/5.2_conv_stride.svg" alt="img"></p>
+<p>目前我们看到的例子里，在高和宽两个方向上步幅均为1。我们也可以使用更大步幅。</p>
+<p>图中展示了在高上步幅为 3、在宽上步幅为 2 的二维互相关运算。可以看到，输出第一列第二个元素时，卷积窗口向下滑动了 3 行，而在输出第一行第二个元素时卷积窗口向右滑动了 2 列。当卷积窗口在输入上再向右滑动 2 列时，由于输入元素无法填满窗口，无结果输出。</p>
+<h3 id="多通道"><a href="#多通道" class="headerlink" title="多通道"></a>多通道</h3><p>前面两节里我们用到的输入和输出都是二维数组，但真实数据的维度经常更高。</p>
+<p>例如，彩色图像在高和宽 2 个维度外还有 RGB（红、绿、蓝）3 个颜色通道。</p>
+<p>假设彩色图像的高和宽分别是 $h$ 和 $w$（像素），那么它可以表示为一个 $3\times h\times w$ 的多维数组。</p>
+<p>我们将大小为 3 的这一维称为通道（channel）维。</p>
+<p>本节我们将介绍含多个输入通道或多个输出通道的卷积核。</p>
+]]></content>
       <categories>
         <category>理论</category>
         <category>理论/机器学习</category>
