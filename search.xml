@@ -7737,7 +7737,7 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
       </tags>
   </entry>
   <entry>
-    <title>《动手学深度学习》 Pytorch ver. 阅读摘录</title>
+    <title>《动手学深度学习》 Pytorch ver. 阅读摘录 Part A</title>
     <url>/dive-into-dl-pytorch/</url>
     <content><![CDATA[<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/cover.png" alt=""></p>
 <ul>
@@ -7748,6 +7748,21 @@ A<span class="token double-colon punctuation">::</span>y <span class="token oper
 <p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/book-org.svg" alt="封面"></p>
 <p>本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学习。希望阅读本书能带来更多的收获吧。</p>
 <p>与前面的一些笔记相比，本文更加侧重于「实践」。也就是说切实地提升自己的代码能力。</p>
+<p>Part A 包含：</p>
+<ul>
+<li>§ 1 深度学习简介</li>
+<li>§ 2 预备知识：Pytorch</li>
+<li>§ 3 深度学习基础<ul>
+<li>线性回归，Softmax 回归，多层感知机三类基本模型</li>
+<li>权重衰减和 Dropout 两类应对过拟合的方法</li>
+</ul>
+</li>
+<li>§ 4 深度学习计算<ul>
+<li>构造 Pytorch 模型的方式</li>
+<li></li>
+</ul>
+</li>
+</ul>
 <a id="more"></a>
 <h2 id="深度学习简介"><a href="#深度学习简介" class="headerlink" title="深度学习简介"></a>深度学习简介</h2><ul>
 <li><strong>机器学习与深度学习的关系</strong></li>
@@ -7976,7 +7991,7 @@ tensor<span class="token punctuation">(</span><span class="token punctuation">[<
 <span class="token boolean">False</span>
 tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
 tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
-<h2 id="深度学习基础"><a href="#深度学习基础" class="headerlink" title="深度学习基础"></a>深度学习基础</h2><h3 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h3><p>首先，回归问题的输出是连续值，而分类问题的输出是离散值，这是二者的区别。</p>
+<h2 id="深度学习基础"><a href="#深度学习基础" class="headerlink" title="深度学习基础"></a>深度学习基础</h2><h3 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h3><h4 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h4><p>首先，回归问题的输出是连续值，而分类问题的输出是离散值，这是二者的区别。</p>
 <ul>
 <li><strong>模型定义</strong>：假设我们采集的样本数为 $n$​，索引为 $i$​ 的样本的特征为 $x_1^{(i)}$​ 和 $x_2^{(i)}$​，标签为 $y^{(i)}$​。对于索引为 $i$​ 的房屋，线性回归模型的房屋价格预测表达式为 <script type="math/tex">\hat{y}^{(i)} = x_1^{(i)} w_1 + x_2^{(i)} w_2 + b</script>​</li>
 <li><strong>损失函数</strong>：$\ell^{(i)}(w_1, w_2, b) = \frac{1}{2} \left(\hat{y}^{(i)} - y^{(i)}\right)^2$​, $ \ell(w_1, w_2, b) =\frac{1}{n} \sum_{i=1}^n \ell^{(i)}(w_1, w_2, b) =\frac{1}{n} \sum_{i=1}^n \frac{1}{2}\left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right)^2$​</li>
@@ -7992,7 +8007,7 @@ tensor<span class="token punctuation">(</span><span class="token punctuation">[<
 \begin{aligned} w_1 &\leftarrow w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial w_1} = w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_1^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right), \\
 w_2 &\leftarrow w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial w_2} = w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_2^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right), \\
 b &\leftarrow b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b) }{\partial b} = b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}\left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right). \end{aligned}</script><p>在上式中，$|\mathcal{B}|$ 代表每个小批量中的样本个数（批量大小，batch size），$\eta$ 称作学习率（learning rate）并取正数。需要强调的是，这里的批量大小和学习率的值是人为设定的，并不是通过模型训练学出的，因此叫作超参数（hyperparameter）。我们通常所说的“调参”指的正是调节超参数，例如通过反复试错来找到超参数合适的值。</p>
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><ul>
+<h5 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h5><ul>
 <li>生成数据集</li>
 </ul>
 <pre class="language-python" data-language="python"><code class="language-python">num_inputs <span class="token operator">=</span> <span class="token number">2</span>
@@ -8229,7 +8244,7 @@ Parameter Group 0
 <p>输出：<br><pre class="language-none"><code class="language-none">epoch 1, loss: 0.000457
 epoch 2, loss: 0.000081
 epoch 3, loss: 0.000198</code></pre></p>
-<h3 id="Softmax-Regression"><a href="#Softmax-Regression" class="headerlink" title="Softmax Regression"></a>Softmax Regression</h3><p>线性回归模型适用于<strong>输出为连续值</strong>的情景。</p>
+<h4 id="Softmax-Regression"><a href="#Softmax-Regression" class="headerlink" title="Softmax Regression"></a>Softmax Regression</h4><p>线性回归模型适用于<strong>输出为连续值</strong>的情景。</p>
 <p>在另一类情景中，模型输出可以是一个像图像类别这样的<strong>离散值</strong>。对于这样的离散值预测问题，我们可以使用诸如 softmax 回归在内的<strong>分类模型</strong>。</p>
 <p>和线性回归不同，softmax 回归的<strong>输出单元从一个变成了多个</strong>，且引入了 softmax 运算使输出更适合离散值的预测和训练。本节以 softmax 回归模型为例，介绍神经网络中的分类模型。</p>
 <p>softmax 回归跟线性回归一样将输入特征与权重做线性叠加。与线性回归的一个主要不同在于，softmax 回归的<strong>输出值个数等于标签里的类别数</strong>。</p>
@@ -8253,7 +8268,7 @@ o_3 &= x_1 w_{13} + x_2 w_{23} + x_3 w_{33} + x_4 w_{43} + b_3. \\
 H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)},</script><p>交叉熵只关心<strong>对正确类别</strong>的预测概率，因为只要其值足够大，就可以确保分类结果正确。</p>
 <p>假设训练数据集的样本数为 $n$​，交叉熵损失函数定义为 $\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) $​. 其中$\boldsymbol{\Theta}$​​代表模型参数。</p>
 <p>注意：这里的交叉熵是 H = - [ 实际值 * log(预测值) ] 的求和。而 log(预测值) 却又可以替换为是预测时的 logits $o_i$​​​，二者之间只差了一个系数。因此背后实现可以直接用 logits 参与简化计算。</p>
-<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><blockquote>
+<blockquote>
 <p>数据集与相关包的介绍：Fashion-MNIST</p>
 <p>本节我们将使用 torchvision 包，它是服务于 PyTorch 深度学习框架的，主要用来构建计算机视觉模型。 torchvision 主要由以下几部分构成：</p>
 <ol>
@@ -8263,6 +8278,235 @@ H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y
 <li><code>torchvision.utils</code>: 其他的一些有用的方法。</li>
 </ol>
 </blockquote>
+<h4 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h4><ul>
+<li>仅添加隐藏层：即便再添加更多的隐藏层，将线性隐藏层间彼此相接依然只能与仅含输出层的单层神经网络等价。</li>
+</ul>
+<p>上述问题的根源在于全连接层只是对数据做仿射变换（affine transformation），而多个仿射变换的叠加仍然是一个仿射变换。</p>
+<p>解决问题的一个方法是引入非线性变换，例如对隐藏变量使用按元素运算的非线性函数进行变换，然后再作为下一个全连接层的输入。</p>
+<p>这个非线性函数被称为激活函数（activation function）。下面我们介绍几个常用的激活函数。</p>
+<ul>
+<li>$Relu(x) = \max(0, x)$.</li>
+<li>$sigmoid(x) =\sigma(x) = \dfrac 1 {1 + e^{-x}}$.</li>
+<li>$\text{tanh}(x) = \frac{1 - \exp(-2x)}{1 + \exp(-2x)}$.</li>
+</ul>
+<p>多层感知机就是含有至少一个隐藏层的由全连接层组成的神经网络，且每个隐藏层的输出通过激活函数进行变换。多层感知机的层数和各隐藏层中隐藏单元个数都是超参数。</p>
+<h3 id="应对过拟合"><a href="#应对过拟合" class="headerlink" title="应对过拟合"></a>应对过拟合</h3><h4 id="L2-Regularization"><a href="#L2-Regularization" class="headerlink" title="L2 Regularization"></a>L2 Regularization</h4><ul>
+<li><strong>权重衰减</strong>是一种应对过拟合的方法</li>
+<li>权重衰减等价于 $L_2$ 范数正则化（regularization）。正则化通过为模型损失函数添加惩罚项使学出的模型参数值较小，是应对过拟合的常用手段。我们先描述 $L_2$ 范数正则化，再解释它为何又称权重衰减。</li>
+</ul>
+<p>$L_2$ 范数正则化在模型原损失函数基础上添加 $L_2$ 范数惩罚项，从而得到训练所需要最小化的函数。</p>
+<p>$L_2$ 范数惩罚项指的是模型权重参数每个元素的平方和与一个正的常数的乘积。即定义新的 Loss Function 为：</p>
+<script type="math/tex; mode=display">
+\ell(w, b) + \frac{\lambda}{2n} \|\boldsymbol{w}\|^2</script><p>为什么 $L_2$ Regularization 能起到“权重衰减”的作用呢？我们考虑 Optimizer 的迭代方式…</p>
+<script type="math/tex; mode=display">
+\begin{aligned} w_1 &\leftarrow \left(1- \frac{\eta\lambda}{|\mathcal{B}|} \right)w_1 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_1^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right),\\ 
+
+w_2 &\leftarrow \left(1- \frac{\eta\lambda}{|\mathcal{B}|} \right)w_2 - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_2^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right). \end{aligned}</script><p>这是因为如果我们对损失函数求梯度，就必然带有了和原有的 $w$ 有关的一项。然后我们在做优化迭代的过程中，$L_2$ 范数正则化令权重 $w_1$ 和 $w_2$ 先自乘小于 1 的数，再减去不含惩罚项的梯度。因此，$L_2$ 范数正则化又叫权重衰减。</p>
+<p>权重衰减通过惩罚绝对值较大的模型参数为需要学习的模型增加了限制，这可能对过拟合有效。实际场景中，我们有时也在惩罚项中添加偏差元素的平方和。</p>
+<h5 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h5><ul>
+<li>定义 L2 范数惩罚项</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">l2_penalty</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>w<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span></code></pre>
+<ul>
+<li>Train (From scratch)</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">fit_and_plot</span><span class="token punctuation">(</span>lambd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    w<span class="token punctuation">,</span> b <span class="token operator">=</span> init_params<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    train_ls<span class="token punctuation">,</span> test_ls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> X<span class="token punctuation">,</span> y <span class="token keyword">in</span> train_iter<span class="token punctuation">:</span>
+            <span class="token comment"># 添加了L2范数惩罚项</span>
+            l <span class="token operator">=</span> loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>X<span class="token punctuation">,</span> w<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token operator">+</span> lambd <span class="token operator">*</span> l2_penalty<span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+            l <span class="token operator">=</span> l<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token keyword">if</span> w<span class="token punctuation">.</span>grad <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                w<span class="token punctuation">.</span>grad<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                b<span class="token punctuation">.</span>grad<span class="token punctuation">.</span>data<span class="token punctuation">.</span>zero_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            l<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            d2l<span class="token punctuation">.</span>sgd<span class="token punctuation">(</span><span class="token punctuation">[</span>w<span class="token punctuation">,</span> b<span class="token punctuation">]</span><span class="token punctuation">,</span> lr<span class="token punctuation">,</span> batch_size<span class="token punctuation">)</span>
+        train_ls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>train_features<span class="token punctuation">,</span> w<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">,</span> train_labels<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        test_ls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>test_features<span class="token punctuation">,</span> w<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">,</span> test_labels<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    d2l<span class="token punctuation">.</span>semilogy<span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> num_epochs <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> train_ls<span class="token punctuation">,</span> <span class="token string">'epochs'</span><span class="token punctuation">,</span> <span class="token string">'loss'</span><span class="token punctuation">,</span>
+                 <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> num_epochs <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> test_ls<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'train'</span><span class="token punctuation">,</span> <span class="token string">'test'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'L2 norm of w:'</span><span class="token punctuation">,</span> w<span class="token punctuation">.</span>norm<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li>Train (Simple)</li>
+</ul>
+<p>这里我们直接在构造优化器实例时通过 <code>weight_decay</code> 参数来指定权重衰减超参数。默认下，PyTorch 会对权重和偏差同时衰减。我们可以分别对权重和偏差构造优化器实例，从而只对权重衰减。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">fit_and_plot_pytorch</span><span class="token punctuation">(</span>wd<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 对权重参数衰减。权重名称一般是以weight结尾</span>
+    net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_inputs<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    nn<span class="token punctuation">.</span>init<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>net<span class="token punctuation">.</span>weight<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    nn<span class="token punctuation">.</span>init<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>net<span class="token punctuation">.</span>bias<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    optimizer_w <span class="token operator">=</span> torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span>params<span class="token operator">=</span><span class="token punctuation">[</span>net<span class="token punctuation">.</span>weight<span class="token punctuation">]</span><span class="token punctuation">,</span> lr<span class="token operator">=</span>lr<span class="token punctuation">,</span> weight_decay<span class="token operator">=</span>wd<span class="token punctuation">)</span> <span class="token comment"># 对权重参数衰减</span>
+    optimizer_b <span class="token operator">=</span> torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">(</span>params<span class="token operator">=</span><span class="token punctuation">[</span>net<span class="token punctuation">.</span>bias<span class="token punctuation">]</span><span class="token punctuation">,</span> lr<span class="token operator">=</span>lr<span class="token punctuation">)</span>  <span class="token comment"># 不对偏差参数衰减</span>
+
+    train_ls<span class="token punctuation">,</span> test_ls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> X<span class="token punctuation">,</span> y <span class="token keyword">in</span> train_iter<span class="token punctuation">:</span>
+            l <span class="token operator">=</span> loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            optimizer_w<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            optimizer_b<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            l<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># 对两个 optimizer 实例分别调用 step 函数，从而分别更新权重和偏差</span>
+            optimizer_w<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            optimizer_b<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        train_ls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>train_features<span class="token punctuation">)</span><span class="token punctuation">,</span> train_labels<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        test_ls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">(</span>net<span class="token punctuation">(</span>test_features<span class="token punctuation">)</span><span class="token punctuation">,</span> test_labels<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    d2l<span class="token punctuation">.</span>semilogy<span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> num_epochs <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> train_ls<span class="token punctuation">,</span> <span class="token string">'epochs'</span><span class="token punctuation">,</span> <span class="token string">'loss'</span><span class="token punctuation">,</span>
+                 <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> num_epochs <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> test_ls<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'train'</span><span class="token punctuation">,</span> <span class="token string">'test'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'L2 norm of w:'</span><span class="token punctuation">,</span> net<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>norm<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h4 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h4><p>除了前一节介绍的权重衰减以外，深度学习模型常常使用丢弃法（Dropout）来应对过拟合问题。丢弃法有一些不同的变体。本节中提到的丢弃法特指倒置丢弃法（inverted dropout）。</p>
+<p>当对某个隐藏层使用丢弃法时，该层的隐藏单元将有一定概率被丢弃掉。设丢弃概率为 $p$，那么有 $p$ 的概率其输出 $h_i$ 会被清零，有 $1-p$ 的概率 $h_i$ 会除以 $1-p$ 做拉伸。</p>
+<p>丢弃概率是丢弃法的超参数。具体来说，设随机变量 $\xi_i$ 为 0 和 1 的概率分别为 $p$ 和 $1-p$ 。使用丢弃法时我们计算新的隐藏单元 $ h_i’ = \frac{\xi_i}{1-p} h_i $，由于 $E(\xi_i) = 1-p$，因此</p>
+<script type="math/tex; mode=display">
+E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i</script><p>即<strong>丢弃法不改变其输入的期望值</strong>。</p>
+<ul>
+<li>实现（Simple）</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+        d2l<span class="token punctuation">.</span>FlattenLayer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_inputs<span class="token punctuation">,</span> num_hiddens1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>drop_prob1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment"># Here</span>
+        nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_hiddens1<span class="token punctuation">,</span> num_hiddens2<span class="token punctuation">)</span><span class="token punctuation">,</span> 
+        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>drop_prob2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment"># Here</span>
+        nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_hiddens2<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    nn<span class="token punctuation">.</span>init<span class="token punctuation">.</span>normal_<span class="token punctuation">(</span>param<span class="token punctuation">,</span> mean<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token operator">=</span><span class="token number">0.01</span><span class="token punctuation">)</span></code></pre>
+<blockquote>
+<ul>
+<li><strong>数值稳定性</strong></li>
+</ul>
+<p>深度模型有关数值稳定性的典型问题是衰减（vanishing）和爆炸（explosion）。</p>
+<p>当神经网络的层数较多时，模型的数值稳定性容易变差。假设一个层数为 $L$ 的多层感知机的第 $l$ 层 $\boldsymbol{H}^{(l)}$ 的权重参数为 $\boldsymbol{W}^{(l)}$，输出层 $\boldsymbol{H}^{(L)}$ 的权重参数为 $\boldsymbol{W}^{(L)}$。</p>
+<p>为了便于讨论，不考虑偏差参数，且设所有隐藏层的激活函数为恒等映射 $\phi(x) = x$。</p>
+<p>给定输入 $\boldsymbol{X}$，多层感知机的第 $l$ 层的输出 $\boldsymbol{H}^{(l)} = \boldsymbol{X} \boldsymbol{W}^{(1)} \boldsymbol{W}^{(2)} \ldots \boldsymbol{W}^{(l)}$。</p>
+<p>此时，如果层数$l$较大，$\boldsymbol{H}^{(l)}$ 的计算可能会出现衰减或爆炸。</p>
+<p>举个例子，假设输入和所有层的权重参数都是标量，如权重参数为 0.2 和 5，多层感知机的第 30 层输出为输入 $\boldsymbol{X}$ 分别与 $0.2^{30} \approx 1 \times 10^{-21}$（衰减）和 $5^{30} \approx 9 \times 10^{20}$（爆炸）的乘积。</p>
+<p>类似地，当层数较多时，梯度的计算也更容易出现衰减或爆炸。</p>
+<ul>
+<li><strong>模型初始化</strong></li>
+</ul>
+<p>在神经网络中，通常需要随机初始化模型参数。下面我们来解释这样做的原因。</p>
+<p>考虑多层感知机模型。如果将每个隐藏单元的参数都初始化为相等的值，那么在正向传播时每个隐藏单元将根据相同的输入计算出相同的值，并传递至输出层。</p>
+<p>在反向传播中，每个隐藏单元的参数梯度值相等。因此，这些参数在使用基于梯度的优化算法迭代后值依然相等。</p>
+<p>之后的迭代也是如此。在这种情况下，无论隐藏单元有多少，隐藏层本质上只有 1 个隐藏单元在发挥作用。</p>
+<p>因此，正如在前面的实验中所做的那样，我们通常将神经网络的模型参数，特别是权重参数，进行随机初始化。</p>
+<p>PyTorch 中 <code>nn.Module</code> 的模块参数都采取了较为合理的初始化策略。</p>
+</blockquote>
+<h2 id="深度学习计算"><a href="#深度学习计算" class="headerlink" title="深度学习计算"></a>深度学习计算</h2><h3 id="模型构造"><a href="#模型构造" class="headerlink" title="模型构造"></a>模型构造</h3><ul>
+<li>可以通过继承<code>Module</code>类来构造模型，重载 <code>__init__</code> 函数和 <code>forward</code> 函数。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MLP</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 声明带有模型参数的层，这里声明了两个全连接层</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 调用 MLP 父类 Module 的构造函数来进行必要的初始化。这样在构造实例时还可以指定其他函数</span>
+        <span class="token comment"># 参数，如“模型参数的访问、初始化和共享”一节将介绍的模型参数 params</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>MLP<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>hidden <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">784</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span> <span class="token comment"># 隐藏层</span>
+        self<span class="token punctuation">.</span>act <span class="token operator">=</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>output <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>  <span class="token comment"># 输出层</span>
+
+
+    <span class="token comment"># 定义模型的前向计算，即如何根据输入 x 计算返回所需要的模型输出</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        a <span class="token operator">=</span> self<span class="token punctuation">.</span>act<span class="token punctuation">(</span>self<span class="token punctuation">.</span>hidden<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>output<span class="token punctuation">(</span>a<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>Sequential</code>、<code>ModuleList</code>、<code>ModuleDict</code>类都继承自<code>Module</code>类。</li>
+</ul>
+<p><strong><code>Sequential</code></strong></p>
+<pre class="language-python" data-language="python"><code class="language-python">net <span class="token operator">=</span> MySequential<span class="token punctuation">(</span>
+        nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">784</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+        <span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+net<span class="token punctuation">(</span>X<span class="token punctuation">)</span></code></pre>
+<p><strong><code>ModuleList</code></strong></p>
+<pre class="language-python" data-language="python"><code class="language-python">net <span class="token operator">=</span> nn<span class="token punctuation">.</span>ModuleList<span class="token punctuation">(</span><span class="token punctuation">[</span>nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">784</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+net<span class="token punctuation">.</span>append<span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># # 类似 List 的 append 操作</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment"># 类似 List 的索引访问</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+<span class="token comment"># net(torch.zeros(1, 784)) # 会报 NotImplementedError</span></code></pre>
+<p><code>ModuleList</code>仅仅是一个储存各种模块的列表，这些模块之间没有联系也没有顺序（所以不用保证相邻层的输入输出维度匹配），而且没有实现 <code>forward</code> 功能需要自己实现，所以上面执行 <code>net(torch.zeros(1, 784))</code> 会报<code>NotImplementedError</code>；而 <code>Sequential</code> 内的模块需要按照顺序排列，要保证相邻层的输入输出大小相匹配，内部 <code>forward</code> 功能已经实现。此外，<code>ModuleList</code> 不同于一般的 Python 的 <code>list</code>，加入到 <code>ModuleList</code> 里面的所有模块的参数会被自动添加到整个网络中。</p>
+<p><strong><code>ModuleDict</code></strong></p>
+<p><code>ModuleDict</code> 接收一个子模块的字典作为输入, 然后也可以类似字典那样进行添加访问操作。</p>
+<pre class="language-python" data-language="python"><code class="language-python">net <span class="token operator">=</span> nn<span class="token punctuation">.</span>ModuleDict<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token string">'linear'</span><span class="token punctuation">:</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">784</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">'act'</span><span class="token punctuation">:</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+net<span class="token punctuation">[</span><span class="token string">'output'</span><span class="token punctuation">]</span> <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token comment"># 添加</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">[</span><span class="token string">'linear'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># 访问</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">.</span>output<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+<span class="token comment"># net(torch.zeros(1, 784)) # 会报NotImplementedError</span>
+</code></pre>
+<p>和 <code>ModuleList</code> 一样，<code>ModuleDict</code> 实例仅仅是存放了一些模块的字典，并没有定义 <code>forward</code> 函数需要自己定义。同样，<code>ModuleDict</code> 也与Python的 <code>Dict</code> 有所不同，<code>ModuleDict</code> 里的所有模块的参数会被自动添加到整个网络中。</p>
+<ul>
+<li>与<code>Sequential</code>不同，<code>ModuleList</code>和<code>ModuleDict</code>并没有定义一个完整的网络，它们只是将不同的模块存放在一起，需要自己定义<code>forward</code>函数。</li>
+<li>虽然<code>Sequential</code>等类可以使模型构造更加简单，但直接继承<code>Module</code>类可以极大地拓展模型构造的灵活性。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">FancyMLP</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>FancyMLP<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+
+        self<span class="token punctuation">.</span>rand_weight <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span> <span class="token comment"># 不可训练参数（常数参数）</span>
+        self<span class="token punctuation">.</span>linear <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token comment"># 使用创建的常数参数，以及 nn.functional 中的 relu 函数和 mm 函数</span>
+        x <span class="token operator">=</span> nn<span class="token punctuation">.</span>functional<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>mm<span class="token punctuation">(</span>x<span class="token punctuation">,</span> self<span class="token punctuation">.</span>rand_weight<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># 复用全连接层。等价于两个全连接层共享参数</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token comment"># 控制流，这里我们需要调用 item 函数来返回标量进行比较</span>
+        <span class="token keyword">while</span> x<span class="token punctuation">.</span>norm<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+            x <span class="token operator">/=</span> <span class="token number">2</span>
+        <span class="token keyword">if</span> x<span class="token punctuation">.</span>norm<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.8</span><span class="token punctuation">:</span>
+            x <span class="token operator">*=</span> <span class="token number">10</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h3 id="模型参数的访问、初始化与共享"><a href="#模型参数的访问、初始化与共享" class="headerlink" title="模型参数的访问、初始化与共享"></a>模型参数的访问、初始化与共享</h3><p>本节用到的模型：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch <span class="token keyword">import</span> nn
+<span class="token keyword">from</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">import</span> init
+
+net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># pytorch 已进行默认初始化</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+X <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+Y <span class="token operator">=</span> net<span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+Output<span class="token punctuation">:</span>
+Sequential<span class="token punctuation">(</span>
+  <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span> ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span> Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> out_features<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre>
+<ul>
+<li>访问模型参数</li>
+</ul>
+<p>对于 <code>Sequential</code> 实例（派生自 <code>Module</code>）中含模型参数的层，我们可以通过 <code>Module</code> 类的 <code>parameters()</code> 或者 <code>named_parameters</code> 方法来访问所有参数（以迭代器的形式返回），后者除了返回参数 <code>Tensor</code> 外还会返回其名字。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'generator'</span><span class="token operator">></span>
+
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">for</span> name<span class="token punctuation">,</span> param <span class="token keyword">in</span> net<span class="token punctuation">.</span>named_parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     <span class="token keyword">print</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> param<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token number">0.</span>weight torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token number">0.</span>bias torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token number">2.</span>weight torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token number">2.</span>bias torch<span class="token punctuation">.</span>Size<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p>接下来访问单层的参数。对于使用 <code>Sequential</code> 类构造的神经网络，我们可以通过方括号 <code>[]</code> 来访问网络的任一层。索引 0 表示隐藏层为 <code>Sequential</code> 实例最先添加的层。</p>
+<pre class="language-python" data-language="python"><code class="language-python"></code></pre>
 ]]></content>
       <categories>
         <category>理论</category>
