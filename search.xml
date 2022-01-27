@@ -9885,13 +9885,55 @@ ic| net(data).shape: torch.Size([4, 10])</code></pre>
 <li>§ 8 计算性能</li>
 </ul>
 <a id="more"></a>
-<h2 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h2>]]></content>
+<h2 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h2><h3 id="优化与深度学习"><a href="#优化与深度学习" class="headerlink" title="优化与深度学习"></a>优化与深度学习</h3><p>本节将讨论优化与深度学习的关系，以及优化在深度学习中的挑战。</p>
+<p>在一个深度学习问题中，我们通常会预先定义一个损失函数。有了损失函数以后，我们就可以使用优化算法试图将其最小化。在优化中，这样的损失函数通常被称作优化问题的<strong>目标函数</strong>。依据惯例，优化算法通常只考虑最小化目标函数。其实，任何最大化问题都可以很容易地转化为最小化问题，只需令目标函数的相反数为新的目标函数即可。</p>
+<p>优化的挑战：</p>
+<ul>
+<li>局部最小值</li>
+<li>Saddle Point</li>
+</ul>
+]]></content>
       <categories>
         <category>理论</category>
         <category>理论/机器学习</category>
       </categories>
       <tags>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>爬取《雨课堂》慕课字幕</title>
+    <url>/yuketang-caption-crawler/</url>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/27/vkPmGVL9IZoWFiX.png" alt="image-20220127154939393"></p>
+<a id="more"></a>
+<p>// 这篇文章现在还很乱，只是草稿.jpeg</p>
+<p>什么爬不爬的，ta 就在那里。</p>
+<p>目前只是逆向找到了这个字幕存的地址。</p>
+<h2 id="Break-on-change"><a href="#Break-on-change" class="headerlink" title="Break on change"></a>Break on change</h2><p>首先自然是取字幕所在的那个 xt-caption 元素，然后打上 Break on change.</p>
+<blockquote>
+<p>在Javascript调试中，我们经常会使用到断点调试。其实，在DOM结构的调试中，我们也可以使用断点方法，这就是DOM Breakpoint（DOM断点）。</p>
+<p>具体的使用方法：</p>
+<p>在Chrome浏览器中，打开开发者工具，先选中一个页面元素，然后点击鼠标右键，依次点击菜单中的”Break on …”——勾选“Attributes modifications”。刷新页面，当该元素的属性发生变化时，就会暂停脚本的执行，并且定位到改变发生的地方。</p>
+<p>除了可以监视DOM元素本身的属性变化，Chrome 和 Firebug 还可以监视其子元素的变化，以及何时元素被删除。</p>
+</blockquote>
+<h2 id="查看调用栈"><a href="#查看调用栈" class="headerlink" title="查看调用栈"></a>查看调用栈</h2><p>然后是当 Trigger 了字幕更改 Event 之后，逐个检查这里的调用栈</p>
+<p><img src="https://s2.loli.net/2022/01/27/e9qdIOvc2butLP3.png" alt="image-20220127155350265"></p>
+<p>然后在这里看起来像是在可疑的发请求的地方找到了一个地址</p>
+<p><img src="https://s2.loli.net/2022/01/27/NoOutDYEpwHPzy3.png" alt="image-20220127155631381"></p>
+<p>然后在 HTML 里面全文检索竟然找到了一样的地址。Lucky，本来我觉得这必须要爬取HTML后把对应的JS全都爬下来才能找到每个视频对应的字幕地址TaT</p>
+<p><img src="https://s2.loli.net/2022/01/27/HdU58pV4NkJyASC.png" alt="image-20220127155810865"></p>
+<p>批量爬数据的脚本没写，回头用的时候再说吧。</p>
+<p><img src="https://s2.loli.net/2022/01/27/uGwhPFHA176dXKy.png" alt="image-20220127160055541"></p>
+<p>清华的这个 yuketang MOOC 平台和学堂在线那个平台竟然是一样的，只不过后端不一样，这简直就和 net9.org 和 stu.cs.tsinghua.edu.cn 的后台一样，写一份程序自己用一份，对外推一份。</p>
+<p>这篇文章有时间再好好整理吧。想要爬数据的都不用点进来这篇文章，直接看 banner 头图应该就没问题了。当然要是头图看不懂的话这篇文章更是看不懂的。</p>
+<p>以上desu。<s>不对我怎么又在摸鱼</s></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/Python应用</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
       </tags>
   </entry>
 </search>

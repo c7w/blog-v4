@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.c7w.tech/yuketang-caption-crawler/</loc>
+    
+    <lastmod>2022-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.c7w.tech/dive-into-dl-pytorch-C/</loc>
     
     <lastmod>2022-01-27</lastmod>
