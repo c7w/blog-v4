@@ -3371,7 +3371,8 @@ s<span class="token punctuation">.</span>close<span class="token punctuation">(<
   <entry>
     <title>GAMES101 PA 报告兼课程重点算法回顾</title>
     <url>/games101-pa/</url>
-    <content><![CDATA[<p>// TODO: 这里本来应该有一张图片和文章摘要，但是现在还没写</p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
+<p>// TODO: 写摘要</p>
 <a id="more"></a>
 <h2 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h2><blockquote>
 <p>本次作业的任务是填写一个<strong>旋转矩阵</strong>和一个<strong>透视投影矩阵</strong>。</p>
@@ -3383,23 +3384,23 @@ s<span class="token punctuation">.</span>close<span class="token punctuation">(<
 <li>视图变换：定义 $M_{view}$ 变换相机，使得经过该变换满足 $\vec e = \vec 0, \hat g = -\hat z, \hat t = \hat y $，其中：$\vec e$ 为相机所在位置， $\hat g$ 为相机看的方向，$\hat t$ 为相机的向上方向。</li>
 </ul>
 <script type="math/tex; mode=display">
-M_{view} = R_{view}T_{view} \ (**)\\
+M_{view} = R_{view}T_{view} \\ 
 
-T_{view} = \begin{bmatrix} 1&0&0&-x_e\\
-0&1&0&-y_e\\
-0&0&1&-z_e\\
-0&0&0&1\end{bmatrix}\\
+T_{view} = \begin{bmatrix} 1&0&0&-x_e \\ 
+0&1&0&-y_e \\ 
+0&0&1&-z_e \\ 
+0&0&0&1\end{bmatrix} \\ 
 
-R_{view}^{-1} = \begin{bmatrix} x_{\hat g \times \hat t}&x_{\hat t}&x_{-\hat g}&0\\
-y_{\hat g \times \hat t}&y_{\hat t}&y_{-\hat g}&0\\
-z_{\hat g \times \hat t}&z_{\hat t}&z_{-\hat g}&0\\
-0&0&0&1\end{bmatrix}\\
+R_{view}^{-1} = \begin{bmatrix} x_{\hat g \times \hat t}&x_{\hat t}&x_{-\hat g}&0 \\
+y_{\hat g \times \hat t}&y_{\hat t}&y_{-\hat g}&0 \\
+z_{\hat g \times \hat t}&z_{\hat t}&z_{-\hat g}&0 \\ 
+0&0&0&1\end{bmatrix} \\ 
 
 R_{view} = (R_{view}^{-1})^T =
-\begin{bmatrix} x_{\hat g \times \hat t}&y_{\hat g \times \hat t}&z_{\hat g \times \hat t}&0\\
-x_{\hat t}&y_{\hat t}&z_{\hat t}&0\\
-x_{-\hat g}&y_{-\hat g}&z_{-\hat g}&0\\
-0&0&0&1\end{bmatrix}\\</script><p>我们要做的，是把所有物体都应用这个变换，保证相机与物体的相对位置不变。</p>
+\begin{bmatrix} x_{\hat g \times \hat t}&y_{\hat g \times \hat t}&z_{\hat g \times \hat t}&0 \\ 
+x_{\hat t}&y_{\hat t}&z_{\hat t}&0 \\ 
+x_{-\hat g}&y_{-\hat g}&z_{-\hat g}&0 \\ 
+0&0&0&1\end{bmatrix} \\</script><p>我们要做的，是把所有物体都应用这个变换，保证相机与物体的相对位置不变。</p>
 <ul>
 <li>投影变换</li>
 </ul>
@@ -3480,19 +3481,32 @@ M_{\text {ortho }}=\left[\begin{array}{cccc}
 \begin{aligned}
 L &=L_{a}+L_{d}+L_{s} \\
 &=k_{a} I_{a}+k_{d}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{l})+k_{s}\left(I / r^{2}\right) \max (0, \mathbf{n} \cdot \mathbf{h})^{p}
-\end{aligned}</script><h3 id="实验结果-2"><a href="#实验结果-2" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="https://s2.loli.net/2022/01/28/I5jeWBENHgndFtC.png" alt="output-small2"></p>
-<p><img src="https://s2.loli.net/2022/01/28/ERkHN7PlVSQF4qm.png" alt="bunny"></p>
-<p><img src="https://s2.loli.net/2022/01/28/OifQ3X8Pmxv7lZw.png" alt="output"></p>
+\end{aligned}</script><h3 id="实验结果-2"><a href="#实验结果-2" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
+<li>Normal</li>
+</ul>
 <p><img src="https://s2.loli.net/2022/01/28/K8ISoYs59h2wdPg.png" alt="output-2"></p>
+<ul>
+<li>BP</li>
+</ul>
 <p><img src="https://s2.loli.net/2022/01/28/oVBEDL2NuwRpkGO.png" alt="output-3"></p>
+<ul>
+<li>Texture</li>
+</ul>
 <p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
+<ul>
+<li>Bump Mapping &amp; Displacement Mapping</li>
+</ul>
 <p><img src="https://s2.loli.net/2022/01/28/HJiSMxQa4udzjPF.png" alt="output-5"></p>
 <p><img src="https://s2.loli.net/2022/01/28/vXV89tQPTSUpDeA.png" alt="output-6"></p>
 <ul>
-<li>双线性插值前/后</li>
+<li>Bunny</li>
 </ul>
-<p><img src="https://s2.loli.net/2022/01/28/gELQqDXmUYyTHdb.png" alt="output-7"></p>
+<p><img src="https://s2.loli.net/2022/01/28/ERkHN7PlVSQF4qm.png" alt="bunny"></p>
+<ul>
+<li>双线性插值前/后 (Shrink texture.png by 50%)</li>
+</ul>
 <p><img src="https://s2.loli.net/2022/01/28/fm9AjRGu2rngCLw.png" alt="output-small"></p>
+<p><img src="https://s2.loli.net/2022/01/28/I5jeWBENHgndFtC.png" alt="output-small2"></p>
 <h3 id="实验框架"><a href="#实验框架" class="headerlink" title="实验框架"></a>实验框架</h3><p>// TODO: 在这里总结 PA3 的实验框架</p>
 <h2 id="PA6"><a href="#PA6" class="headerlink" title="PA6"></a>PA6</h2><blockquote>
 <p>在之前的编程练习中，我们实现了基础的光线追踪算法，具体而言是光线传输、光线与三角形求交。</p>
@@ -3541,8 +3555,9 @@ c(A,B) = \frac {S(A)} {S(C)}a + \frac {S(B)} {S(C)}b + 0.125</script><p>SAH 考�
 </ul>
 <p>参考资料：<a href="https://zhuanlan.zhihu.com/p/50720158">https://zhuanlan.zhihu.com/p/50720158</a></p>
 <h3 id="实验结果-3"><a href="#实验结果-3" class="headerlink" title="实验结果"></a>实验结果</h3><p>采用 SAH 加速前，进行 RT 用时 8 min 35 secs；使用 SAH 加速后，用时为 8 min 48 secs。</p>
-<p>// TODO: 没错用了这 ** 优化又慢了我也不知道为什么总之明天再说吧</p>
-<p>// TODO: 我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊我好困啊</p>
+<p>// Warning: this code may be buggy!</p>
+<p>// 没错用了这 ** 优化又慢了我也不知道x</p>
+<p>// 我感觉包围盒算法就需要大改，anyway 领会精神吧x</p>
 <p><img src="https://s2.loli.net/2022/01/18/Y9Nh7QAUxfncCgV.png" alt="6-1"></p>
 <h3 id="实验框架-1"><a href="#实验框架-1" class="headerlink" title="实验框架"></a>实验框架</h3><ul>
 <li><code>main.cpp</code><ul>
