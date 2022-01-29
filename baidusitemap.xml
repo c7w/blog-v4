@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.c7w.tech/dsa-pa3/</loc>
+    <lastmod>2022-01-29</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/dsa-pa2/</loc>
+    <lastmod>2022-01-29</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/dsa-lab/</loc>
+    <lastmod>2022-01-29</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/dsa-pa1/</loc>
+    <lastmod>2022-01-29</lastmod>
+  </url>
+  <url>
     <loc>https://www.c7w.tech/games101-pa/</loc>
-    <lastmod>2022-01-28</lastmod>
+    <lastmod>2022-01-29</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/games101-cont/</loc>
+    <lastmod>2022-01-29</lastmod>
   </url>
   <url>
     <loc>https://www.c7w.tech/dive-into-dl-pytorch-practice/</loc>
@@ -23,10 +43,6 @@
   <url>
     <loc>https://www.c7w.tech/dive-into-dl-pytorch-A/</loc>
     <lastmod>2022-01-26</lastmod>
-  </url>
-  <url>
-    <loc>https://www.c7w.tech/games101-cont/</loc>
-    <lastmod>2022-01-18</lastmod>
   </url>
   <url>
     <loc>https://www.c7w.tech/python-pandas/</loc>

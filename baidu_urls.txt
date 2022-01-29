@@ -6,6 +6,10 @@ https://www.c7w.tech/dive-into-dl-pytorch-A/
 https://www.c7w.tech/games101-pa/
 https://www.c7w.tech/games101-cont/
 https://www.c7w.tech/python-pandas/
+https://www.c7w.tech/dsa-lab/
+https://www.c7w.tech/dsa-pa3/
+https://www.c7w.tech/dsa-pa2/
+https://www.c7w.tech/dsa-pa1/
 https://www.c7w.tech/summary-2021/
 https://www.c7w.tech/update-2022/
 https://www.c7w.tech/games101/

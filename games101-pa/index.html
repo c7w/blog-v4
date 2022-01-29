@@ -7,7 +7,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2022-01-18T13:19:54.000Z">
-<meta property="article:modified_time" content="2022-01-28T09:12:08.702Z">
+<meta property="article:modified_time" content="2022-01-29T10:46:35.431Z">
 <meta property="article:author" content="c7w">
 <meta property="article:tag" content="图形学">
 <meta name="twitter:card" content="summary">
@@ -65,7 +65,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-01-28 17:12:08'
+  postUpdate: '2022-01-29 18:46:35'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -155,7 +155,7 @@
     }
     detectApple()
     })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
-</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">GAMES101 PA 报告兼课程重点算法回顾</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-18T13:19:54.000Z" title="发表于 2022-01-18 21:19:54">2022-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-28T09:12:08.702Z" title="更新于 2022-01-28 17:12:08">2022-01-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">理论/计算机图形学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GAMES101 PA 报告兼课程重点算法回顾"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">GAMES101 PA 报告兼课程重点算法回顾</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-18T13:19:54.000Z" title="发表于 2022-01-18 21:19:54">2022-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-29T10:46:35.431Z" title="更新于 2022-01-29 18:46:35">2022-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">理论/计算机图形学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GAMES101 PA 报告兼课程重点算法回顾"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
 <p>// TODO: 写摘要</p>
 <a id="more"></a>
 <h2 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h2><blockquote>
@@ -168,23 +168,23 @@
 <li>视图变换：定义 $M_{view}$ 变换相机，使得经过该变换满足 $\vec e = \vec 0, \hat g = -\hat z, \hat t = \hat y $，其中：$\vec e$ 为相机所在位置， $\hat g$ 为相机看的方向，$\hat t$ 为相机的向上方向。</li>
 </ul>
 <script type="math/tex; mode=display">
-M_{view} = R_{view}T_{view} \\ 
+M_{view} = R_{view}T_{view} \ (**)\\
 
-T_{view} = \begin{bmatrix} 1&0&0&-x_e \\ 
-0&1&0&-y_e \\ 
-0&0&1&-z_e \\ 
-0&0&0&1\end{bmatrix} \\ 
+T_{view} = \begin{bmatrix} 1&0&0&-x_e\\
+0&1&0&-y_e\\
+0&0&1&-z_e\\
+0&0&0&1\end{bmatrix}\\
 
-R_{view}^{-1} = \begin{bmatrix} x_{\hat g \times \hat t}&x_{\hat t}&x_{-\hat g}&0 \\
-y_{\hat g \times \hat t}&y_{\hat t}&y_{-\hat g}&0 \\
-z_{\hat g \times \hat t}&z_{\hat t}&z_{-\hat g}&0 \\ 
-0&0&0&1\end{bmatrix} \\ 
+R_{view}^{-1} = \begin{bmatrix} x_{\hat g \times \hat t}&x_{\hat t}&x_{-\hat g}&0\\
+y_{\hat g \times \hat t}&y_{\hat t}&y_{-\hat g}&0\\
+z_{\hat g \times \hat t}&z_{\hat t}&z_{-\hat g}&0\\
+0&0&0&1\end{bmatrix}\\
 
 R_{view} = (R_{view}^{-1})^T =
-\begin{bmatrix} x_{\hat g \times \hat t}&y_{\hat g \times \hat t}&z_{\hat g \times \hat t}&0 \\ 
-x_{\hat t}&y_{\hat t}&z_{\hat t}&0 \\ 
-x_{-\hat g}&y_{-\hat g}&z_{-\hat g}&0 \\ 
-0&0&0&1\end{bmatrix} \\</script><p>我们要做的，是把所有物体都应用这个变换，保证相机与物体的相对位置不变。</p>
+\begin{bmatrix} x_{\hat g \times \hat t}&y_{\hat g \times \hat t}&z_{\hat g \times \hat t}&0\\
+x_{\hat t}&y_{\hat t}&z_{\hat t}&0\\
+x_{-\hat g}&y_{-\hat g}&z_{-\hat g}&0\\
+0&0&0&1\end{bmatrix}\\</script><p>我们要做的，是把所有物体都应用这个变换，保证相机与物体的相对位置不变。</p>
 <ul>
 <li>投影变换</li>
 </ul>
@@ -291,7 +291,106 @@ L &=L_{a}+L_{d}+L_{s} \\
 </ul>
 <p><img src="https://s2.loli.net/2022/01/28/fm9AjRGu2rngCLw.png" alt="output-small"></p>
 <p><img src="https://s2.loli.net/2022/01/28/I5jeWBENHgndFtC.png" alt="output-small2"></p>
-<h3 id="实验框架"><a href="#实验框架" class="headerlink" title="实验框架"></a>实验框架</h3><p>// TODO: 在这里总结 PA3 的实验框架</p>
+<h3 id="实验框架"><a href="#实验框架" class="headerlink" title="实验框架"></a>实验框架</h3><ul>
+<li><code>main.cpp</code><ul>
+<li><code>Eigen::Matrix4f get_view_matrix(Eigen::Vector3f eye_pos)</code></li>
+<li><code>Eigen::Matrix4f get_model_matrix(float angle)</code></li>
+<li><code>Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float zNear, float zFar)</code></li>
+<li><code>struct Light &#123;Eigen::Vector3f position; Eigen::Vector3f intensity;&#125;;</code></li>
+<li>Shaders<ul>
+<li><code>Eigen::Vector3f texture_fragment_shader(const fragment_shader_payload&amp; payload)</code></li>
+<li><code>Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload&amp; payload)</code><ul>
+<li>定义 $k_d, k_s, k_a, lights, amb_light, eye_pos$​</li>
+<li>返回 $result_color * 255.0$</li>
+</ul>
+</li>
+<li><code>Eigen::Vector3f displacement_fragment_shader(const fragment_shader_payload&amp; payload)</code></li>
+<li><code>Eigen::Vector3f bump_fragment_shader(const fragment_shader_payload&amp; payload)</code></li>
+</ul>
+</li>
+<li><code>int main()</code><ul>
+<li>读取模型，然后将模型中的各个面建立 Triangle 对象</li>
+<li>建立 Rasterizer 类对象，设置材质</li>
+<li>调用渲染函数，然后使用 OpenCV 库保存渲染结果</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>OBJ_Loader.h</code>：加载模型用</li>
+<li><p><code>Rasterizer.hpp/Rasterizer.cpp</code></p>
+<ul>
+<li>其中的 rasterizer 子类内包括了一些必备的结构和函数</li>
+<li><code>std::vector&lt;Eigen::Vector3f&gt; frame_buf;</code></li>
+<li><code>std::vector&lt;float&gt; depth_buf;</code></li>
+</ul>
+</li>
+<li><p><code>Texture.hpp/Texture.cpp</code></p>
+<ul>
+<li><code>cv::Mat image_data;</code> // Raw data</li>
+<li><code>int width, height;</code></li>
+<li><code>Vector3f getColor(float u, float v);</code></li>
+</ul>
+</li>
+<li><code>Triangle.hpp/Triangle.cpp</code><ul>
+<li><code>Vector4f v[3];</code> // Original coordinates of the triangle</li>
+<li><code>Vector3f color[3]; Vector2f tex_coords[3]; Vector3f normal[3];</code> // Color, texture_coord, normal vector for each vertex</li>
+</ul>
+</li>
+</ul>
+<h2 id="PA4"><a href="#PA4" class="headerlink" title="PA4"></a>PA4</h2><blockquote>
+<p>使用 <strong>De Casteljau 算法</strong> 生成贝塞尔曲线。</p>
+</blockquote>
+<h3 id="算法回顾-3"><a href="#算法回顾-3" class="headerlink" title="算法回顾"></a>算法回顾</h3><p>（1）先考虑三个控制点，生成二次贝塞尔曲线。</p>
+<p><img src="https://i.loli.net/2021/12/01/fE6FrtaL2sDQIGT.png" alt="image-20211201194418429"></p>
+<p>（2）再考虑四个控制点，生成三次贝塞尔曲线。</p>
+<p><img src="https://i.loli.net/2021/12/01/wR7VDnSPCrLxkKY.png" alt="image-20211201194528603"></p>
+<p>(3) 代数形式：插值！</p>
+<p><img src="https://i.loli.net/2021/12/01/pmW5vVa61urdbxI.png" alt="image-20211201194639946"></p>
+<p>给定 $n+1$ 个控制点，有贝塞尔曲线如下：</p>
+<script type="math/tex; mode=display">
+b^n(t) = b^n_0(t) = \sum_{j=0}^nb_jB_j^n(t) \\
+B_{i}^{n}(t)=\left(\begin{array}{l}
+n\\
+i
+\end{array}\right) t^{i}(1-t)^{n-i}</script><h3 id="实验结果-3"><a href="#实验结果-3" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="https://s2.loli.net/2022/01/29/kHpBU6wfgcvxi7W.png" alt="4"></p>
+<h2 id="PA5"><a href="#PA5" class="headerlink" title="PA5"></a>PA5</h2><blockquote>
+<p>在光线追踪中，最重要的操作之一就是找到光线与物体的交点。</p>
+<p>一旦找到光线与物体的交点，就可以执行着色并返回像素颜色。</p>
+<p>在这次作业中，我们需要实现两个部分：光线的生成和光线与三角的相交。</p>
+<p>具体来说，我们需要修改：</p>
+<ul>
+<li><code>Renderer.cpp</code> 中的 <code>Render()</code>：这里你需要为每个像素生成一条对应的光线，然后调用函数 <code>castRay()</code> 来得到颜色，最后将颜色存储在帧缓冲区的相应像素中。</li>
+<li><code>Triangle.hpp</code> 中的 <code>rayTriangleIntersect()</code>: v0, v1, v2 是三角形的三个顶点，orig 是光线的起点，dir 是光线单位化的方向向量。tnear, u, v 是你需要使用我们课上推导的 Moller-Trumbore 算法来更新的参数。</li>
+</ul>
+</blockquote>
+<h3 id="算法回顾-4"><a href="#算法回顾-4" class="headerlink" title="算法回顾"></a>算法回顾</h3><ul>
+<li>Whitted-style Ray Tracing</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/01/14/T1xAeVvrhOoGJK4.png" alt="image-20220114155905503"></p>
+<ul>
+<li>Möller Trumbore 算法</li>
+</ul>
+<p>Möller Trumbore 算法，可以直接判断交点是否在三角形内（需要用到克莱姆法则）：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+\overrightarrow{\mathbf{O}}+t \overrightarrow{\mathbf{D}}=\left(1-b_{1}-b_{2}\right) \overrightarrow{\mathbf{P}}_{0}+b_{1} \overrightarrow{\mathbf{P}}_{1}+b_{2} \overrightarrow{\mathbf{P}}_{2} \\
+\text { Where: } \\
+{\left[\begin{array}{c}
+t \\
+b_{1} \\
+b_{2}
+\end{array}\right]=\frac{1}{\overrightarrow{\mathbf{S}}_{1} \bullet \overrightarrow{\mathbf{E}}_{1}}\left[\begin{array}{cc}
+\overrightarrow{\mathbf{S}}_{2} \cdot \overrightarrow{\mathbf{E}}_{2} \\
+\overrightarrow{\mathbf{S}}_{1} \cdot \overrightarrow{\mathbf{S}} \\
+\overrightarrow{\mathbf{S}}_{2} \cdot \overrightarrow{\mathbf{D}}
+\end{array}\right]} \\
+\text { Cost = (1 div, 27 mul, 17 add) } \\
+\overrightarrow{\mathbf{E}}_{1}=\overrightarrow{\mathbf{P}}_{1}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{E}}_{2}=\overrightarrow{\mathbf{P}}_{2}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{S}}=\overrightarrow{\mathbf{O}}-\overrightarrow{\mathbf{P}}_{0} \\
+\overrightarrow{\mathbf{S}}_{1}=\overrightarrow{\mathbf{D}} \times \overrightarrow{\mathbf{E}}_{2} \\
+\overrightarrow{\mathbf{S}}_{2}=\overrightarrow{\mathbf{S}} \times \overrightarrow{\mathbf{E}}_{1}
+\end{gathered}</script><h3 id="实验结果-4"><a href="#实验结果-4" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="https://s2.loli.net/2022/01/29/ZeSLqlF65o7vfD8.png" alt="5"></p>
 <h2 id="PA6"><a href="#PA6" class="headerlink" title="PA6"></a>PA6</h2><blockquote>
 <p>在之前的编程练习中，我们实现了基础的光线追踪算法，具体而言是光线传输、光线与三角形求交。</p>
 <p>我们采用了这样的方法寻找光线与场景的交点：<strong>遍历场景中的所有物体，判断光线是否与它相交。</strong></p>
@@ -300,7 +399,7 @@ L &=L_{a}+L_{d}+L_{s} \\
 <p>在本次练习中，我们重点关注：<strong>物体划分算法 Bounding Volume Hierarchy (BVH)</strong>。</p>
 <p>本练习要求你实现 Ray-Bounding Volume 求交与 BVH 查找，附加内容为使用 <strong>SAH 加速</strong>算法对 BVH 查找进行改进。</p>
 </blockquote>
-<h3 id="算法回顾-3"><a href="#算法回顾-3" class="headerlink" title="算法回顾"></a>算法回顾</h3><h4 id="包围盒求交"><a href="#包围盒求交" class="headerlink" title="包围盒求交"></a>包围盒求交</h4><p>我们将（包围盒）长方体理解成三个对面所分划出的空间的交集。我们一般使用的包围体积便是长方体，且长方体是与坐标轴平行的，即轴对齐包围盒（AABB）。选用 AABB 式包围盒有利于加速计算。判断光线和 AABB 类包围盒的求交方法如下：</p>
+<h3 id="算法回顾-5"><a href="#算法回顾-5" class="headerlink" title="算法回顾"></a>算法回顾</h3><h4 id="包围盒求交"><a href="#包围盒求交" class="headerlink" title="包围盒求交"></a>包围盒求交</h4><p>我们将（包围盒）长方体理解成三个对面所分划出的空间的交集。我们一般使用的包围体积便是长方体，且长方体是与坐标轴平行的，即轴对齐包围盒（AABB）。选用 AABB 式包围盒有利于加速计算。判断光线和 AABB 类包围盒的求交方法如下：</p>
 <p><img src="https://s2.loli.net/2022/01/14/5rMlAnIw3gQBVNL.png" alt="image-20220114163501816"></p>
 <p>核心思想：只有当光线进入所有三个对面后，光线才进入了包围盒；若光线从某一个对面出射，则光线便从包围盒中射出。于是我们可以计算三个对面分别对应的 $t_{min}$​​ 和 $t_{max}$​​，然后对其求交。当且仅当 $t_{enter} \lt t_{exit}$​​ 且 $t_{exit} \ge 0$​​，光线才可能与包围盒有交点。</p>
 <h4 id="BVH"><a href="#BVH" class="headerlink" title="BVH"></a>BVH</h4><p>通过对含有物体的向量沿轴划分建立二叉树，并且对于二叉树的每一个结点建立其包围盒。</p>
@@ -338,7 +437,7 @@ c(A,B) = \frac {S(A)} {S(C)}a + \frac {S(B)} {S(C)}b + 0.125</script><p>SAH 考�
 <li>$\forall k$​，考虑划分 $[0, k] \ || \ [k+1, n)$​，计算其代价并更新最小代价. $O(n)$​</li>
 </ul>
 <p>参考资料：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50720158">https://zhuanlan.zhihu.com/p/50720158</a></p>
-<h3 id="实验结果-3"><a href="#实验结果-3" class="headerlink" title="实验结果"></a>实验结果</h3><p>采用 SAH 加速前，进行 RT 用时 8 min 35 secs；使用 SAH 加速后，用时为 8 min 48 secs。</p>
+<h3 id="实验结果-5"><a href="#实验结果-5" class="headerlink" title="实验结果"></a>实验结果</h3><p>采用 SAH 加速前，进行 RT 用时 8 min 35 secs；使用 SAH 加速后，用时为 8 min 48 secs。</p>
 <p>// Warning: this code may be buggy!</p>
 <p>// 没错用了这 ** 优化又慢了我也不知道x</p>
 <p>// 我感觉包围盒算法就需要大改，anyway 领会精神吧x</p>
@@ -362,7 +461,41 @@ c(A,B) = \frac {S(A)} {S(C)}a + \frac {S(B)} {S(C)}b + 0.125</script><p>SAH 考�
 </ul>
 </li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/games101-pa/">https://www.c7w.tech/games101-pa/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.c7w.tech" target="_blank">c7w 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dive-into-dl-pytorch-A/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《动手学深度学习》 Pytorch ver. 阅读摘录 Part A</div></div></a></div><div class="next-post pull-right"><a href="/games101-cont/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GAMES101 现代计算机图形学基础 笔记（下）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PA1"><span class="toc-number">1.</span> <span class="toc-text">PA1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA2"><span class="toc-number">2.</span> <span class="toc-text">PA2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-1"><span class="toc-number">2.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-1"><span class="toc-number">2.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA3"><span class="toc-number">3.</span> <span class="toc-text">PA3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-2"><span class="toc-number">3.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-2"><span class="toc-number">3.2.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%A1%86%E6%9E%B6"><span class="toc-number">3.3.</span> <span class="toc-text">实验框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA6"><span class="toc-number">4.</span> <span class="toc-text">PA6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-3"><span class="toc-number">4.1.</span> <span class="toc-text">算法回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%85%E5%9B%B4%E7%9B%92%E6%B1%82%E4%BA%A4"><span class="toc-number">4.1.1.</span> <span class="toc-text">包围盒求交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BVH"><span class="toc-number">4.1.2.</span> <span class="toc-text">BVH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SAH-%E5%8A%A0%E9%80%9F"><span class="toc-number">4.1.3.</span> <span class="toc-text">SAH 加速</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-3"><span class="toc-number">4.2.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%A1%86%E6%9E%B6-1"><span class="toc-number">4.3.</span> <span class="toc-text">实验框架</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+<h2 id="PA7"><a href="#PA7" class="headerlink" title="PA7"></a>PA7</h2><blockquote>
+<ul>
+<li>实现 Path Tracing 算法</li>
+</ul>
+</blockquote>
+<h3 id="算法回顾-6"><a href="#算法回顾-6" class="headerlink" title="算法回顾"></a>算法回顾</h3><h3 id="实验结果-6"><a href="#实验结果-6" class="headerlink" title="实验结果"></a>实验结果</h3><h2 id="PA8"><a href="#PA8" class="headerlink" title="PA8"></a>PA8</h2><blockquote>
+<ul>
+<li>连接绳子约束，正确的构造绳子 </li>
+<li>半隐式欧拉法</li>
+<li>显式欧拉法</li>
+<li>显式 Verlet</li>
+<li>阻尼</li>
+</ul>
+</blockquote>
+<h3 id="算法回顾-7"><a href="#算法回顾-7" class="headerlink" title="算法回顾"></a>算法回顾</h3><ul>
+<li>显式/半隐式欧拉法</li>
+</ul>
+<script type="math/tex; mode=display">
+\boldsymbol{f}_{a \rightarrow b}=k_{s} \frac{\boldsymbol{b}-\boldsymbol{a}}{\|\boldsymbol{b}-\boldsymbol{a}\|}(\|\boldsymbol{b}-\boldsymbol{a}\|-l) \\
+f_{b \rightarrow a} = - f_{ a \rightarrow b}</script><script type="math/tex; mode=display">
+\begin{aligned}
+&\mathrm{F}=\mathrm{ma} \\
+&\mathrm{v}(\mathrm{t}+1)=\mathrm{v}(\mathrm{t})+\mathrm{a}(\mathrm{t}) * \mathrm{dt} \\
+&\mathrm{x}(\mathrm{t}+1)=\mathrm{x}(\mathrm{t})+\mathrm{v}(\mathrm{t}) * \mathrm{dt} \\
+&\mathrm{x}(\mathrm{t}+1)=\mathrm{x}(\mathrm{t})+\mathrm{v}(\mathrm{t}+1) * \mathrm{dt}
+\end{aligned}</script><p>倒数第二行为显式欧拉法，最后一行为半隐式欧拉法。</p>
+<ul>
+<li>显式 Verlet</li>
+</ul>
+<script type="math/tex; mode=display">
+x(t+1)=x(t)+[x(t)-x(t-1)]+a(t) * d t * d t</script><ul>
+<li>阻尼</li>
+</ul>
+<script type="math/tex; mode=display">
+x(t+1) =x(t)+(1-\text {damping\_factor }) *[x(t)-x(t-1)]+a(t) * d t * d t</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/games101-pa/">https://www.c7w.tech/games101-pa/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.c7w.tech" target="_blank">c7w 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dive-into-dl-pytorch-A/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《动手学深度学习》 Pytorch ver. 阅读摘录 Part A</div></div></a></div><div class="next-post pull-right"><a href="/games101-cont/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GAMES101 现代计算机图形学基础 笔记（下）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PA1"><span class="toc-number">1.</span> <span class="toc-text">PA1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA2"><span class="toc-number">2.</span> <span class="toc-text">PA2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-1"><span class="toc-number">2.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-1"><span class="toc-number">2.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA3"><span class="toc-number">3.</span> <span class="toc-text">PA3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-2"><span class="toc-number">3.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-2"><span class="toc-number">3.2.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%A1%86%E6%9E%B6"><span class="toc-number">3.3.</span> <span class="toc-text">实验框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA4"><span class="toc-number">4.</span> <span class="toc-text">PA4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-3"><span class="toc-number">4.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-3"><span class="toc-number">4.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA5"><span class="toc-number">5.</span> <span class="toc-text">PA5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-4"><span class="toc-number">5.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-4"><span class="toc-number">5.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA6"><span class="toc-number">6.</span> <span class="toc-text">PA6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-5"><span class="toc-number">6.1.</span> <span class="toc-text">算法回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%85%E5%9B%B4%E7%9B%92%E6%B1%82%E4%BA%A4"><span class="toc-number">6.1.1.</span> <span class="toc-text">包围盒求交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BVH"><span class="toc-number">6.1.2.</span> <span class="toc-text">BVH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SAH-%E5%8A%A0%E9%80%9F"><span class="toc-number">6.1.3.</span> <span class="toc-text">SAH 加速</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-5"><span class="toc-number">6.2.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%A1%86%E6%9E%B6-1"><span class="toc-number">6.3.</span> <span class="toc-text">实验框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA7"><span class="toc-number">7.</span> <span class="toc-text">PA7</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-6"><span class="toc-number">7.1.</span> <span class="toc-text">算法回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C-6"><span class="toc-number">7.2.</span> <span class="toc-text">实验结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PA8"><span class="toc-number">8.</span> <span class="toc-text">PA8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE-7"><span class="toc-number">8.1.</span> <span class="toc-text">算法回顾</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
   endLoading: () => {
     document.body.style.overflow = 'auto';
     document.getElementById('loading-box').classList.add("loaded")
