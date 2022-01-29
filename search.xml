@@ -3374,7 +3374,7 @@ s<span class="token punctuation">.</span>close<span class="token punctuation">(<
     <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
 <p>GAMES101 2020-Spring 对应的 8 次 PA 整理。</p>
 <p>仓库地址：<a href="https://github.com/c7w/GAMES101-HW-2020-Spring">https://github.com/c7w/GAMES101-HW-2020-Spring</a></p>
-<p>/ <em> Warning: FYI, these codes may be ugly and buggy. </em>/</p>
+<p><em>　　Warning: FYI, these codes may be ugly and buggy.</em></p>
 <a id="more"></a>
 <h2 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h2><blockquote>
 <p>本次作业的任务是填写一个<strong>旋转矩阵</strong>和一个<strong>透视投影矩阵</strong>。</p>
