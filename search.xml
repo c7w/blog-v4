@@ -11426,10 +11426,11 @@ a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \
       </tags>
   </entry>
   <entry>
-    <title>爬取《雨课堂》慕课字幕</title>
+    <title>爬取《雨课堂》慕课字幕 Tsinghua MOOC Caption Crawler</title>
     <url>/yuketang-caption-crawler/</url>
-    <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/27/vkPmGVL9IZoWFiX.png" alt="image-20220127154939393"></p>
-<p>// 这篇文章现在还很乱，只是草稿.jpeg</p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/30/nkI5B9DcPQzX3Us.png" alt="image-20220130000139599"></p>
+<p>GitHub Repo: <a href="https://github.com/c7w/TsinghuaMoocCaptionCrawler">https://github.com/c7w/TsinghuaMoocCaptionCrawler</a></p>
+<p>Blog: <a href="https://c7w.tech/yuketang-caption-crawler/">https://c7w.tech/yuketang-caption-crawler/</a></p>
 <a id="more"></a>
 <h2 id="爬取过程"><a href="#爬取过程" class="headerlink" title="爬取过程"></a>爬取过程</h2><h3 id="乱抓"><a href="#乱抓" class="headerlink" title="乱抓"></a>乱抓</h3><ul>
 <li><strong>利用 Break on change 查看脚本运行状况</strong></li>
@@ -11801,9 +11802,78 @@ a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \
 <p>好的，现在来整理一下思路，截至目前我们已经获得了从一个视频在网页上外显的 ID 转换成其 CCID 的方法，也就是 <code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/leaf_info/[课程号]/[视频外显ID]/?sign=[学生ID]&amp;term=latest&amp;uv_id=2598</code>，然后<code>CCID = response.json()[&#39;data&#39;][&#39;content_info&#39;][&#39;media&#39;][&#39;ccid&#39;]</code>，接着我们就能通过 <code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/service/subtitle_parse/?c_d=[CCID]&amp;lg=0</code> 来获取对应视频字幕。</p>
 <p>下面我们还想优化，就是怎么把一个课程所有的 <code>[视频外显ID]</code> 全部拿出来，事实上这也是可以做到的，因为我们再仔细检查一下发送的这一堆请求，找到了：</p>
 <p><code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/course/chapter?cid=3029907&amp;sign=8NpUsbr6GZH&amp;term=latest&amp;uv_id=2598</code>，请求了整个课程的信息，我们对其返回的 JSON 解码得到：</p>
-<h3 id="调-API"><a href="#调-API" class="headerlink" title="调 API"></a>调 API</h3><h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>清华雨课堂用来放 MOOC 的这个平台和学堂在线那个平台前端是一样的。</p>
+<p><img src="https://s2.loli.net/2022/01/29/KftCcXuOY73v5NR.png" alt="image-20220129232309709"></p>
+<p>从这个 Response 里面我们能拿到所有视频的外显 ID。</p>
+<h3 id="调-API"><a href="#调-API" class="headerlink" title="调 API"></a>调 API</h3><ul>
+<li><code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/course/chapter?cid=[课程ID]&amp;sign=[学生ID]&amp;term=latest&amp;uv_id=2598</code> -&gt; 视频外显 ID 的列表</li>
+<li><code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/leaf_info/[课程ID]/[视频外显ID]/?sign=[学生ID]&amp;term=latest&amp;uv_id=2598</code> -&gt; 视频 CCID</li>
+<li><code>[GET] https://tsinghua.yuketang.cn/mooc-api/v1/lms/service/subtitle_parse/?c_d=[CCID]&amp;lg=0</code> -&gt; 视频字幕</li>
+</ul>
+<p>整理成代码如下：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_course_info</span><span class="token punctuation">(</span>cid<span class="token punctuation">,</span> sid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    
+    video_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    
+    url <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'''https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/course/chapter?cid=</span><span class="token interpolation"><span class="token punctuation">&#123;</span>cid<span class="token punctuation">&#125;</span></span><span class="token string">&amp;sign=</span><span class="token interpolation"><span class="token punctuation">&#123;</span>sid<span class="token punctuation">&#125;</span></span><span class="token string">&amp;term=latest&amp;uv_id=2598'''</span></span>
+    cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">'./cookies'</span><span class="token punctuation">)</span>
+    response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span><span class="token punctuation">&#123;</span>\
+                            <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'</span><span class="token punctuation">,</span>
+                            <span class="token string">'xtbz'</span><span class="token punctuation">:</span> <span class="token string">'cloud'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                            cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">"./cookies"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+    data <span class="token operator">=</span> response<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    chapter_list <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'course_chapter'</span><span class="token punctuation">]</span>
+    
+    <span class="token keyword">for</span> chapter <span class="token keyword">in</span> chapter_list<span class="token punctuation">:</span>
+        leaves <span class="token operator">=</span> chapter<span class="token punctuation">[</span><span class="token string">'section_leaf_list'</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> leaf <span class="token keyword">in</span> leaves<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                video_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>leaf<span class="token punctuation">[</span><span class="token string">'leaf_list'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">except</span><span class="token punctuation">:</span>
+                <span class="token keyword">pass</span>
+    
+    <span class="token keyword">return</span> video_list
+
+<span class="token keyword">def</span> <span class="token function">get_caption</span><span class="token punctuation">(</span>cid<span class="token punctuation">,</span> sid<span class="token punctuation">,</span> vid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'''https://tsinghua.yuketang.cn/mooc-api/v1/lms/learn/leaf_info/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>cid<span class="token punctuation">&#125;</span></span><span class="token string">/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>vid<span class="token punctuation">&#125;</span></span><span class="token string">/?sign=</span><span class="token interpolation"><span class="token punctuation">&#123;</span>sid<span class="token punctuation">&#125;</span></span><span class="token string">&amp;term=latest&amp;uv_id=2598'''</span></span>
+    cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">'./cookies'</span><span class="token punctuation">)</span>
+    response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span><span class="token punctuation">&#123;</span>\
+                            <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'</span><span class="token punctuation">,</span>
+                            <span class="token string">'xtbz'</span><span class="token punctuation">:</span> <span class="token string">'cloud'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                            cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">"./cookies"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+    data <span class="token operator">=</span> response<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    video_name <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span>
+    
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        ccid <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'content_info'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'media'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'ccid'</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> ccid<span class="token punctuation">:</span> <span class="token keyword">raise</span> BaseException<span class="token punctuation">(</span><span class="token string">"HTML Introduction. No video."</span><span class="token punctuation">)</span>
+        
+        url <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'''https://tsinghua.yuketang.cn/mooc-api/v1/lms/service/subtitle_parse/?c_d=</span><span class="token interpolation"><span class="token punctuation">&#123;</span>ccid<span class="token punctuation">&#125;</span></span><span class="token string">&amp;lg=0'''</span></span>
+        cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">'./cookies'</span><span class="token punctuation">)</span>
+        response <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span><span class="token punctuation">&#123;</span>\
+                                <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'</span><span class="token punctuation">,</span>
+                                <span class="token string">'xtbz'</span><span class="token punctuation">:</span> <span class="token string">'cloud'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                                cookies <span class="token operator">=</span> getCookies<span class="token punctuation">(</span><span class="token string">"./cookies"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        data <span class="token operator">=</span> response<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        data<span class="token punctuation">[</span><span class="token string">'start'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">for</span> s <span class="token keyword">in</span> data<span class="token punctuation">[</span><span class="token string">'start'</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+        caption_list <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">zip</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">'start'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"./output/[</span><span class="token interpolation"><span class="token punctuation">&#123;</span>vid<span class="token punctuation">&#125;</span></span><span class="token string">] </span><span class="token interpolation"><span class="token punctuation">&#123;</span>video_name<span class="token punctuation">&#125;</span></span><span class="token string">.txt"</span></span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">for</span> caption <span class="token keyword">in</span> caption_list<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"%-10d  %s\n"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>caption<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> caption<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span></code></pre>
+<p>效果如下：</p>
+<p><img src="https://s2.loli.net/2022/01/29/klDeE37nTJ6QPgb.png" alt="image-20220129235837541"></p>
+<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>清华雨课堂用来放 MOOC 的这个平台和学堂在线那个平台前端是一样的。</p>
 <p>这简直就和 net9.org 和 stu.cs.tsinghua.edu.cn 的后台一样，写一份账户管理工具，一份自己用，另一份拿出去用。</p>
-<p>这篇文章仅供练习使用，不保证能复现，更不会提供爬取后的慕课字幕数据。以上。</p>
+<p>这篇博文仅供练习使用，不保证能复现，更不会提供爬取后的慕课字幕数据。以上。</p>
 ]]></content>
       <categories>
         <category>技术</category>
