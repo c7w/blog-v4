@@ -3372,7 +3372,9 @@ s<span class="token punctuation">.</span>close<span class="token punctuation">(<
     <title>GAMES101 PA 报告兼课程重点算法回顾</title>
     <url>/games101-pa/</url>
     <content><![CDATA[<p><img src="https://s2.loli.net/2022/01/28/hIQTsycbV6xeojp.png" alt="output-4"></p>
-<p>// TODO: 写摘要</p>
+<p>GAMES101 2020-Spring 对应的 8 次 PA 整理。</p>
+<p>仓库地址：<a href="https://github.com/c7w/GAMES101-HW-2020-Spring">https://github.com/c7w/GAMES101-HW-2020-Spring</a></p>
+<p>/ <em> Warning: FYI, these codes may be ugly and buggy. </em>/</p>
 <a id="more"></a>
 <h2 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h2><blockquote>
 <p>本次作业的任务是填写一个<strong>旋转矩阵</strong>和一个<strong>透视投影矩阵</strong>。</p>
@@ -3670,10 +3672,98 @@ c(A,B) = \frac {S(A)} {S(C)}a + \frac {S(B)} {S(C)}b + 0.125</script><p>SAH 考�
 </ul>
 </li>
 <li><code>Vector.hpp, Vector.cpp</code>：向量类，提供了向量 <code>Vector3f</code>, <code>Vector2f</code> 的基本操作</li>
-<li><code>Object.hpp</code>：抽象类，提供了以下接口：<ul>
+<li><code>Object.hpp</code>：抽象类<ul>
+<li>提供了以下接口：<ul>
 <li><code>bool intersect(const Ray&amp;)</code></li>
 <li><code>bool intersect(const Ray&amp; ray, float&amp; distance, int&amp; index) const</code></li>
-<li>// TODO: 不想写了 明天 再说吧   </li>
+<li><code>Intersection getIntersection(Ray _ray)</code></li>
+<li><code>void getSurfaceProperties(const Vector3f &amp;, const Vector3f &amp;, const uint32_t &amp;, const Vector2f &amp;, Vector3f &amp;, Vector2f &amp;) const</code></li>
+<li><code>virtual Vector3f evalDiffuseColor(const Vector2f &amp;) const</code></li>
+<li><code>virtual Bounds3 getBounds()</code></li>
+</ul>
+</li>
+<li>总结来说，首先是判断有无交点和获取交点的接口，然后是获取表面属性和计算颜色的接口，然后是获取包围盒的接口。</li>
+<li><code>Triangle.hpp/Sphere.hpp</code>：继承自 <code>Object</code>，重载上述函数并实现为对应对象</li>
+</ul>
+</li>
+<li><code>Ray.hpp</code><ul>
+<li><code>Vector3f orig, direction;</code>, <code>double t, t_min, t_max;</code></li>
+</ul>
+</li>
+<li><code>Light.hpp</code>：<code>Vector3f position, intensity;</code><ul>
+<li><code>AreaLight.hpp</code>：<code>Vector3f u, v, normal; double length;</code></li>
+</ul>
+</li>
+<li><code>Intersection.hpp</code>：<ul>
+<li><code>bool happened;</code></li>
+<li><code>Vector3f coords, normal;</code></li>
+<li><code>double distance;</code></li>
+<li><code>Object* obj;</code></li>
+<li><code>Material* m;</code></li>
+</ul>
+</li>
+<li><code>Material.hpp</code>：存储表面属性<ul>
+<li>表面类型： <code>enum MaterialType &#123; DIFFUSE_AND_GLOSSY, REFLECTION_AND_REFRACTION, REFLECTION &#125;;</code></li>
+<li>表面颜色（反射，辐射），折射率，BP 模型中的 $k_d, k_s, p$​</li>
+</ul>
+</li>
+<li><code>Bounds3.hpp</code>：包围盒相关函数<ul>
+<li>求对角线，维数，表面积，中心点；</li>
+<li>与另外一个包围盒求交，求并；</li>
+<li>检测两个包围盒是否互相包含或者重叠；</li>
+<li>判断与光线是否相交；</li>
+</ul>
+</li>
+<li><code>BVH.hpp/BVH.cpp</code>：加速结构<ul>
+<li><code>enum class SplitMethod &#123; NAIVE, SAH &#125;;</code></li>
+<li>与光线求交<ul>
+<li><code>Intersection Intersect(const Ray &amp;ray) const;</code></li>
+<li><code>Intersection getIntersection(BVHBuildNode* node, const Ray&amp; ray)const;</code></li>
+<li><code>bool IntersectP(const Ray &amp;ray) const;</code></li>
+</ul>
+</li>
+<li>本质是一颗二叉树，拥有树形结构<ul>
+<li><code>BVHBuildNode* root;</code></li>
+<li><code>BVHBuildNode* recursiveBuild(std::vector&lt;Object*&gt;objects);</code></li>
+<li><code>BVHBuildNode* recursiveBuildSAH(std::vector&lt;Object*&gt;objects);</code></li>
+</ul>
+</li>
+<li>存储其图元 primitive 的指针<ul>
+<li><code>std::vector&lt;Object*&gt; primitives;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Renderer.hpp / Renderer.cpp</code><ul>
+<li>给定一个场景，创建渲染任务</li>
+<li>管理任务过程中的 framebuffer 等等图像数据</li>
+<li>管理整个渲染流程以及数据最终的写入文件</li>
+</ul>
+</li>
+<li><code>Scene.hpp / Scene.cpp</code><ul>
+<li>图像相关的设定<ul>
+<li><code>int width, height;</code></li>
+<li><code>double fov;</code></li>
+<li><code>Vector3f backgroundColor;</code></li>
+<li><code>maxDepth;</code></li>
+</ul>
+</li>
+<li>模型相关的设定 Get / Set<ul>
+<li><code>void Add(Object *object);</code></li>
+<li><code>void Add(std::unique_ptr&lt;Light&gt; light);</code></li>
+</ul>
+</li>
+<li>与光线求交的函数：<code>Intersection intersect(const Ray&amp; ray) const;</code></li>
+<li>BVH 相关：<ul>
+<li><code>BVHAccel *bvh = nullptr;</code></li>
+<li><code>void buildBVH();</code></li>
+</ul>
+</li>
+<li>渲染主函数：<ul>
+<li><code>Vector3f castRay(const Ray &amp;ray, int depth) const;</code> // Important!</li>
+<li><code>bool trace(const Ray &amp;ray, const std::vector&lt;Object*&gt; &amp;objects, float &amp;tNear, uint32_t &amp;index, Object **hitObject);</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -3682,7 +3772,40 @@ c(A,B) = \frac {S(A)} {S(C)}a + \frac {S(B)} {S(C)}b + 0.125</script><p>SAH 考�
 <li>实现 Path Tracing 算法</li>
 </ul>
 </blockquote>
-<h3 id="算法回顾-6"><a href="#算法回顾-6" class="headerlink" title="算法回顾"></a>算法回顾</h3><h3 id="实验结果-6"><a href="#实验结果-6" class="headerlink" title="实验结果"></a>实验结果</h3><h2 id="PA8"><a href="#PA8" class="headerlink" title="PA8"></a>PA8</h2><blockquote>
+<h3 id="算法回顾-6"><a href="#算法回顾-6" class="headerlink" title="算法回顾"></a>算法回顾</h3><pre class="language-none"><code class="language-none">def ray_generation(camPos, pixel):
+	Uniformly choose N samples from the pixel
+	pixel_radiance &#x3D; 0.0
+	for sample in the pixel:
+		Shoot a ray r(camPos, cam_to_sample)
+		if ray r hit the scene at p:
+			pixel_radiance +&#x3D; 1 &#x2F; N * shade(p, sample_to_cam)
+    return pixel_radiance
+
+def shade(p, wo):
+
+	# Contributions from the light source
+	L_dir &#x3D; 0.0
+	Uniformly sample the light at x&#39; (pdf_light &#x3D; 1&#x2F;A)
+	Shoot a ray from p to x&#39;
+	if the ray is not blocked in the middle:
+		L_dir &#x3D; L_i * f_r * cos \theta * cos \theta&#39; &#x2F; |x&#39;-p|^2 &#x2F; pdf_light
+    
+    # Contributions from other places
+    L_indir &#x3D; 0.0
+    If test Russian Roulette with probability P_RR :
+        Uniformly sample the hemisphere toward wi (pdf_hemi &#x3D; 1 &#x2F; 2pi)
+        Trace a ray r(p, wi)
+        If ray r hit a non-emitting object at q:
+            L_indir &#x3D; shade(q, -wi) * f_r * cos \theta &#x2F; pdf_hemi &#x2F; P_RR
+    
+    Return L_dir + L_indir</code></pre>
+<h3 id="实验结果-6"><a href="#实验结果-6" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
+<li>SPP = 16 / 32 / 64</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/01/29/pwevmYcRyDqBPxh.png" alt="7-16"></p>
+<p><img src="https://s2.loli.net/2022/01/29/1OrJUsgTSLocbwK.png" alt="7-32"></p>
+<p><img src="https://s2.loli.net/2022/01/29/7aCgFk6KOdqS4bM.png" alt="7-64"></p>
+<h2 id="PA8"><a href="#PA8" class="headerlink" title="PA8"></a>PA8</h2><blockquote>
 <ul>
 <li>连接绳子约束，正确的构造绳子 </li>
 <li>半隐式欧拉法</li>
