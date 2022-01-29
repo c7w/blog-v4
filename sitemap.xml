@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.c7w.tech/dsa-cheatsheet/</loc>
+    
+    <lastmod>2022-01-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.c7w.tech/python-pandas/</loc>
+    
+    <lastmod>2022-01-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.c7w.tech/games101-pa/</loc>
     
     <lastmod>2022-01-29</lastmod>
@@ -104,15 +122,6 @@
     <loc>https://www.c7w.tech/friends/index.html</loc>
     
     <lastmod>2022-01-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.c7w.tech/python-pandas/</loc>
-    
-    <lastmod>2022-01-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -867,6 +876,13 @@
   
   <url>
     <loc>https://www.c7w.tech/categories/%E7%A8%8B%E8%AE%BE/%E7%A8%8B%E8%AE%BE-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2022-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.c7w.tech/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2022-01-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
