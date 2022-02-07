@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.c7w.tech/javascript-module-dev/</loc>
+    <lastmod>2022-02-07</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/ml-notes/</loc>
+    <lastmod>2022-02-07</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/drafts/tiger-book.html</loc>
+    <lastmod>2022-02-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/drafts/combinatorics.html</loc>
+    <lastmod>2022-02-03</lastmod>
+  </url>
+  <url>
     <loc>https://www.c7w.tech/yuketang-caption-crawler/</loc>
     <lastmod>2022-01-29</lastmod>
   </url>
@@ -66,10 +82,6 @@
   </url>
   <url>
     <loc>https://www.c7w.tech/dp-backpack/</loc>
-    <lastmod>2022-01-10</lastmod>
-  </url>
-  <url>
-    <loc>https://www.c7w.tech/ml-notes/</loc>
     <lastmod>2022-01-10</lastmod>
   </url>
   <url>

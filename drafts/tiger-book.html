@@ -1,0 +1,437 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fundamentals of Computer Graphics 笔记 | c7w 的博客</title><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="大名鼎鼎的《虎书》，顺便也是读点东西磨一磨自己惨淡的英语水平。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fundamentals of Computer Graphics 笔记">
+<meta property="og:url" content="https://www.c7w.tech/drafts/tiger-book.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="大名鼎鼎的《虎书》，顺便也是读点东西磨一磨自己惨淡的英语水平。">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-02-03T08:41:52.000Z">
+<meta property="article:modified_time" content="2022-02-06T12:22:38.688Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="图形学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/drafts/tiger-book"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Fundamentals of Computer Graphics 笔记',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-02-06 20:22:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">Fundamentals of Computer Graphics 笔记</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><p><img src="https://s2.loli.net/2022/02/03/aAO39JEPR5MnFZD.png" alt="images"></p>
+<p>大名鼎鼎的《虎书》，顺便也是读点东西磨一磨自己惨淡的英语水平。</p>
+<a id="more"></a>
+<h2 id="§-1-§-8"><a href="#§-1-§-8" class="headerlink" title="§ 1 - § 8"></a>§ 1 - § 8</h2><h3 id="§-1-Introduction"><a href="#§-1-Introduction" class="headerlink" title="§ 1 Introduction"></a>§ 1 Introduction</h3><p>计算机图形学是研究使用计算机来创建（create）和操作（manipulate）图像的学科。</p>
+<p>计算机图形学可以大致分为如下领域：Modeling，Rendering，Animation。</p>
+<p>图形学所用到的 API 大抵可以分为两类，一类是依托 Java 语言的特性，封装成 Package；另一类是像 Direct3D 和 OpenGL 一样提供相关库，供如 C++ 语言实现的相关程序调用。</p>
+<p>图形管线是将 3D 空间中的图元高效地透视到二维平面上的系统。这里可能会用到深度缓冲的算法。并且，图形管线中对于模型的所有操作均可以在引入齐次坐标的意义下，用四维坐标系统来表示。</p>
+<p>IEEE 浮点数标准中引入了 $+ \infin, -\infin, \text{NaN}$ 三种特殊记号。三者在计算中的结果均与其取极限意义下的结果相同。此外，如果 $\text{NaN}$ 参与了浮点数大小比较，结果总返回 <code>false</code>。</p>
+<p>此外，在设计图形学相关程序时，我们还应该注重程序运行的效率和精度的平衡。以 <code>float</code> 和 <code>double</code> 二者的使用为例，对于几何计算相关的数据，我们建议采用 <code>double</code> 类型；对于颜色的计算，我们建议采用 <code>float</code> 类型；而对于需要占用一定内存的数据，比如三角形面，建议数据存储类型为 <code>float</code>，而在参与计算时通过成员函数转换为 <code>double</code> 类型。</p>
+<p>而对于图形学相关程序的 Debug，传统技巧可能不再十分适用。这里可能需要一些特殊的技巧。</p>
+<ul>
+<li>类科学的方法：之所以称呼其为“类科学”，是因为其过程和科学研究的过程类似。首先我们需要仔细观察我们的问题，然后针对我们发现的问题提出一定的假说，然后再验证其是否正确。</li>
+<li>使用 Debug 数据生成图像的方法：比如我们直接生成表面单位法向量 $255 (x,y,z)$ 所代表的图像，来查看模型导入的法向量是否存在问题。</li>
+<li>在程序中添加额外的代码来达到断点调试的效果。注意，这里最好采用单线程，随机种子固定的方式。</li>
+<li>如果程序遇到了类似于 segmentation fault 的问题，我们可以在程序中加入一些 assert 语句来方便我们进行问题的定位。</li>
+<li>将 Debug 相关数据绘制成图或表以将其可视化。</li>
+</ul>
+<h3 id="§-2-Miscellaneous-Math"><a href="#§-2-Miscellaneous-Math" class="headerlink" title="§ 2 Miscellaneous Math"></a>§ 2 Miscellaneous Math</h3><ul>
+<li>集合与映射（Mapping, 输入为同一类型的参数, 输出一个对象）<ul>
+<li>逆映射</li>
+<li>区间及其运算</li>
+<li>对数与换底公式，对数的求导</li>
+</ul>
+</li>
+<li>二次方程的求解</li>
+<li>三角学<ul>
+<li>角的定义（两条边与单位圆交的弧长），弧度制与角度值的转换</li>
+<li>三角函数及相关公式</li>
+<li>极坐标</li>
+</ul>
+</li>
+<li>向量及其运算，获取某个分量直接与该方向的单位向量进行点积<ul>
+<li>从一个向量 $a$ 获取一组单位正交基：$w = \dfrac a {||a||}$，选择不平行与 $w$ 的 $t$ 使得 $u = \dfrac {t \times w} { || t \times w ||}$，然后令 $v = w \times u$，那么 $w,u,v$​ 便是一组单位正交基。这里选择 $t$ 需要有一些要求，因为 $t \times w$ 的值为二者围成的平行四边形的面积，所以如果该值不够大的话，会产生精度问题。于是，我们提供下列选取 $t$ 的方法。首先令 $t \leftarrow w$，然后选择 $t$ 绝对值最小的分量，将其变成 1。在做表面着色时我们时常需要用到这种构造方法，我们需要一个与表面法向量平行的坐标轴，而对于另外两个坐标轴的方位无任何要求。</li>
+<li>从两个向量 $a, b$ 获得一组单位正交基：$w = \dfrac a { ||a ||}, u = \dfrac{b \times w}{ ||  b \times w||}, v = w \times u$​。这种构造方法常常用于换基到某个摄像机的位置，摄像机看向的方位是固定的，而摄像机旋转的角度也是给定的。这时，$w$ 为摄像机看向的方向，$v$ 为摄像机的正上方。</li>
+<li>有时由于舍入误差或是存储精度误差，某个基为程序的运行带来了错误。我们当然可以用现有的 $w$ 和 $v$ 再构造一组新基，但是这却不是最佳的选择。我们可以用 SVD 分解的方法来求出一组和原有正交基相距最近的基。</li>
+</ul>
+</li>
+<li>曲线和曲面<ul>
+<li>使用隐函数方法来定义，$f(x,y) = 0$</li>
+<li>2D 梯度，梯度向量即法向量指向 $f(x,y) &gt; 0$​ 方向</li>
+<li>参数形式的曲线与曲面</li>
+</ul>
+</li>
+<li>线性插值</li>
+<li>三角形与重心坐标</li>
+</ul>
+<h3 id="§-3-Raster-Images"><a href="#§-3-Raster-Images" class="headerlink" title="§ 3 Raster Images"></a>§ 3 Raster Images</h3><ul>
+<li>Intro</li>
+</ul>
+<p>基于扫描的光栅设备在生活中应用广泛。与之相联系地，点阵图（Raster Images）是存储和处理图像最常用的方式。我们可以将点阵图考虑为是，不随设备而变化的二维数组，其中存储了这张图片中的颜色信息。此外，还有一种图叫做向量图，概括来说其存储的是如何显示这种图的“指令”，并不包含每个像素的具体内容，其在显示之前也要先经过点阵化。</p>
+<ul>
+<li>光栅设备：输出设备有显示器与打印机，输入设备为传感器</li>
+<li>Raster Images 与其显示</li>
+</ul>
+<p>我们可以将 Raster Images 视为是 $I(x,y) : R \rightarrow V$，其中 $R \subset \mathbb {R}^2$​，对于灰度图 $V=\mathbb R^+$，而对于 RGB 图像 $V=\mathbb{R^+}^3$​. 一般的，采用课上定义屏幕平面的方式，我们有 $R = [-0.5, n_x-0.5] \times [-0.5, n_y-0.5]$.</p>
+<p>像素值存储为浮点数的图片我们一般称为 HDR 图片，这是相比使用 int 存储像素值的 LDR 图片来说的。</p>
+<p>使用后者这种存储方式会导致两种现象：一种是大于最大可记录值的像素值被强制设为最大可记录值（clipping）；一种是原始像素值都需要向可以被表示的最近的可记录值舍入（banding, quantization artifects）</p>
+<p>由于人类对光强的感知并不是线性变化的，显示器对于输入值也不是线性变化的，因此我们需要进行一定程度的校正。对于后者是说，显示器的 $\text{displayed intensity} = \text{maximum intensity} \cdot \text{(input)}^\gamma$，于是我们便可以校正我们的输入值，这里 $\gamma$ 由显示器的材料特性决定。</p>
+<ul>
+<li>RGB 色系与加色系统，24-bit 颜色表示</li>
+<li>Alpha 合成：设前景颜色为 $c_f$，背景颜色为 $c_b$，Alpha 通道值为 $\alpha$（不透明度），则输出结果为 $c = \alpha c_f + (1-\alpha) c_b$​，32-bit 颜色表示</li>
+<li>图片的存储格式：可以分为 Lossless 和 Lossy 两种系统，前者保留了几乎所有的信息，而后者不可避免地丢失了一定程度的信息<ul>
+<li>jpeg（Lossy），根据人类视觉信息压缩图片</li>
+<li>tiff</li>
+<li>ppm（Lossless，简洁）</li>
+<li>png（Lossless）</li>
+</ul>
+</li>
+</ul>
+<h3 id="§-4-Ray-Tracing"><a href="#§-4-Ray-Tracing" class="headerlink" title="§ 4 Ray Tracing"></a>§ 4 Ray Tracing</h3><p>图形学的基本任务之一便是渲染，输入一系列 3D 空间中的模型，输出其在某个视角下的 2D 投影。</p>
+<p>渲染有两种方式：</p>
+<ul>
+<li>Object-order rendering：遍历场景中所有的模型，考虑其对目前已计算的图像的影响并更新</li>
+<li>Image-order rendering：考虑图像中的每一个像素，针对某个像素找到所有可能影响该像素的模型，然后对该像素的值进行计算</li>
+</ul>
+<h4 id="Basic-RT"><a href="#Basic-RT" class="headerlink" title="Basic RT"></a>Basic RT</h4><p>由光路可逆性，由摄像机发出 Viewing Ray，一旦这个 Viewing Ray 与某个物体相交，就在这个相交点计算其着色。</p>
+<p>基本的 RT 算法包含以下部分：</p>
+<ul>
+<li>生成光线：考虑视角原点和像平面每个像素连线的方向，生成光线</li>
+<li>光线与场景求交：找到与光线相交的最近的物体</li>
+<li>着色：计算交点的颜色</li>
+</ul>
+<h4 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h4><p>// 区分：平行投影与透视投影，正交投影与斜投影，正交透视投影与斜透视投影</p>
+<p>最简单的投影方法是平行投影：我们只需要将物体沿着投影方向移动，直到与平面得到交点就可以。平行投影使得原来平行的线在投影后仍然平行。</p>
+<p>如果投影方向恰好与像平面垂直，这就变成了正交投影（第一张图）；不然我们称之为斜投影（第二张图右图）。</p>
+<p><img src="https://s2.loli.net/2022/02/04/cRVipBDY2FlunoP.png" alt="Figure showing when projection lines are parallel and perpendicular to the image plane, the resulting views are called orthographic."></p>
+<p><img src="https://s2.loli.net/2022/02/04/WlZc8arUyLi49He.png" alt="Figure showing a parallel projection that has the image plane at an angle to the projection direction is called oblique (right). In perspective projection, the projection lines all pass through the viewpoint, rather than being parallel (left). The illustrated perspective view is non-oblique because a projection line drawn through the center of the image would be perpendicular to the image plane."></p>
+<p>但是我们发现我们所观察到的世界并不能完全用平行投影来解释，比如平行的铁轨越远看起来离得越近。</p>
+<p>而透视投影却能解决这个问题。透视投影是说我们要将模型投影到 <strong>Viewpoint 和模型对应点的连线与像平面的交点上</strong>（第二幅图左图）。仿照上述平行投影的概念，我们可以引入正交透视投影和斜透视投影两个概念，区别在与 ViewPoint 和像平面中心点的连线与像平面是否垂直。</p>
+<h4 id="计算-Viewing-Ray"><a href="#计算-Viewing-Ray" class="headerlink" title="计算 Viewing Ray"></a>计算 Viewing Ray</h4><ul>
+<li>定义光线：3D 含参射线</li>
+<li>换基：$e$ 为相机所在处，$u$, $v$ 分别指向相机看向方向的右方与上方</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/02/04/IroxRwmCYQ5K1HV.png" alt="Figure showing the sample points on the screen are mapped to a similar array on the 3D window. A viewing ray is sent to each of these locations."></p>
+<ul>
+<li>计算（略去课上结果 $M_{perspective \rightarrow ortho}$, $M_{ortho}$）</li>
+</ul>
+<h4 id="光线与物体求交"><a href="#光线与物体求交" class="headerlink" title="光线与物体求交"></a>光线与物体求交</h4><ul>
+<li>与球求交</li>
+<li>与三角形求交</li>
+<li>与多个物体求交：To intersect a ray with a group, you simply intersect the ray with the objects in the group and return the intersection with the smallest <em>t</em> value. </li>
+</ul>
+<pre class="language-none"><code class="language-none">for each pixel do
+	Compute viewing ray
+	if ( ray hits an object with t \in [0, inf) ) then
+		Compute n
+		Evaluate shading model and set pixel to the shading color
+	else
+		Set pixel color to background color</code></pre>
+<h4 id="Shading"><a href="#Shading" class="headerlink" title="Shading"></a>Shading</h4><p>着色模型：计算某个像素处的颜色值；基本的着色模型：</p>
+<ul>
+<li>Lambertian Shading Model</li>
+<li>Blinn Phong Shading Model</li>
+</ul>
+<h4 id="Shadows"><a href="#Shadows" class="headerlink" title="Shadows"></a>Shadows</h4><p>假设我们在着色表面的 $p$ 处看向光源 $l$​，这束“光线”称为 Shadow Ray，如果这条试探光线在中间被物体遮挡，那么这里就应该有阴影。</p>
+<pre class="language-none"><code class="language-none">function raycolor(ray e+td, real t0, real t1)
+	hit_record rec, srec
+	if ( scene-&gt;hit(e+td, t0, t1, rec) ) then
+		p &#x3D; e + (rec.t) d
+		color c &#x3D; rec.ka * Ia &#x2F;&#x2F; Ambition
+		if ( not scene-&gt;hit(p+sl, epsilon, inf, srec) ) then
+			c +&#x3D; Specular_term + Diffuse_term
+			return c
+		
+	else
+		return background_color</code></pre>
+<h4 id="Ideal-Specular-Reflection"><a href="#Ideal-Specular-Reflection" class="headerlink" title="Ideal Specular Reflection"></a>Ideal Specular Reflection</h4><p>这种镜面效果的材质只需要：</p>
+<pre class="language-none"><code class="language-none">r &#x3D; d - 2 * dotProduct(d, n) * n
+color c &#x3D; c + km * raycolor(p + sr, epsilon, inf)</code></pre>
+<p><img src="https://s2.loli.net/2022/02/04/OKEaQfnUNBr1zhu.png" alt="Figure showing when looking into a perfect mirror, the viewer looking in direction d will see whatever the viewer “below” the surface would see in direction r."></p>
+<p><img src="https://s2.loli.net/2022/02/04/JlYnHvX2s8jgwMO.png" alt="Figure showing a simple scene rendered with diffuse and Blinn-Phong shading, shadows from three light sources, and specular reflection from the floor."></p>
+<center>BP Shading Model with Shadows + Specular Reflection</center>
+
+<h3 id="§-5-Linear-Algebra"><a href="#§-5-Linear-Algebra" class="headerlink" title="§ 5 Linear Algebra"></a>§ 5 Linear Algebra</h3><ul>
+<li>行列式，顺序主子式</li>
+<li>矩阵</li>
+<li>矩阵求逆</li>
+<li>特征值与矩阵对角化</li>
+<li>奇异值分解</li>
+</ul>
+<h3 id="§-6-Transformation-Matrices"><a href="#§-6-Transformation-Matrices" class="headerlink" title="§ 6 Transformation Matrices"></a>§ 6 Transformation Matrices</h3><ul>
+<li>2D Linear Transformations<ul>
+<li>Scaling</li>
+<li>Shearing</li>
+<li>Rotation</li>
+<li>Reflection</li>
+<li>Composition and decomposition</li>
+</ul>
+</li>
+<li>3D Linear Transformations<ul>
+<li>Arbitrary 3D Rotations</li>
+<li>Transforming Normal Vectors: If a surface is transformed by matrix $M$, then $Mt$ remains to be the tangent vector of the transformed surface if its tangent vector is denoted with $t$. However, $Mn$ may not be the normal vector of the new surface if $n$ is the normal vector of the former surface.<ul>
+<li>$(n’)^TMt = 0 \  \and \ n^Tt = 0 \  \Rightarrow  (n’)^TMt = 0 \  \and \ n^TM^{-1}Mt=0$，于是我们取 $n’ = (M^{-1})^Tn$.</li>
+<li>即 $M’ = (M^{-1})^T$.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Translation and Affine Transformations<ul>
+<li>平移与仿射变换</li>
+</ul>
+</li>
+<li>引入齐次坐标表示仿射变换</li>
+</ul>
+<h3 id="§-7-Viewing"><a href="#§-7-Viewing" class="headerlink" title="§ 7 Viewing"></a>§ 7 Viewing</h3><p>What is Viewing? Use linear algebra tools to move objects their 3D locations and their positions in the 2D view. This 3D to 2D mapping is called <em>viewing transformation</em>.</p>
+<ul>
+<li>Viewing Transformations: The viewing transformation has the job of mapping 3D locations, represented as (x, y, z) coordinates in the canonical coordinate system, to coordinates in the image, expressed in units of pixels. It could break into a sequence of these transformations:<ul>
+<li>Camera transformation / Eye transformation: Places the camera on the right position and orientation. Depending on the camera only. World space (Canonical coordinates) -&gt; Camera space.</li>
+<li>Projection transformation: Projects visible points from camera space to $[-1, 1]^3$​​​. Depending on the projection type. Camera space -&gt; canonical view volume.</li>
+<li>Viewport transformation / Windowing transformation: Map $[-1, 1]^3$​​ to pixel coordinates. Depending on the output image. Canonical view volume -&gt; screen space.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/02/04/kVl81omw4pxbGnr.png" alt="Figure showing the sequence of spaces and transformations that gets objects from their original coordinates into screen space."></p>
+<p>这里略去各个矩阵的推导过程，结论详见 GAMES101 笔记。</p>
+<h3 id="§-8-The-Graphics-Pipeline"><a href="#§-8-The-Graphics-Pipeline" class="headerlink" title="§ 8 The Graphics Pipeline"></a>§ 8 The Graphics Pipeline</h3><p>Now consider using object-order rendering. </p>
+<p>The process of finding all the pixels in an image that are occupied by a geometric primitive is called <strong>rasterization</strong>, so object-order rendering can also be called rendering by rasterization. </p>
+<p>The sequence of operations that is required, starting with objects and ending by updating pixels in the image, is known as the <strong>graphics pipeline</strong>.</p>
+<p>Any graphics system has one or more types of “primitive object” that it can handle directly, and more complex objects are converted into these “<strong>primitives</strong>.” Triangles are the most often used primitive.</p>
+<p><img src="https://s2.loli.net/2022/02/04/4nQuE5cprbliGwR.png" alt="Figure showing the stages of a graphics pipeline."></p>
+<p>For the purposes of this chapter, we’ll discuss the graphics pipeline in terms of four stages.</p>
+<ul>
+<li>Vertex processing stage</li>
+<li>Rasterization stage</li>
+<li>Fragment processing stage</li>
+<li>Fragment blending stage</li>
+</ul>
+<h4 id="Rasterization"><a href="#Rasterization" class="headerlink" title="Rasterization"></a>Rasterization</h4><ul>
+<li>Rasterizer<ul>
+<li>For each primitive coming in, the rasterizer <strong>enumerates the pixels</strong> it covers, and then <strong>interpolates </strong>its attribute values. </li>
+<li>Its output is a set of <em>fragments</em>, one for each pixel covered by the primitive.</li>
+</ul>
+</li>
+<li>Triangle<ul>
+<li>重心坐标插值计算属性值</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">19</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-C/"><span class="card-category-list-name">技术/C#</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Java/"><span class="card-category-list-name">技术/Java</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-JavaScript/"><span class="card-category-list-name">技术/JavaScript</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Linux/"><span class="card-category-list-name">技术/Linux</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Python/"><span class="card-category-list-name">技术/Python</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-Python%E5%BA%94%E7%94%A8/"><span class="card-category-list-name">技术/Python应用</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-%E5%89%8D%E7%AB%AF/"><span class="card-category-list-name">技术/前端</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/0-1%E8%83%8C%E5%8C%85/" style="font-size: 1.1em; color: #999">0/1背包</a> <a href="/tags/C/" style="font-size: 1.1em; color: #999">C#</a> <a href="/tags/Java/" style="font-size: 1.1em; color: #999">Java</a> <a href="/tags/JavaScript/" style="font-size: 1.1em; color: #999">JavaScript</a> <a href="/tags/Linux/" style="font-size: 1.3em; color: #99a1ac">Linux</a> <a href="/tags/OOP/" style="font-size: 1.1em; color: #999">OOP</a> <a href="/tags/QQ-Bot/" style="font-size: 1.1em; color: #999">QQ Bot</a> <a href="/tags/React/" style="font-size: 1.2em; color: #999da3">React</a> <a href="/tags/WSL/" style="font-size: 1.1em; color: #999">WSL</a> <a href="/tags/Websocket/" style="font-size: 1.1em; color: #999">Websocket</a> <a href="/tags/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">三角函数的积分</a> <a href="/tags/%E5%85%A8%E5%B1%80%E6%95%B0%E6%8D%AE%E6%B5%81/" style="font-size: 1.1em; color: #999">全局数据流</a> <a href="/tags/%E5%87%BD%E6%95%B0%E8%A3%85%E9%A5%B0%E5%99%A8/" style="font-size: 1.1em; color: #999">函数装饰器</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 1.1em; color: #999">动态规划</a> <a href="/tags/%E5%90%88%E5%90%8C%E7%9F%A9%E9%98%B5/" style="font-size: 1.1em; color: #999">合同矩阵</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 1.3em; color: #99a1ac">图形学</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.2em; color: #999da3">多线程</a> <a href="/tags/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91/" style="font-size: 1.1em; color: #999">安卓开发</a> <a href="/tags/%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB/" style="font-size: 1.1em; color: #999">对象关系</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 1.1em; color: #999">并发</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">微积分</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 1.1em; color: #999">总结</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 1.2em; color: #999da3">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.1em; color: #999">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.4em; color: #99a5b6">数据结构</a> <a href="/tags/%E6%9B%B2%E7%BA%BF%E5%9B%BE%E5%83%8F/" style="font-size: 1.1em; color: #999">曲线图像</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.5em; color: #99a9bf">机器学习</a> <a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.1em; color: #999">杂谈</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.3em; color: #99a1ac">爬虫</a> <a href="/tags/%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5/" style="font-size: 1.1em; color: #999">相似矩阵</a> <a href="/tags/%E7%AB%99%E7%82%B9%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">站点日志</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.1em; color: #999">线性代数</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/02/"><span class="card-archive-list-date">2022-02</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">2022-01</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">2021-12</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">2021-09</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">2021-08</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">2021-07</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">41</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">132.3k</div></div><div class="webinfo-item"><div class="item-name">总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-02-07T13:48:57.451Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By c7w</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
