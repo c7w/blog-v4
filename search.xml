@@ -14080,13 +14080,17 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>使用 Express 可以快速地搭建一个完整功能的网站，但是，我们一般更倾向于使用 Express 来快速搭建<strong>网站后端</strong>。</p>
 <p>注意，这里我们将网站分为前端和后端，事实上与我们在《程序设计训练》课程中对于使用 Django 来搭建网站的方式不同。Django 的页面渲染是<strong>服务器端渲染</strong>（Server-side Rendering），也就是说，在收到用户发来的请求后，服务器端按照设计的逻辑读取相应的页面模板，在完成页面渲染（也就是在页面模板的对应处填充对应字段）后，将渲染后的 HTML 页面直接发给用户。</p>
 <p>而这里我们将网站分为“前端”和“后端”，这种设计模式和上述服务器端渲染有本质的区别，我们一般称为<strong>客户端渲染</strong>（Client-side Rendering）。其运作模式是，网站提供服务器直接将未渲染的 HTML 模板（我们称为“前端代码”）发送给用户，而这模板中包含了类似于 <code>fetch</code> 的函数，可以在浏览器将其渲染时向我们的“后端”发送请求。“后端”在收到请求后，一般以 Json 格式返回所请求的数据，前端再通过 Javascript 脚本将收到的数据渲染在页面上。</p>
-<p>在《软件工程》课程中我们推荐使用后者这种设计模式，即进行前后端分离。虽然我们也可以继续利用 Django 来作为后端，但是我们这里给大家提供一种业界也很常用的选项 —— Express。其优点在于，相比于 Django 而言，其编写起来更加方便，也更加快捷。<s>而且，后端更加靠近 <code>npm</code> 这个轮子工厂，对于我们进行大调库也更加的方便。</s></p>
-<p>本文我们侧重介绍如何配置一个 Express 项目，并完成一个最基本的与后端数据库通信的 RESTful API.</p>
+<p>在《软件工程》课程中我们推荐使用后者这种设计模式，即进行前后端分离。虽然我们也可以继续利用 Django 来作为后端，但是我们这里给大家提供一种业界也很常用的选项 —— Express。其优点在于，相比于 Django 而言，其编写起来更加方便，也更加快捷。<s>而且，后端更加靠近 <code>npm</code> 这个轮子工厂，对于我们进行大调库也更加的方便。当然，因为 Javascript 令人**的设计，也会收获更加酸爽的 Debug 体验。</s></p>
+<p>本文我们侧重介绍如何配置一个 Express 项目，并完成一个最基本的与后端数据库通信的增删查改功能.</p>
 <a id="more"></a>
 <h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
 <li>JavaScript 语言</li>
-<li>RESTful API 的有关知识 <a href="https://www.runoob.com/nodejs/nodejs-restful-api.html">https://www.runoob.com/nodejs/nodejs-restful-api.html</a></li>
-<li>（至少一种）数据库的使用操作</li>
+<li>RESTful API 的有关知识（事实上后文也有介绍） <a href="https://www.runoob.com/nodejs/nodejs-restful-api.html">https://www.runoob.com/nodejs/nodejs-restful-api.html</a></li>
+<li>（至少一种）数据库的使用操作<ul>
+<li>可以是直接使用 SQL 语句操作</li>
+<li>可以是使用 ORM 来操作</li>
+</ul>
+</li>
 </ul>
 <h2 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h2><p>搜索结果可以找到的大多数编写教程均是基于 <code>CommonJS</code> 规范（以 <code>require</code> 和 <code>define</code> 为特点），而 <code>Node.js</code> 则推出了基于语言层面支持的 <code>ES6 Module</code> 规范（以 <code>import</code> 和 <code>export</code> 为特点）。后者必将成为今后较为常用的编写规范。如果想了解更多关于 Javascript 模块化开发的有关知识，可以参考本文初稿作者的<a href="https://c7w.tech/javascript-module-dev/">这篇博客</a>。</p>
 <p>同样，这里我们采用更为广泛使用的 <code>yarn</code> 来进行包管理。其安装在 Node.js 简介及 npm 的介绍中已给出，这里我们不再赘述。</p>
@@ -14146,9 +14150,227 @@ app<span class="token punctuation">.</span><span class="token function">listen</
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 <p>之后我们就可以使用 <code>yarn start</code> 来开启服务端了。</p>
-<h2 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a>RESTful API</h2><p>// TODO：还在咕</p>
-<p>选用 Mongoose 吧 我也懒得写 SQL</p>
-<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><h2 id="req-与-res"><a href="#req-与-res" class="headerlink" title="req 与 res"></a>req 与 res</h2><h2 id="后续拓展"><a href="#后续拓展" class="headerlink" title="后续拓展"></a>后续拓展</h2><h2 id="资源链接"><a href="#资源链接" class="headerlink" title="资源链接"></a>资源链接</h2><ul>
+<h2 id="路由-Routing"><a href="#路由-Routing" class="headerlink" title="路由 Routing"></a>路由 Routing</h2><p>没错，相信你已经猜到了，我们后端网站的路由便是主要通过 <code>app.get</code> 和 <code>app.post</code> 两个方法来定义。事实上，如果你对 HTTP 请求方法了解的更多些的话，我们可以使用以下方法：</p>
+<ul>
+<li><code>app.get()</code></li>
+<li><code>app.post()</code></li>
+<li><code>app.put()</code></li>
+<li><code>app.delete()</code></li>
+</ul>
+<p>事实上还有更多，这里我们不再一一列出，如欲了解可以借助<a href="https://expressjs.com/en/4x/api.html#app.METHOD">官方的 Docs</a>。</p>
+<p>我们这里给出一些示例写法：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">"express"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Hello, baka c7w!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'GET method to /item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/item'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'POST method to /item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Regular Expression!</span>
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item/*'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// Variables!</span>
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item2/:item/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item2/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; item: '1' &#125;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Even ReExp + Variables!</span>
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"/item3/:item(\\d+)"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item3/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; item: '1' &#125;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="Route-Handler"><a href="#Route-Handler" class="headerlink" title="Route Handler"></a>Route Handler</h3><p>我们可以尝试考虑以下情景：我们要根据用户身份（这里做简要简化，假设用户身份通过 Routing 传入），分别展示不同的页面。事实上这种情景很常见，比如一个网站的管理员登入博客看到的应该是管理页面，而登录作者看到的应该是写作页面，普通用户看到的就是浏览页面。但是这些页面中又会有一些耦合的元素。于是，我们能不能采用 OOP 课程中策略模式的思想来解决这个问题呢？</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token function-variable function">logger</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// Logger 部件，记录用</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>user <span class="token operator">+</span> <span class="token string">' tried to visit...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">main</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>user <span class="token operator">==</span> <span class="token string">"c7w"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">.</span>result <span class="token operator">=</span> <span class="token string">"Welcome!&lt;br />"</span><span class="token punctuation">;</span>
+        <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Permission Denied"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">footer</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span>result <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token string">'&lt;br />&lt;br />'</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>result<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"/user/:user"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>logger<span class="token punctuation">,</span> main<span class="token punctuation">,</span> footer<span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p>事实上我们可以利用这种 Handler “数组”来定义处理一个请求的先后顺序。如果在前面的某个 Handler 调用了 <code>next()</code>，那么便会执行下一个 <code>Handler</code>。</p>
+<h2 id="req-与-res"><a href="#req-与-res" class="headerlink" title="req 与 res"></a>req 与 res</h2><p>这里我们介绍下 <code>req</code> 和 <code>res</code> 两个参数的主要属性和方法。</p>
+<h3 id="req"><a href="#req" class="headerlink" title="req"></a><code>req</code></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>req.query</td>
+<td>在请求后以 <code>?</code> 和 <code>&amp;</code> 连接的键值对</td>
+</tr>
+<tr>
+<td>req.body</td>
+<td>请求体的内容</td>
+</tr>
+<tr>
+<td>req.cookies</td>
+<td>Cookies 中的内容</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>更多详见：<a href="https://expressjs.com/en/4x/api.html#req">https://expressjs.com/en/4x/api.html#req</a></p>
+<h3 id="res"><a href="#res" class="headerlink" title="res"></a><code>res</code></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.download">res.download()</a></td>
+<td>Prompt a file to be downloaded.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.end">res.end()</a></td>
+<td>End the response process.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.json">res.json()</a></td>
+<td>Send a JSON response.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.redirect">res.redirect()</a></td>
+<td>Redirect a request.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.render">res.render()</a></td>
+<td>Render a view template.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.send">res.send()</a></td>
+<td>Send a response of various types.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.sendFile">res.sendFile()</a></td>
+<td>Send a file as an octet stream.</td>
+</tr>
+<tr>
+<td><a href="https://expressjs.com/en/4x/api.html#res.sendStatus">res.sendStatus()</a></td>
+<td>Set the response status code and send its string representation as the response body.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>更多详见：<a href="https://expressjs.com/en/4x/api.html#res">https://expressjs.com/en/4x/api.html#res</a></p>
+<h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h2><p>Middleware（中间件函数）的概念其实很好理解。就像是我们上面举的那个例子，<code>logger</code> 和 <code>main</code> 就可以理解成是 Middleware functions。中间件函数是带有了 <code>req, res, next</code> 为签名的函数，在 Express 处理请求的时候，事实上会将某个地址对应的路由的所有中间件组织成一个类似链表的结构，随着 <code>next()</code> 的调用在中间件间顺序执行。而且，中间件都是有修改 <code>req</code> 和 <code>res</code> 的所有属性的能力的。</p>
+<p>一个需要注意的点是，如果中间件函数没有使用类似于 <code>res.send()</code> 的方法将一个请求返回的话，必须要调用 <code>next()</code> 函数，不然即使这个中间件函数执行到末尾，也不会自动跳转。这就会导致请求“假死”的现象。</p>
+<h3 id="全局-Middleware"><a href="#全局-Middleware" class="headerlink" title="全局 Middleware"></a>全局 Middleware</h3><p>使用 <code>app.use([path], &lt;middleware function&gt;)</code> 我们可以添加供全局使用的 Middleware 函数（Application-level middleware），示例如下：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">"express"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">logger</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span> <span class="token comment">// Logger 部件，记录用</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">[</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">] </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>req<span class="token punctuation">.</span>method<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>req<span class="token punctuation">.</span>originalUrl<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Hello, baka c7w!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'GET method to /item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/item'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'POST method to /item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item/*'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/item2/:item/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item2/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; item: '1' &#125;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"/item3/:item(\\d+)"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// `/item3/1`</span>
+    console<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123; item: '1' &#125;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"Item/*"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>Tue Feb 08 <span class="token number">2022</span> <span class="token number">22</span>:16:18 GMT+0800 <span class="token punctuation">(</span>China Standard Time<span class="token punctuation">)</span><span class="token punctuation">]</span> GET /user/123
+<span class="token punctuation">[</span>Tue Feb 08 <span class="token number">2022</span> <span class="token number">22</span>:16:20 GMT+0800 <span class="token punctuation">(</span>China Standard Time<span class="token punctuation">)</span><span class="token punctuation">]</span> GET /user/123
+<span class="token punctuation">[</span>Tue Feb 08 <span class="token number">2022</span> <span class="token number">22</span>:16:22 GMT+0800 <span class="token punctuation">(</span>China Standard Time<span class="token punctuation">)</span><span class="token punctuation">]</span> GET /user/123/123</code></pre>
+<h3 id="异常处理-Middleware"><a href="#异常处理-Middleware" class="headerlink" title="异常处理 Middleware"></a>异常处理 Middleware</h3><p>我们可以定义处理异常的中间件函数，方法如下：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>stack<span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Sorry, but fatal error occurred meanwhile.'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<h3 id="内置-Middleware"><a href="#内置-Middleware" class="headerlink" title="内置 Middleware"></a>内置 Middleware</h3><p>Express 内置了以下中间件：</p>
+<ul>
+<li><a href="https://expressjs.com/en/4x/api.html#express.static">express.static</a> 用于提供静态文件，比如图片，文件等等</li>
+<li><a href="https://expressjs.com/en/4x/api.html#express.json">express.json</a> 将 req.body 处理为 json (Available with Express 4.16.0+)</li>
+<li><a href="https://expressjs.com/en/4x/api.html#express.urlencoded">express.urlencoded</a></li>
+</ul>
+<p>对于 POST 请求，我们推荐使用后两个中间件。</p>
+<h2 id="CRUD-的实现"><a href="#CRUD-的实现" class="headerlink" title="CRUD 的实现"></a>CRUD 的实现</h2><p>首先我们先简单地介绍一下 RESTful API 是什么。</p>
+<p>RESTful API 是目前比较成熟的一套互联网应用程序的 API 设计理论。可以参考 <a href="https://www.ruanyifeng.com/blog/2014/05/restful_api.html。">https://www.ruanyifeng.com/blog/2014/05/restful_api.html。</a></p>
+<p>TL; DR: 按照一定约定俗成的设计，对于我们所关心的涉及的资源，进行增删查改的操作。RESTful API 更多的是关注在“设计”这一层面。</p>
+<p>作为今天的教程，我们只要理解，我们设计出一个后端，能让它和我们的数据库连接，完成增删查改（Create, Read, Update, Delete）就可以了。</p>
+<p>作为轮子工厂，我们经过简单的搜索就能找到 JavaScript 与 mysql 连接的工具，其使用教程可以<a href="https://www.runoob.com/nodejs/nodejs-mysql.html">见此</a>。</p>
+<p>直接撰写 SQL 语句固然在应用上是高效的，但是切换编程语言或者找一些自动生成 SQL 查询语句的工具也会降低我们的编程效率。在我们<strong>并不是很在意查询效率的前提下</strong>，我们不禁回忆起 Django 中用类撰写 Model 的模式，当时可是十分节省我们的力气。</p>
+<p>事实上，这也是一种十分常见的设计模式，叫做 ORM（Object–relational mapping）。之前我们可以将关系型数据库中的一个表看做是一张 Excel 表，而表头规定了这个表的每行记录所应该有的属性。而如果我们把这张表中的表头，视为是一个类在规定它应该具有的属性的话，那么这张表的每行记录，事实上就是这个类所实例化出来的对象。这正是 Django 的 db.models 所采用的设计模式。</p>
+<p>再一次，作为轮子工厂，只需要简单的搜索，我们便能找到实现与数据库之间 ORM 设计的库，这里我们以 <a href="https://sequelize.org/v7/">Sequelize</a> 为例。这里我们采用便携的 <code>sqlite3</code> 作为我们的数据库。</p>
+<p>实现后的简单项目归档于：<a href="https://github.com/c7w/MyDashboardBackend">https://github.com/c7w/MyDashboardBackend</a></p>
+<h2 id="后续拓展"><a href="#后续拓展" class="headerlink" title="后续拓展"></a>后续拓展</h2><ul>
+<li>了解更多 ExpressJS 的中间件</li>
+<li>了解 ExpressJS 的模板渲染机制</li>
+<li>换用其他数据库尝试，包括 fs（本地存储），MySQL，以及非关系型数据库 PostgreSQL</li>
+</ul>
+<p>可以应用 ExpressJS 的课程：</p>
+<ul>
+<li>《软件工程》</li>
+</ul>
+<h2 id="资源链接"><a href="#资源链接" class="headerlink" title="资源链接"></a>资源链接</h2><ul>
 <li>ExpressJS 官网 <a href="https://expressjs.com/">https://expressjs.com/</a></li>
 <li>ExpressJS 中文网 <a href="https://expressjs.com/zh-cn/">https://expressjs.com/zh-cn/</a></li>
 <li>菜鸟教程 <a href="https://www.runoob.com/nodejs/nodejs-express-framework.html">https://www.runoob.com/nodejs/nodejs-express-framework.html</a></li>
