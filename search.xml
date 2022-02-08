@@ -14073,4 +14073,94 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <tag>JavaScript</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ExpressJS 项目开发指北</title>
+    <url>/express-js/</url>
+    <content><![CDATA[<p>Express 是一个简洁而灵活的 Node.js Web 应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。</p>
+<p>使用 Express 可以快速地搭建一个完整功能的网站，但是，我们一般更倾向于使用 Express 来快速搭建<strong>网站后端</strong>。</p>
+<p>注意，这里我们将网站分为前端和后端，事实上与我们在《程序设计训练》课程中对于使用 Django 来搭建网站的方式不同。Django 的页面渲染是<strong>服务器端渲染</strong>（Server-side Rendering），也就是说，在收到用户发来的请求后，服务器端按照设计的逻辑读取相应的页面模板，在完成页面渲染（也就是在页面模板的对应处填充对应字段）后，将渲染后的 HTML 页面直接发给用户。</p>
+<p>而这里我们将网站分为“前端”和“后端”，这种设计模式和上述服务器端渲染有本质的区别，我们一般称为<strong>客户端渲染</strong>（Client-side Rendering）。其运作模式是，网站提供服务器直接将未渲染的 HTML 模板（我们称为“前端代码”）发送给用户，而这模板中包含了类似于 <code>fetch</code> 的函数，可以在浏览器将其渲染时向我们的“后端”发送请求。“后端”在收到请求后，一般以 Json 格式返回所请求的数据，前端再通过 Javascript 脚本将收到的数据渲染在页面上。</p>
+<p>在《软件工程》课程中我们推荐使用后者这种设计模式，即进行前后端分离。虽然我们也可以继续利用 Django 来作为后端，但是我们这里给大家提供一种业界也很常用的选项 —— Express。其优点在于，相比于 Django 而言，其编写起来更加方便，也更加快捷。<s>而且，后端更加靠近 <code>npm</code> 这个轮子工厂，对于我们进行大调库也更加的方便。</s></p>
+<p>本文我们侧重介绍如何配置一个 Express 项目，并完成一个最基本的与后端数据库通信的 RESTful API.</p>
+<a id="more"></a>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
+<li>JavaScript 语言</li>
+<li>RESTful API 的有关知识 <a href="https://www.runoob.com/nodejs/nodejs-restful-api.html">https://www.runoob.com/nodejs/nodejs-restful-api.html</a></li>
+<li>（至少一种）数据库的使用操作</li>
+</ul>
+<h2 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h2><p>搜索结果可以找到的大多数编写教程均是基于 <code>CommonJS</code> 规范（以 <code>require</code> 和 <code>define</code> 为特点），而 <code>Node.js</code> 则推出了基于语言层面支持的 <code>ES6 Module</code> 规范（以 <code>import</code> 和 <code>export</code> 为特点）。后者必将成为今后较为常用的编写规范。如果想了解更多关于 Javascript 模块化开发的有关知识，可以参考本文初稿作者的<a href="https://c7w.tech/javascript-module-dev/">这篇博客</a>。</p>
+<p>同样，这里我们采用更为广泛使用的 <code>yarn</code> 来进行包管理。其安装在 Node.js 简介及 npm 的介绍中已给出，这里我们不再赘述。</p>
+<p>首先我们先新建一个项目。（这里采用 Windows 的 CMD 进行操作，Linux 的操作类似，下同）</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">D:<span class="token punctuation">\</span>Coding<span class="token operator">></span>cd D:<span class="token punctuation">\</span>Coding<span class="token punctuation">\</span>MyDashBoardBackend
+
+D:<span class="token punctuation">\</span>Coding<span class="token punctuation">\</span>MyDashBoardBackend<span class="token operator">></span>yarn init
+<span class="token function">yarn</span> init v1.22.17
+question name <span class="token punctuation">(</span>MyDashBoardBackend<span class="token punctuation">)</span>:
+question version <span class="token punctuation">(</span><span class="token number">1.0</span>.0<span class="token punctuation">)</span>:
+question description: A sample backend project.
+question entry point <span class="token punctuation">(</span>index.js<span class="token punctuation">)</span>:
+question repository url:
+question author:
+question license <span class="token punctuation">(</span>MIT<span class="token punctuation">)</span>:
+question private:
+success Saved package.json
+Done <span class="token keyword">in</span> <span class="token number">20</span>.93s.</code></pre>
+<p>然后我们安装 express 模块：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> express</code></pre>
+<p>为了使用 <code>ES6 Module</code> 规范，我们配置 <code>package.json</code>，在其中加入 <code>&quot;type&quot;: &quot;module&quot;</code> 字段：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"MyDashBoardBackend"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"module"</span><span class="token punctuation">,</span>
+  <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"A sample backend project."</span><span class="token punctuation">,</span>
+  <span class="token property">"main"</span><span class="token operator">:</span> <span class="token string">"index.js"</span><span class="token punctuation">,</span>
+  <span class="token property">"license"</span><span class="token operator">:</span> <span class="token string">"MIT"</span><span class="token punctuation">,</span>
+  <span class="token property">"dependencies"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"express"</span><span class="token operator">:</span> <span class="token string">"^4.17.2"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>然后，我们在根目录新建 <code>index.js</code>，写入如下内容：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">"express"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Hello, baka c7w!'</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>然后我们就可以运行 <code>node index.js</code>，然后前往浏览器访问 <code>http://localhost:3000/</code>，便可以看到我们输出的欢迎信息。</p>
+<p>若是感觉如此逼格还不够高，不要紧，我们可以继续进行一些配置：</p>
+<p>我们可以继续修改 <code>package.json</code>，向其中加入使用 <code>yarn start</code> 开启服务端的配置：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"MyDashBoardBackend"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"module"</span><span class="token punctuation">,</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"start"</span><span class="token operator">:</span> <span class="token string">"node index.js"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"A sample backend project."</span><span class="token punctuation">,</span>
+  <span class="token property">"main"</span><span class="token operator">:</span> <span class="token string">"index.js"</span><span class="token punctuation">,</span>
+  <span class="token property">"license"</span><span class="token operator">:</span> <span class="token string">"MIT"</span><span class="token punctuation">,</span>
+  <span class="token property">"dependencies"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"express"</span><span class="token operator">:</span> <span class="token string">"^4.17.2"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>之后我们就可以使用 <code>yarn start</code> 来开启服务端了。</p>
+<h2 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a>RESTful API</h2><p>// TODO：还在咕</p>
+<p>选用 Mongoose 吧 我也懒得写 SQL</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><h2 id="req-与-res"><a href="#req-与-res" class="headerlink" title="req 与 res"></a>req 与 res</h2><h2 id="后续拓展"><a href="#后续拓展" class="headerlink" title="后续拓展"></a>后续拓展</h2><h2 id="资源链接"><a href="#资源链接" class="headerlink" title="资源链接"></a>资源链接</h2><ul>
+<li>ExpressJS 官网 <a href="https://expressjs.com/">https://expressjs.com/</a></li>
+<li>ExpressJS 中文网 <a href="https://expressjs.com/zh-cn/">https://expressjs.com/zh-cn/</a></li>
+<li>菜鸟教程 <a href="https://www.runoob.com/nodejs/nodejs-express-framework.html">https://www.runoob.com/nodejs/nodejs-express-framework.html</a></li>
+<li>MDN 教程 <a href="https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Express_Nodejs/skeleton_website">https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Express_Nodejs/skeleton_website</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/后端</category>
+      </categories>
+      <tags>
+        <tag>ExpressJS</tag>
+      </tags>
+  </entry>
 </search>
