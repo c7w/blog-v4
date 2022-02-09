@@ -14385,4 +14385,32 @@ app<span class="token punctuation">.</span><span class="token function">listen</
         <tag>ExpressJS</tag>
       </tags>
   </entry>
+  <entry>
+    <title>VSCode 配置指北</title>
+    <url>/vscode/</url>
+    <content><![CDATA[<p>VSCode 是一款<strong>轻量级</strong>的<strong>代码编辑器</strong>，可以通过安装各种各样不同<strong>扩展</strong>的方式来实现开发者所需要的功能。</p>
+<blockquote>
+<p>区分：代码编辑器（Editor）与集成开发环境（IDE, Integrated Development Environment）</p>
+<p>代码编辑器事实上我们可以看成是一个记事本（没错，如果是 Windows 用户，就是你按下 Win+R 输入 notepad 回车之后的那个记事本），其最基本的功能是文档编辑。不过之所以将其称为是<strong>代码编辑器</strong>，是因为它虽然继承自一般的文档编辑器，又具备了一些一般的文档编辑器所不具备的功能。具体来说，例如自动语法高亮，自动补全，甚至是自动代码重构等等。</p>
+<p>集成开发环境（IDE）是一种用于构建应用程序的软件，<strong>可将常用的开发人员工具合并到单个图形用户界面</strong>（GUI）中。具体来说，我们只需要简单的点击按钮，可能就可以完成程序的编译、链接、运行、调试等等工作。而这些工作在最初都是需要人手工在命令行中完成的。我们在《程序设计基础》课程中最初使用的 Dev-C++ 便是一个集成开发环境。</p>
+</blockquote>
+<p>我们今天要介绍的 VSCode 是一款轻量级的<strong>代码编辑器</strong>。如果没有各种扩展插件的支持的话，可能我们只能把它称作是大号的 Notepad++，而正是因为社区中各种各样的扩展，VSCode 才得以展现其强大。</p>
+<p><img src="https://s2.loli.net/2022/02/09/psKk8yJ2CxMic1O.png" alt="image-20220209114623794"></p>
+<p>本文我们介绍 VSCode 的基本配置，重点在于介绍一些未来可能会用到的扩展插件。按照本文的流程完成后，你应该等效地完成了足以应对《面向对象程序设计基础》课程中的代码的集成开发环境的配置。此外，我们还会介绍一些基本的调试方法，而这恰恰是 VSCode 比 Dev-C++ 在现阶段不知道高到哪里去的地方。</p>
+<p>事实上，在未来，我们可以用 VSCode 配置 Python 开发环境，配置软件工程课程中所需要的框架的开发环境，而这些都是通过“扩展”（Extension）来实现的。</p>
+<a id="more"></a>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
+<li>了解一个 C++ 程序从源代码到可执行程序中发生了编译、链接这两步操作（《程序设计基础》大作业中会有此部分的讲解）</li>
+<li>动手能力</li>
+</ul>
+<h2 id="下载与运行"><a href="#下载与运行" class="headerlink" title="下载与运行"></a>下载与运行</h2><p>// TODO: 咕</p>
+<h2 id="C-相关开发环境配置"><a href="#C-相关开发环境配置" class="headerlink" title="C++ 相关开发环境配置"></a>C++ 相关开发环境配置</h2><h2 id="代码调试"><a href="#代码调试" class="headerlink" title="代码调试"></a>代码调试</h2><h2 id="后续扩展"><a href="#后续扩展" class="headerlink" title="后续扩展"></a>后续扩展</h2><h2 id="资源链接"><a href="#资源链接" class="headerlink" title="资源链接"></a>资源链接</h2>]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/开发环境</category>
+      </categories>
+      <tags>
+        <tag>VSCode</tag>
+      </tags>
+  </entry>
 </search>
