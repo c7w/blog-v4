@@ -14471,7 +14471,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 <p><img src="https://s2.loli.net/2022/02/09/UO5mv1K3VBcN2lL.png" alt="image-20220209222124275"></p>
 <p>这是一段演示单向平方和双向平方探测在哈希表中可以占用的位置的示例程序，在这里仅做说明使用，大家不必理解其背后的原理。（事实上你给别人调代码的时候不都是这样嘛，对着看不懂的逻辑满脸黑线.jpeg）</p>
 <p>想要在程序运行过程中设置断点，我们只需点击对应的行号：</p>
-<p><img src="C:/Users/c7w/AppData/Roaming/Typora/typora-user-images/image-20220209222401148.png" alt="image-20220209222401148"></p>
+<p><img src="https://s2.loli.net/2022/02/09/ZVFLrcwSbaOdxTm.png" alt="image-20220209222401148"></p>
 <p>在这里设置断点，程序将会在第 30 行执行完成，第 31 行将要执行的时候触发断点，让我们看一看：</p>
 <p><img src="https://s2.loli.net/2022/02/09/5tHAOwQBdh1Sqcs.png" alt="image-20220209222500324"></p>
 <p>红框，也就是“终端框中，我们的程序输出了前半段运行时产生的 <code>cout</code> 信息。接下来我们将说明该如何查看中间变量：</p>
