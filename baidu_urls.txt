@@ -1,3 +1,4 @@
+https://www.c7w.tech/solving-wordle-using-infomation-theory/
 https://www.c7w.tech/vscode/
 https://www.c7w.tech/express-js/
 https://www.c7w.tech/javascript-module-dev/
