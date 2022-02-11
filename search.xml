@@ -14823,4 +14823,214 @@ I = - \log_2(p)</script><p>Expressed like this it can look a little bit weird to
         <tag>信息论</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Docker 使用指北</title>
+    <url>/docker/</url>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2022/02/11/MbaA67dgptL9YBc.png" alt="img"></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>软件开发最大的麻烦事之一，就是环境配置。用户计算机的环境不同，可能导致软件在开发环境中能运行，而到了生产环境无法运行的情况。</p>
+<p>用户必须保证两件事：操作系统的设置，各种库和组件的安装。只有它们都正确，软件才能运行。举例来说，安装一个 Python 应用，计算机必须有 Python 引擎，还必须有各种依赖，可能还要配置环境变量。</p>
+<p>环境配置如此麻烦，换一台机器，就要重来一次，旷日费时。很多人想到，能不能从根本上解决问题，软件可以带环境安装？也就是说，<strong>安装的时候，把原始环境一模一样地复制过来</strong>。</p>
+<p>这个问题的一种解决方式是使用<strong>虚拟机</strong>，比如我们常用的 WSL，就是在 Windows 系统中运行 Linux 虚拟系统的例子。但是，这样做的资源占用多，要重新配置一个全新操作系统的冗余步骤多，启动起来也十分缓慢。于是，Linux 发展出了另一种虚拟化技术：<strong>虚拟容器</strong>。</p>
+<p><strong>Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔离。</strong>或者说，在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都是虚拟的，从而实现与底层系统的隔离。</p>
+<p><strong>Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。</strong>它是目前最流行的 Linux 容器解决方案。</p>
+<p>Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。</p>
+<p>总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
+<a id="more"></a>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><ul>
+<li>Windows <a href="https://docs.docker.com/desktop/windows/install/">https://docs.docker.com/desktop/windows/install/</a></li>
+<li>Linux <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></li>
+</ul>
+<h2 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h2><ol>
+<li>镜像（Image）：类似于虚拟机中的镜像，是一个包含有文件系统的面向 Docker 引擎的只读模板。任何应用程序运行都需要环境，而镜像就是用来提供这种运行环境的。例如一个 Ubuntu 镜像就是一个包含 Ubuntu 操作系统环境的模板，同理在该镜像上装上 Apache 软件，就可以称为 Apache 镜像。</li>
+<li>容器（Container）：类似于一个轻量级的沙盒，可以将其看作一个极简的 Linux 系统环境（包括 root 权限、进程空间、用户空间和网络空间等），以及运行在其中的应用程序。Docker 引擎利用容器来运行、隔离各个应用。容器是镜像创建的应用实例，可以创建、启动、停止、删除容器，各个容器之间是是相互隔离的，互不影响。注意：<strong>镜像本身是只读的，容器从镜像启动时，Docker 在镜像的上层创建一个可写层，镜像本身不变。</strong></li>
+<li>仓库（Repository）：类似于代码仓库，这里是镜像仓库，是 Docker 用来集中存放镜像文件的地方。注意与注册服务器（Registry）的区别：注册服务器是存放仓库的地方，一般会有多个仓库；而仓库是存放镜像的地方，一般每个仓库存放一类镜像，每个镜像利用 tag 进行区分，比如 Ubuntu 仓库存放有多个版本（12.04、14.04 等）的 Ubuntu 镜像。</li>
+</ol>
+<h2 id="Images"><a href="#Images" class="headerlink" title="Images"></a>Images</h2><p>对镜像的基本操作总结：</p>
+<ul>
+<li>官方注册服务器（Registry）：<a href="https://hub.docker.com/">https://hub.docker.com/</a></li>
+<li>搜索某个镜像：<code>docker search &lt;image&gt;</code></li>
+<li>将某个镜像下载到本地：<ul>
+<li><code>docker pull &lt;image&gt;</code>// 如果不加 tag 默认使用 latest 镜像</li>
+<li><code>docker pull &lt;image&gt;:&lt;tag&gt;</code></li>
+</ul>
+</li>
+<li>查看当前下载的镜像信息：<code>docker images</code></li>
+<li>新建自定义镜像的方法</li>
+</ul>
+<p><strong>方法 1：利用镜像启动一个容器后修改，再进行 commit</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xxx ~<span class="token punctuation">]</span><span class="token comment"># docker run -it centos:latest /bin/bash    # 启动一个容器</span>
+<span class="token punctuation">[</span>root@72f1a8a0e394 /<span class="token punctuation">]</span><span class="token comment">#    # 这里命令行形式变了，表示已经进入了一个新环境</span>
+<span class="token punctuation">[</span>root@72f1a8a0e394 /<span class="token punctuation">]</span><span class="token comment"># git --version    # 此时的容器中没有 git</span>
+bash: git: <span class="token builtin class-name">command</span> not found
+<span class="token punctuation">[</span>root@72f1a8a0e394 /<span class="token punctuation">]</span><span class="token comment"># yum install git    # 利用 yum 安装 git</span>
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token punctuation">[</span>root@72f1a8a0e394 /<span class="token punctuation">]</span><span class="token comment"># git --version   # 此时的容器中已经装有 git 了</span>
+<span class="token function">git</span> version <span class="token number">1.8</span>.3.1</code></pre>
+<p>然后按下 Ctrl+D 或者输入 exit 退出容器，然后查看当前所有容器：<code>docker ps -a</code>。这里将容器转化为一个镜像，即执行 commit 操作，完成后可使用 docker images 查看：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@xxx ~<span class="token punctuation">]</span><span class="token comment"># docker ps -a</span>
+CONTAINER ID  IMAGE    COMMAND      CREATED   STATUS   PORTS    NAMES
+72f1a8a0e394  centos:latest <span class="token string">"/bin/bash"</span>  <span class="token number">9</span> minutes ago   Exited <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">3</span> minutes ago      angry_hodgkin
+
+<span class="token punctuation">[</span>root@xxx ~<span class="token punctuation">]</span><span class="token comment"># docker commit -m "Commit Message" -a "UserInfo" &lt;Container ID> &lt;user>/&lt;repo>:&lt;tag></span>
+
+<span class="token punctuation">[</span>root@xxx ~<span class="token punctuation">]</span><span class="token comment"># docker images</span>
+REPOSITORY       TAG    IMAGE ID         CREATED             SIZE
+<span class="token operator">&lt;</span>user<span class="token operator">></span>/<span class="token operator">&lt;</span>repo<span class="token operator">></span>    <span class="token function">git</span>    52166e4475ed     <span class="token number">5</span> seconds ago       <span class="token number">358.1</span> MB
+centos           latest 0584b3d2cf6d     <span class="token number">9</span> days ago          <span class="token number">196.5</span> MB</code></pre>
+<p>此时 Docker 引擎中就有了我们新建的镜像 <code>&lt;user&gt;/&lt;repo&gt;:&lt;tag&gt;</code>，此镜像和原有的 CentOS 镜像区别在于多了个 Git 工具。此时我们利用新镜像创建的容器，本身就自带 Git 了。</p>
+<p><strong>方法 2：使用 <code>Dockerfile</code></strong></p>
+<p>Dockerfile 可以理解为一种配置文件，用来告诉 <code>docker build</code> 命令应该执行哪些操作。一个简易的 <code>Dockerfile</code> 文件如下所示：</p>
+<pre class="language-dockerfile" data-language="dockerfile"><code class="language-dockerfile"># 说明该镜像以哪个镜像为基础
+FROM centos:latest
+
+# 构建者的基本信息
+MAINTAINER &lt;user&gt;
+
+# 在 build 这个镜像时执行的操作 
+RUN yum update
+RUN yum install -y git
+
+# 拷贝本地文件到镜像中
+COPY .&#x2F;* &#x2F;usr&#x2F;share&#x2F;gitdir&#x2F;
+
+# Expose 对应端口，允许外部连接
+EXPOSE 3000</code></pre>
+<p>官方教程链接：<a href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a></p>
+<p>有了 <code>Dockerfile</code> 之后，就可以利用 <code>build</code> 命令<strong>构建镜像</strong>了：</p>
+<pre class="language-text" data-language="text"><code class="language-text">[root@xxx ~]# docker build -t="&lt;user>/&lt;repo>:&lt;tag>" .</code></pre>
+<p>其中 -t 用来指定新镜像的用户信息、tag 等。最后的点表示在当前目录寻找 <code>Dockerfile</code>。</p>
+<ul>
+<li><p>删除容器或镜像</p>
+<ul>
+<li>删除容器：<code>docker rm container_name/container_id</code></li>
+<li>删除镜像：<code>docker rmi image_name/image_id</code></li>
+<li>删除镜像前必须先删除以此镜像为基础的容器。</li>
+</ul>
+</li>
+<li><p>镜像的保存与加载</p>
+<ul>
+<li>保存镜像：<code>docker save -o centos.tar &lt;user&gt;/&lt;repo&gt;:&lt;tag&gt;</code></li>
+<li>加载镜像：<code>docker load -i centos.tar</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Containers"><a href="#Containers" class="headerlink" title="Containers"></a>Containers</h2><ul>
+<li>启动容器：<code>docker run [Options] &lt;Image&gt; [Command]</code><ul>
+<li><code>-d</code>：Run container in background and print container ID</li>
+<li><code>-e</code>：Set environment variables</li>
+<li><code>-i</code>：Keep STDIN open even if not attached</li>
+<li><code>-p &lt;host&gt;:&lt;container&gt;</code>：Publish a container’s port to the host</li>
+<li><code>-t</code>：Allocate a pseudo-TTY</li>
+<li><code>--name</code>：Assign a name to the container</li>
+<li><code>-v &lt;host&gt;:&lt;container&gt;</code>：Mount host_path to container_path </li>
+<li>常用命令：<code>docker run -itd centos:latest /bin/bash</code></li>
+<li>如果想让容器一直运行，而不是停止，可以使用快捷键 Ctrl+P Ctrl+Q 退出，此时容器的状态为 Up。</li>
+</ul>
+</li>
+<li>启动容器：<code>docker start &lt;container&gt;</code></li>
+<li>停止容器：<code>docker stop container&gt;</code></li>
+<li>重启容器：<code>docker restart &lt;container&gt;</code></li>
+<li>进入已启动的容器：<code>docker attach &lt;container&gt;</code></li>
+<li>复制文件：<code>docker cp &lt;container&gt;:&lt;path&gt; &lt;host_path&gt;</code></li>
+</ul>
+<h2 id="Repositories"><a href="#Repositories" class="headerlink" title="Repositories"></a>Repositories</h2><ul>
+<li>官方镜像服务器：<a href="https://hub.docker.com">https://hub.docker.com</a></li>
+<li>登录 DockerHub：<code>docker login</code></li>
+<li>推送本地镜像：<code>docker push &lt;username&gt;/&lt;repo&gt;:&lt;tag&gt;</code><ul>
+<li><code>username</code> 必须与你 Docker Hub 中的用户名一致</li>
+</ul>
+</li>
+<li>拉取远端镜像：<code>docker pull &lt;username&gt;/&lt;repo&gt;:&lt;tag&gt;</code></li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/23599229">https://zhuanlan.zhihu.com/p/23599229</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/后端</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Django + ElasticSearch 实现搜索网站纪实</title>
+    <url>/elasticsearch/</url>
+    <content><![CDATA[<p>事实上是挑战杯要搭一个文书搜索网站…暂时需要用 BM25 算法顶一下。</p>
+<p>搜索的对象是…数目约在 $10^8$ 规模左右的文档…</p>
+<p>嘛嘛，反正都是大调库。缝合就完事了。</p>
+<a id="more"></a>
+<h2 id="索引算法"><a href="#索引算法" class="headerlink" title="索引算法"></a>索引算法</h2><p>我们首先介绍下 Sparse Retrieval 的主要算法，TF-IDF 算法和 BM25 算法。</p>
+<h3 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h3><p>TF 是指归一化的词频，IDF 是指逆文档频率。给定文档集合 $D$，有 $d_i \in D, 1 \le i \le n$. </p>
+<p>文档集合总共包含 $m$​ 个词，去除一些十分常见的词作为停用词（Stop word），有 $w_i \in W, 1 \le i \le m$​.</p>
+<p>定义 TF 如下，即一篇文档中某个词出现的频率：</p>
+<script type="math/tex; mode=display">
+\text{TF}(q_i, d_j) = \dfrac {f_{i, d_j}}{ |d_j| }</script><p>TF 只能描述词在文档中的频率，但假设现在有个词为“我们”，这个词可能在文档集 $D$ 中每篇文档中都会出现，并且有较高的频率。那么这一类词就不具有很好的区分文档的能力，为了降低这种通用词的作用，引入了 IDF：</p>
+<script type="math/tex; mode=display">
+\text{IDF}(q_i) = \ln \dfrac {|D|}{|\{d_i  : q_i \in d_i \}|}</script><p>于是我们综合这两部分， 便可以得到 TF-IDF：</p>
+<script type="math/tex; mode=display">
+\text{TF-IDF} = \text{TF} * \text{IDF}</script><p>TF 可以计算在一篇文档中词出现的频率，而 IDF 可以降低一些通用词的作用。因此对于一篇文档我们可以用文档中每个词的 TF−IDF 组成的向量来表示该文档，再根据余弦相似度这类的方法来计算文档之间的相关性。</p>
+<h3 id="BM25"><a href="#BM25" class="headerlink" title="BM25"></a>BM25</h3><p>BM25 是信息索引领域用来计算 query 与文档相似度得分的经典算法。</p>
+<p>不同于 TF-IDF，BM25 的公式主要由三个部分组成：</p>
+<ol>
+<li>query 中每个单词 $q_i$ 与文档 $d$ 之间的相关性</li>
+<li>单词 $q_i$ 与 query 之间的相似性</li>
+<li>每个单词的权重</li>
+</ol>
+<p>BM25 算法的一般公式：</p>
+<script type="math/tex; mode=display">
+score(Q,d) = \sum_i^n W_i R(q_i, d)</script><p>其中 $Q$ 表示 query，$q_i \in Q$，$d$​ 表示 document.</p>
+<p>下展开介绍各部分公式：</p>
+<ul>
+<li><strong>$W_i$</strong></li>
+</ul>
+<script type="math/tex; mode=display">
+W_i = IDF(q_i) = \ln \dfrac {N-df_i+0.5}{df_i+0.5}</script><p>其中 $N$​​ 是 document 总数，$df_i$​ 表示含有 $q_i$​ 的文档总数。</p>
+<p>依据 IDF 的作用，对于某个 $q_i$​ ，包含 $q_i$ 的文档数越多，说明 $q_i$ 重要性越小，或者区分度越低，IDF 越小，因此 IDF 可以用来刻画 $q_i$ 与文档的相似性。</p>
+<ul>
+<li><strong>$R(q_i, d)$​</strong></li>
+</ul>
+<p>BM25 的设计依据一个重要的发现：<strong>词频和相关性之间的关系是非线性的</strong>，也就是说，每个词对于文档的相关性分数不会超过一个特定的阈值，当词出现的次数达到一个阈值后，其影响就不在线性增加了，而这个阈值会跟文档本身有关。</p>
+<script type="math/tex; mode=display">
+R(q_i, d) = \dfrac {f_i \cdot (k_1+1)}{f_i+K} \cdot \dfrac {qf_i \cdot(k_2+1)}{qf_i+k_2}</script><p>我们可以分成两部分来看待上述公式，其中 $f_i$​ 为 $q_i$​ 在 $d$​ 中出现的次数，$k_1, k_2, K$​ 是常数。</p>
+<p>后一部分 $\dfrac {qf_i \cdot(k_2+1)}{qf_i+k_2}$ 在控制 $q_i$​ 和 Query 的相似度。</p>
+<p>前一部分在计算 $q_i$ 与 $d$​ 的相似度，其中 $K = k_1 \cdot (1-b+b\cdot \dfrac {|d|}{AVG_n(|d|)})$，参数 $b$ 在调节文本长度对相关性的影响。</p>
+<p>不失一般性地我们可以取 $k_1 = 2, k_2 = 0, b = 0.75$​.</p>
+<p>反正在接下来的运用也是大调库，参数不调问题不大（x</p>
+<h2 id="网站搭建纪实"><a href="#网站搭建纪实" class="headerlink" title="网站搭建纪实"></a>网站搭建纪实</h2><h3 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h3><blockquote>
+<p><strong>Elasticsearch</strong> is the distributed <strong>search and analytics engine</strong> at the heart of the Elastic Stack. <em>Logstash</em> and <em>Beats</em> facilitate collecting, aggregating, and enriching your data and storing it in Elasticsearch. <em>Kibana</em> enables you to interactively explore, visualize, and share insights into your data and manage and monitor the stack. <strong>Elasticsearch is where the indexing, search, and analysis magic happens.</strong></p>
+<p>Elasticsearch 是一个开源的搜索引擎，建立在一个全文搜索引擎库 Apache Lucene™ 基础之上。</p>
+<p>那 Lucene 又是什么？Lucene 可能是目前存在的，不论开源还是私有的，拥有最先进，高性能和全功能搜索引擎功能的库，但也仅仅只是一个库。</p>
+<p>要用上 Lucene，我们需要编写 Java 并引用 Lucene 包才可以，而且我们需要对信息检索有一定程度的理解才能明白 Lucene 是怎么工作的，反正用起来没那么简单。</p>
+<p>那么为了解决这个问题，Elasticsearch 就诞生了。Elasticsearch 也是使用 Java 编写的，它的内部使用 Lucene 做索引与搜索，但是它的目标是使全文检索变得简单，相当于 Lucene 的一层封装，它提供了一套简单一致的 RESTful API 来帮助我们实现存储和检索。</p>
+<p>所以 Elasticsearch 仅仅就是一个简易版的 Lucene 封装吗？那就大错特错了，Elasticsearch 不仅仅是 Lucene，并且也不仅仅只是一个全文搜索引擎。它可以被下面这样准确的形容：</p>
+<ul>
+<li>一个分布式的实时文档存储，每个字段可以被索引与搜索</li>
+<li>一个分布式实时分析搜索引擎</li>
+<li>能胜任上百个服务节点的扩展，并支持 PB 级别的结构化或者非结构化数据</li>
+</ul>
+<p>总之，是一个相当牛逼的搜索引擎，维基百科、Stack Overflow、GitHub 都纷纷采用它来做搜索。</p>
+</blockquote>
+<p>总之我们先来到了下载网站看看：<a href="https://www.elastic.co/cn/downloads/elasticsearch。为了">https://www.elastic.co/cn/downloads/elasticsearch。为了</a><s>避免麻烦</s>防止污染服务器环境遂决定用 Docker 安装：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html</a></p>
+<p>首先自然是 <code>docker pull</code>：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">docker pull docker.elastic.co/elasticsearch/elasticsearch:8.0.0</code></pre>
+<p> // TODO: 写到这里去补 Docker 挂载了</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://www.cnblogs.com/jiangxinyang/p/10516302.html">https://www.cnblogs.com/jiangxinyang/p/10516302.html</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/79202151">https://zhuanlan.zhihu.com/p/79202151</a></li>
+<li><a href="https://www.elastic.co/cn/downloads/elasticsearch">https://www.elastic.co/cn/downloads/elasticsearch</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html</a></li>
+<li><a href="https://cuiqingcai.com/6214.html">https://cuiqingcai.com/6214.html</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/后端</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+      </tags>
+  </entry>
 </search>
