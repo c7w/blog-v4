@@ -14964,7 +14964,7 @@ EXPOSE 3000</code></pre>
 <a id="more"></a>
 <h2 id="索引算法"><a href="#索引算法" class="headerlink" title="索引算法"></a>索引算法</h2><p>我们首先介绍下 Sparse Retrieval 的主要算法，TF-IDF 算法和 BM25 算法。</p>
 <h3 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h3><p>TF 是指归一化的词频，IDF 是指逆文档频率。给定文档集合 $D$，有 $d_i \in D, 1 \le i \le n$. </p>
-<p>文档集合总共包含 $m$​ 个词，去除一些十分常见的词作为停用词（Stop word），有 $w_i \in W, 1 \le i \le m$​.</p>
+<p>文档集合总共包含 $m$​ 个词，去除一些十分常见的词作为停用词（Stop Words），有 $w_i \in W, 1 \le i \le m$​.</p>
 <p>定义 TF 如下，即一篇文档中某个词出现的频率：</p>
 <script type="math/tex; mode=display">
 \text{TF}(q_i, d_j) = \dfrac {f_{i, d_j}}{ |d_j| }</script><p>TF 只能描述词在文档中的频率，但假设现在有个词为“我们”，这个词可能在文档集 $D$ 中每篇文档中都会出现，并且有较高的频率。那么这一类词就不具有很好的区分文档的能力，为了降低这种通用词的作用，引入了 IDF：</p>
