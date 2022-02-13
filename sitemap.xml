@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.c7w.tech/latex/</loc>
+    
+    <lastmod>2022-02-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.c7w.tech/vscode/</loc>
+    
+    <lastmod>2022-02-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.c7w.tech/friends/index.html</loc>
     
     <lastmod>2022-02-12</lastmod>
@@ -23,15 +41,6 @@
     <loc>https://www.c7w.tech/docker/</loc>
     
     <lastmod>2022-02-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.c7w.tech/vscode/</loc>
-    
-    <lastmod>2022-02-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -818,6 +827,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://www.c7w.tech/tags/Latex/</loc>
+    <lastmod>2022-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -1004,13 +1020,6 @@
   
   <url>
     <loc>https://www.c7w.tech/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-JavaScript/</loc>
-    <lastmod>2022-02-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.c7w.tech/categories/%E6%8A%80%E6%9C%AF/%E6%8A%80%E6%9C%AF-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2022-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
