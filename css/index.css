@@ -3421,18 +3421,12 @@ blockquote footer cite:before {
 }
 #footer {
   position: relative;
-  background: #49b1f5;
-  background-attachment: local;
-  background-position: bottom;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
 }
 #footer-wrap {
   position: relative;
-  padding: 2rem 1rem;
-  color: var(--light-grey);
+  padding: 0.5rem 1rem;
   text-align: center;
+  font-family: Consolas;
 }
 #footer-wrap a {
   color: var(--light-grey);
