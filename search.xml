@@ -1650,9 +1650,10 @@ f[i][v][u]=max(f[i-1][v][u], f[i-1][v-a[i]][u-b[i]]+c[i])</script><p>如前述�
       </tags>
   </entry>
   <entry>
-    <title>Django + ElasticSearch 实现搜索网站纪实</title>
+    <title>ElasticSearch 实现搜索网站纪实</title>
     <url>/elasticsearch/</url>
     <content><![CDATA[<p>事实上是挑战杯要搭一个文书搜索网站…暂时需要用 BM25 算法顶一下。</p>
+<p>Elasticsearch 的默认相似度算法就是 BM25，嘛嘛，大胜利。</p>
 <p>搜索的对象是…数目约在 $10^8$ 规模左右的文档…</p>
 <p>嘛嘛，反正都是大调库。缝合就完事了。</p>
 <a id="more"></a>
@@ -1693,7 +1694,7 @@ R(q_i, d) = \dfrac {f_i \cdot (k_1+1)}{f_i+K} \cdot \dfrac {qf_i \cdot(k_2+1)}{q
 <p>前一部分在计算 $q_i$ 与 $d$​ 的相似度，其中 $K = k_1 \cdot (1-b+b\cdot \dfrac {|d|}{AVG_n(|d|)})$，参数 $b$ 在调节文本长度对相关性的影响。</p>
 <p>不失一般性地我们可以取 $k_1 = 2, k_2 = 0, b = 0.75$​.</p>
 <p>反正在接下来的运用也是大调库，参数不调问题不大（x</p>
-<h2 id="网站搭建纪实"><a href="#网站搭建纪实" class="headerlink" title="网站搭建纪实"></a>网站搭建纪实</h2><h3 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h3><blockquote>
+<h2 id="网站搭建纪实：Elasticsearch"><a href="#网站搭建纪实：Elasticsearch" class="headerlink" title="网站搭建纪实：Elasticsearch"></a>网站搭建纪实：Elasticsearch</h2><blockquote>
 <p><strong>Elasticsearch</strong> is the distributed <strong>search and analytics engine</strong> at the heart of the Elastic Stack. <em>Logstash</em> and <em>Beats</em> facilitate collecting, aggregating, and enriching your data and storing it in Elasticsearch. <em>Kibana</em> enables you to interactively explore, visualize, and share insights into your data and manage and monitor the stack. <strong>Elasticsearch is where the indexing, search, and analysis magic happens.</strong></p>
 <p>Elasticsearch 是一个开源的搜索引擎，建立在一个全文搜索引擎库 Apache Lucene™ 基础之上。</p>
 <p>那 Lucene 又是什么？Lucene 可能是目前存在的，不论开源还是私有的，拥有最先进，高性能和全功能搜索引擎功能的库，但也仅仅只是一个库。</p>
@@ -1707,21 +1708,475 @@ R(q_i, d) = \dfrac {f_i \cdot (k_1+1)}{f_i+K} \cdot \dfrac {qf_i \cdot(k_2+1)}{q
 </ul>
 <p>总之，是一个相当牛逼的搜索引擎，维基百科、Stack Overflow、GitHub 都纷纷采用它来做搜索。</p>
 </blockquote>
-<p>总之我们先来到了下载网站看看：<a href="https://www.elastic.co/cn/downloads/elasticsearch。为了">https://www.elastic.co/cn/downloads/elasticsearch。为了</a><s>避免麻烦</s>防止污染服务器环境遂决定用 Docker 安装：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html</a></p>
-<p>首先自然是 <code>docker pull</code>：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">docker pull docker.elastic.co/elasticsearch/elasticsearch:8.0.0</code></pre>
-<p> // TODO: 写到这里去补 Docker 挂载了</p>
+<p>总之我们先来到了下载网站看看：<a href="https://www.elastic.co/cn/downloads/elasticsearch。然后选择了适用">https://www.elastic.co/cn/downloads/elasticsearch。然后选择了适用</a> Linux 的安装方式：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html。然后就是把">https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html。然后就是把</a> <code>./config/elasticsearch.yml</code> 的关于安全的设定全部设置成 <code>false</code>（毕竟还要过一层 Django 转接）。然后执行 <code>curl localhost:9200</code>，返回：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token string">"thunlp-3"</span><span class="token punctuation">,</span>
+  <span class="token property">"cluster_name"</span> <span class="token operator">:</span> <span class="token string">"elasticsearch"</span><span class="token punctuation">,</span>
+  <span class="token property">"cluster_uuid"</span> <span class="token operator">:</span> <span class="token string">"7O7KbQ6hQGOUieAXeKm10g"</span><span class="token punctuation">,</span>
+  <span class="token property">"version"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"number"</span> <span class="token operator">:</span> <span class="token string">"8.0.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"build_flavor"</span> <span class="token operator">:</span> <span class="token string">"default"</span><span class="token punctuation">,</span>
+    <span class="token property">"build_type"</span> <span class="token operator">:</span> <span class="token string">"tar"</span><span class="token punctuation">,</span>
+    <span class="token property">"build_hash"</span> <span class="token operator">:</span> <span class="token string">"1b6a7ece17463df5ff54a3e1302d825889aa1161"</span><span class="token punctuation">,</span>
+    <span class="token property">"build_date"</span> <span class="token operator">:</span> <span class="token string">"2022-02-03T16:47:57.507843096Z"</span><span class="token punctuation">,</span>
+    <span class="token property">"build_snapshot"</span> <span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"lucene_version"</span> <span class="token operator">:</span> <span class="token string">"9.0.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"minimum_wire_compatibility_version"</span> <span class="token operator">:</span> <span class="token string">"7.17.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"minimum_index_compatibility_version"</span> <span class="token operator">:</span> <span class="token string">"7.0.0"</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"tagline"</span> <span class="token operator">:</span> <span class="token string">"You Know, for Search"</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="Node-与-Cluster"><a href="#Node-与-Cluster" class="headerlink" title="Node 与 Cluster"></a>Node 与 Cluster</h3><p>Elastic 本质上是一个<strong>分布式</strong>数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。</p>
+<p>单个 Elastic 实例称为一个<strong>节点</strong>（node）。一组节点构成一个<strong>集群</strong>（cluster）。</p>
+<h4 id="集群与分布式"><a href="#集群与分布式" class="headerlink" title="集群与分布式"></a>集群与分布式</h4><p>（只是趁着这次机会顺便就把 Elasticsearch 上手学一遍，这次毕竟只有单节点（x）</p>
+<blockquote>
+<p>事实上，Elasticsearch 被设计出来就是以集群运作为基础的。</p>
+<p>ElasticSearch 的主旨是随时可用和按需扩容。 而扩容可以通过购买性能更强大（垂直扩容，或纵向扩容）或者数量更多的服务器（水平扩容，或横向扩容）来实现。虽然 Elasticsearch 可以获益于更强大的硬件设备，但是垂直扩容是有极限的。 真正的扩容能力是来自于水平扩容—为集群添加更多的节点，并且将负载压力和稳定性分散到这些节点中。</p>
+</blockquote>
+<ul>
+<li>结点与集群：一个运行中的 Elasticsearch 实例称为一个节点，而集群是由一个或者多个拥有相同 <code>cluster.name</code> 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。</li>
+<li>主节点：管理集群范围内的所有变更，例如增加、删除索引，或者增加、删除节点等。用户可以将请求发送到任意结点，每个节点都知道任意文档所处的位置，并且能够将我们的请求直接转发到存储我们所需文档的节点。</li>
+<li>集群健康状态：通过 <code>[GET] /_cluster/health</code> 可以查询当前节点所在集群的状态。其中返回值的 <code>status</code> 字段如果为 <code>green</code>，代表所有主分片和副本分片都在正常运行；如果为 <code>yellow</code>，代表所有主分片都在正常运行，副本分片并不是都在正常运行；如果为 <code>red</code>，说明有主分片没能正常运行。</li>
+<li>主分片与副本分片：<ul>
+<li>分片：索引实际上是指向一个或者多个物理<strong>分片</strong>的逻辑命名空间。一个分片是一个底层的工作单元，它保存了全部数据中的一部分。现在我们只需知道一个分片是一个 Lucene 的实例，以及它本身就是一个完整的搜索引擎。 我们的文档被存储和索引到分片内，但是应用程序是直接与索引而不是与分片进行交互。</li>
+<li>主分片：索引内任意一个文档都归属于一个主分片，所以主分片的数目决定着索引能够保存的最大数据量。</li>
+<li>副本分片：一个副本分片只是一个主分片的拷贝。副本分片作为硬件故障时保护数据不丢失的冗余备份，并为搜索和返回文档等读操作提供服务。副本分片的存在目的是为了在故障的情况下不至于丢失数据。如在下图这个具有三个节点的集群中，$P_i$ 代表主分片，$R_i$ 代表副本分片，每个主分片拥有 2 个其对应的副本分片。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.elastic.co/guide/cn/elasticsearch/guide/current/images/elas_0205.png" alt="拥有2份副本分片3个节点的集群"></p>
+<h3 id="Document"><a href="#Document" class="headerlink" title="Document"></a>Document</h3><p>Index 里面单条的记录称为 Document（<strong>文档</strong>）。许多条 Document 构成了一个 Index。</p>
+<p>Document 使用 JSON 格式表示，下面是一个例子。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"user"</span><span class="token operator">:</span> <span class="token string">"张三"</span><span class="token punctuation">,</span>
+  <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"工程师"</span><span class="token punctuation">,</span>
+  <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"数据库管理"</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>同一个 Index 里面的 Document，<strong>不要求有相同的结构</strong>（scheme），但是最好保持相同，这样有利于提高搜索效率。</p>
+<p>文档的元数据：</p>
+<ul>
+<li><p><strong><code>_id</code></strong>：文档的 ID 字符串</p>
+</li>
+<li><p><strong><code>_type</code></strong>：文档的类型名</p>
+</li>
+<li><p><strong><code>_index</code></strong>：文档所在的索引</p>
+</li>
+<li><p><strong><code>_uid</code></strong>：<code>_type</code> 和 <code>_id</code> 连接在一起构造成 <code>type#id</code></p>
+</li>
+<li><strong><code>_source</code></strong>：原模原样的 JSON 文件</li>
+<li><strong><code>_all</code></strong>：全文拼接</li>
+</ul>
+<p>文档路由到分片中的方式为：<code>shard = hash(routing) % number_of_primary_shards</code>，其中默认 <code>routing</code> 是一个可变值，默认是文档的 <code>_id</code>。所有的文档 API（<code>get</code>、<code>index</code>、<code>delete</code>、<code>bulk</code>、<code>update</code> 以及 <code>mget</code>）都接受一个叫做 <code>routing</code> 的路由参数 ，通过这个参数我们可以自定义文档到分片的映射。</p>
+<h3 id="Indexing"><a href="#Indexing" class="headerlink" title="Indexing"></a>Indexing</h3><p>Elastic 会索引所有字段，经过处理后写入一个<strong>倒排索引</strong>（Inverted Index）。查找数据的时候，直接查找该索引。</p>
+<p>所以，Elastic 数据管理的顶层单位就叫做<strong>索引</strong>（Index）。它是单个数据库的同义词。每个 Index （即数据库）的名字必须是小写。</p>
+<h4 id="索引与中文分析器"><a href="#索引与中文分析器" class="headerlink" title="索引与中文分析器"></a>索引与中文分析器</h4><ul>
+<li>索引的创建</li>
+</ul>
+<pre class="language-json" data-language="json"><code class="language-json">PUT /my_index
+<span class="token punctuation">&#123;</span>
+    <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"number_of_shards"</span> <span class="token operator">:</span>   <span class="token number">5</span><span class="token punctuation">,</span> <span class="token comment">// 主分片数</span>
+        <span class="token property">"number_of_replicas"</span> <span class="token operator">:</span> <span class="token number">0</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"mappings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"type_one"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> ... any mappings ... <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"type_two"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> ... any mappings ... <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        ...
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li>索引的删除：<code>[DELETE] /my_index</code></li>
+</ul>
+<h5 id="分析器-Analysis"><a href="#分析器-Analysis" class="headerlink" title="分析器 Analysis"></a>分析器 Analysis</h5><ul>
+<li><p>索引的设置：分析器（<code>analysis</code>），用于将全文字符串转换为适合搜索的倒排索引的工具。</p>
+</li>
+<li><p>何为<strong>分析</strong>？</p>
+</li>
+</ul>
+<p><strong>Exact Values 与 Full Text</strong></p>
+<p>Elasticsearch 中的数据可以分为两类：精确值（Exact Values）和全文本（Full Text）。</p>
+<p>精确值是指一些精确的数据，比如日期或者用户 ID。相比较起来，精确值类型的数据很容易查询。结果是二进制的：要么匹配查询，要么不匹配。</p>
+<p>全文本数据指的是长文本数据，比如一个推文的内容或者一封邮件的内容。查询全文数据要微妙的多。我们问的不只是“这个文档匹配查询吗”，而是“该文档匹配查询的程度有多大？”换句话说，该文档与给定查询的相关性如何？</p>
+<p>为了促进这类在全文本域中的查询，Elasticsearch 首先 <strong>分析</strong> 文档，之后根据结果创建 <strong>倒排索引</strong> 。在接下来的两节，我们会讨论倒排索引和分析过程。</p>
+<p><strong>倒排索引</strong></p>
+<p>Elasticsearch 使用一种称为 <strong>倒排索引</strong> 的结构，它适用于快速的全文搜索。一个倒排索引由文档中所有不重复词的列表构成，对于其中每个词，有一个包含它的文档列表。</p>
+<p>例如，假设我们有两个文档，每个文档的 <code>content</code> 域包含如下内容：</p>
+<ol>
+<li>The quick brown fox jumped over the lazy dog</li>
+<li>Quick brown foxes leap over lazy dogs in summer</li>
+</ol>
+<p>为了创建倒排索引，我们首先将每个文档的 <code>content</code> 域拆分成单独的词（我们称它为 <code>词条</code> 或 <code>tokens</code> ），创建一个包含所有不重复词条的排序列表，然后列出每个词条出现在哪个文档。结果如下所示：</p>
+<pre class="language-none"><code class="language-none">Term      Doc_1  Doc_2
+-------------------------
+Quick   |       |  X
+The     |   X   |
+brown   |   X   |  X
+dog     |   X   |
+dogs    |       |  X
+fox     |   X   |
+foxes   |       |  X
+in      |       |  X
+jumped  |   X   |
+lazy    |   X   |  X
+leap    |       |  X
+over    |   X   |  X
+quick   |   X   |
+summer  |       |  X
+the     |   X   |
+------------------------</code></pre>
+<p>现在，如果我们想搜索 <code>quick brown</code> ，我们只需要查找包含每个词条的文档：</p>
+<pre class="language-none"><code class="language-none">Term      Doc_1  Doc_2
+-------------------------
+brown   |   X   |  X
+quick   |   X   |
+------------------------
+Total   |   2   |  1</code></pre>
+<p>但是，我们目前的倒排索引有一些问题：</p>
+<ul>
+<li><code>Quick</code> 和 <code>quick</code> 以独立的词条出现，然而用户可能认为它们是相同的词。</li>
+<li><code>fox</code> 和 <code>foxes</code> 非常相似, 就像 <code>dog</code> 和 <code>dogs</code> ；他们有相同的词根。</li>
+<li><code>jumped</code> 和 <code>leap</code>, 尽管没有相同的词根，但他们的意思很相近。他们是同义词。</li>
+</ul>
+<p>如果我们将词条和用户查询都规范为标准模式，那么我们可以找到与用户搜索的词条不完全一致，但具有足够相关性的文档。</p>
+<p>这种<strong>分词</strong>和<strong>标准化</strong>的过程就称为是<strong>分析</strong>。</p>
+<p><strong>分析和分析器</strong></p>
+<p><strong>分析</strong>包含下面的过程：</p>
+<ul>
+<li>首先，将一块文本分成适合于倒排索引的独立的 <strong>Tokens</strong></li>
+<li>之后，将这些词条统一化为标准格式以提高它们的“可搜索性”</li>
+</ul>
+<p><strong>分析器</strong>执行上面的工作。 <strong>分析器</strong> 实际上是将三个功能封装到了一个包里：</p>
+<ul>
+<li><p><strong>字符过滤器</strong></p>
+<p>首先，字符串按顺序通过每个 <strong>字符过滤器</strong> 。他们的任务是在分词前整理字符串。一个字符过滤器可以用来去掉 HTML，或者将 <code>&amp;</code> 转化成 <code>and</code>。</p>
+</li>
+<li><p><strong>分词器</strong></p>
+<p>其次，字符串被 <strong>分词器</strong> 分为单个的词条。一个简单的分词器遇到空格和标点的时候，可能会将文本拆分成词条。</p>
+</li>
+<li><p><strong>Token 过滤器</strong></p>
+<p>最后，词条按顺序通过每个 <strong>token 过滤器</strong> 。这个过程可能会改变词条（例如，小写化 <code>Quick</code> ），删除词条（例如， 像 <code>a</code>， <code>and</code>， <code>the</code> 等无用词，我们一般称为停用词，Stop Word），或者增加词条（例如，像 <code>jump</code> 和 <code>leap</code> 这种同义词）。</p>
+</li>
+</ul>
+<p><strong>内置的分析器</strong></p>
+<ul>
+<li>Standard analyzer：对于西方语种表现较好，标准分析器</li>
+<li>Simple analyzer：在任何不是字母的地方分隔文本，将词条小写</li>
+<li>Whitespace analyzer：在空格的地方划分文本</li>
+<li>Language analyzers：考虑指定语言的特点的分析器</li>
+</ul>
+<p><strong>测试分析器</strong></p>
+<pre class="language-json" data-language="json"><code class="language-json">GET /_analyze
+<span class="token punctuation">&#123;</span>
+  <span class="token property">"analyzer"</span><span class="token operator">:</span> <span class="token string">"standard"</span><span class="token punctuation">,</span>
+  <span class="token property">"text"</span><span class="token operator">:</span> <span class="token string">"Text to analyze"</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><strong>中文分析器</strong></p>
+<p>在本节的最后会介绍一个中文分析器插件 IK Analysis for Elasticsearch：</p>
+<ul>
+<li><a href="https://github.com/medcl/elasticsearch-analysis-ik">https://github.com/medcl/elasticsearch-analysis-ik</a></li>
+</ul>
+<p>提供的分析器：</p>
+<ul>
+<li><code>ik_smart</code>：将需要分词的文本做最大粒度的拆分。</li>
+<li><code>ik_max_word</code>：将需要分词的文本做最小粒度的拆分，尽量分更多的词。</li>
+</ul>
+<p>安装：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">./elasticsearch-plugin -v <span class="token function">install</span> https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v8.0.0/elasticsearch-analysis-ik-8.0.0.zip</code></pre>
+<h4 id="Type-amp-Mappings"><a href="#Type-amp-Mappings" class="headerlink" title="Type &amp; Mappings"></a>Type &amp; Mappings</h4><p>Document 可以分组，比如 <code>weather</code> 这个 Index 里面，可以按城市分组（北京和上海），也可以按气候分组（晴天和雨天）。这种分组就叫做 Type，它是虚拟的逻辑分组，用来过滤 Document。</p>
+<p>不同的 Type 应该有相似的结构（schema），举例来说，<code>id</code> 字段不能在这个组是字符串，在另一个组是数值。这是与关系型数据库的表的<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/mapping.html">一个区别</a>。性质完全不同的数据（比如 <code>products</code> 和 <code>logs</code>）应该存成两个 Index，而不是一个 Index 里面的两个 Type（虽然可以做到）。</p>
+<p>类型（Type）由名称（Name）和映射（Mapping）组成。<strong>映射</strong>，就像数据库中的 schema，描述了文档可能具有的字段或属性以及每个字段的数据类型 —— 比如 <code>string</code>，<code>integer</code> 或 <code>date</code> —— 以及 Lucene 是如何索引和存储这些字段的。</p>
+<h5 id="映射-Mappings"><a href="#映射-Mappings" class="headerlink" title="映射 Mappings"></a>映射 Mappings</h5><p>为了能够将时间域视为时间，数字域视为数字，字符串域视为全文本或精确值字符串， Elasticsearch 需要知道每个域中数据的类型。这个信息包含在映射中。</p>
+<p>索引中每个文档都有 <strong>类型</strong>，每种类型都有它自己的 <strong>映射</strong>。映射定义了类型中的域，每个域的数据类型，以及 Elasticsearch 如何处理这些域。映射也用于配置与类型有关的元数据。</p>
+<p>所有可用的域类型枚举如下：</p>
+<ul>
+<li>字符串: <code>string</code></li>
+<li>整数: <code>byte</code>, <code>short</code>, <code>integer</code>, <code>long</code></li>
+<li>浮点数: <code>float</code>, <code>double</code></li>
+<li>布尔型: <code>boolean</code></li>
+<li>日期: <code>date</code></li>
+<li>多层级对象: <code>object</code></li>
+</ul>
+<p><strong>自定义域映射</strong></p>
+<p>针对于简单域类型：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"number_of_clicks"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token comment">// 指定类型</span>
+        
+        <span class="token comment">// analyzed 作为全文本域索引; </span>
+        <span class="token comment">// not_analyzed 作为精确值索引;</span>
+        <span class="token comment">// no 不索引.</span>
+        <span class="token property">"index"</span><span class="token operator">:</span> <span class="token string">"not_analyzed"</span><span class="token punctuation">,</span> 
+        
+        <span class="token property">"analyzer"</span><span class="token operator">:</span> <span class="token string">"whitespace"</span> <span class="token comment">// 分析器 默认为 standard</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>针对于多层级对象：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"gb"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"tweet"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> 
+      <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"tweet"</span><span class="token operator">:</span>            <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"user"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> 
+          <span class="token property">"type"</span><span class="token operator">:</span>             <span class="token string">"object"</span><span class="token punctuation">,</span>
+          <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"id"</span><span class="token operator">:</span>           <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token property">"gender"</span><span class="token operator">:</span>       <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token property">"age"</span><span class="token operator">:</span>          <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"long"</span>   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token property">"name"</span><span class="token operator">:</span>   <span class="token punctuation">&#123;</span> 
+              <span class="token property">"type"</span><span class="token operator">:</span>         <span class="token string">"object"</span><span class="token punctuation">,</span>
+              <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token property">"full"</span><span class="token operator">:</span>     <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token property">"first"</span><span class="token operator">:</span>    <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token property">"last"</span><span class="token operator">:</span>     <span class="token punctuation">&#123;</span> <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span> <span class="token punctuation">&#125;</span>
+              <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>事实上这将被索引为：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"tweet"</span><span class="token operator">:</span>            <span class="token punctuation">[</span>elasticsearch<span class="token punctuation">,</span> flexible<span class="token punctuation">,</span> very<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.id"</span><span class="token operator">:</span>          <span class="token punctuation">[</span>@johnsmith<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.gender"</span><span class="token operator">:</span>      <span class="token punctuation">[</span>male<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.age"</span><span class="token operator">:</span>         <span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.name.full"</span><span class="token operator">:</span>   <span class="token punctuation">[</span>john<span class="token punctuation">,</span> smith<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.name.first"</span><span class="token operator">:</span>  <span class="token punctuation">[</span>john<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"user.name.last"</span><span class="token operator">:</span>   <span class="token punctuation">[</span>smith<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>总结起来，我们可以在 <code>[PUT] /my_index</code> 时使用：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"mappings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"tweet"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 类型名</span>
+      <span class="token property">"properties"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"tweet"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"type"</span> <span class="token operator">:</span>    <span class="token string">"string"</span><span class="token punctuation">,</span>
+          <span class="token property">"analyzer"</span><span class="token operator">:</span> <span class="token string">"english"</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"date"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"type"</span> <span class="token operator">:</span>   <span class="token string">"date"</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"type"</span> <span class="token operator">:</span>   <span class="token string">"string"</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"user_id"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"type"</span> <span class="token operator">:</span>   <span class="token string">"long"</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><h4 id="新增记录"><a href="#新增记录" class="headerlink" title="新增记录"></a>新增记录</h4><ul>
+<li><code>[PUT] /Index/Type/Id</code></li>
+</ul>
+<p>比如，向<code>/accounts/person</code>发送请求，就可以新增一条人员记录。服务器返回的 JSON 对象，会给出 Index、Type、Id、Version 等信息。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"accounts"</span><span class="token punctuation">,</span>
+  <span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"person"</span><span class="token punctuation">,</span>
+  <span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"1"</span><span class="token punctuation">,</span>
+  <span class="token property">"_version"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"result"</span><span class="token operator">:</span><span class="token string">"created"</span><span class="token punctuation">,</span>
+  <span class="token property">"_shards"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token property">"total"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token property">"successful"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token property">"failed"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"created"</span><span class="token operator">:</span><span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li><code>[POST] /Index/Type</code></li>
+</ul>
+<p>新增记录的时候，也可以不指定 Id，这时要改成 POST 请求。这时，服务器返回的 JSON 对象里面，<code>_id</code>字段就是一个随机字符串。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"accounts"</span><span class="token punctuation">,</span>
+  <span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"person"</span><span class="token punctuation">,</span>
+  <span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"AV3qGfrC6jMbsbXb6k1p"</span><span class="token punctuation">,</span>
+  <span class="token property">"_version"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"result"</span><span class="token operator">:</span><span class="token string">"created"</span><span class="token punctuation">,</span>
+  <span class="token property">"_shards"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token property">"total"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token property">"successful"</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token property">"failed"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"created"</span><span class="token operator">:</span><span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>注意，如果没有先创建 Index（这个例子是<code>accounts</code>），直接执行上面的命令，Elastic 也不会报错，而是直接生成指定的 Index。</p>
+<h4 id="查看记录"><a href="#查看记录" class="headerlink" title="查看记录"></a>查看记录</h4><ul>
+<li><code>[GET] /Index/Type/Id</code></li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> <span class="token string">'localhost:9200/accounts/person/1?pretty=true'</span></code></pre>
+<p>上面代码请求查看<code>/accounts/person/1</code>这条记录，URL 的参数<code>pretty=true</code>表示以易读的格式返回。</p>
+<p>返回的数据中，<code>found</code>字段表示查询成功，<code>_source</code>字段返回原始记录。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"_index"</span> <span class="token operator">:</span> <span class="token string">"accounts"</span><span class="token punctuation">,</span>
+  <span class="token property">"_type"</span> <span class="token operator">:</span> <span class="token string">"person"</span><span class="token punctuation">,</span>
+  <span class="token property">"_id"</span> <span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+  <span class="token property">"_version"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  <span class="token property">"found"</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"_source"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"user"</span> <span class="token operator">:</span> <span class="token string">"张三"</span><span class="token punctuation">,</span>
+    <span class="token property">"title"</span> <span class="token operator">:</span> <span class="token string">"工程师"</span><span class="token punctuation">,</span>
+    <span class="token property">"desc"</span> <span class="token operator">:</span> <span class="token string">"数据库管理"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>如果 Id 不正确，就查不到数据，<code>found</code>字段就是<code>false</code>。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">curl</span> <span class="token string">'localhost:9200/weather/beijing/abc?pretty=true'</span>
+
+<span class="token punctuation">&#123;</span>
+  <span class="token string">"_index"</span> <span class="token builtin class-name">:</span> <span class="token string">"accounts"</span>,
+  <span class="token string">"_type"</span> <span class="token builtin class-name">:</span> <span class="token string">"person"</span>,
+  <span class="token string">"_id"</span> <span class="token builtin class-name">:</span> <span class="token string">"abc"</span>,
+  <span class="token string">"found"</span> <span class="token builtin class-name">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h4><ul>
+<li><code>[PUT] /Index/Type/Id</code></li>
+</ul>
+<p>更新记录就是使用 PUT 请求，重新发送一次数据。比如我们将原始数据从”数据库管理”改成”数据库管理，软件开发”。 返回结果里面，有几个字段发生了变化。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"_version"</span> <span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+<span class="token property">"result"</span> <span class="token operator">:</span> <span class="token string">"updated"</span><span class="token punctuation">,</span>
+<span class="token property">"created"</span> <span class="token operator">:</span> <span class="token boolean">false</span></code></pre>
+<p>可以看到，记录的 Id 没变，但是版本（version）从 <code>1</code> 变成 <code>2</code>，操作类型（result）从 <code>created</code> 变成 <code>updated</code>，<code>created</code> 字段变成 <code>false</code>，因为这次不是新建记录。</p>
+<h4 id="部分更新记录"><a href="#部分更新记录" class="headerlink" title="部分更新记录"></a>部分更新记录</h4><p>使用 <code>update</code> API 我们还可以部分更新文档，例如在某个请求时对计数器进行累加。</p>
+<ul>
+<li><code>[POST] /Index/Type/Id/_update</code></li>
+</ul>
+<p><code>update</code> 请求最简单的一种形式是接收文档的一部分作为 <code>doc</code> 的参数， 它只是与现有的文档进行合并。对象被合并到一起，覆盖现有的字段，增加新的字段。 例如，我们增加字段 <code>tags</code> 和 <code>views</code> 到我们的博客文章：</p>
+<pre class="language-json" data-language="json"><code class="language-json">POST /website/blog/<span class="token number">1</span>/_update
+<span class="token punctuation">&#123;</span>
+   <span class="token property">"doc"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"tags"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"testing"</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"views"</span><span class="token operator">:</span> <span class="token number">0</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>如果请求成功，我们看到类似于 <code>index</code> 请求的响应：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+   <span class="token property">"_index"</span> <span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+   <span class="token property">"_id"</span> <span class="token operator">:</span>      <span class="token string">"1"</span><span class="token punctuation">,</span>
+   <span class="token property">"_type"</span> <span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+   <span class="token property">"_version"</span> <span class="token operator">:</span> <span class="token number">3</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h4><ul>
+<li><code>[DELETE] /Index/Type/Id</code></li>
+</ul>
+<h4 id="取回多个文档"><a href="#取回多个文档" class="headerlink" title="取回多个文档"></a>取回多个文档</h4><p>将多个请求合并成一个，避免单独处理每个请求花费的网络延时和开销。如果你需要从 Elasticsearch 检索很多文档，那么使用 <code>mget</code> API 来将这些检索请求放在一个请求中，将比逐个文档请求更快地检索到全部文档。<strong>每个文档都是单独检索和报告的。</strong>要想知道请求数组中某个请求是否确实找到，检查 <code>found</code> 字段。</p>
+<pre class="language-json" data-language="json"><code class="language-json">GET /_mget
+<span class="token punctuation">&#123;</span>
+   <span class="token property">"docs"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>
+         <span class="token property">"_index"</span> <span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span>
+         <span class="token property">"_type"</span> <span class="token operator">:</span>  <span class="token string">"blog"</span><span class="token punctuation">,</span>
+         <span class="token property">"_id"</span> <span class="token operator">:</span>    <span class="token number">2</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>
+         <span class="token property">"_index"</span> <span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span>
+         <span class="token property">"_type"</span> <span class="token operator">:</span>  <span class="token string">"pageviews"</span><span class="token punctuation">,</span>
+         <span class="token property">"_id"</span> <span class="token operator">:</span>    <span class="token number">1</span><span class="token punctuation">,</span>
+         <span class="token property">"_source"</span><span class="token operator">:</span> <span class="token string">"views"</span>
+      <span class="token punctuation">&#125;</span>
+   <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>返回值：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+   <span class="token property">"docs"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>
+         <span class="token property">"_index"</span> <span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+         <span class="token property">"_id"</span> <span class="token operator">:</span>      <span class="token string">"2"</span><span class="token punctuation">,</span>
+         <span class="token property">"_type"</span> <span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+         <span class="token property">"found"</span> <span class="token operator">:</span>    <span class="token boolean">true</span><span class="token punctuation">,</span>
+         <span class="token property">"_source"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"text"</span> <span class="token operator">:</span>  <span class="token string">"This is a piece of cake..."</span><span class="token punctuation">,</span>
+            <span class="token property">"title"</span> <span class="token operator">:</span> <span class="token string">"My first external blog entry"</span>
+         <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+         <span class="token property">"_version"</span> <span class="token operator">:</span> <span class="token number">10</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>
+         <span class="token property">"_index"</span> <span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+         <span class="token property">"_id"</span> <span class="token operator">:</span>      <span class="token string">"1"</span><span class="token punctuation">,</span>
+         <span class="token property">"_type"</span> <span class="token operator">:</span>    <span class="token string">"pageviews"</span><span class="token punctuation">,</span>
+         <span class="token property">"found"</span> <span class="token operator">:</span>    <span class="token boolean">true</span><span class="token punctuation">,</span>
+         <span class="token property">"_version"</span> <span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+         <span class="token property">"_source"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"views"</span> <span class="token operator">:</span> <span class="token number">2</span>
+         <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+   <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="批量操作"><a href="#批量操作" class="headerlink" title="批量操作"></a>批量操作</h4><p>与 <code>mget</code> 可以使我们一次取回多个文档同样的方式， <code>bulk</code> API 允许在单个步骤中进行多次 <code>create</code> 、 <code>index</code> 、 <code>update</code> 或 <code>delete</code> 请求。 如果你需要索引一个数据流比如日志事件，它可以排队和索引数百或数千批次。</p>
+<p><code>bulk</code> 与其他的请求体格式稍有不同，如下所示：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> action<span class="token operator">:</span> <span class="token punctuation">&#123;</span> metadata <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>\n
+<span class="token punctuation">&#123;</span> request body1        <span class="token punctuation">&#125;</span>\n
+<span class="token punctuation">&#123;</span> action<span class="token operator">:</span> <span class="token punctuation">&#123;</span> metadata <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>\n
+<span class="token punctuation">&#123;</span> request body2        <span class="token punctuation">&#125;</span>\n
+...</code></pre>
+<p>这种格式就是每行写一个 JSON 格式的数据，通过换行符(<code>\n</code>)连接到一起。注意两个要点：</p>
+<ul>
+<li>每行一定要以换行符(<code>\n</code>)结尾，<strong>包括最后一行</strong>。这些换行符被用作一个标记，可以有效分隔行。</li>
+<li>这些行不能包含未转义的换行符，因为他们将会对解析造成干扰。这意味着这个 JSON不能使用 pretty 参数打印。</li>
+</ul>
+<p><code>action</code> 必须是以下选项之一:</p>
+<ul>
+<li><strong><code>create</code></strong>：如果文档不存在，那么就创建它。</li>
+<li><strong><code>index</code></strong>：创建一个新文档或者替换一个现有的文档。</li>
+<li><strong><code>update</code></strong>：部分更新一个文档。</li>
+<li><strong><code>delete</code></strong>：删除一个文档。不需要再另附一行请求体。</li>
+</ul>
+<p><code>metadata</code> 应该指定被索引、创建、更新或者删除的文档的 <code>_index</code> 、 <code>_type</code> 和 <code>_id</code> 。</p>
+<p>举个例子：</p>
+<pre class="language-json" data-language="json"><code class="language-json">POST /_bulk
+<span class="token punctuation">&#123;</span> <span class="token property">"delete"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"_index"</span><span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span> <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"blog"</span><span class="token punctuation">,</span> <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"123"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span> 
+<span class="token punctuation">&#123;</span> <span class="token property">"create"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"_index"</span><span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span> <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"blog"</span><span class="token punctuation">,</span> <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"123"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"title"</span><span class="token operator">:</span>    <span class="token string">"My first blog post"</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"index"</span><span class="token operator">:</span>  <span class="token punctuation">&#123;</span> <span class="token property">"_index"</span><span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span> <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"blog"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"title"</span><span class="token operator">:</span>    <span class="token string">"My second blog post"</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"update"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"_index"</span><span class="token operator">:</span> <span class="token string">"website"</span><span class="token punctuation">,</span> <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"blog"</span><span class="token punctuation">,</span> <span class="token property">"_id"</span><span class="token operator">:</span> <span class="token string">"123"</span><span class="token punctuation">,</span> <span class="token property">"_retry_on_conflict"</span> <span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"doc"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"title"</span> <span class="token operator">:</span> <span class="token string">"My updated blog post"</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span> </code></pre>
+<p>返回值：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+   <span class="token property">"took"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+   <span class="token property">"errors"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> 
+   <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>  <span class="token property">"delete"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"_index"</span><span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+            <span class="token property">"_type"</span><span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+            <span class="token property">"_id"</span><span class="token operator">:</span>      <span class="token string">"123"</span><span class="token punctuation">,</span>
+            <span class="token property">"_version"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"status"</span><span class="token operator">:</span>   <span class="token number">200</span><span class="token punctuation">,</span>
+            <span class="token property">"found"</span><span class="token operator">:</span>    <span class="token boolean">true</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>  <span class="token property">"create"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"_index"</span><span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+            <span class="token property">"_type"</span><span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+            <span class="token property">"_id"</span><span class="token operator">:</span>      <span class="token string">"123"</span><span class="token punctuation">,</span>
+            <span class="token property">"_version"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"status"</span><span class="token operator">:</span>   <span class="token number">201</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>  <span class="token property">"create"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"_index"</span><span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+            <span class="token property">"_type"</span><span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+            <span class="token property">"_id"</span><span class="token operator">:</span>      <span class="token string">"EiwfApScQiiy7TIKFxRCTw"</span><span class="token punctuation">,</span>
+            <span class="token property">"_version"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"status"</span><span class="token operator">:</span>   <span class="token number">201</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>  <span class="token property">"update"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"_index"</span><span class="token operator">:</span>   <span class="token string">"website"</span><span class="token punctuation">,</span>
+            <span class="token property">"_type"</span><span class="token operator">:</span>    <span class="token string">"blog"</span><span class="token punctuation">,</span>
+            <span class="token property">"_id"</span><span class="token operator">:</span>      <span class="token string">"123"</span><span class="token punctuation">,</span>
+            <span class="token property">"_version"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+            <span class="token property">"status"</span><span class="token operator">:</span>   <span class="token number">200</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+   <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>批量大小选择：一个好的办法是开始时将 1,000 到 5,000 个文档作为一个批次, 如果你的文档非常大，那么就减少批量的文档个数。一个好的批量大小在开始处理后所占用的物理大小约为 <strong>5-15 MB</strong>。</p>
+<h3 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h3><p>// TODO: 咕咕咕</p>
+<h2 id="网站搭建纪实：前端"><a href="#网站搭建纪实：前端" class="headerlink" title="网站搭建纪实：前端"></a>网站搭建纪实：前端</h2><p>没啥好讲的，用的是自己最熟悉的 React+Redux 框架半天肝了个 Prototype…</p>
+<p>嘛嘛，反正前端不是主要部分啦x</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a href="https://www.cnblogs.com/jiangxinyang/p/10516302.html">https://www.cnblogs.com/jiangxinyang/p/10516302.html</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/79202151">https://zhuanlan.zhihu.com/p/79202151</a></li>
 <li><a href="https://www.elastic.co/cn/downloads/elasticsearch">https://www.elastic.co/cn/downloads/elasticsearch</a></li>
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html</a></li>
 <li><a href="https://cuiqingcai.com/6214.html">https://cuiqingcai.com/6214.html</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2017/08/elasticsearch.html">https://www.ruanyifeng.com/blog/2017/08/elasticsearch.html</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>技术</category>
-        <category>技术/后端</category>
+        <category>技术/后端c</category>
       </categories>
       <tags>
         <tag>ElasticSearch</tag>

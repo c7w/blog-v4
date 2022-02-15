@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.c7w.tech/elasticsearch/</loc>
+    <lastmod>2022-02-15</lastmod>
+  </url>
+  <url>
     <loc>https://www.c7w.tech/latex/</loc>
     <lastmod>2022-02-13</lastmod>
   </url>
@@ -10,10 +14,6 @@
   </url>
   <url>
     <loc>https://www.c7w.tech/dsa-cheatsheet/</loc>
-    <lastmod>2022-02-11</lastmod>
-  </url>
-  <url>
-    <loc>https://www.c7w.tech/elasticsearch/</loc>
     <lastmod>2022-02-11</lastmod>
   </url>
   <url>
