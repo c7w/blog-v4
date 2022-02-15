@@ -1,0 +1,643 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《数据结构》课程 PA3 报告 | c7w 的博客</title><meta name="keywords" content="数据结构"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="内含以下题目的实验报告：  CST2021F 3-1 Circuit CST2021F 3-3 kth CST2021F 3-5 Prefix CST2021F 3-7 Sort  这里不提供任何解题代码，仅将解题的白盒报告归档处理。 本博文仅做参考使用，任何可能影响您查重结果的行为请您后果自负！     Problem White Box (20%) Black Box (80%)     CS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《数据结构》课程 PA3 报告">
+<meta property="og:url" content="https://www.c7w.tech/dsa-pa3/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="内含以下题目的实验报告：  CST2021F 3-1 Circuit CST2021F 3-3 kth CST2021F 3-5 Prefix CST2021F 3-7 Sort  这里不提供任何解题代码，仅将解题的白盒报告归档处理。 本博文仅做参考使用，任何可能影响您查重结果的行为请您后果自负！     Problem White Box (20%) Black Box (80%)     CS">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-09T16:00:03.000Z">
+<meta property="article:modified_time" content="2022-01-29T11:16:06.703Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/dsa-pa3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《数据结构》课程 PA3 报告',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-29 19:16:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">47</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《数据结构》课程 PA3 报告</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-09T16:00:03.000Z" title="发表于 2022-01-10 00:00:03">2022-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-29T11:16:06.703Z" title="更新于 2022-01-29 19:16:06">2022-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E8%AE%BE/">程设</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E8%AE%BE/%E7%A8%8B%E8%AE%BE-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">程设/数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《数据结构》课程 PA3 报告"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>内含以下题目的实验报告：</p>
+<ul>
+<li>CST2021F 3-1 Circuit</li>
+<li>CST2021F 3-3 kth</li>
+<li>CST2021F 3-5 Prefix</li>
+<li>CST2021F 3-7 Sort</li>
+</ul>
+<p>这里不提供任何解题代码，仅将解题的白盒报告归档处理。</p>
+<p>本博文仅做参考使用，任何可能影响您查重结果的行为请您后果自负！</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Problem</th>
+<th style="text-align:center">White Box (20%)</th>
+<th style="text-align:center">Black Box (80%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CST2021F 3-1 Circuit (25%)</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">[100] -1</td>
+</tr>
+<tr>
+<td style="text-align:center">CST2021F 3-3 kth (25%)</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">[100] -1</td>
+</tr>
+<tr>
+<td style="text-align:center">CST2021F 3-5 Prefix (25%)</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">[100] -1</td>
+</tr>
+<tr>
+<td style="text-align:center">CST2021F 3-7 Sort (25%)</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">[100] -1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<a id="more"></a>
+<h1 id="CST2021F-3-1-Circuit"><a href="#CST2021F-3-1-Circuit" class="headerlink" title="CST2021F 3-1 Circuit"></a>CST2021F 3-1 Circuit</h1><p>​    <strong>[关键词] Trie 树</strong></p>
+<h2 id="方案设计"><a href="#方案设计" class="headerlink" title="方案设计"></a>方案设计</h2><p>$\forall i \in [0, n)$，需要一种支持以下操作的数据结构：</p>
+<p>(1) 持有 $[\max(i-k-1, 0), \min(i+k+1, n-1)]$ 中所有的元件的输出信息；</p>
+<p>(2) 可以查询这些信息中满足与 $data[i]$ 异或值最大的 $data[j]$ 的 $j$，其中 $i \ne j$。</p>
+<p>(3) 在考虑 $i$ 结束，转向考虑 $i+1$ 的时候，可以快速地删除 $data[i-k-1]$ 的信息，加入 $data[(i+1)+k+1]$ 的信息。</p>
+<p>而字典树，恰恰就能满足我们上述的需求，下面对其进行详细介绍。</p>
+<h3 id="字典树：规则"><a href="#字典树：规则" class="headerlink" title="字典树：规则"></a>字典树：规则</h3><p>字典树的结点分<strong>非叶结点</strong>和<strong>叶结点</strong>两种。事实上，我们可以用考虑有限转移自动机（DFA）的方式来考虑字典树。</p>
+<p><strong>非叶结点</strong>记录了所有终态经过它的串的个数，以及通过输入一个字符 $a\in\Sigma$​，可以转移到的下一个非叶结点或叶结点的位置。</p>
+<p><strong>叶结点</strong>记录了所有以它为终态的串的个数，同时维护了一个列表来按次序记录所有以该叶结点为终态的串的 ID。</p>
+<p>我们定义，一个结点输入一个字符 $a\in \Sigma$​​ 后对应的结点<strong>存在</strong>，当且仅当该结点是非叶结点，同时该非叶结点可以通过字符 $a$ 转移到位置 $t$，且结点 $t$ 接受的终态经过 $t$ 或是以 $t$ 为终态的串的个数非零。</p>
+<h3 id="字典树：初始化"><a href="#字典树：初始化" class="headerlink" title="字典树：初始化"></a>字典树：初始化</h3><p>从这小节的讨论开始，我们只讨论 $\Sigma=\{0, 1\}$ 的情况。</p>
+<p>字典树默认只有一个根节点，接受空串 $\epsilon$​，终态经过它的串的个数为 $0$​​，这里我们不将该根节点视为叶结点。</p>
+<p>$\Sigma = \{0,1\}$​​ 的字典树的非叶结点只需记录其经过 $0$ 转移和 $1$ 转移后的到达结点，这里我们使用二叉树的记号，分别记作其左孩子和右孩子。</p>
+<h3 id="字典树：插入"><a href="#字典树：插入" class="headerlink" title="字典树：插入"></a>字典树：插入</h3><p>考虑我们将插入 $64$ 位整数 $data[i]$。</p>
+<p>我们从根节点出发，逐一考虑去接受该串的字符，遇 $0$ 则转向其左孩子，遇 $1$ 则转向其右孩子，若对应的孩子的<strong>位置不存在</strong>（注意这里与上述结点的<strong>存在</strong>不同，结点存在需要位置存在，且该位置的记录串数非零）则创建。同时我们将沿途所有的非叶结点的“终态经过它的串的个数”自增，终态叶结点的“以它为终态的串的个数”自增。最后，我们在终态叶结点的串列表中将该串的 ID $i$ 插入。在本题中由于我们考虑的窗口永远是从左向右滑动，我们可以保证插入的 ID $i$​ 一定是在列表的末尾，故我们只需插入到列表末尾即可。</p>
+<h3 id="字典树：删除"><a href="#字典树：删除" class="headerlink" title="字典树：删除"></a>字典树：删除</h3><p>考虑我们将删除 $64$ 位整数 $data[i]$，同时我们断言 $data[i]$ 在此前一定被插入到树中。</p>
+<p>我们从根节点出发，逐一考虑去接受该串的字符，遇 $0$ 则转向其左孩子，遇 $1$ 则转向其右孩子。我们将沿途所有的非叶结点的“终态经过它的串的个数”自减，终态叶结点的“以它为终态的串的个数”自减。最后，我们在终态叶结点的串列表中将该串的 ID $i$ 移除。在本题中由于我们考虑的窗口永远是从左向右滑动，我们可以保证删除的 ID $i$​ 一定是在列表的首位，故我们只需删除列表首位即可。</p>
+<h3 id="字典树：查询"><a href="#字典树：查询" class="headerlink" title="　字典树：查询"></a>　字典树：查询</h3><p>考虑我们将查询 $j$，使得 $i \ne j$ 且 $data[j]$ 与 $64$ 位整数 $data[i]$ 的异或值最大，其中 $j \in [\max(i-k-1, 0), \min(i+k+1, n-1)]$。</p>
+<p>由贪心策略，如果我们每步均朝向异或值最大的方向走，即遇 $0$ 走 $1$，遇 $1$ 走 $0$（如果可能的话，这种可能性由对应的<strong>结点存在</strong>蕴含），我们最终得到的异或值便一定是最大的。</p>
+<p>也就是说，我们的查询过程可以概述如下：</p>
+<p>从根节点出发，逐一去考虑接受该串的字符，遇 $0$ 若右孩子存在则转向右孩子，不然转向左孩子；遇 $1$ 若左孩子存在则转向左孩子，不然转向右孩子。这样不断进行下去势必会达到一个终态，而这个我们要做的便是输出这个终态叶结点的接受串 ID 列表中第一个 $id$（满足 $id \ne i$​）。</p>
+<h2 id="过程记录"><a href="#过程记录" class="headerlink" title="过程记录"></a>过程记录</h2><p>输入有毒。输入有毒。输入有毒。最初一版使用 <code>getchar()</code> 读取 $64$ 位字符串，结果满满的是 WA，一个点都不给过。初步推断可能是输入文件以 <code>\r\n</code> 结尾而程序只考虑了以 <code>\n</code> 结尾的情况。换用 <code>scanf()</code> 后便解决了问题，<s>而这个问题竟然喜提 PA3 中 Debug 时间最久的问题</s>。</p>
+<p>解决过程大致是首先为了控制变量，排除算法实现过程的具体问题，做了以下两个操作：</p>
+<p>(1) 撰写了对拍器 check.py（见附 1），但是本地的数据怎么测都是 AC。</p>
+<p>(2) 撰写了 Trivial.cpp（见附 2），读入部分没变（事实上，最初我认为是后续字典树处理写出了问题，于是想写个最简单的版本交上去看下测试数据的规模），使用最平凡的 $O(nk)$ 的算法处理问题，最终发现还是爆零。目光转向读入部分，改用 <code>scanf</code> 后 Trivial 算法拿到了 40/50（自然会喜提 TLE），然后是将新的读入复制回 <code>main.cpp</code>，前后两次拿到了 50/50, 90/90, <s>完结撒花</s>。</p>
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>从时间上来看，每个结点最多被插入一次，查询一次，删除一次，这些操作的时间复杂度均是正比于树高 $h=O(64)=O(1)$，而对于 $n$ 个结点，我们有时间复杂度是 $O(n)$。</p>
+<p>字典树的每个结点可能对应 $64$​​ 位整数的位表示中的一个字符。也就是说，最多有 $O(64n)=O(n)$​​ 量级的结点个数。而这些结点有小部分是可以复用的。具体来说，根据鸽巢原理，我们设读入 $k$​​ 个字符后，才会出现 $2^k&gt;n$​​，解得 $k\ge19$​​。也就是说，我们可以考虑一种极端的情况，树深度 $depth \le 19$​​ 时为满树，而树深度 $depth \ge 20$​​ 时为单链，这种情况下最多的结点个数为 $\sum_{i=0}^{19}2^i+(64-19)<em>n\approx 2.4</em>10^7=24M$​​​。</p>
+<p>我们的叶结点共有 $O(n)$​ 个，同时每个叶节点都需要维护 1 个列表，因此列表的个数也是 $O(n)$​​ 个，列表的元素的总个数也是 $O(n)$。综上，空间复杂度为 $O(n)$。</p>
+<p>而这题还是有卡常的嫌疑的，也就是说虽然是 $O(n)$​ 量级，但是空间复杂度还是可能有可能会超限，具体分析如下：（$n=5*10^5$）</p>
+<ul>
+<li>非叶结点，24M * 12Byte = 288M.</li>
+<li>列表条目，0.5M * 12Byte = 6M.</li>
+<li>叶结点，0.5M * 20Byte = 10M.</li>
+<li>$64$ 位整数的数据，0.5M * 8Byte = 4M.</li>
+<li>合计 308M &lt; 512M.</li>
+</ul>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="附-1-check-py"><a href="#附-1-check-py" class="headerlink" title="附 1: check.py"></a>附 1: check.py</h3><pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> io
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> datetime
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> subprocess
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+
+IN <span class="token operator">=</span> <span class="token string">''</span>
+OUT <span class="token operator">=</span> <span class="token string">''</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Judger</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">generateInputData</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">global</span> IN<span class="token punctuation">,</span> OUT
+        IN <span class="token operator">=</span> <span class="token string">''</span>
+        OUT <span class="token operator">=</span> <span class="token string">''</span>
+        n <span class="token operator">=</span> <span class="token number">10</span>
+        k <span class="token operator">=</span> <span class="token number">2</span>
+        IN <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span>k<span class="token punctuation">&#125;</span></span><span class="token string">\n'</span></span>
+        
+        dataList <span class="token operator">=</span> <span class="token punctuation">[</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token operator">**</span><span class="token number">64</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">]</span>
+        rawList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">bin</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>zfill<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> <span class="token keyword">for</span> data <span class="token keyword">in</span> dataList<span class="token punctuation">]</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>dataList<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>rawList<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> raw <span class="token keyword">in</span> rawList<span class="token punctuation">:</span>
+            IN <span class="token operator">+=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>raw<span class="token punctuation">&#125;</span></span><span class="token string">\n'</span></span>
+        
+        <span class="token keyword">for</span> index<span class="token punctuation">,</span> data <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>dataList<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            left <span class="token operator">=</span> index <span class="token operator">-</span> k <span class="token operator">-</span> <span class="token number">1</span>
+            <span class="token keyword">if</span> left <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                left <span class="token operator">=</span> <span class="token number">0</span>
+            right <span class="token operator">=</span> index <span class="token operator">+</span> k <span class="token operator">+</span> <span class="token number">1</span>
+            <span class="token keyword">if</span> right <span class="token operator">></span> n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+                right <span class="token operator">=</span> n<span class="token operator">-</span><span class="token number">1</span>
+            
+            currMaxIndex <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">999</span>
+            currMaxValue <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">999</span>
+            <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token keyword">continue</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>dataList<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">^</span> data<span class="token punctuation">)</span> <span class="token operator">></span> currMaxValue<span class="token punctuation">:</span>
+                    currMaxIndex <span class="token operator">=</span> i
+                    currMaxValue <span class="token operator">=</span> <span class="token punctuation">(</span>dataList<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">^</span> data<span class="token punctuation">)</span>
+            OUT <span class="token operator">+=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>currMaxIndex<span class="token punctuation">&#125;</span></span><span class="token string">\n'</span></span>
+        
+        <span class="token keyword">return</span> IN
+
+    <span class="token keyword">def</span> <span class="token function">getAnswer</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">global</span> OUT
+        <span class="token keyword">return</span> OUT<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">judge</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> name<span class="token punctuation">,</span> judgeAns<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'\n\nCompiling...'</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'g++'</span><span class="token punctuation">,</span> <span class="token string">'-O2'</span><span class="token punctuation">,</span> <span class="token string">'-std=c++14'</span><span class="token punctuation">,</span> <span class="token string">'-w'</span><span class="token punctuation">,</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>name<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">,</span> <span class="token string">'-o'</span><span class="token punctuation">,</span> <span class="token string">'main'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> subprocess<span class="token punctuation">.</span>CalledProcessError <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'CE'</span>
+        
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Generating testing data...'</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> self<span class="token punctuation">.</span>generateInputData<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Running...'</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            time1 <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            cppout <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./main'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token builtin">input</span><span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">2.0</span><span class="token punctuation">)</span>
+            cppout <span class="token operator">=</span> cppout<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            time2 <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> subprocess<span class="token punctuation">.</span>TimeoutExpired<span class="token punctuation">:</span>
+            f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'check-</span><span class="token interpolation"><span class="token punctuation">&#123;</span>datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d-%H-%M-%S"</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">.log'</span></span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Time Limit Exceeded\n"</span></span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"-------------IN--------------\n"</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f'Time Limit Exceeded (2.000s)'</span></span>
+        <span class="token keyword">except</span> subprocess<span class="token punctuation">.</span>CalledProcessError <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'check-</span><span class="token interpolation"><span class="token punctuation">&#123;</span>datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d-%H-%M-%S"</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">.log'</span></span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Runtime Error (signal </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">.</span>returncode<span class="token punctuation">&#125;</span></span><span class="token string">)\n"</span></span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"-------------IN--------------\n"</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f'Runtime Error (Signal </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">.</span>returncode<span class="token punctuation">&#125;</span></span><span class="token string">)'</span></span>
+        <span class="token keyword">if</span> judgeAns<span class="token punctuation">:</span>
+            <span class="token comment"># print(cppout)</span>
+            <span class="token comment"># print("↑ cppout ↓ ans")</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Generating testing answer...'</span><span class="token punctuation">)</span>
+            ans <span class="token operator">=</span> self<span class="token punctuation">.</span>getAnswer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment"># print(ans)</span>
+            
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Judging...'</span><span class="token punctuation">)</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                cppout_ <span class="token operator">=</span> cppout<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+                ans_ <span class="token operator">=</span> ans<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>cppout_<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>ans_<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token keyword">raise</span> BaseException<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>cppout_<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>cppout_<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> ans_<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        <span class="token keyword">raise</span> BaseException<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> BaseException <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'check-</span><span class="token interpolation"><span class="token punctuation">&#123;</span>datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strftime<span class="token punctuation">(</span><span class="token string">"%Y-%m-%d-%H-%M-%S"</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">.log'</span></span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Wrong Answer on line </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">&#125;</span></span><span class="token string">\n"</span></span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"-------------IN--------------\n"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"-------------CPPOUT--------------\n"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>cppout <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"-------------ANS--------------\n"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>ans <span class="token operator">+</span> <span class="token string">'\n'</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token string">'Wrong Answer'</span>
+            <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f'Accepted (</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">round</span><span class="token punctuation">(</span>time2 <span class="token operator">-</span> time1<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">s)'</span></span>
+
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string-interpolation"><span class="token string">f'Program exited successfully (</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">round</span><span class="token punctuation">(</span>time2 <span class="token operator">-</span> time1<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">s)'</span></span>
+        
+
+j <span class="token operator">=</span> Judger<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>j<span class="token punctuation">.</span>judge<span class="token punctuation">(</span><span class="token string">'trivial.cpp'</span><span class="token punctuation">,</span> judgeAns<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="附-2-Trivial-cpp"><a href="#附-2-Trivial-cpp" class="headerlink" title="附 2: Trivial.cpp"></a>附 2: Trivial.cpp</h3><pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">ull</span> <span class="token expression"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> k<span class="token punctuation">;</span>
+
+ull data<span class="token punctuation">[</span><span class="token number">500001</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d %d\n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>n<span class="token punctuation">,</span> <span class="token operator">&amp;</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'0'</span> <span class="token operator">||</span> c <span class="token operator">==</span> <span class="token string">'1'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            data<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            data<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> c <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+            c <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        
+        <span class="token keyword">int</span> l <span class="token operator">=</span> i<span class="token operator">-</span>k<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>l <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> l <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> r <span class="token operator">=</span> i <span class="token operator">+</span> k <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>r <span class="token operator">></span> n<span class="token punctuation">)</span> r <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        
+        ull currMax <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        ull currMaxIndex <span class="token operator">=</span> l <span class="token operator">!=</span> i <span class="token operator">?</span> l <span class="token operator">:</span> <span class="token punctuation">(</span>l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> T <span class="token operator">=</span> l<span class="token punctuation">;</span> T <span class="token operator">&lt;=</span> r<span class="token punctuation">;</span> <span class="token operator">++</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>T <span class="token operator">==</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">continue</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token operator">^</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">></span>currMax<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                currMax <span class="token operator">=</span> data<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token operator">^</span> data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                currMaxIndex <span class="token operator">=</span> T<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> currMaxIndex<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">!=</span> n<span class="token punctuation">)</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h1 id="CST2021F-3-3-kth"><a href="#CST2021F-3-3-kth" class="headerlink" title="CST2021F 3-3 kth"></a>CST2021F 3-3 kth</h1><p>​    <strong>[关键词] 堆，偏序关系，归并排序</strong></p>
+<h2 id="方案设计-1"><a href="#方案设计-1" class="headerlink" title="方案设计"></a>方案设计</h2><h3 id="偏序关系"><a href="#偏序关系" class="headerlink" title="偏序关系"></a>偏序关系</h3><p>首先我们可以回忆出针对一维数组寻找第 $k$​ 大元素问题的解决方案。我们可以将原数组直接建小顶堆后，第 $k$​ 次 pop 出的元素即为所求，时间复杂度为 $O(n+k*\log n)$​​。而稍微再仔细考虑我们的建堆过程，实际上我们是将这一维数组中的所有元素之间建立起一种偏序关系。没错，偏序关系，这也是接下来我们讨论的重点。</p>
+<h3 id="二维情况"><a href="#二维情况" class="headerlink" title="二维情况"></a>二维情况</h3><p>再来考虑针对两个数组的情况。首先我们可以固定某个 $X$ 元素，将 $Y$ 元素的顺序排序；然后固定某个 $Y$ 元素，将 $X$ 元素进行排序。这里排序的意思是说，找到一个序列 $(new_1, new_2, \cdots, new_n)$，使得 $X_{new_i} = sorted(X)[i]$。之后我们便可以记 $X[i]:=X_{new_i}=sorted(X)[i]$.</p>
+<p>针对两个数组的情况，我们记 $(i,j)$ 表示值 $X[i]+Y[j]$。可以对于 $(i_1, j_1)$ 与 $(i_2, j_2)$，我们有：</p>
+<ul>
+<li>$(i_1,j_1) \le (i_2, j_2)$, if $i_1 \le i_2$ and $j_1 \le j_2$.</li>
+</ul>
+<p>由于我们的内存有限，我们能放在堆中的元素是有限的。所以我们要想出一种组织这些元素的方式，使得每个元素能且仅能出现在小顶堆中一次，也就是说，我们要建立一种新的偏序关系 $M$​​，使得 $\forall (i,j)$, 集合 $\{(x,y)\ |\ (x,y) \le_M (i,j) \ \and\ (x,y)\ne(i,j) \}$ 有最大元 $(m,n)$，即当且仅当 $(m,n)$ 出堆，$(i,j)$ 才能入堆，且这种偏序关系满足如果 $(x,y) \le_M(i,j)$，那么 $(x,y) \le (i,j)$​​​​。</p>
+<p>对于数组有两个维度的情况，我们可以构造偏序关系 $M$ 如下图：</p>
+<p><img src="https://i.loli.net/2021/11/30/ebFOURVMwqcm56J.png" alt="image-20211130004938307.png"></p>
+<p>对于某个顶点 $(i,j)$，可以验证从比它小的元素指向它的边的入度均为 $1$（根节点除外），此即保证了每个元素都能入堆（当在新的偏序关系下，比它小的元素的极大值出堆，即当与它直接相连但比它小的那个顶点出堆，注意这里的“小”均为在新的偏序关系下），且每个元素仅能入堆一次。</p>
+<p>于是我们便可以首先将 $(1,1)$ 推入小顶堆中，然后每 pop 一次，将其出边对应的结点推入堆中。这样 pop $k$ 次后得到的 $(x,y)$​ 即为所求。</p>
+<h3 id="三维情况"><a href="#三维情况" class="headerlink" title="三维情况"></a>三维情况</h3><p>在三个数组的情况，我们采用与上述类似的记号，而建立的偏序关系如下图：</p>
+<p><img src="https://i.loli.net/2021/11/30/nq3Vba9K1WA4P8J.png" alt="image-20211130005405726.png"></p>
+<p>于是我们便可以首先将 $(1,1,1)$​​ 推入小顶堆中，然后每 pop 一次，将其出边对应的结点推入堆中。这样 pop $k$​​ 次后得到的 $(x,y,z)$​​ 即为所求。</p>
+<h2 id="过程记录-1"><a href="#过程记录-1" class="headerlink" title="过程记录"></a>过程记录</h2><ul>
+<li><p>首先对原有的 X，Y，Z 数组进行归并排序，具体来说是找到上述的 $X$​</p>
+</li>
+<li><p>编写 <code>Index</code> 类模拟上述定义的索引 tuple。可以简单地通过重载运算符来实现两个 <code>Index</code> 之间的比较（调用交互库函数）。</p>
+</li>
+<li>注意按照上述拓扑关系建立 <code>Index</code> 之间的新偏序关系，以保证所有顶点能且仅能被推入堆中一次。</li>
+</ul>
+<h2 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>从时间上来说，归并排序所需时间复杂度为 $O(n \log n)$​。注意到上述所有结点最多有 3 条出边，即运行 $k$​ 次上述操作后，可以保证堆中的结点数不超过 $3*k=O(k)$​。对于这样的堆，运行 $k$​ 次 pop，$O(3k)$​ 次 insert，我们有时间复杂度为 $O(k \log k)$​​​。​于是总体时间复杂度为 $O(n \log n + k \log k)$。</p>
+<p>对原数组进行排序的归并排序数组辅助空间为 $O(n)$​，堆开辟的空间大小为 $O(3k)=O(k)$​。总空间复杂度为 $O(n+k)$。</p>
+<h1 id="CST2021F-3-5-Prefix"><a href="#CST2021F-3-5-Prefix" class="headerlink" title="CST2021F 3-5 Prefix"></a>CST2021F 3-5 Prefix</h1><p>​    <strong>[关键词] KMP next[] 表，动态规划</strong></p>
+<h2 id="方案设计-2"><a href="#方案设计-2" class="headerlink" title="方案设计"></a>方案设计</h2><h3 id="关键概念定义"><a href="#关键概念定义" class="headerlink" title="关键概念定义"></a>关键概念定义</h3><p>这里我们采用一种与题目和课堂讲义上不同的字符串及 <code>next[]</code> 表表示方式，具体介绍如下：</p>
+<ul>
+<li>对于长度为 $n$ 的串 $S$，记之为 $S[1…n]$​. (Index starts from 1)</li>
+<li>记 $next[j]$​ 表示 <strong>$S[1…j]$​​ 中最大自匹配的真前缀和真后缀的串长</strong>，也就是说，与讲义中偏重 Pattern String 下一次移动到的位置不同，我们更加侧重的是这个长度值。举个例子：</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">raw[i]</td>
+<td>*</td>
+<td>a</td>
+<td>a</td>
+<td>b</td>
+<td>a</td>
+<td>a</td>
+<td>b</td>
+</tr>
+<tr>
+<td style="text-align:center">next[i]</td>
+<td>-1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可以证明，这种 next[] 表与讲义上的 next[] 表只偏差了一个 offset。</p>
+<h3 id="next-表的构建"><a href="#next-表的构建" class="headerlink" title="next[] 表的构建"></a>next[] 表的构建</h3><p>根据我们的定义，$next[j]$​​ 代表 $S[1…j]$​​ 中<strong>最大自匹配的真前缀和真后缀的串长</strong>，而这个真前缀便是 $S[1…next[j]]$​。</p>
+<p>于是，在我们采用递推的方式计算 $next[j+1]$​ 时，我们要寻找的是 $S[1…j+1]$​ 中最大自匹配的真前缀和真后缀的串长。</p>
+<p>我们已知 $S[1…t]$​ 与 $S[j-t+1… j]$​ 是匹配的，这里 <strong>$t \in \{next[j], next[next[j]], next[next[next[j]]] \cdots\} =: T_j$​</strong>。</p>
+<p>于是，我们便可以逐个考虑序列 $T_j$ 中的元素：</p>
+<ul>
+<li>如果 $S[j+1]$​​ 与 $S[t+1]$​​ 相等，我们便找到了 $S[1…j+1]$​​ 的一个最大的自匹配的真前缀与真后缀，此即 $next[j+1] \leftarrow t+1$.</li>
+<li>不然，我们转而考虑这个序列的下一个元素。</li>
+</ul>
+<p>由于这个序列最后必然收敛于通配符 <code>*</code>，算法必定终止。</p>
+<h3 id="动态规划求前缀出现次数"><a href="#动态规划求前缀出现次数" class="headerlink" title="动态规划求前缀出现次数"></a>动态规划求前缀出现次数</h3><p>考虑串 <code>aabaabaab</code>，定义 $dp[j]$ 表示 $S[1…j]$ 的所有真前缀与真后缀相匹配的次数。可得下表：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw[i]</td>
+<td>*</td>
+<td>a</td>
+<td>a</td>
+<td>b</td>
+<td>a</td>
+<td>a</td>
+<td>b</td>
+<td>a</td>
+<td>a</td>
+<td>b</td>
+</tr>
+<tr>
+<td>next[i]</td>
+<td>-1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>dp[i]</td>
+<td>-</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>归纳可证明：</p>
+<script type="math/tex; mode=display">
+dp[i] =
+\begin{cases}
+0, & next[i] = 0, \\
+dp[next[i]]+1, & next[i] \gt 0.
+\end{cases}</script><p>最后我们的答案还需要考虑整个子串自匹配的情况，即 $S[1…j]$ 在 $S[1…n]$ 中出现过一次，$\forall j \in [1, n]$.</p>
+<p>于是答案便是 $n + \sum_{i=1}^ndp[i]$.</p>
+<h2 id="过程记录-2"><a href="#过程记录-2" class="headerlink" title="过程记录"></a>过程记录</h2><ul>
+<li>通过引入通配符 <code>*</code> 这个哨兵结点，可以有效地进行递推。</li>
+<li>需要用 <code>long long</code> 来存储答案数值。</li>
+<li>同时记录 $raw, next, dp$ 会导致内存溢出，因为 $(1+4+8)*20M = 260M &gt; 256M.$<ul>
+<li>首先想到的解决方案是，由于答案的大小不会超过 $(20M)^2=4e14$，而 $\log_2(4*10^{14})=2+\frac {14} {\lg2} \approx 49$，使用 $56$ 个 bit 便可以将其储存。<ul>
+<li>于是我们可以撰写自己的 <code>int56</code> 类，在 get 与 set 对应整数的时候将 <code>long long</code> 通过位运算拆成 <code>char</code>, <code>short</code>, <code>int</code> 三部分（7 Byte）。</li>
+<li>经过此种优化之后，内存用量为 $240M$，便有了通过的可能。</li>
+</ul>
+</li>
+<li><s>但是转而一想，数据结构并不是汇编程序设计。</s><ul>
+<li>事实上我们按照上述解题思路不难得出，我们是先算出了 $next$ 数组中的所有值，然后根据 $next$ 数组的值去递推 $dp$ 数组。</li>
+<li>事实上，我们可以考虑只建立一个 $next$​ 数组，为 <code>long long</code> 类型，首先在其中算出所有 $next_j$，然后根据这个 $next_j$ 计算 $dp_i$，实行就地覆盖的方法，并不会影响答案的结果。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>KMP 的 next[] 表构建过程时间复杂度为 $O(n)$，之后根据 $next$ 递推 $dp$ 与累加求和的复杂度均为 $O(n)$。于是时间复杂度为 $O(n)$。</p>
+<p>空间上，使用 $raw$​ 与 $next$​ 数组均为 $O(n)$​ 大小，最大内存使用量为 $20M*9=180M&lt;256M$。</p>
+<h1 id="CST2021F-3-7-Sort"><a href="#CST2021F-3-7-Sort" class="headerlink" title="CST2021F 3-7 Sort"></a>CST2021F 3-7 Sort</h1><p>​    <strong>[关键词] 归并排序， 四路归并</strong></p>
+<h2 id="方案设计-3"><a href="#方案设计-3" class="headerlink" title="方案设计"></a>方案设计</h2><p>首先由题目测试数据给出的 $n$ 和 $k$ 的大小关系我们可以果断摒弃掉最坏情况为 $O(n^2)$ 的冒泡排序，选择排序等等算法。这些算法即使在一次能比较的数的个数上进行了优化，这也只是常数级别的，并不能撼动其数量级的地位。</p>
+<p>目光自然转向了复杂度为 $O(n \log n)$ 的快速排序和归并排序上。我们要做的，便是利用比较器一次可以比较三个数的性质，对这些复杂度已经达到理论下界的算法进行常数级别的优化。</p>
+<p>这里由于归并排序的稳定性，所以首选的是归并排序。首先我们自然可以想到的是，模仿二路归并的具体实现，如果比较器一次可以比较三个数，那么我们可以尝试实现三路归并，这样需要求解的递推方程为 $Cmp(n) = 3*Cmp(\frac n 3) + n$​，这是基于每经过一次比较，我们就可以确定三路中的最小元素，并将其从三路中取出，放置于数组的对应位置​。</p>
+<p>但是如果我们代入 $n=3^k$​​ 对该方程求解，我们得出 $a_k=(k+1)<em>3^k$​​，其中 $a_k=Cmp(3^k)$​​，此即 $Cmp(n) \sim n</em>\log_3n$​​。代入 $n=10^6$ 我们有 $Cmp(n) \approx 7.6*10^7$。不能满足我们对 $limit$ 的要求。</p>
+<p>于是想法转移到能否更加 exploit 比较器返回的结果中包含的信息。具体来说，在三路归并中，每次比较都能返回 $a&lt;b&lt;c$，我们只运用到了 $a&lt;b$, $a&lt;c$ 这两个部分，并没有利用到 $c$​ 是三者的最大值这么一个条件。而一旦 $c$ 是最大值，由于有 $b&lt;c$，可以保证在下次的比较过程中，$c$ 一定不是三者中的最小值。这竟然退化成了 $b,c,d$ 比较，实际上我们用比较器只比较了 $b, d$ 的二路归并的情况。</p>
+<p>于是再进一步，我们考虑可以使用四路归并，便可以尽力 exploit 比较器的返回信息。具体来说，和上述想法相似，对于待合并数组 $a,b,c,d$，一旦我们在 $a,b,c$ 中比较得到 $a&lt;b&lt;c$，在下一次比较选择最小值时，我们便可以忽略掉 $c$，只比较 $next(a), b,d$，其正确性由 $b&lt;c$，即 $c$ 一定不是最小值保证。</p>
+<p>这样需要求解的递推方程为 $Cmp(n) = 4<em>Cmp(\frac n 4) + n$​，此即 $Cmp(n) \sim n</em>\log_4n$​。代入 $n=10^6$​ 我们有 $Cmp(n) \approx 9.97*10^6&lt;limit_n$​。</p>
+<h2 id="过程记录-3"><a href="#过程记录-3" class="headerlink" title="过程记录"></a>过程记录</h2><p>四路归并的具体实现过程中，递归过程与二路归并类似，而重点在于四路合并的过程。具体来说，我们可以先在 $a,b,c,d$ 四个数组中选取前三个数组 $a,b,c$ 做一次比较，将三者中的最大值的数组信息记录在一个全局变量 <code>nextBypass</code> 中。</p>
+<p>然后我们便可以进入循环，每次比较除了该全局变量 <code>nextBypass</code> 记录的数组的剩下三个数组的首元素的相对大小信息，然后将三者中的最大值所在的数组信息更新给全局变量 <code>nextBypass</code>，而将最小值写入最终的合并后数组中，直到四路中某个数组耗竭，退化成上述平凡的三路归并的情况，进而退化成更加平凡的二路归并的情况，进而退化成更加更加平凡的数组拷贝的情况。</p>
+<h2 id="复杂度分析-3"><a href="#复杂度分析-3" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>四路归并中，时间复杂度方程与 $Cmp(n) = 4*Cmp(\frac n 4) + n$ 同构，即 $T(n) = O(n \log_4 n)$。而我们在上文也证明了比较次数 $Cmp(n) = O(n \log_4 n)$。</p>
+<p>在空间上，主要开辟的是 $a,b,c,d$ 四个数组的辅助空间，空间复杂度为 $O(n)$。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/dsa-pa3/">https://www.c7w.tech/dsa-pa3/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dsa-lab/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《数据结构》课程 Lab 报告</div></div></a></div><div class="next-post pull-right"><a href="/dsa-pa2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《数据结构》课程 PA2 报告</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">47</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CST2021F-3-1-Circuit"><span class="toc-number">1.</span> <span class="toc-text">CST2021F 3-1 Circuit</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%9A%E8%A7%84%E5%88%99"><span class="toc-number">1.1.1.</span> <span class="toc-text">字典树：规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.2.</span> <span class="toc-text">字典树：初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%9A%E6%8F%92%E5%85%A5"><span class="toc-number">1.1.3.</span> <span class="toc-text">字典树：插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%9A%E5%88%A0%E9%99%A4"><span class="toc-number">1.1.4.</span> <span class="toc-text">字典树：删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E6%A0%91%EF%BC%9A%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.5.</span> <span class="toc-text">　字典树：查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">过程记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">复杂度分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">1.4.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84-1-check-py"><span class="toc-number">1.4.1.</span> <span class="toc-text">附 1: check.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84-2-Trivial-cpp"><span class="toc-number">1.4.2.</span> <span class="toc-text">附 2: Trivial.cpp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CST2021F-3-3-kth"><span class="toc-number">2.</span> <span class="toc-text">CST2021F 3-3 kth</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-1"><span class="toc-number">2.1.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%BA%8F%E5%85%B3%E7%B3%BB"><span class="toc-number">2.1.1.</span> <span class="toc-text">偏序关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E6%83%85%E5%86%B5"><span class="toc-number">2.1.2.</span> <span class="toc-text">二维情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BB%B4%E6%83%85%E5%86%B5"><span class="toc-number">2.1.3.</span> <span class="toc-text">三维情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95-1"><span class="toc-number">2.2.</span> <span class="toc-text">过程记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="toc-number">2.3.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CST2021F-3-5-Prefix"><span class="toc-number">3.</span> <span class="toc-text">CST2021F 3-5 Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-2"><span class="toc-number">3.1.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">关键概念定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#next-%E8%A1%A8%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-number">3.1.2.</span> <span class="toc-text">next[] 表的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%B1%82%E5%89%8D%E7%BC%80%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0"><span class="toc-number">3.1.3.</span> <span class="toc-text">动态规划求前缀出现次数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95-2"><span class="toc-number">3.2.</span> <span class="toc-text">过程记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-2"><span class="toc-number">3.3.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CST2021F-3-7-Sort"><span class="toc-number">4.</span> <span class="toc-text">CST2021F 3-7 Sort</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-3"><span class="toc-number">4.1.</span> <span class="toc-text">方案设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95-3"><span class="toc-number">4.2.</span> <span class="toc-text">过程记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-3"><span class="toc-number">4.3.</span> <span class="toc-text">复杂度分析</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

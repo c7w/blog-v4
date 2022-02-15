@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《动手学深度学习》 Pytorch ver. 阅读摘录 Part C | c7w 的博客</title><meta name="keywords" content="机器学习"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《动手学深度学习》原书地址：https:&#x2F;&#x2F;github.com&#x2F;d2l-ai&#x2F;d2l-zh 《动手学深度学习》(Pytorch ver.)：https:&#x2F;&#x2F;tangshusen.me&#x2F;Dive-into-DL-PyTorch&#x2F;#&#x2F;  知识架构：  本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《动手学深度学习》 Pytorch ver. 阅读摘录 Part C">
+<meta property="og:url" content="https://www.c7w.tech/dive-into-dl-pytorch-C/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="《动手学深度学习》原书地址：https:&#x2F;&#x2F;github.com&#x2F;d2l-ai&#x2F;d2l-zh 《动手学深度学习》(Pytorch ver.)：https:&#x2F;&#x2F;tangshusen.me&#x2F;Dive-into-DL-PyTorch&#x2F;#&#x2F;  知识架构：  本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-27T07:00:32.000Z">
+<meta property="article:modified_time" content="2022-01-28T08:16:40.949Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/dive-into-dl-pytorch-C/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《动手学深度学习》 Pytorch ver. 阅读摘录 Part C',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-28 16:16:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">47</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《动手学深度学习》 Pytorch ver. 阅读摘录 Part C</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-27T07:00:32.000Z" title="发表于 2022-01-27 15:00:32">2022-01-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-28T08:16:40.949Z" title="更新于 2022-01-28 16:16:40">2022-01-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">理论/机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>32分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《动手学深度学习》 Pytorch ver. 阅读摘录 Part C"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/cover.png" alt=""></p>
+<ul>
+<li>《动手学深度学习》原书地址：<a target="_blank" rel="noopener" href="https://github.com/d2l-ai/d2l-zh">https://github.com/d2l-ai/d2l-zh</a></li>
+<li>《动手学深度学习》(Pytorch ver.)：<a target="_blank" rel="noopener" href="https://tangshusen.me/Dive-into-DL-PyTorch/#/">https://tangshusen.me/Dive-into-DL-PyTorch/#/</a></li>
+</ul>
+<p>知识架构：</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/book-org.svg" alt="封面"></p>
+<p>本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域， c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学习。希望阅读本书能带来更多的收获吧。</p>
+<p>与前面的一些笔记相比，本文更加侧重于「实践」。也就是说切实地提升自己的代码能力。</p>
+<p>Part C 包含：</p>
+<ul>
+<li>§ 7 优化算法<ul>
+<li>优化与深度学习，优化存在的挑战</li>
+<li>梯度下降（略）</li>
+<li>Momentum, Adagrad</li>
+<li>RMSProp, AdaDelta</li>
+<li>Adam</li>
+</ul>
+</li>
+<li>§ 8 计算性能<ul>
+<li>多 GPU 计算</li>
+<li>多 GPU 计算时模型的保存与加载</li>
+</ul>
+</li>
+<li>§ 10 NLP<ul>
+<li>Word2Vec, fastText, GloVe</li>
+<li>Encoder-Decoder, Beam Search</li>
+<li>Attention</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h2><h3 id="优化与深度学习"><a href="#优化与深度学习" class="headerlink" title="优化与深度学习"></a>优化与深度学习</h3><p>本节将讨论优化与深度学习的关系，以及优化在深度学习中的挑战。</p>
+<p>在一个深度学习问题中，我们通常会预先定义一个损失函数。有了损失函数以后，我们就可以使用优化算法试图将其最小化。在优化中，这样的损失函数通常被称作优化问题的<strong>目标函数</strong>。依据惯例，优化算法通常只考虑最小化目标函数。其实，任何最大化问题都可以很容易地转化为最小化问题，只需令目标函数的相反数为新的目标函数即可。</p>
+<p>优化的挑战：</p>
+<ul>
+<li>局部最小值</li>
+<li>Saddle Point</li>
+</ul>
+<h3 id="Gradient-Descent-与-SGD"><a href="#Gradient-Descent-与-SGD" class="headerlink" title="Gradient Descent 与 SGD"></a>Gradient Descent 与 SGD</h3><p>（之前的笔记中记录已十分详细，此处略去）</p>
+<h3 id="动量法"><a href="#动量法" class="headerlink" title="动量法"></a>动量法</h3><blockquote>
+<p>　指数移动加权平均法，是指<strong>各数值的加权系数随时间呈指数式递减，越靠近当前时刻的数值加权系数就越大</strong>。</p>
+<p>　指数移动加权平均较传统的平均法来说，一是不需要保存过去所有的数值；二是计算量显著减小。</p>
+</blockquote>
+<p>目标函数有关自变量的梯度代表了目标函数在自变量当前位置下降最快的方向。因此，梯度下降也叫作最陡下降。在每次迭代中，梯度下降根据自变量当前位置，沿着当前位置的梯度更新自变量。</p>
+<p>然而，如果自变量的迭代方向仅仅取决于自变量当前位置，这可能会带来一些问题。</p>
+<p>让我们考虑一个输入和输出分别为二维向量 $\boldsymbol{x} = [x_1, x_2]^\top$​ 和标量的目标函数 $f(\boldsymbol{x})=0.1x_1^2+2x_2^2$​。</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/chapter07/7.4_output1.png" alt="img"></p>
+<p>可以看到，同一位置上，目标函数在竖直方向（$x_2$ 轴方向）比在水平方向（$x_1$ 轴方向）的斜率的绝对值更大。因此，给定学习率，梯度下降迭代自变量时会使自变量在竖直方向比在水平方向移动幅度更大。那么，我们需要一个较小的学习率从而避免自变量在竖直方向上越过目标函数最优解。然而，这会造成自变量在水平方向上朝最优解移动变慢。</p>
+<p>但如果我们试着将学习率调得稍大一点，此时自变量在竖直方向不断越过最优解并逐渐发散。</p>
+<p>动量法的提出是为了解决梯度下降的上述问题。设时间步 $t$​ 的自变量为 $\boldsymbol{x}_t$​，学习率为 $\eta_t$​，对应梯度为 $\boldsymbol  g_t$​。<br>在时间步 $0$​，动量法创建速度变量 $\boldsymbol{v}_0$​，并将其元素初始化成 0。在时间步 $t&gt;0$​，动量法对每次迭代的步骤做如下修改：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\boldsymbol{v}_t &\leftarrow \gamma \boldsymbol{v}_{t-1} + \eta_t \boldsymbol{g}_t, \\
+\boldsymbol{x}_t &\leftarrow \boldsymbol{x}_{t-1} - \boldsymbol{v}_t,
+\end{aligned}</script><p>其中，动量超参数$\gamma$满足$0 \leq \gamma &lt; 1$。当$\gamma=0$时，动量法等价于小批量随机梯度下降。</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/chapter07/7.4_output3.png" alt="img"></p>
+<p>在动量法中，自变量在各个方向上的移动幅度不仅取决当前梯度，还取决于过去的各个梯度在各个方向上是否一致。</p>
+<p>实现的话也是大调库：</p>
+<pre class="language-python" data-language="python"><code class="language-python">d2l<span class="token punctuation">.</span>train_pytorch_ch7<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>SGD<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'lr'</span><span class="token punctuation">:</span> <span class="token number">0.004</span><span class="token punctuation">,</span> <span class="token string">'momentum'</span><span class="token punctuation">:</span> <span class="token number">0.9</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                    features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span></code></pre>
+<h3 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h3><p>AdaGrad 算法根据自变量在每个维度的梯度值的大小来调整各个维度上的学习率，从而避免统一的学习率难以适应所有维度的问题。</p>
+<p>AdaGrad 算法会使用一个小批量随机梯度 $\boldsymbol{g}_t$​​ 按元素平方的累加变量 $\boldsymbol{s}_t$​​。在时间步 0，AdaGrad 将 $\boldsymbol{s}_0$​​ 中每个元素初始化为 0。在时间步 $t$​​，首先将小批量随机梯度 $\boldsymbol{g}_t$​​ 按元素平方后累加到变量 $\boldsymbol{s}_t$​​：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{s}_t \leftarrow \boldsymbol{s}_{t-1} + \boldsymbol{g}_t \odot \boldsymbol{g}_t</script><p>接着，我们将目标函数自变量中每个元素的学习率通过按元素运算重新调整一下：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{x}_t \leftarrow \boldsymbol{x}_{t-1} - \frac{\eta}{\sqrt{\boldsymbol{s}_t + \epsilon}} \odot \boldsymbol{g}_t</script><p>其中 $\eta$​ 是学习率，$\epsilon$​ 是为了维持数值稳定性而添加的常数，如 $10^{-6}$​​​。这里开方、除法和乘法的运算都是按元素运算的。这些按元素运算使得目标函数自变量中每个元素都分别拥有自己的学习率。</p>
+<p>由于 $\boldsymbol{s}_t$ 一直在累加按元素平方的梯度，自变量中每个元素的学习率在迭代过程中一直在降低（或不变）。所以，当学习率在迭代早期降得较快且当前解依然不佳时，AdaGrad算法在迭代后期由于学习率过小，可能较难找到一个有用的解。</p>
+<p>通过名称为 <code>Adagrad</code> 的优化器方法，我们便可使用 PyTorch 提供的 AdaGrad 算法来训练模型。</p>
+<pre class="language-python" data-language="python"><code class="language-python">d2l<span class="token punctuation">.</span>train_pytorch_ch7<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adagrad<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'lr'</span><span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span></code></pre>
+<h3 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h3><p>针对最后我们提出的 Adagrad 算法存在的迭代后期 learning_rate 过小问题，RMSProp 算法被提出。</p>
+<p>不同于 AdaGrad 算法里状态变量 $\boldsymbol{s}_t$ 是截至时间步 $t$ 所有小批量随机梯度 $\boldsymbol{g}_t$ 按元素平方和，RMSProp 算法将这些梯度按元素平方做指数加权移动平均。具体来说，给定超参数 $0 \leq \gamma &lt; 1$，RMSProp 算法在时间步 $t&gt;0$ 计算 $\boldsymbol{s}_t \leftarrow \gamma \boldsymbol{s}_{t-1} + (1 - \gamma) \boldsymbol{g}_t \odot \boldsymbol{g}_t$​.</p>
+<p>和 AdaGrad 算法一样，RMSProp 算法将目标函数自变量中每个元素的学习率通过按元素运算重新调整，然后更新自变量 $\boldsymbol{x}_t \leftarrow \boldsymbol{x}_{t-1} - \frac{\eta}{\sqrt{\boldsymbol{s}_t + \epsilon}} \odot \boldsymbol{g}_t $.</p>
+<p>因为 RMSProp 算法的状态变量 $\boldsymbol{s}_t$ 是对平方项 $\boldsymbol{g}_t \odot \boldsymbol{g}_t$ 的指数加权移动平均，所以可以看作是最近 $ \dfrac 1 {1-\gamma}$ 个时间步的小批量随机梯度平方项的加权平均。如此一来，自变量每个元素的学习率在迭代过程中就不再一直降低（或不变）。</p>
+<pre class="language-python" data-language="python"><code class="language-python">d2l<span class="token punctuation">.</span>train_pytorch_ch7<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>RMSprop<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'lr'</span><span class="token punctuation">:</span> <span class="token number">0.01</span><span class="token punctuation">,</span> <span class="token string">'alpha'</span><span class="token punctuation">:</span> <span class="token number">0.9</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                    features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span></code></pre>
+<h3 id="AdaDelta"><a href="#AdaDelta" class="headerlink" title="AdaDelta"></a>AdaDelta</h3><p>除了 RMSProp 算法以外，另一个常用优化算法 AdaDelta 算法也针对 AdaGrad 算法在迭代后期可能较难找到有用解的问题做了改进。有意思的是，<strong>AdaDelta 算法没有学习率这一超参数</strong>。</p>
+<p>AdaDelta 算法也像 RMSProp 算法一样，使用了小批量随机梯度 $\boldsymbol{g}_t$ 按元素平方的指数加权移动平均变量 $\boldsymbol{s}_t$。在时间步 0，它的所有元素被初始化为 0。给定超参数 $0 \leq \rho &lt; 1$（对应RMSProp算法中的 $\gamma$），在时间步 $t&gt;0$，同RMSProp算法一样计算 $ \boldsymbol{s}_t \leftarrow \rho \boldsymbol{s}_{t-1} + (1 - \rho) \boldsymbol{g}_t \odot \boldsymbol{g}_t $。​</p>
+<p>与 RMSProp 算法不同的是，AdaDelta 算法还维护一个额外的状态变量 $\Delta\boldsymbol{x}_t$，其元素同样在时间步 0 时被初始化为 0。我们使用 $\Delta\boldsymbol{x}_{t-1}$ 来计算自变量的变化量：$ \boldsymbol{g}_t’ \leftarrow \sqrt{\frac{\Delta\boldsymbol{x}_{t-1} + \epsilon}{\boldsymbol{s}_t + \epsilon}}   \odot \boldsymbol{g}_t $​，其中 $\epsilon$ 是为了维持数值稳定性而添加的常数，如$10^{-5}$。</p>
+<p>接着更新自变量：$ \boldsymbol{x}_t \leftarrow \boldsymbol{x}_{t-1} - \boldsymbol{g}’_t $​。</p>
+<p>最后，我们使用 $\Delta\boldsymbol{x}_t$ 来记录自变量变化量 $\boldsymbol{g}’_t$ 按元素平方的指数加权移动平均：$\Delta\boldsymbol{x}_t \leftarrow \rho \Delta\boldsymbol{x}_{t-1} + (1 - \rho) \boldsymbol{g}’_t \odot \boldsymbol{g}’_t$。</p>
+<p>可以看到，如不考虑 $\epsilon$​ 的影响，<strong>AdaDelta 算法跟 RMSProp 算法的不同之处在于使用 $\sqrt{\Delta\boldsymbol{x}_{t-1}}$​ 来替代学习率 $\eta$​</strong>。</p>
+<pre class="language-python" data-language="python"><code class="language-python">d2l<span class="token punctuation">.</span>train_pytorch_ch7<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adadelta<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'rho'</span><span class="token punctuation">:</span> <span class="token number">0.9</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span></code></pre>
+<h3 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h3><p>Adam 算法在 RMSProp 算法基础上对小批量随机梯度也做了指数加权移动平均，所以 Adam 算法可以看做是 RMSProp 算法与动量法的结合。</p>
+<p>Adam 算法使用了动量变量 $\boldsymbol{v}_t$ 和 RMSProp 算法中小批量随机梯度按元素平方的指数加权移动平均变量 $\boldsymbol{s}_t$，并在时间步 0 将它们中每个元素初始化为 0。</p>
+<p>给定超参数 $0 \leq \beta_1 &lt; 1$（算法作者建议设为 0.9），时间步 $t$ 的动量变量 $\boldsymbol{v}_t$ 即小批量随机梯度 $\boldsymbol{g}_t$ 的指数加权移动平均：$\boldsymbol{v}_t \leftarrow \beta_1 \boldsymbol{v}_{t-1} + (1 - \beta_1) \boldsymbol{g}_t $。​</p>
+<p>和 RMSProp 算法中一样，给定超参数 $0 \leq \beta_2 &lt; 1$（算法作者建议设为0.999），<br>将小批量随机梯度按元素平方后的项 $\boldsymbol{g}_t \odot \boldsymbol{g}_t$ 做指数加权移动平均得到 $\boldsymbol{s}_t$：$\boldsymbol{s}_t \leftarrow \beta_2 \boldsymbol{s}_{t-1} + (1 - \beta_2) \boldsymbol{g}_t \odot \boldsymbol{g}_t$</p>
+<ul>
+<li>偏差修正</li>
+</ul>
+<p>由于我们将 $\boldsymbol{v}_0$ 和 $\boldsymbol{s}_0$ 中的元素都初始化为 0，在时间步 $t$ 我们得到 $\boldsymbol{v}_t =  (1-\beta_1) \sum_{i=1}^t \beta_1^{t-i} \boldsymbol{g}_i$。</p>
+<p>将过去各时间步小批量随机梯度的权值相加，得到 $(1-\beta_1) \sum_{i=1}^t \beta_1^{t-i} = 1 - \beta_1^t$。</p>
+<p>需要注意的是，当 $t$ 较小时，过去各时间步小批量随机梯度权值之和会较小。例如，当 $\beta_1 = 0.9$ 时，$\boldsymbol{v}_1 = 0.1\boldsymbol{g}_1$。</p>
+<p>为了消除这样的影响，对于任意时间步 $t$，我们可以将 $\boldsymbol{v}_t$ 再除以 $1 - \beta_1^t$​，从而使过去各时间步小批量随机梯度权值之和为 1。这也叫作偏差修正。</p>
+<p>在 Adam 算法中，我们对变量 $\boldsymbol{v}_t$ 和 $\boldsymbol{s}_t$ 均作偏差修正：</p>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{v}}_t \leftarrow \frac{\boldsymbol{v}_t}{1 - \beta_1^t}, \\ 
+\hat{\boldsymbol{s}}_t \leftarrow \frac{\boldsymbol{s}_t}{1 - \beta_2^t}.</script><p>接下来，Adam 算法使用以上偏差修正后的变量 $\hat{\boldsymbol{v}}_t$ 和 $\hat{\boldsymbol{s}}_t$，将模型参数中每个元素的学习率通过按元素运算重新调整：$\boldsymbol{g}_t’ \leftarrow \frac{\eta \hat{\boldsymbol{v}}_t}{\sqrt{\hat{\boldsymbol{s}}_t} + \epsilon}$。​​其中 $\eta$ ​是学习率，$\epsilon$ ​是为了维持数值稳定性而添加的常数，如 $10^{-8}$​。</p>
+<p>和 AdaGrad 算法、RMSProp 算法以及 AdaDelta 算法一样，目标函数自变量中每个元素都分别拥有自己的学习率。最后，使用 $\boldsymbol{g}_t’$ ​迭代自变量：$\boldsymbol{x}_t \leftarrow \boldsymbol{x}_{t-1} - \boldsymbol{g}_t’$。</p>
+<pre class="language-python" data-language="python"><code class="language-python">d2l<span class="token punctuation">.</span>train_pytorch_ch7<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>Adam<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'lr'</span><span class="token punctuation">:</span> <span class="token number">0.01</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span></code></pre>
+<h2 id="计算性能：多-GPU-计算"><a href="#计算性能：多-GPU-计算" class="headerlink" title="计算性能：多 GPU 计算"></a>计算性能：多 GPU 计算</h2><ul>
+<li>多 GPU 计算</li>
+</ul>
+<p>先定义一个模型：</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+net <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span> <span class="token comment"># Linear(in_features=10, out_features=1, bias=True)</span></code></pre>
+<p>要想使用 PyTorch 进行多 GPU 计算，最简单的方法是直接用 <code>torch.nn.DataParallel</code> 将模型wrap一下即可：<br><pre class="language-python" data-language="python"><code class="language-python">net <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>DataParallel<span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+net</code></pre><br>输出：<br><pre class="language-none"><code class="language-none">DataParallel(
+  (module): Linear(in_features&#x3D;10, out_features&#x3D;1, bias&#x3D;True)
+)</code></pre><br>这时，默认所有存在的 GPU 都会被使用。</p>
+<p>如果我们机子中有很多 GPU (例如上面显示我们有 4 张显卡，但是只有第 0、3 块还剩下一点点显存)，但我们只想使用 0、3 号显卡，那么我们可以用参数 <code>device_ids</code> 指定即可：<code>torch.nn.DataParallel(net, device_ids=[0, 3])</code>。</p>
+<ul>
+<li>多 GPU 模型的保存与加载</li>
+</ul>
+<p>按之前的方法，被 <code>DataParallel</code> 包围的模型保存时正常，但加载时会出问题。</p>
+<p>正确的方法是保存的时候只保存 <code>net.module</code>:</p>
+<pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>net<span class="token punctuation">.</span>module<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"./8.4_model.pt"</span><span class="token punctuation">)</span>
+new_net<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"./8.4_model.pt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 加载成功</span></code></pre>
+<p>或者先将 <code>new_net</code> 用 <code>DataParallel</code> 包括以下再用上面报错的方法进行模型加载:<br><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>net<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"./8.4_model.pt"</span><span class="token punctuation">)</span>
+new_net <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+new_net <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>DataParallel<span class="token punctuation">(</span>new_net<span class="token punctuation">)</span>
+new_net<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"./8.4_model.pt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 加载成功</span></code></pre></p>
+<h2 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h2><h3 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h3><p>Word2vec 是 Google 于 2013 年推出的开源的获取词向量 word2vec 的工具包。它包括了一组用于 word embedding 的模型，这些模型通常都是用浅层（两层）神经网络训练词向量。</p>
+<p>Word2vec 的模型以大规模语料库作为输入，然后生成一个向量空间（通常为几百维）。词典中的每个词都对应了向量空间中的一个独一的向量，而且<strong>语料库中拥有共同上下文的词映射到向量空间中的距离会更近</strong>。</p>
+<p>本节参考 <a target="_blank" rel="noopener" href="https://www.zybuluo.com/Dounm/note/591752，梳理其发展历程及原理。">https://www.zybuluo.com/Dounm/note/591752，梳理其发展历程及原理。</a></p>
+<ul>
+<li><strong>神经概率语言模型</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Dounm/TheFarmOfDounm/master/resources/images/word2vec/1.png" alt="1"></p>
+<ul>
+<li>训练样本为 <code>(Context(w), w)</code>，其中 $w \in Corpus$, $Context(w)$ 为其前面的 $n-1$ 个词</li>
+<li>$X_w$ 为直接将 $Context(w)$​ 收尾顺次相接得到的 $(n-1) \cdot m$ 长度的向量，其中 $m$ 为词向量长度</li>
+<li>$Z_w = \tanh (WX_w + p), \, y_w = Uz_w + q$.</li>
+</ul>
+<p>于是在对 $y_w$ Softmax 归一化之后，$y_w$ 在对应维度的分量就是对应词的预测概率。</p>
+<p>这个模型存在的问题：计算量太大。假设 $n \sim  5, m \sim 10^2, |Z_w| \sim 10^2, |y_w| = | \Sigma| \sim 10^5$，那么<strong>隐层和输出层之间的矩阵运算</strong>，以及<strong>输出层的 Softmax 运算</strong>会大大增加模型的计算量。</p>
+<ul>
+<li><strong>Word2vec 对网格结构的优化</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Dounm/TheFarmOfDounm/master/resources/images/word2vec/2.png" alt="7"></p>
+<p>网格结构删除了隐藏层，而且 Projection Layer 也由“拼接”变成了“求和”，因此 Projection Layer 的结点数为词向量对应维数；输出层规模仍然是词典中词的个数。</p>
+<p>但是，对于神经网络而言，我们的输入层的参数是中各个词的词向量，那么这个词向量是怎么来的呢？</p>
+<p>事实上，我们在给定 $x$ 计算 $y_i$ 的时候，采用的方法是 $Y = Wx$，即 $y_i = w_i^Tx$，即矩阵 $W$ 第 $i$ 行与投影层做点积。于是这个词向量就可以直接用输出层和映射层之间的参数 $W$ 的第 $i$ 行 $w_i$ 来表示。</p>
+<p>这样一来的话，我们训练神经网络的参数，就相当于训练了每个词的词向量，也就得到了词典中每个词的词向量。</p>
+<ul>
+<li><strong>对 Softmax 归一化的优化</strong></li>
+</ul>
+<p>但是这样我们还是没有绕开 Softmax 对计算量的消耗。</p>
+<script type="math/tex; mode=display">
+\begin {align}
+p(y_i | Context(w)) &= \dfrac {e^{y_i}}{\sum_{k=1}^{|C|} e^{y_k} } \\ 
+&=\dfrac {e^{w_i^Tx}} { \sum_{k=1}^{|C|} e^{w_k^T x}}
+\end {align}</script><p>上述式子的计算瓶颈在于分母。分母需要枚举一遍词典中所有的词，而词典中的词的数目在 $10^5$ 的量级。同时，我们需要对语料库中的每个词进行训练并按照这个公式计算所有 $y_i$ 的归一化概率，而语料库中的词的数量级通常在 million 甚至 billion 量级，这样一来的话，训练复杂度就无法接受。</p>
+<p>因此，Word2vec 提出了两种优化 Softmax 计算过程的方法，同样也对应着 Word2vec 的两种框架，即： Hieraichical Softmax 和 Negative Sampling。</p>
+<ul>
+<li><strong>Hierarchical Softmax</strong></li>
+</ul>
+<p>本框架之所以叫 Hierarchical Softmax，是因为它利用了树实现了分层的 Softmax，即用树形结构替代了输出层的结构。</p>
+<p>其具体作用原理我们会在后续介绍 CBOW 模型时介绍。</p>
+<ul>
+<li><strong>Negative Sampling</strong></li>
+</ul>
+<p>除了使用上述 Hierarchical Softmax 方法之外，也可以使用 Noise Contrastive Estimation 来优化。</p>
+<blockquote>
+<p>NCE posits that a good model should <strong>be able to differentiate data from noise</strong> by means of <strong>logistic regression</strong>.</p>
+</blockquote>
+<p>Word2vec 采用的 Negative Sampling 是 NCE 的一种简化版本，目的是为了提高训练速度以及改善所得词的质量。相比于 Hierarchical Softmax，Negative Sampling 不再采用 Huffman 树，而是采用<strong>随机负采样</strong>。</p>
+<p>考虑：</p>
+<script type="math/tex; mode=display">
+\begin {align}
+p(y_i | Context(w)) &= \dfrac {e^{y_i}}{\sum_{k=1}^{|C|} e^{y_k} } \\ 
+&=\dfrac {e^{w_i^Tx}} { \sum_{k=1}^{|C|} e^{w_k^T x}}
+\end {align}</script><p>我们要让这个值最大化，也就是说要最大化 $w_i$ 和 $x$ 的余弦相似度，最小化非 $w_i$ 与 $x$ 的余弦相似度。</p>
+<p>我们可以将分子的 $(Context(w), w_i)$​​ 看做一个正样本，将分母的 $(Context(w), w_k)$​​ 看做负样本，这里 $k \ne i$。</p>
+<p>问题在于，上面公式将词典里的几乎所有词都看做了负样本，因此计算分母太耗时间。所以，我们使用 Negative Sampling 的思路，每次只从词典里随机选一些词作为当前词 $w$​ 的负样本（称为 $NCE(w)$​​），而不是以所有的字典里的其他词作为负样本。</p>
+<p>Word2vec 的作者们测试发现，<strong>最佳的分布是 $\frac 3 4$ 次幂的 Unigram Distribution</strong>，也就是说，选中语料库中词 $w$ 的概率为 $\dfrac {count(w)^{3/4}} {\sum_{u \in D}count(u)^{3/4}}$. </p>
+<p>其实在做出随机选取负样本的动作之后，我们就已经抛弃了 Softmax 这个函数所代表的归一化的意思了。也就代表了我们已经不再关注求解<strong>语言模型</strong>的问题，而只关注求解<strong>词向量</strong>的问题。</p>
+<ul>
+<li><strong>Continous Bag-of-words</strong></li>
+</ul>
+<p>这里我们以 CBOW（Continous Bag-of-words）模型来说明 Hierarchical Softmax 的作用方法。</p>
+<p><img src="https://raw.githubusercontent.com/Dounm/TheFarmOfDounm/master/resources/images/word2vec/3.png" alt="2"></p>
+<p>这里首先对上图进行一定的解释：</p>
+<ul>
+<li>$Context(w)$: 由 $w$ 前后各 $c$ 个词构成</li>
+<li>输入层：包含 $2c$ 个词的词向量</li>
+<li>投影层：将 $2c$ 个词向量累加求和得到的 $X_w$</li>
+<li>输出层：输出层对应的是一棵 Huffman 树。该 Huffman 树以语料中出现的词为叶子节点，以各词在语料中<strong>出现的次数当做权值</strong>构造出来的。该树中，叶子节点总共有 $N$ 个（$N = |D| := |Corpus|$）。</li>
+</ul>
+<p>首先定义以下符号：</p>
+<ul>
+<li>$p^w$：从根节点到 $w$ 对应的那个叶子结点在树中的路径</li>
+<li>$l^w$：路径 $p^w$ 上包含的结点数目</li>
+<li>$p^w_1, p^w_2, \cdots, p^w_{l^w}$：路径 $p^w$ 上对应的结点</li>
+<li>$d^w_2, d^w_3, \cdots, d^w_{l^w}$：路径 $p^w$ 上的结点对应的 Huffman 编码</li>
+<li>$\theta^w_1, \theta^w_2, \cdots, \theta^w_{l^w}$：路径 $p^w$ 上非叶子结点对应的词向量</li>
+</ul>
+<p>从根节点出发到某个叶子节点的路径上，每次分支都可视为进行了一次<strong>二分类</strong>。以下的推导过程中，我们默认左边（编码为0）是负类，右边（编码为1）是正类。于是有：</p>
+<ul>
+<li>分为正类的概率：$\sigma(X_w^T\theta) = \dfrac 1 {1 + e^{-X_w^T\theta}}$</li>
+<li>分为负类的概率：$1-\sigma(X_w^T\theta)$</li>
+</ul>
+<p>其中 $\theta$ 即为当前非叶子结点的对应词向量。</p>
+<p>所以 Hierarchical Softmax 的思想就是：<strong>对于词典 $D$ 中的任意词 $w$，Huffman 树中必存在一条从根节点到词对应叶子节点 $w$ 的路径 $p^w$。这条路径 $p^w$ 上存在 $l^w-1$ 个分支，将每个分支看做一次二分类，每次分类就产生一个概率，将这些概率连乘，即得到我们所需近似的 $p(w | Context(w))$</strong>。</p>
+<p>然后我们就可以使用极大似然法，只需将这个近似的条件概率最大化，就可以达到我们想要的训练效果。这里我们略去对其求梯度的推导过程。</p>
+<ul>
+<li><strong>Skip-gram</strong></li>
+</ul>
+<p>Skip-gram 模型是已知当前词 $w$，对其上下文中的词 $Context(w)$ 进行预测。</p>
+<p>举个例子，假设文本序列是 “the”“man”“loves”“his”“son”。以 “loves” 作为中心词，设背景窗口大小为 2。Skip-gram 模型所关心的是，给定中心词 “loves”，生成与它距离不超过 2 个词的背景词 “the”“man”“his”“son” 的条件概率，即</p>
+<script type="math/tex; mode=display">
+P(the, man, his, son | loves) \\
+= P(the |loves) P(man | loves) P(his | loves) P(son | loves)</script><p>我们要做的就是使用极大似然法最大化这个条件概率。</p>
+<h3 id="fastText"><a href="#fastText" class="headerlink" title="fastText"></a>fastText</h3><p>在 Word2Vec 中，我们并没有直接利用构词学中的信息。无论是在跳字模型还是连续词袋模型中，我们都将形态不同的单词用不同的向量来表示。例如，“dog” 和 “dogs” 分别用两个不同的向量表示，而模型中并未直接表达这两个向量之间的关系。鉴于此，fastText 提出了子词嵌入的方法，从而试图将构词信息引入 Word2Vec 中的跳字模型。</p>
+<p>在 fastText 中，每个中心词被表示成子词的集合。下面我们用单词 “where” 作为例子来了解子词是如何产生的。首先，我们在单词的首尾分别添加特殊字符 “&lt;” 和 “&gt;” 以区分作为前后缀的子词。然后，将单词当成一个由字符构成的序列来提取 $n$​ 元语法。例如，当 $n=3$​ 时，我们得到所有长度为3的子词：<code>“&lt;wh&gt;”“whe”“her”“ere”“&lt;re&gt;”</code> 以及特殊子词 <code>“&lt;where&gt;”</code>。</p>
+<p>在 fastText 中，对于一个词 $w$​​，我们将它所有长度在 $3 \sim 6$​ ​的子词和特殊子词的并集记为 $\mathcal{G}_w$​​。那么词典则是所有词的子词集合的并集。假设词典中子词 $g$​​ 的向量为 $\boldsymbol{z}_g$​​，那么跳字模型中词 $w$​​ 的作为中心词的向量 $\boldsymbol{v}_w$ ​​​则表示成</p>
+<script type="math/tex; mode=display">
+\boldsymbol{v}_w = \sum_{g\in\mathcal{G}_w} \boldsymbol{z}_g.</script><h3 id="GloVe"><a href="#GloVe" class="headerlink" title="GloVe"></a>GloVe</h3><ul>
+<li>在有些情况下，交叉熵损失函数有劣势。GloVe 模型采用了平方损失，并通过词向量拟合预先基于整个数据集计算得到的全局统计信息。</li>
+<li>任意词的中心词向量和背景词向量在 GloVe 模型中是等价的。</li>
+</ul>
+<h3 id="Encoder-Decoder"><a href="#Encoder-Decoder" class="headerlink" title="Encoder-Decoder"></a>Encoder-Decoder</h3><ul>
+<li>总览</li>
+</ul>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/chapter10/10.9_seq2seq.svg" alt="img"></p>
+<p>图中描述了使用编码器—解码器将上述英语句子翻译成法语句子的一种方法。</p>
+<p>在训练数据集中，我们可以在每个句子后附上特殊符号“&lt;eos&gt;”（end of sequence）以表示序列的终止。</p>
+<p>编码器每个时间步的输入依次为英语句子中的单词、标点和特殊符号“&lt;eos&gt;”。图中使用了编码器在最终时间步的隐藏状态作为输入句子的表征或编码信息。</p>
+<p>解码器在各个时间步中使用输入句子的编码信息和上个时间步的输出以及隐藏状态作为输入。我们希望解码器在各个时间步能正确依次输出翻译后的法语单词、标点和特殊符号”&lt;eos&gt;”。</p>
+<p>需要注意的是，解码器在最初时间步的输入用到了一个表示序列开始的特殊符号”&lt;bos&gt;”（beginning of sequence）。</p>
+<ul>
+<li>Encoder (Usually RNN)</li>
+</ul>
+<p>编码器的作用是把一个不定长的输入序列变换成一个定长的背景变量 $\boldsymbol{c}$，并在该背景变量中编码输入序列信息。常用的编码器是循环神经网络。</p>
+<p>让我们考虑批量大小为 1 的时序数据样本。假设输入序列是 $x_1,\ldots,x_T$，$x_i$ 是输入句子中的第 $i$ 个词。在时间步 $t$，循环神经网络将输入 $x_t$ 的特征向量 $\boldsymbol{x}_t$ 和上个时间步的隐藏状态 $\boldsymbol{h}_{t-1}$ 变换为当前时间步的隐藏状态 $\boldsymbol{h}_t$。我们可以用函数 $f$ 表达循环神经网络隐藏层的变换：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{h}_t = f(\boldsymbol{x}_t, \boldsymbol{h}_{t-1})</script><p>接下来，编码器通过自定义函数 $q$ 将各个时间步的隐藏状态变换为背景变量</p>
+<script type="math/tex; mode=display">
+\boldsymbol{c} =  q(\boldsymbol{h}_1, \ldots, \boldsymbol{h}_T)</script><p>例如，当选择 $q(\boldsymbol{h}_1, \ldots, \boldsymbol{h}_T) = \boldsymbol{h}_T$ 时，背景变量是输入序列最终时间步的隐藏状态 $\boldsymbol{h}_T$。</p>
+<p>以上描述的编码器是一个单向的循环神经网络，每个时间步的隐藏状态只取决于该时间步及之前的输入子序列。我们也可以使用双向循环神经网络构造编码器。在这种情况下，编码器每个时间步的隐藏状态同时取决于该时间步之前和之后的子序列（包括当前时间步的输入），并编码了整个序列的信息。</p>
+<ul>
+<li>Decoder</li>
+</ul>
+<p>刚刚已经介绍，编码器输出的背景变量 $\boldsymbol{c}$ 编码了整个输入序列 $x_1, \ldots, x_T$ 的信息。给定训练样本中的输出序列 $y_1, y_2, \ldots, y_{T’}$，对每个时间步 $t’$（符号与输入序列或编码器的时间步 $t$ 有区别），解码器输出 $y_{t’}$ 的条件概率将基于之前的输出序列 $y_1,\ldots,y_{t’-1}$ 和背景变量 $\boldsymbol{c}$，即$P(y_{t’} \mid y_1, \ldots, y_{t’-1}, \boldsymbol{c})$。</p>
+<p>为此，我们可以使用另一个循环神经网络作为解码器。在输出序列的时间步 $t^\prime$，解码器将上一时间步的输出 $y_{t^\prime-1}$ 以及背景变量 $\boldsymbol{c}$ 作为输入，并将它们与上一时间步的隐藏状态 $\boldsymbol{s}_{t^\prime-1}$ 变换为当前时间步的隐藏状态 $\boldsymbol{s}_{t^\prime}$。因此，我们可以用函数 $g$ 表达解码器隐藏层的变换：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{s}_{t^\prime} = g(y_{t^\prime-1}, \boldsymbol{c}, \boldsymbol{s}_{t^\prime-1})</script><p>有了解码器的隐藏状态后，我们可以使用自定义的输出层和 softmax 运算来计算 $P(y_{t^\prime} \mid y_1, \ldots, y_{t^\prime-1}, \boldsymbol{c})$，例如，基于当前时间步的解码器隐藏状态 $\boldsymbol{s}_{t^\prime}$、上一时间步的输出 $y_{t^\prime-1}$ 以及背景变量 $\boldsymbol{c}$ 来计算当前时间步输出$y_{t^\prime}$的概率分布。</p>
+<h4 id="Beam-Search"><a href="#Beam-Search" class="headerlink" title="Beam Search"></a>Beam Search</h4><ul>
+<li>输出层的贪婪搜索不一定能得到最优输出序列</li>
+</ul>
+<p>上一节里已经提到，在准备训练数据集时，我们通常会在样本的输入序列和输出序列后面分别附上一个特殊符号 “&lt;eos&gt;” 表示序列的终止。我们在接下来的讨论中也将沿用上一节的全部数学符号。为了便于讨论，假设解码器的输出是一段文本序列。设输出文本词典 $\mathcal{Y}$（包含特殊符号 “&lt;eos&gt;” ）的大小为 $\left|\mathcal{Y}\right|$，输出序列的最大长度为 $T’$。所有可能的输出序列一共有 $\mathcal{O}(\left|\mathcal{Y}\right|^{T’})$ 种。这些输出序列中所有特殊符号 “&lt;eos&gt;” 后面的子序列将被舍弃。</p>
+<p>让我们先来看一个简单的解决方案：贪婪搜索（greedy search）。对于输出序列任一时间步 $t’$​​，我们从 $|\mathcal{Y}|$​​ 个词中搜索出条件概率最大的词</p>
+<script type="math/tex; mode=display">
+y _ { t ^ { \prime } } = \underset { y \in \mathcal { Y } } { \operatorname { argmax } } P \left( y | y _ { 1 } , \ldots , y _ { t ^ { \prime } - 1 } , c \right)</script><p>作为输出。一旦搜索出 “&lt;eos&gt;” 符号，或者输出序列长度已经达到了最大长度 $T’$​，便完成输出。</p>
+<p>这样做的问题是，这样“逐层贪心”的策略不一定能够得到最优输出序列。</p>
+<ul>
+<li>穷举搜索的开销过于庞大</li>
+<li>Beam Search!</li>
+</ul>
+<p>束搜索（beam search）是对贪婪搜索的一个改进算法。</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/chapter10/10.10_beam_search.svg" alt="img"></p>
+<p>它有一个束宽（beam size）超参数。我们将它设为 $k$​​。在时间步1时，选取当前时间步条件概率最大的 $k$​​ 个词，分别组成 $k$​​ 个候选输出序列的首词。在之后的每个时间步，基于上个时间步的 $k$ ​​个候选输出序列，从 $k\left|\mathcal{Y}\right|$​​ 个可能的输出序列中选取条件概率最大的 $k$​ ​​个，作为该时间步的候选输出序列。最终，我们从各个时间步的候选输出序列中筛选出包含特殊符号 “&lt;eos&amp; gt;”的序列，并将它们中所有特殊符号 “&lt;eos&gt;” 后面的子序列舍弃，得到最终候选输出序列的集合。</p>
+<p>在最终候选输出序列的集合中，我们取以下分数最高的序列作为输出序列：</p>
+<script type="math/tex; mode=display">
+\frac{1}{L^\alpha} \log P(y_1, \ldots, y_{L}) = \frac{1}{L^\alpha} \sum_{t'=1}^L \log P(y_{t'} \mid y_1, \ldots, y_{t'-1}, \boldsymbol{c})</script><p>其中 $L$​​ 为最终候选序列长度，$\alpha$​​ 一般可选为0.75。分母上的 $L^\alpha$ ​​是为了惩罚较长序列在以上分数中较多的对数相加项。分析可知，束搜索的计算开销为 $\mathcal{O}(k\left|\mathcal{Y}\right|T’)$​​。这介于贪婪搜索和穷举搜索的计算开销之间。此外，贪婪搜索可看作是束宽为 1 的束搜索。束搜索通过灵活的束宽 $k$ ​​来权衡计算开销和搜索质量。</p>
+<h3 id="Attention-Mechanism"><a href="#Attention-Mechanism" class="headerlink" title="Attention Mechanism"></a>Attention Mechanism</h3><p>现在，让我们再次思考上一节提到的翻译例子：输入为英语序列 “They”“are”“watching”“.”，输出为法语序列 “Ils”“regardent”“.”。</p>
+<p>不难想到，解码器在生成输出序列中的每一个词时可能只需利用输入序列某一部分的信息。例如，在输出序列的时间步 1，解码器可以主要依赖 “They”“are” 的信息来生成 “Ils”，在时间步 2 则主要使用来自 “watching” 的编码信息生成 “regardent”，最后在时间步3则直接映射句号 “.”。这看上去就像是在解码器的每一时间步对输入序列中不同时间步的表征或编码信息分配不同的注意力一样。这也是注意力机制的由来。</p>
+<p>仍然以循环神经网络为例，注意力机制通过对编码器所有时间步的隐藏状态做加权平均来得到背景变量。解码器在每一时间步调整这些权重，即注意力权重，从而能够在不同时间步分别关注输入序列中的不同部分并编码进相应时间步的背景变量。本节我们将讨论注意力机制是怎么工作的。</p>
+<p>在上一节里我们区分了输入序列或编码器的索引 $t$ ​与输出序列或解码器的索引 $t’$​。该节中，解码器在时间步 $t’$ ​的隐藏状态 $\boldsymbol{s}_{t’} = g(\boldsymbol{y}_{t’-1}, \boldsymbol{c}, \boldsymbol{s}_{t’-1})$，其中 $\boldsymbol{y}_{t’-1}$​ 是上一时间步 $t’-1$​ 的输出 $y_{t’-1}$ ​的表征，且任一时间步 $t’$ ​使用相同的背景变量 $\boldsymbol{c}$​。</p>
+<p>但在注意力机制中，解码器的每一时间步将使用可变的背景变量。记 $\boldsymbol{c}_{t’}$ ​是解码器在时间步 $t’$ ​的背景变量，那么解码器在该时间步的隐藏状态可以改写为：$\boldsymbol{s}_{t’} = g(\boldsymbol{y}_{t’-1}, \boldsymbol{c}_{t’}, \boldsymbol{s}_{t’-1})$。</p>
+<p>这里的关键是如何计算背景变量 $\boldsymbol{c}_{t’}$ ​和如何利用它来更新隐藏状态 $\boldsymbol{s}_{t’}$​。下面将分别描述这两个关键点。</p>
+<ul>
+<li><strong>计算背景变量</strong></li>
+</ul>
+<p>我们先描述第一个关键点，即计算背景变量。</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/chapter10/10.11_attention.svg" alt="img"></p>
+<p>图中描绘了注意力机制如何为解码器在时间步 2 计算背景变量。</p>
+<p>首先，函数 $a$​​​ 根据解码器在时间步 1 的隐藏状态和编码器在各个时间步的隐藏状态计算 softmax 运算的输入。softmax 运算输出概率分布并对编码器各个时间步的隐藏状态做加权平均，从而得到背景变量。</p>
+<p>具体来说，令编码器在时间步 $t$ 的隐藏状态为 $\boldsymbol{h}_t$，且总时间步数为 $T$。那么解码器在时间步 $t’$ ​的背景变量为所有编码器隐藏状态的加权平均：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{c}_{t'} = \sum_{t=1}^T \alpha_{t' t} \boldsymbol{h}_t,</script><p>其中给定 $t’$​ 时，权重 $\alpha_{t’ t}$ ​在 $t=1,\ldots,T$ ​的值是一个概率分布。为了得到概率分布，我们可以使用 softmax 运算:</p>
+<script type="math/tex; mode=display">
+\alpha_{t' t} = \frac{\exp(e_{t' t})}{ \sum_{k=1}^T \exp(e_{t' k}) },\quad t=1,\ldots,T.</script><p>现在，我们需要定义如何计算上式中 softmax 运算的输入 $e_{t’ t}$​​。由于 $e_{t’ t} $ ​​同时取决于解码器的时间步 $t’$​​ 和编码器的时间步 $t$​​，我们不妨以解码器在时间步 $t’-1$ ​​的隐藏状态 $\boldsymbol{s}_{t’ - 1}$ ​​与编码器在时间步 $t$​​ 的隐藏状态 $\boldsymbol{h}_t$​​ 为输入，并通过函数 $a$ ​​计算$e_{t’ t}$​​：</p>
+<script type="math/tex; mode=display">
+e_{t' t} = a(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t).</script><p>这里函数 $a$ ​有多种选择，如果两个输入向量长度相同，一个简单的选择是计算它们的内积 $a(\boldsymbol{s}, \boldsymbol{h})=\boldsymbol{s}^\top \boldsymbol{h}$​。而最早提出注意力机制的论文则将输入连结后通过含单隐藏层的多层感知机变换：</p>
+<script type="math/tex; mode=display">
+a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \boldsymbol{s} + \boldsymbol{W}_h \boldsymbol{h}),</script><p>其中$\boldsymbol{v}$​、$\boldsymbol{W}_s$​、$\boldsymbol{W}_h$​都是可以学习的模型参数。</p>
+<ul>
+<li><strong>矢量化计算</strong> (Query, Key &amp; Value)</li>
+</ul>
+<p>广义上，注意力机制的输入包括 query 以及对应的 key 和 value，其中 value 是需要加权平均的一组项。在加权平均中，value 的权重来自 $a(query, key)$。</p>
+<p>在上面的例子中，查询项为解码器的隐藏状态 $s_{t’-1}$，Key 和 Value 均为编码器的隐藏状态 $h_t$。</p>
+<p>让我们考虑一个常见的简单情形，即编码器和解码器的隐藏单元个数均为 $h$，且函数$a(\boldsymbol{s}, \boldsymbol{h})=\boldsymbol{s}^\top \boldsymbol{h}$。</p>
+<p>假设我们希望根据解码器单个隐藏状态 $\boldsymbol{s}_{t’ - 1} \in \mathbb{R}^{h}$ 和编码器所有隐藏状态 $\boldsymbol{h}_t \in \mathbb{R}^{h}, t = 1,\ldots,T$ 来计算背景向量$\boldsymbol{c}_{t’}\in \mathbb{R}^{h}$。</p>
+<p>我们可以将查询项矩阵 $\boldsymbol{Q} \in \mathbb{R}^{1 \times h}$ 设为 $\boldsymbol{s}_{t’ - 1}^\top$，并令键项矩阵 $\boldsymbol{K} \in \mathbb{R}^{T \times h}$ 和值项矩阵 $\boldsymbol{V} \in \mathbb{R}^{T \times h}$ 相同且第 $t$ 行均为 $\boldsymbol{h}_t^\top$​。</p>
+<p>此时，我们只需要通过矢量化计算 $\text{softmax}(\boldsymbol{Q}\boldsymbol{K}^\top)\boldsymbol{V}$​​ 即可算出转置后的背景向量 $\boldsymbol{c}_{t’}^\top$。</p>
+<p>当查询项矩阵 $\boldsymbol{Q}$ 的行数为 $n$ 时，上式将得到 $n$ 行的输出矩阵。输出矩阵与查询项矩阵在相同行上一一对应。</p>
+<ul>
+<li><strong>更新隐藏状态</strong> (GRU)</li>
+</ul>
+<p>以门控循环单元为例，在解码器中我们可以对 GRU 中门控循环单元的设计稍作修改，从而变换上一时间步 $t’-1$ 的输出 $\boldsymbol{y}_{t’-1}$、隐藏状态 $\boldsymbol{s}_{t’ - 1}$ 和当前时间步 $t’$ 的含注意力机制的背景变量 $\boldsymbol{c}_{t’}$。</p>
+<p>解码器在时间步 $t’$ 的隐藏状态为：$\boldsymbol{s}_{t’} = \boldsymbol{z}_{t’} \odot \boldsymbol{s}_{t’-1}  + (1 - \boldsymbol{z}_{t’}) \odot \tilde{\boldsymbol{s}}_{t’}$.​</p>
+<p>其中的重置门、更新门和候选隐藏状态分别为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\boldsymbol{r}_{t'} &= \sigma(\boldsymbol{W}_{yr} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{sr} \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_{cr} \boldsymbol{c}_{t'} + \boldsymbol{b}_r),\\
+\boldsymbol{z}_{t'} &= \sigma(\boldsymbol{W}_{yz} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{sz} \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_{cz} \boldsymbol{c}_{t'} + \boldsymbol{b}_z),\\
+\tilde{\boldsymbol{s}}_{t'} &= \text{tanh}(\boldsymbol{W}_{ys} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{ss} (\boldsymbol{s}_{t' - 1} \odot \boldsymbol{r}_{t'}) + \boldsymbol{W}_{cs} \boldsymbol{c}_{t'} + \boldsymbol{b}_s),
+\end{aligned}</script><p>其中含下标的 $\boldsymbol{W}$ ​和 $\boldsymbol{b}$ ​分别为门控循环单元的权重参数和偏差参数。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/dive-into-dl-pytorch-C/">https://www.c7w.tech/dive-into-dl-pytorch-C/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/yuketang-caption-crawler/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">爬取《雨课堂》慕课字幕 Tsinghua MOOC Caption Crawler</div></div></a></div><div class="next-post pull-right"><a href="/dive-into-dl-pytorch-practice/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《动手学深度学习》 Pytorch ver. 阅读后练习</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">47</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">优化算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.1.</span> <span class="toc-text">优化与深度学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-Descent-%E4%B8%8E-SGD"><span class="toc-number">1.2.</span> <span class="toc-text">Gradient Descent 与 SGD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">动量法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adagrad"><span class="toc-number">1.4.</span> <span class="toc-text">Adagrad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-number">1.5.</span> <span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdaDelta"><span class="toc-number">1.6.</span> <span class="toc-text">AdaDelta</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adam"><span class="toc-number">1.7.</span> <span class="toc-text">Adam</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%80%A7%E8%83%BD%EF%BC%9A%E5%A4%9A-GPU-%E8%AE%A1%E7%AE%97"><span class="toc-number">2.</span> <span class="toc-text">计算性能：多 GPU 计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NLP"><span class="toc-number">3.</span> <span class="toc-text">NLP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Word2Vec"><span class="toc-number">3.1.</span> <span class="toc-text">Word2Vec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastText"><span class="toc-number">3.2.</span> <span class="toc-text">fastText</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GloVe"><span class="toc-number">3.3.</span> <span class="toc-text">GloVe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Encoder-Decoder"><span class="toc-number">3.4.</span> <span class="toc-text">Encoder-Decoder</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Beam-Search"><span class="toc-number">3.4.1.</span> <span class="toc-text">Beam Search</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attention-Mechanism"><span class="toc-number">3.5.</span> <span class="toc-text">Attention Mechanism</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
