@@ -2162,7 +2162,197 @@ Total   |   2   |  1</code></pre>
    <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span></code></pre>
 <p>批量大小选择：一个好的办法是开始时将 1,000 到 5,000 个文档作为一个批次, 如果你的文档非常大，那么就减少批量的文档个数。一个好的批量大小在开始处理后所占用的物理大小约为 <strong>5-15 MB</strong>。</p>
-<h3 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h3><p>// TODO: 咕咕咕</p>
+<h3 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h3><h4 id="返回所有记录"><a href="#返回所有记录" class="headerlink" title="返回所有记录"></a>返回所有记录</h4><ul>
+<li><code>[GET] /Index/Type/_search</code></li>
+</ul>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"took"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span>
+  <span class="token property">"timed_out"</span><span class="token operator">:</span><span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token property">"_shards"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token property">"total"</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token property">"successful"</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token property">"failed"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"hits"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>
+    <span class="token property">"total"</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token property">"max_score"</span><span class="token operator">:</span><span class="token number">1.0</span><span class="token punctuation">,</span>
+    <span class="token property">"hits"</span><span class="token operator">:</span><span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"accounts"</span><span class="token punctuation">,</span>
+        <span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"person"</span><span class="token punctuation">,</span>
+        <span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"AV3qGfrC6jMbsbXb6k1p"</span><span class="token punctuation">,</span>
+        <span class="token property">"_score"</span><span class="token operator">:</span><span class="token number">1.0</span><span class="token punctuation">,</span>
+        <span class="token property">"_source"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"user"</span><span class="token operator">:</span> <span class="token string">"李四"</span><span class="token punctuation">,</span>
+          <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"工程师"</span><span class="token punctuation">,</span>
+          <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"系统管理"</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token property">"_index"</span><span class="token operator">:</span><span class="token string">"accounts"</span><span class="token punctuation">,</span>
+        <span class="token property">"_type"</span><span class="token operator">:</span><span class="token string">"person"</span><span class="token punctuation">,</span>
+        <span class="token property">"_id"</span><span class="token operator">:</span><span class="token string">"1"</span><span class="token punctuation">,</span>
+        <span class="token property">"_score"</span><span class="token operator">:</span><span class="token number">1.0</span><span class="token punctuation">,</span>
+        <span class="token property">"_source"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"user"</span> <span class="token operator">:</span> <span class="token string">"张三"</span><span class="token punctuation">,</span>
+          <span class="token property">"title"</span> <span class="token operator">:</span> <span class="token string">"工程师"</span><span class="token punctuation">,</span>
+          <span class="token property">"desc"</span> <span class="token operator">:</span> <span class="token string">"数据库管理，软件开发"</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>上面代码中，返回结果的 <code>took</code> 字段表示该操作的耗时（单位为毫秒），<code>timed_out</code> 字段表示是否超时，<code>hits</code> 字段表示命中的记录，里面子字段的含义如下。</p>
+<ul>
+<li><code>total</code>：返回记录数，本例是 2 条。</li>
+<li><code>max_score</code>：最高的匹配程度，本例是 <code>1.0</code>。</li>
+<li><code>hits</code>：返回的记录组成的数组。</li>
+</ul>
+<p>返回的记录中，每条记录都有一个<code>_score</code>字段，表示匹配的程序，默认是按照这个字段降序排列。</p>
+<h4 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h4><ul>
+<li><code>[GET] /Index/Type?size=10&amp;from=10</code></li>
+</ul>
+<p>分页实现的逻辑：</p>
+<p>当我们请求结果的第一页（结果从 1 到 10），每一个分片产生前 10 的结果，并且返回给 <strong>协调节点</strong> ，协调节点对 50 个结果排序得到全部结果的前 10 个。</p>
+<p>现在假设我们请求第 1000 页 —— 结果从 10001 到 10010。所有都以相同的方式工作除了每个分片不得不产生前 10010 个结果以外。然后协调节点对全部 50050 个结果排序最后丢弃掉这些结果中的 50040 个结果。</p>
+<p>可以看到，在分布式系统中，对结果排序的成本随分页的深度成指数上升。这就是 Web 搜索引擎对任何查询都不要返回超过 1000 个结果的原因。</p>
+<h4 id="搜索-API：轻量版"><a href="#搜索-API：轻量版" class="headerlink" title="搜索 API：轻量版"></a>搜索 API：轻量版</h4><p>有两种形式的 <code>搜索</code> API：一种是 “轻量的” <strong>查询字符串</strong> 版本，要求在查询字符串中传递所有的参数，另一种是更完整的 <strong>请求体</strong> 版本，要求使用 JSON 格式和更丰富的查询表达式作为搜索语言。</p>
+<p>在 <code>name</code> 字段中包含 <code>john</code> 并且在 <code>tweet</code> 字段中包含 <code>mary</code> 的文档。实际的查询就是这样：</p>
+<pre class="language-none"><code class="language-none">+name:john +tweet:mary</code></pre>
+<p>但是查询字符串参数所需要的 URL 编码实际上更加难懂：</p>
+<p><code>[GET] /_search?q=%2Bname%3Ajohn+%2Btweet%3Amary</code></p>
+<p>下面的查询使用以下的条件：</p>
+<ul>
+<li><code>name</code> 字段中包含 <code>mary</code> 或者 <code>john</code></li>
+<li><code>date</code> 值大于 <code>2014-09-10</code></li>
+<li><code>_all</code> 字段包含 <code>aggregations</code> 或者 <code>geo</code>（除非设置特定字段，否则查询字符串就使用 <code>_all</code> 字段进行搜索）</li>
+</ul>
+<pre class="language-sense" data-language="sense"><code class="language-sense">+name:(mary john) +date:&gt;2014-09-10 +(aggregations geo)</code></pre>
+<p>从之前的例子中可以看出，这种 <strong>轻量</strong> 的查询字符串搜索效果还是挺让人惊喜的。 它的查询语法在相关参考文档中有详细解释，以便简洁的表达很复杂的查询。对于通过命令做一次性查询，或者是在开发阶段，都非常方便。</p>
+<p>但同时也可以看到，这种精简让调试更加晦涩和困难。而且很脆弱，一些查询字符串中很小的语法错误，像 <code>-</code>，<code>:</code>，<code>/</code> 或者 <code>&quot;</code> 不匹配等，将会返回错误而不是搜索结果。</p>
+<p>最后，查询字符串搜索允许任何用户在索引的任意字段上执行可能较慢且重量级的查询，这可能会暴露隐私信息，甚至将集群拖垮。</p>
+<p>相反，我们经常在生产环境中更多地使用功能全面的 <strong>request body</strong> 查询 API，除了能完成以上所有功能，还有一些附加功能。</p>
+<h4 id="搜索-API：请求体"><a href="#搜索-API：请求体" class="headerlink" title="搜索 API：请求体"></a>搜索 API：请求体</h4><h5 id="返回所有记录与分页"><a href="#返回所有记录与分页" class="headerlink" title="返回所有记录与分页"></a>返回所有记录与分页</h5><p><code>[GET/POST] /Index/Type/_search</code></p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"from"</span><span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+  <span class="token property">"size"</span><span class="token operator">:</span> <span class="token number">10</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h5 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h5><p><strong>查询语句（Query clauses）</strong>就像一些简单的组合块，这些组合块可以彼此之间合并组成更复杂的查询。这些语句可以是如下形式：</p>
+<ul>
+<li><strong>叶子语句（Leaf clauses）</strong>(比如 <code>match</code> 语句) 被用于将查询字符串和一个字段（或者多个字段）对比。</li>
+<li><strong>复合(Compound)</strong> 语句主要用于合并其它查询语句。 比如，一个 <code>bool</code> 语句允许在你需要的时候组合其它语句，无论是 <code>must</code> 匹配、 <code>must_not</code> 匹配还是 <code>should</code> 匹配，同时它可以包含不评分的过滤器（filters）：</li>
+</ul>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"bool"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"must"</span><span class="token operator">:</span>     <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tweet"</span><span class="token operator">:</span> <span class="token string">"elasticsearch"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"must_not"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"name"</span><span class="token operator">:</span>  <span class="token string">"mary"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"should"</span><span class="token operator">:</span>   <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tweet"</span><span class="token operator">:</span> <span class="token string">"full text"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"filter"</span><span class="token operator">:</span>   <span class="token punctuation">&#123;</span> <span class="token property">"range"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"age"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"gt"</span> <span class="token operator">:</span> <span class="token number">30</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h5 id="查询与过滤"><a href="#查询与过滤" class="headerlink" title="查询与过滤"></a>查询与过滤</h5><p>我们的搜索一般有以下两种情况：过滤情况（filtering context）和查询情况（query context）。</p>
+<p>当使用于 <strong>过滤情况</strong> 时，查询被设置成一个“不评分”或者“过滤”查询。即，这个查询只是简单的问一个问题：“这篇文档是否匹配？”。回答也是非常的简单，yes 或者 no ，二者必居其一。</p>
+<p>当使用于 <strong>查询情况</strong> 时，查询就变成了一个“评分”的查询。和不评分的查询类似，也要去判断这个文档是否匹配，同时它还需要判断这个文档匹配的有 <strong>多好</strong>（匹配程度如何）。一个评分查询计算每一个文档与此查询的 <strong>相关程度</strong>，同时将这个相关程度分配给表示相关性的字段 <code>_score</code>，并且按照相关性对匹配到的文档进行排序。这种相关性的概念是非常适合全文搜索的情况，因为全文搜索几乎没有完全 “正确” 的答案。</p>
+<p>在一般情况下，一个 filter 会比一个 query 性能更优异，并且每次都表现的很稳定。</p>
+<p>通常的规则是，使用查询（query）语句来进行 <strong>全文</strong> 搜索或者其它任何需要影响 <strong>相关性得分</strong> 的搜索。除此以外的情况都使用过滤（filters)。</p>
+<h5 id="Leaf-Clauses"><a href="#Leaf-Clauses" class="headerlink" title="Leaf Clauses"></a>Leaf Clauses</h5><ul>
+<li><code>match_all</code></li>
+</ul>
+<p><code>match_all</code> 查询简单的匹配所有文档。在没有指定查询方式时，它是默认的查询：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> <span class="token property">"match_all"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></code></pre>
+<p>它经常与 filter 结合使用—例如，检索收件箱里的所有邮件。所有邮件被认为具有相同的相关性，所以都将获得分值为 <code>1</code> 的中性 <code>_score</code>。</p>
+<ul>
+<li><code>match</code></li>
+</ul>
+<p>无论你在任何字段上进行的是全文搜索还是精确查询，<code>match</code> 查询是你可用的标准查询。如果你在一个全文字段上使用 <code>match</code> 查询，<strong>在执行查询前，它将用正确的分析器去分析查询字符串</strong>。也就是说，如果在一个精确值的字段上使用它，例如数字、日期、布尔或者一个 <code>not_analyzed</code> 字符串字段，那么它将会精确匹配给定的值。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tweet"</span><span class="token operator">:</span> <span class="token string">"About Search"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li><code>multi_match</code></li>
+</ul>
+<p><code>multi_match</code> 查询可以在多个字段上执行相同的 <code>match</code> 查询：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"multi_match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"query"</span><span class="token operator">:</span>    <span class="token string">"full text search"</span><span class="token punctuation">,</span>
+        <span class="token property">"fields"</span><span class="token operator">:</span>   <span class="token punctuation">[</span> <span class="token string">"title"</span><span class="token punctuation">,</span> <span class="token string">"body"</span> <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li><code>range</code></li>
+</ul>
+<p><code>range</code> 查询找出那些落在指定区间内的数字或者时间：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"range"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"age"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token property">"gte"</span><span class="token operator">:</span>  <span class="token number">20</span><span class="token punctuation">,</span>
+            <span class="token property">"lt"</span><span class="token operator">:</span>   <span class="token number">30</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>被允许的操作符如下：</p>
+<ul>
+<li><strong><code>gt</code></strong>：大于</li>
+<li><strong><code>gte</code></strong>：大于等于</li>
+<li><strong><code>lt</code></strong>：小于</li>
+<li><strong><code>lte</code></strong>：小于等于</li>
+</ul>
+<ul>
+<li><code>term</code></li>
+</ul>
+<p><code>term</code> 查询被用于精确值匹配，这些精确值可能是数字、时间、布尔或者那些 <code>not_analyzed</code> 的字符串：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> <span class="token property">"term"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"age"</span><span class="token operator">:</span>    <span class="token number">26</span>           <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"term"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"date"</span><span class="token operator">:</span>   <span class="token string">"2014-09-01"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"term"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"public"</span><span class="token operator">:</span> <span class="token boolean">true</span>         <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span> <span class="token property">"term"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tag"</span><span class="token operator">:</span>    <span class="token string">"full_text"</span>  <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></code></pre>
+<p><code>term</code> 查询对于输入的文本不分析，所以它将给定的值进行精确查询。</p>
+<ul>
+<li><code>terms</code></li>
+</ul>
+<p><code>terms</code> 查询和 <code>term</code> 查询一样，但它允许你指定多值进行匹配。如果这个字段包含了指定值中的任何一个值，那么这个文档满足条件：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> <span class="token property">"terms"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"search"</span><span class="token punctuation">,</span> <span class="token string">"full_text"</span><span class="token punctuation">,</span> <span class="token string">"nosql"</span> <span class="token punctuation">]</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span></code></pre>
+<ul>
+<li><code>exists / missing</code></li>
+</ul>
+<p><code>exists</code> 查询和 <code>missing</code> 查询被用于查找那些指定字段中有值 (<code>exists</code>) 或无值 (<code>missing</code>) 的文档。这与SQL中的 <code>IS_NULL</code> (<code>missing</code>) 和 <code>NOT IS_NULL</code> (<code>exists</code>) 在本质上具有共性：</p>
+<pre class="language-sense" data-language="sense"><code class="language-sense">&#123;
+    &quot;exists&quot;:   &#123;
+        &quot;field&quot;:    &quot;title&quot;
+    &#125;
+&#125;</code></pre>
+<h5 id="Compound-Clauses"><a href="#Compound-Clauses" class="headerlink" title="Compound Clauses"></a>Compound Clauses</h5><p>现实的查询需求从来都没有那么简单；它们需要在多个字段上查询多种多样的文本，并且根据一系列的标准来过滤。为了构建类似的高级查询，你需要一种能够将多查询组合成单一查询的查询方法。</p>
+<p>你可以用 <code>bool</code> 查询来实现你的需求。这种查询将多查询组合在一起，成为用户自己想要的布尔查询。它接收以下参数：</p>
+<ul>
+<li><strong><code>must</code></strong>：文档 <strong>必须</strong> 匹配这些条件才能被包含进来。</li>
+<li><strong><code>must_not</code></strong>：文档 <strong>必须不</strong> 匹配这些条件才能被包含进来。</li>
+<li><strong><code>should</code></strong>：如果满足这些语句中的任意语句，将增加 <code>_score</code> ，否则，无任何影响。它们主要用于修正每个文档的相关性得分。</li>
+<li><strong><code>filter</code></strong>：<strong>必须</strong> 匹配，但它以不评分、过滤模式来进行。这些语句对评分没有贡献，只是根据过滤标准来排除或包含文档。</li>
+</ul>
+<p>例子：</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"bool"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"must"</span><span class="token operator">:</span>     <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"how to make millions"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"must_not"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tag"</span><span class="token operator">:</span>   <span class="token string">"spam"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"should"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"starred"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"filter"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"bool"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> 
+              <span class="token property">"must"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                  <span class="token punctuation">&#123;</span> <span class="token property">"range"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"date"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"gte"</span><span class="token operator">:</span> <span class="token string">"2014-01-01"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">&#123;</span> <span class="token property">"range"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"price"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"lte"</span><span class="token operator">:</span> <span class="token number">29.99</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+              <span class="token punctuation">]</span><span class="token punctuation">,</span>
+              <span class="token property">"must_not"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                  <span class="token punctuation">&#123;</span> <span class="token property">"term"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"category"</span><span class="token operator">:</span> <span class="token string">"ebooks"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+              <span class="token punctuation">]</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"query"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"bool"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"must"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"软件"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#123;</span> <span class="token property">"match"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property">"desc"</span><span class="token operator">:</span> <span class="token string">"系统"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <h2 id="网站搭建纪实：前端"><a href="#网站搭建纪实：前端" class="headerlink" title="网站搭建纪实：前端"></a>网站搭建纪实：前端</h2><p>没啥好讲的，用的是自己最熟悉的 React+Redux 框架半天肝了个 Prototype…</p>
 <p>嘛嘛，反正前端不是主要部分啦x</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
