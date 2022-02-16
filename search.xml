@@ -1726,6 +1726,10 @@ R(q_i, d) = \dfrac {f_i \cdot (k_1+1)}{f_i+K} \cdot \dfrac {qf_i \cdot(k_2+1)}{q
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token property">"tagline"</span> <span class="token operator">:</span> <span class="token string">"You Know, for Search"</span>
 <span class="token punctuation">&#125;</span></code></pre>
+<blockquote>
+<p>观前提示：官方的中文 Doc 已经过时了，不少接口和格式都已经改了，请阅读最新版的文档。<s>好大的坑</s></p>
+<p>2022-2-17 00:23:38：姑且是把后端调通了，不过这份学习笔记我觉得可以近似作废了，找时间再改吧。下面的教程并不适用 ES 最新版本，虽然大多数思想是相同的，比较便于迁移学习。</p>
+</blockquote>
 <h3 id="Node-与-Cluster"><a href="#Node-与-Cluster" class="headerlink" title="Node 与 Cluster"></a>Node 与 Cluster</h3><p>Elastic 本质上是一个<strong>分布式</strong>数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。</p>
 <p>单个 Elastic 实例称为一个<strong>节点</strong>（node）。一组节点构成一个<strong>集群</strong>（cluster）。</p>
 <h4 id="集群与分布式"><a href="#集群与分布式" class="headerlink" title="集群与分布式"></a>集群与分布式</h4><p>（只是趁着这次机会顺便就把 Elasticsearch 上手学一遍，这次毕竟只有单节点（x）</p>
