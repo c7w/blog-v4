@@ -1656,6 +1656,7 @@ f[i][v][u]=max(f[i-1][v][u], f[i-1][v-a[i]][u-b[i]]+c[i])</script><p>如前述�
 <p>Elasticsearch 的默认相似度算法就是 BM25，嘛嘛，大胜利。</p>
 <p>搜索的对象是…数目约在 $10^8$ 规模左右的文档…</p>
 <p>嘛嘛，反正都是大调库。缝合就完事了。</p>
+<p>// WIP: 应该不会咕</p>
 <a id="more"></a>
 <h2 id="索引算法"><a href="#索引算法" class="headerlink" title="索引算法"></a>索引算法</h2><p>我们首先介绍下 Sparse Retrieval 的主要算法，TF-IDF 算法和 BM25 算法。</p>
 <h3 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h3><p>TF 是指归一化的词频，IDF 是指逆文档频率。给定文档集合 $D$，有 $d_i \in D, 1 \le i \le n$. </p>
@@ -2370,7 +2371,7 @@ Total   |   2   |  1</code></pre>
 ]]></content>
       <categories>
         <category>技术</category>
-        <category>技术/后端c</category>
+        <category>技术/后端</category>
       </categories>
       <tags>
         <tag>ElasticSearch</tag>
@@ -16082,6 +16083,165 @@ d2l<span class="token punctuation">.</span>train_and_predict_rnn_pytorch<span cl
       </categories>
       <tags>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ESLint 配置指北</title>
+    <url>/eslint/</url>
+    <content><![CDATA[<h2 id="从代码规范说起"><a href="#从代码规范说起" class="headerlink" title="从代码规范说起"></a>从代码规范说起</h2><p>由于我们每个人对 JavaScript 的理解不同，编写代码的习惯也不同，所以在合作编写项目时，难免会出现代码风格的不同。这种差异性导致了团队协作的效率低下，也影响了项目的健壮性和可维护性。所以，我们需要对代码风格进行规范。这种规范不仅可以使代码风格保持统一，并且可以在代码运行之前就检测出一些错误和 Bug，提高协作开发效率。</p>
+<p>lint 是最著名的 C 语言工具之一，作用是静态代码分析，它被用于检查 C 程序中潜在的错误，包括（但不限于）可疑的类型组合、未使用的变量、不可达的代码以及不可移植的代码等等。</p>
+<p>而 ESLint 则是 2013 年推出的 JavaScript 的 lint 工具。命名前缀的来源是由于 JavaScript 也被称为 ECMAScript（ES）。</p>
+<p>ESLint 是在 ECMAScript/JavaScript 代码中识别和报告模式匹配的工具，它的目标是保证代码的一致性和避免错误。</p>
+<p>ESLint 可以在运行代码前就发现一些语法错误和潜在的 Bug，极大地减轻测试人员的压力，减少软件项目的除错成本。同时，ESLint 允许开发者通过 rules 定义自己的代码规范，所以非常适合用于制定团队代码规范。</p>
+<a id="more"></a>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><ul>
+<li>引入 ESLint：注意只需要将依赖安装到开发环境</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> eslint --save-dev
+
+<span class="token comment"># or</span>
+
+<span class="token function">yarn</span> <span class="token function">add</span> eslint --dev</code></pre>
+<p>然后我们输入 <code>npm init @eslint/config</code> 或 <code>yarn create @eslint/config</code> 回答问题进行配置。</p>
+<p><img src="https://s2.loli.net/2022/02/17/nWjZaQvTKLcgdVm.png" alt="image-20220217215148544"></p>
+<p>之后再使用 <code>yarn install</code> 进行依赖补全。</p>
+<p>什么是 <code>airbnb</code>？且听下节分解。</p>
+<h2 id="常见的标准规范"><a href="#常见的标准规范" class="headerlink" title="常见的标准规范"></a>常见的标准规范</h2><p>我们在 <code>eslintrc.js</code> 中以 CommonJS 格式规定我们的标准规范。</p>
+<pre class="language-json" data-language="json"><code class="language-json">module.exports = <span class="token punctuation">&#123;</span>
+  env<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    browser<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    es2021<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  extends<span class="token operator">:</span> <span class="token punctuation">[</span>
+    'plugin<span class="token operator">:</span>react/recommended'<span class="token punctuation">,</span>
+    'airbnb'<span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  parser<span class="token operator">:</span> '@typescript-eslint/parser'<span class="token punctuation">,</span>
+  parserOptions<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    ecmaFeatures<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      jsx<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    ecmaVersion<span class="token operator">:</span> 'latest'<span class="token punctuation">,</span>
+    sourceType<span class="token operator">:</span> 'module'<span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+    'react'<span class="token punctuation">,</span>
+    '@typescript-eslint'<span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  rules<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>;
+</code></pre>
+<h3 id="eslint-recommended"><a href="#eslint-recommended" class="headerlink" title="eslint:recommended"></a><code>eslint:recommended</code></h3><ul>
+<li>参考 <a href="https://eslint.org/docs/rules/。">https://eslint.org/docs/rules/。</a></li>
+</ul>
+<h3 id="eslint-standard"><a href="#eslint-standard" class="headerlink" title="eslint:standard"></a><code>eslint:standard</code></h3><p>standard 是基于 recommended 衍生出来的更严格的规范。其与后者的不同之处主要是 recommended 很多都是 off, standard 是 error, 比如 <code>单行代码块两边加空格</code>、<code>禁止使用分号结尾</code>。</p>
+<p>先使用 <code>npm i standard eslint-plugin-standard eslint-config-standard -D</code> 命令安装 <code>standard</code> 插件，然后在 <code>eslintrc.js</code> 文件中写入以下内容后，将会启用 standard 规范：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  root<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token keyword">extends</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'standard'</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
+<p>standard 会比 recommended 更加严格，在代码风格上也做了一些限制。不过它的用户群体也是比较多的，也不乏一些大家耳熟能详的。</p>
+<p><img src="https://s2.loli.net/2022/02/17/cQrWjvtLeORM5AG.jpg" alt="image"></p>
+<ul>
+<li>参考：<a href="https://standardjs.com/rules-zhcn.html">https://standardjs.com/rules-zhcn.html</a></li>
+</ul>
+<h3 id="Airbnb"><a href="#Airbnb" class="headerlink" title="Airbnb"></a><code>Airbnb</code></h3><p>Airbnb 规范是最严格的 ESLint 规范，列出下面几点比较明显的区别：</p>
+<ol>
+<li>默认必须要分号，而 ESLint 默认不添加分号</li>
+<li>不能使用 for 循环，推荐使用数组自带的 API 完成遍历工作。</li>
+<li>当你必须使用函数表达式（或传递一个匿名函数）时，使用箭头函数符号。</li>
+</ol>
+<p>除了这些以外，还有更多严格的规则，可以参考：</p>
+<ul>
+<li><a href="https://link.segmentfault.com/?enc=cUG%2BYxm078373Ai4Zl7xzg%3D%3D.mQwuT8A0xwjTxWnJCQBguM5%2BsxTvj%2FcbfNrhYRoEuzlOAiIikVMfCqL4fFnglX%2FQ">Airbnb 规范</a></li>
+</ul>
+<blockquote>
+<ul>
+<li>补充：<strong>Babel-eslint</strong> ?</li>
+</ul>
+<p><a href="https://www.npmjs.com/package/@babel/eslint-parser">https://www.npmjs.com/package/@babel/eslint-parser</a></p>
+<p>ESLint’s default parser and core rules <a href="https://github.com/eslint/eslint/blob/a675c89573836adaf108a932696b061946abf1e6/README.md#what-about-experimental-features">only support the latest final ECMAScript standard</a> and do not support experimental (such as new features) and non-standard (such as Flow or TypeScript types) syntax provided by Babel. @babel/eslint-parser is a parser that allows ESLint to run on source code that is transformed by Babel.</p>
+<p><strong>Note:</strong> You only need to use @babel/eslint-parser <strong>if you are using Babel to transform your code</strong>. If this is not the case, please use the relevant parser for your chosen flavor of ECMAScript (note that the default parser supports all non-experimental syntax as well as JSX).</p>
+</blockquote>
+<h2 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h2><p>直接说结论，使用以下插件：</p>
+<ul>
+<li>@typescript-eslint/parser</li>
+<li>@typescript-eslint/eslint-plugin</li>
+</ul>
+<p>在上述回答问题的过程中会帮我们自动补全在 <code>package.json</code> 中。</p>
+<h2 id="对照：Prettier"><a href="#对照：Prettier" class="headerlink" title="对照：Prettier"></a>对照：Prettier</h2><blockquote>
+<ul>
+<li>什么是 Prettier</li>
+</ul>
+<p>Prettier 在自己官网首页列出这么三点：</p>
+<ul>
+<li>An opinionated code formatter</li>
+<li>Supports many languages</li>
+<li>Integrates with most editors</li>
+<li>Has few options</li>
+</ul>
+<p>官方首先告诉你，Prettier 是一个 <strong>Opinionated</strong> 的代码格式化工具。所以要掌握 Prettier 的精髓就是要理解这个单词。</p>
+<p>对比 Angular, ExpressJS 和 SpringBoot 的 Unopinionated，Prettier 说自己是一个 Opinionated code formatter，就是说：你必须认同我的观点，按照我说的做。否则你就别用我，硬着头皮用就会处处不爽！</p>
+<p>Has few options，其实就是 Opinionated 的最直接体现。除了必要的设置项，不会再给你们更多。给你设置项越多，你们越乱，你们就会继续争吵！</p>
+<p>Prettier 的原理非常简单：</p>
+<p>不管你写的代码是个什么鬼样子，Prettier 会去掉你代码里的所有样式风格，然后用统一固定的格式重新输出。输出时基本上只考虑一个参数，就是 line length。</p>
+</blockquote>
+<p>而 Prettier 与 Linters 有什么区别呢？</p>
+<blockquote>
+<ul>
+<li>Formatting rules</li>
+</ul>
+<p>当 ESLint 遇到上面的 incorrect code 的时候，会提示你违反规则，让你修改代码以符合规则。</p>
+<p>而 Prettier 则不会这么麻烦，它根本不管你之前符不符合什么规则，都先把你的代码解析成 AST，然后按照它自己的风格给你重新输出代码。</p>
+<p>换句话说，Prettier 对应的是各种 Linters 的 Formatting rules 这一类规则。而且你用了 Prettier 之后，就不会再违反这类规则了！不需要你自己手动修改代码。</p>
+<ul>
+<li>Code-quality rules</li>
+</ul>
+<p>Prettier 对这类规则束手无策。而且这类规则也正是各种 Linters 的重点，因为它们真的能帮你发现很多低级的 Bug。</p>
+<p>所以，Prettier 并不会取代各种 Linters，而是能避免你的代码和这些 Linters 定义的 Formatting rules 冲突。Linters 检查出来违反 Code-quality rules 的情况后还需要你自己根据业务逻辑和语法手动修改。Prettier 帮你格式化代码，但是不会帮你挑出潜在的错误。</p>
+<p>那么既要让 Prettier 帮你格式化代码，还想让 Linters 帮你挑出潜在的 Code-quality 类错误，怎么办？就需要 Prettier 和 Linters 配合使用。</p>
+</blockquote>
+<p>以上摘自：参考资料中的《Prettier》文</p>
+<p>现在 ESLint 也有了 <code>--fix</code> 功能，暂且搁置一下 Prettier 的学习。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>// TODO</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><h3 id="husky"><a href="#husky" class="headerlink" title="husky"></a><code>husky</code></h3><p>在项目开发过程中，自动格式化并不总是让人安心的，因为并不是项目组的所有成员都会使用插件来做自动格式化。</p>
+<p>这样的情况会导致有一些不规范的代码被提交到服务端，依然会造成团队规范不一致的问题，这个时候就需要用到提交时自动检测和格式化代码的功能。</p>
+<p>接下来，我们将使用 <code>husky</code> Hook 来进行代码提交时的自动检测工作。</p>
+<p>先使用 <code>npm i husky -D</code> 安装依赖，在依赖完成完成后，我们需要使用下面这条命令初始化 <code>husky</code>：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">husky <span class="token function">install</span>
+npx husky <span class="token function">add</span> .husky/pre-commit <span class="token string">"npm pre-commit"</span></code></pre>
+<p>我们还需要在项目的 <code>package.json</code> 中，添加 <code>pre-commit</code>，这个命令运行时进行 <code>eslint</code> 检测（如下）。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"pre-commit"</span><span class="token operator">:</span> <span class="token string">"eslint src"</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="lint-staged"><a href="#lint-staged" class="headerlink" title="lint-staged"></a><code>lint-staged</code></h3><p>如果我们希望在检测错误的同时，自动修复 <code>eslint</code> 语法错误，则需要用到 <code>lint-staged</code>，使用 <code>npm i lint-staged -D</code> 先进行安装，然后在 <code>package.json</code> 中修改 <code>pre-commit</code> 命令，再添加以下内容。</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"pre-commit"</span><span class="token operator">:</span> <span class="token string">"lint-staged"</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token property">"lint-staged"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"src/**"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"eslint --fix"</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p><code>lint-staged</code> Repo 地址：<a href="https://github.com/okonet/lint-staged">https://github.com/okonet/lint-staged</a></p>
+<p><code>lint-staged</code> 针对暂存的 git 文件运行 linters，不要让不符合规则的代码溜进代码库。<code>lint-staged</code>总是将 <strong>所有暂存文件的列表传递给任务</strong>，忽略任何文件都应该在任务本身中配置，比如：<code>.prettierignore</code> / <code>.eslintignore</code> 。lint-stage 总是配合 husky 一起使用。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000016626739">在React项目中使用Eslint代码检查工具</a></li>
+<li><a href="https://eslint.org/docs/user-guide/getting-started">Getting Started with ESLint</a></li>
+<li><a href="https://segmentfault.com/a/1190000039880312">从项目规范（eslint + prettier）到自动化配置</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/81764012">Prettier</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/62401626">使用ESLint+Prettier规范React+Typescript项目</a></li>
+<li><a href="https://juejin.cn/post/6844903901292920846">深入理解 ESlint</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>ESLint</tag>
       </tags>
   </entry>
 </search>
