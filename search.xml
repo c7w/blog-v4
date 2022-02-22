@@ -16244,4 +16244,440 @@ npx husky <span class="token function">add</span> .husky/pre-commit <span class=
         <tag>ESLint</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MATLAB 从入门到放弃</title>
+    <url>/matlab/</url>
+    <content><![CDATA[<p>大概记录的是 MATLAB 的入门之路。反正《数值分析》课程也得用。</p>
+<a id="more"></a>
+<h2 id="数值数组"><a href="#数值数组" class="headerlink" title="数值数组"></a>数值数组</h2><p>MATLAB 中数组的存储方式是 column-major order. 因此，数组的第一个维度是列数。</p>
+<h3 id="数组的创建"><a href="#数组的创建" class="headerlink" title="数组的创建"></a>数组的创建</h3><h4 id="等距数组"><a href="#等距数组" class="headerlink" title="等距数组"></a>等距数组</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% Comment</span>
+<span class="token comment">% 在代码行的后加分号，运行结果不会显示在命令行窗口；</span>
+<span class="token comment">% 不加分号，变量的值会随着运行显示在命令行窗口。 </span>
+start <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">% Variable assignment  </span>
+finish <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span> <span class="token comment">% Closed this way</span>
+stride <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+a <span class="token operator">=</span> start<span class="token operator">:</span>stride<span class="token operator">:</span>finish <span class="token comment">% [1, 3, 5, 7, 9, 11]</span>
+b <span class="token operator">=</span> finish<span class="token operator">:</span><span class="token operator">-</span>stride<span class="token operator">:</span>start <span class="token comment">% [11, 9, 7, 5, 3, 1]</span>
+c <span class="token operator">=</span> start<span class="token operator">:</span>finish <span class="token comment">% The default value for stride is 1</span>
+
+xstart <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> xfinish <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span> xpoints <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+x <span class="token operator">=</span> <span class="token function">linspace</span><span class="token punctuation">(</span>xstart<span class="token punctuation">,</span> xfinish<span class="token punctuation">,</span> xpoints<span class="token punctuation">)</span>
+<span class="token comment">% [1, 25.75, 50.5, 75.25, 100]</span>
+
+ystart <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> yfinish <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> ypoints <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+y <span class="token operator">=</span> <span class="token function">logspace</span><span class="token punctuation">(</span>ystart<span class="token punctuation">,</span> yfinish<span class="token punctuation">,</span> ypoints<span class="token punctuation">)</span>
+<span class="token comment">% [10, 100, 1000, 10000, 100000]</span></code></pre>
+<h4 id="逐个元素输入"><a href="#逐个元素输入" class="headerlink" title="逐个元素输入"></a>逐个元素输入</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token comment">% Shaped 1 x 4</span>
+b <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token comment">% Also shaped 1 x 4</span>
+c <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token comment">% Shaped 2 x 2</span>
+<span class="token comment">% 1 2</span>
+<span class="token comment">% 3 4</span></code></pre>
+<h4 id="随机数产生"><a href="#随机数产生" class="headerlink" title="随机数产生"></a>随机数产生</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">% Random seed</span>
+
+a <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">% Uniformly distribution between 0 and 1, shaped 2 x 5</span>
+b <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token comment">% Normal distribution, shaped 2 x 6</span>
+
+upperbound <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+lowerbound <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+c <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span>lowerbound<span class="token punctuation">,</span>upperbound<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>  <span class="token comment">% Random Interger</span></code></pre>
+<h4 id="其他初始化"><a href="#其他初始化" class="headerlink" title="其他初始化"></a>其他初始化</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token function">ones</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+c <span class="token operator">=</span> <span class="token function">eye</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+
+v <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span>
+d <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token comment">% Diagonal</span></code></pre>
+<h3 id="元素的访问和寻找"><a href="#元素的访问和寻找" class="headerlink" title="元素的访问和寻找"></a>元素的访问和寻找</h3><h4 id="数组的维度和大小"><a href="#数组的维度和大小" class="headerlink" title="数组的维度和大小"></a>数组的维度和大小</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">% Seed 2</span>
+a <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+
+v <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">% [3, 4], shaped 1 x 2</span>
+v <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">% ans = 3, get the value of the 1st dim</span>
+v <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">% ans = 4</span></code></pre>
+<h4 id="数组的循秩访问"><a href="#数组的循秩访问" class="headerlink" title="数组的循秩访问"></a>数组的循秩访问</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">% namely a[2][3]</span>
+c <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token operator">:</span><span class="token punctuation">)</span> <span class="token comment">% namely the second row of a</span>
+d <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+f <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">)</span>
+g <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token comment">% NOTICE: column-major order!</span>
+
+idx <span class="token operator">=</span> <span class="token number">12</span><span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span>
+h <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span> <span class="token comment">% Inversed order of a, shaped 1 x 12</span>
+
+k <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token keyword">end</span><span class="token punctuation">)</span> <span class="token comment">% [end] could be viewed as [-1] in Python</span>
+			  <span class="token comment">% end-1, end-2, ... , are also supported</span></code></pre>
+<h4 id="逻辑寻访"><a href="#逻辑寻访" class="headerlink" title="逻辑寻访"></a>逻辑寻访</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+
+b <span class="token operator">=</span> a <span class="token operator">></span> <span class="token number">10</span> <span class="token comment">% Boolean, shaped 6 x 8</span>
+<span class="token function">a</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">100</span> <span class="token comment">% Set all those greater than 10 to 100</span>
+
+c <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span> a <span class="token operator">></span> <span class="token number">50</span> <span class="token punctuation">)</span> 
+<span class="token comment">% Column vector shaped k x 1, consisting the index of elements != 0</span>
+<span class="token function">a</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">NaN</span></code></pre>
+<h3 id="数组的扩充、收缩与重排"><a href="#数组的扩充、收缩与重排" class="headerlink" title="数组的扩充、收缩与重排"></a>数组的扩充、收缩与重排</h3><h4 id="扩充"><a href="#扩充" class="headerlink" title="扩充"></a>扩充</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">;</span> b <span class="token operator">=</span> <span class="token number">6</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">;</span> c <span class="token operator">=</span> <span class="token number">11</span><span class="token operator">:</span><span class="token number">15</span><span class="token punctuation">;</span>
+a_b <span class="token operator">=</span> <span class="token punctuation">[</span>a<span class="token punctuation">,</span> b<span class="token punctuation">]</span> <span class="token comment">% 1 x 10</span>
+abc <span class="token operator">=</span> <span class="token punctuation">[</span>a<span class="token punctuation">;</span> b<span class="token punctuation">;</span> c<span class="token punctuation">]</span> <span class="token comment">% 3 x 5</span>
+
+AB1 <span class="token operator">=</span> <span class="token function">repmat</span><span class="token punctuation">(</span>a_b<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">% 1 x 20</span>
+AB2 <span class="token operator">=</span> <span class="token function">repmat</span><span class="token punctuation">(</span>a_b<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">% 2 x 10</span></code></pre>
+<h4 id="收缩"><a href="#收缩" class="headerlink" title="收缩"></a>收缩</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span>
+
+b <span class="token operator">=</span> a<span class="token punctuation">;</span>
+<span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">:</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+c <span class="token operator">=</span> a<span class="token punctuation">;</span>
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span></code></pre>
+<h4 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">24</span>
+b <span class="token operator">=</span> <span class="token function">reshape</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token comment">% 3 x 8, column major</span>
+c <span class="token operator">=</span> <span class="token function">reshape</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span>
+
+     <span class="token number">1</span>     <span class="token number">3</span>     <span class="token number">5</span>
+     <span class="token number">2</span>     <span class="token number">4</span>     <span class="token number">6</span>
+
+
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span>
+
+     <span class="token number">7</span>     <span class="token number">9</span>    <span class="token number">11</span>
+     <span class="token number">8</span>    <span class="token number">10</span>    <span class="token number">12</span>
+
+
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span>
+
+    <span class="token number">13</span>    <span class="token number">15</span>    <span class="token number">17</span>
+    <span class="token number">14</span>    <span class="token number">16</span>    <span class="token number">18</span>
+
+
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">=</span>
+
+    <span class="token number">19</span>    <span class="token number">21</span>    <span class="token number">23</span>
+    <span class="token number">20</span>    <span class="token number">22</span>    <span class="token number">24</span>
+    
+</code></pre>
+<h4 id="翻转"><a href="#翻转" class="headerlink" title="翻转"></a>翻转</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token function">reshape</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> <span class="token function">flipud</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>    <span class="token comment">% 将数组从上向下翻转</span>
+c <span class="token operator">=</span> <span class="token function">fliplr</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>    <span class="token comment">% 将数组从左向右翻转</span>
+d <span class="token operator">=</span> <span class="token function">flipdim</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">% 将数组沿第一个维度翻转</span>
+f <span class="token operator">=</span> <span class="token function">flipdim</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token comment">% 将数组沿第二个维度翻转</span>
+
+g <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span>
+h <span class="token operator">=</span> g<span class="token operator">'</span>             <span class="token comment">% 转置</span></code></pre>
+<h4 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token function">reshape</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">rot90</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>     <span class="token comment">% 将 a 旋转 90 度</span>
+c <span class="token operator">=</span> <span class="token function">rot90</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>    <span class="token comment">%将 a 旋转 180 度</span>
+<span class="token comment">% 还有 rotx, roty, rotz, rot45 等函数可供探索</span></code></pre>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>b<span class="token punctuation">,</span> idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>        <span class="token comment">% 对 a 的每一列按升序排序，idx 为索引。</span>
+c <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>             <span class="token comment">% 对 a 的每一行按升序排序</span>
+d <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token string">'ascend'</span><span class="token punctuation">)</span>      <span class="token comment">% 对 a 的每一列按升序排序</span>
+f <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'descend'</span><span class="token punctuation">)</span>   <span class="token comment">% 对 a 的第 2 个维度按降序排序</span>
+g <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token string">'ComparisonMethod'</span><span class="token punctuation">,</span><span class="token string">'abs'</span><span class="token punctuation">)</span>
+<span class="token comment">%还有 cat,circshift,horzcat,vercat,permute,ipermute,shiftdim,sortrows,squeeze 等函数可供探索</span></code></pre>
+<h2 id="数组运算"><a href="#数组运算" class="headerlink" title="数组运算"></a>数组运算</h2><h3 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h3><p>MATLAB 中的运算都是矩阵与矩阵的运算，或者标量与矩阵的运算。也就是说，要满足矩阵运算的规则。</p>
+<pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% 矩阵运算</span>
+a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">;</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">;</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span>
+b <span class="token operator">=</span> a<span class="token operator">'</span>            <span class="token comment">%共轭转置</span>
+c <span class="token operator">=</span> b<span class="token operator">*</span>a           <span class="token comment">%矩阵乘法，注意维度要符合</span>
+d <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>     
+f <span class="token operator">=</span> a<span class="token operator">/</span>d           <span class="token comment">%对d求逆，再左乘a</span>
+g <span class="token operator">=</span> d<span class="token operator">\</span>b           <span class="token comment">%对d求逆，再右乘b</span>
+h <span class="token operator">=</span> <span class="token number">3</span><span class="token operator">*</span>a           <span class="token comment">%3是标量，与矩阵a相乘</span>
+k <span class="token operator">=</span> a<span class="token operator">/</span><span class="token number">3</span>           <span class="token comment">%矩阵a除以标量3</span>
+l <span class="token operator">=</span> <span class="token number">3</span><span class="token operator">\</span>a           <span class="token comment">%含义同上</span>
+m <span class="token operator">=</span> <span class="token number">4</span><span class="token operator">^</span>d           <span class="token comment">%4的d次幂</span>
+n <span class="token operator">=</span> d<span class="token operator">^</span><span class="token number">4</span>           <span class="token comment">%d的4次幂</span>
+
+<span class="token comment">% Elementwise</span>
+a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">;</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span>
+b <span class="token operator">=</span> a<span class="token operator">.'</span>             <span class="token comment">%非共轭转置</span>
+c <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  
+d <span class="token operator">=</span> a<span class="token operator">.*</span>c            <span class="token comment">%按元素乘，要求矩阵形状完全相同</span>
+f <span class="token operator">=</span> c<span class="token operator">./</span>a            <span class="token comment">%按元素除，c除以a</span>
+g <span class="token operator">=</span> a<span class="token operator">.\</span>c            <span class="token comment">%按元素除，a除以c</span>
+h <span class="token operator">=</span> <span class="token number">4.</span><span class="token operator">^</span>a           
+l <span class="token operator">=</span> a<span class="token operator">.^</span><span class="token number">3</span>    </code></pre>
+<p>上文用到了左除（\）和右除（/）。左除是 MATLAB 中独有的，其速度、准确度都远高于右除。此外，使用矩阵除法时应该注意，对于奇异矩阵或近似于奇异的矩阵，MATLAB 会给出警告。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>MATLAB 的数据类型包括 <code>double，uint8，uint16，boolean，char，str</code>。</p>
+<p>前 3 种的转换函数分别为 <code>double(),uint8(),uint16()</code>。<br>char 是字符，char(x) 会将 x 按 ASCII 值转变成相应的字符。str 是字符串，被看做一个行向量。具体示例见字符串部分。</p>
+<p>MATLAB 中还有一些保留关键字，列举如下：</p>
+<ul>
+<li>eps：浮点数相对精度</li>
+<li>i 或 j：复数单位</li>
+<li>inf 或 Inf：无穷大</li>
+<li>intmax：最大正整数</li>
+<li>intmin：最小负整数</li>
+<li>NaN 或 nan：非数。注意，不能用 a==nan 判断 a 是否为 nan。</li>
+<li>pi：π</li>
+<li>realmax：最大正实数</li>
+<li>realmin：最小正实数</li>
+</ul>
+<pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% Complex numbers</span>
+a <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">+</span><span class="token number">2j</span>
+a_real <span class="token operator">=</span> <span class="token function">real</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>    <span class="token comment">%a的实部</span>
+a_imag <span class="token operator">=</span> <span class="token function">imag</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>    <span class="token comment">%a的虚部</span>
+b <span class="token operator">=</span> <span class="token function">conj</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>         <span class="token comment">%b是a的共轭</span>
+b_abs <span class="token operator">=</span> <span class="token function">abs</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>      <span class="token comment">%b的模长</span>
+b_angle <span class="token operator">=</span> <span class="token function">angle</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>  <span class="token comment">%b的辅角</span>
+
+<span class="token comment">% NaN</span>
+<span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">a</span><span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">NaN</span><span class="token punctuation">;</span>
+idx1 <span class="token operator">=</span> <span class="token function">isnan</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">% a==NaN 不能正确判别 NaN</span>
+
+<span class="token comment">% 不同进制的转化</span>
+<span class="token comment">% MATLAB 支持 2 进制（bin），8 进制(oct)，10 进制(dec)和 16 进制(hex)</span>
+a <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">dec2bin</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+c <span class="token operator">=</span> <span class="token function">bin2dec</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span></code></pre>
+<h3 id="特殊运算"><a href="#特殊运算" class="headerlink" title="特殊运算"></a>特殊运算</h3><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% 和与积</span>
+a <span class="token operator">=</span> <span class="token function">reshape</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">cumsum</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>            <span class="token comment">%沿 a 的第一个 length 不为 1 的维度求累积和</span>
+c <span class="token operator">=</span> <span class="token function">cumsum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>          <span class="token comment">%沿a的第二个维度求累积和</span>
+d <span class="token operator">=</span> <span class="token function">cumsum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token string">'reverse'</span><span class="token punctuation">)</span>  <span class="token comment">%沿a的第一个不为1的维度，反向求累积和</span>
+f <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>               <span class="token comment">%沿a的第一个不为1的维度求和，其他用法同cumsum</span>
+g <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token string">'all'</span><span class="token punctuation">)</span>         <span class="token comment">%对a的所有元素求和</span>
+s3 <span class="token operator">=</span> <span class="token function">cumprod</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>          <span class="token comment">%累积积，用法同上</span>
+s4 <span class="token operator">=</span> <span class="token function">prod</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>             <span class="token comment">%求积，用法同上</span>
+
+<span class="token comment">% 最大值</span>
+<span class="token function">rng</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>                    <span class="token comment">%沿a的第一个不为1的维度计算</span>
+c <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>               <span class="token comment">%沿a的第二个维度计算</span>
+<span class="token punctuation">[</span>d<span class="token punctuation">,</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>              <span class="token comment">%idx是每个最大值的位置</span>
+f <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">'all'</span><span class="token punctuation">)</span>           <span class="token comment">%在a的所有元素中找最大值</span>
+g <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>           <span class="token comment">%在a的第1个和第3个维度中求最大值</span>
+<span class="token punctuation">[</span>h<span class="token punctuation">,</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">'linear'</span><span class="token punctuation">)</span>  <span class="token comment">%idx是最大值的线性索引</span>
+k <span class="token operator">=</span> <span class="token function">randi</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>              
+l <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>k<span class="token punctuation">)</span>                  <span class="token comment">%求a，k中的最大值</span>
+
+<span class="token comment">% 逻辑操作</span>
+a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+L1 <span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">%按位取非</span>
+L2 <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token punctuation">(</span>a<span class="token operator">&lt;</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">%与</span>
+L3 <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token punctuation">(</span>a<span class="token operator">&lt;</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">%与,第一项为false时，不再计算第二项</span>
+L4 <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">%或</span>
+L5 <span class="token operator">=</span> <span class="token punctuation">(</span>a<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">||</span><span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">%或，第一项为true时，不再计算第二项</span>
+b<span class="token operator">=</span>a<span class="token punctuation">;</span>
+c <span class="token operator">=</span> <span class="token function">xor</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">%异或</span>
+d <span class="token operator">=</span> <span class="token function">all</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">%a中元素全不为0时，d为真</span>
+e <span class="token operator">=</span> <span class="token function">any</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">%a中元素至少有一个非0时，e为真</span>
+idx <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>a<span class="token operator">></span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+f <span class="token operator">=</span> <span class="token function">isempty</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">%检查idx是否为空矩阵</span>
+
+<span class="token comment">% MATLAB还可以计算矩阵的特征值，对矩阵做奇异值分解、QR分解等。</span></code></pre>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><pre class="language-matlab" data-language="matlab"><code class="language-matlab">a <span class="token operator">=</span> <span class="token string">'Three-six-nine, hon, the goose drank wine.'</span><span class="token punctuation">;</span>
+<span class="token comment">%如果字符串中有单引号，用两个连续的单引号表示。</span>
+b <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>     <span class="token comment">%可以看出，MATLAB将字符串数组视为行矩阵</span>
+
+a <span class="token operator">=</span> <span class="token string">'May you long day and pleasant nights.'</span><span class="token punctuation">;</span>
+a14 <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">4</span><span class="token punctuation">)</span>       <span class="token comment">%取出字符串数组的前4个元素   </span>
+ra <span class="token operator">=</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">)</span>   <span class="token comment">%翻转字符串数组</span>
+
+a <span class="token operator">=</span> <span class="token string">'May you have twice the number.'</span><span class="token punctuation">;</span>
+Ua <span class="token operator">=</span> <span class="token function">double</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>          <span class="token comment">%查看a的ASCII码值</span>
+c <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>Ua<span class="token punctuation">)</span>            <span class="token comment">%将ASCII转化回字符串</span>
+w <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>a<span class="token operator">>=</span><span class="token string">'a'</span><span class="token operator">&amp;</span>a<span class="token operator">&lt;=</span><span class="token string">'z'</span><span class="token punctuation">)</span> <span class="token comment">%找出所有的小写字母</span>
+<span class="token function">Ua</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">Ua</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token number">32</span>       <span class="token comment">%将小写字母变为大写字母</span>
+d <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>Ua<span class="token punctuation">)</span>            <span class="token comment">%将ASCII转化回字符串</span></code></pre>
+<h2 id="控制流语句"><a href="#控制流语句" class="headerlink" title="控制流语句"></a>控制流语句</h2><p>MATLAB 很适宜向量化编程，也就是说，编写 MATLAB 程序的时候要尽量用矩阵和数组代替循环，尤其是 2 层及以上的循环。</p>
+<p>在 MATLAB 中，二维矩阵的运算速度要远快于 2 层循环。因此，本节介绍的所有数据流控制语句都要尽量少用，除非万不得已。</p>
+<pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% if/else/elseif</span>
+a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> a<span class="token operator">&lt;</span><span class="token number">0</span>
+    a <span class="token operator">=</span> <span class="token operator">-</span>a<span class="token punctuation">;</span>
+<span class="token keyword">elseif</span> a<span class="token operator">></span><span class="token number">10</span>
+    a <span class="token operator">=</span> a<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">else</span> 
+    a <span class="token operator">=</span> a<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">% while</span>
+sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> sum <span class="token operator">&lt;</span> <span class="token number">10</span>
+    sum <span class="token operator">=</span> sum <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">% for</span>
+sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> ii <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span>
+    sum <span class="token operator">=</span> sum <span class="token operator">+</span> ii<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">% switch</span>
+a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> a
+    <span class="token keyword">case</span> <span class="token number">1</span>
+        a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token number">3</span>
+        a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">otherwise</span>
+        a <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token comment">% try/catch</span>
+a <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> 
+    b <span class="token operator">=</span> a<span class="token operator">*</span>a<span class="token punctuation">;</span>
+<span class="token keyword">catch</span> ME
+    b <span class="token operator">=</span> a<span class="token operator">.*</span>a<span class="token punctuation">;</span>
+<span class="token keyword">end</span></code></pre>
+<h2 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h2><pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">% 读写 mat 文件</span>
+clear
+a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>b <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span> c <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+save file1<span class="token punctuation">;</span>                <span class="token comment">%把工作区中全部变量保存到名为file1.mat的文件中。</span>
+                           <span class="token comment">%如果file1.mat原先存在，它的原始内容会被删除。</span>
+save file2 a b<span class="token punctuation">;</span>            <span class="token comment">%把变量a和b保存到file2.mat文件中。</span>
+save file2 c <span class="token operator">-</span>append       <span class="token comment">%把变量c添加到file2.mat中，不会删除file2.mat中原有的值</span>
+save file3 <span class="token operator">-</span>ascii          <span class="token comment">%把变量保存到8位ascii文件file3.mat中</span>
+save file4 <span class="token operator">-</span>ascii <span class="token operator">-</span>double  <span class="token comment">%把变量保存到16位ascii文件file4.mat中</span>
+clear
+load file1                 <span class="token comment">%把file1.mat中的全部变量加载到工作区</span>
+clear                      
+load file1 a b             <span class="token comment">%把file1.mat中的变量a和b加载到工作区</span>
+clear
+load file3 a <span class="token operator">-</span>ascii        <span class="token comment">%把ascii文件file3.mat中的变量a加载到工作区</span>
+
+<span class="token comment">% 科学计数法</span>
+a <span class="token operator">=</span> <span class="token number">1.4e3</span>                  <span class="token comment">%a=1400</span>
+
+<span class="token comment">% 输出格式</span>
+a <span class="token operator">=</span> format                <span class="token comment">%返回当前的format</span>
+format long               <span class="token comment">%将输出格式设定为long           </span>
+format short              <span class="token comment">%将输出格式设定为short</span>
+<span class="token comment">% format的参数有多种选择，可自行探索</span>
+
+<span class="token comment">% disp</span>
+name <span class="token operator">=</span> <span class="token string">'Jake'</span><span class="token punctuation">;</span>   
+chassit <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">;</span>
+X <span class="token operator">=</span> <span class="token punctuation">[</span>name<span class="token punctuation">,</span><span class="token string">', son of Elm, ka-tet of '</span><span class="token punctuation">,</span><span class="token function">num2str</span><span class="token punctuation">(</span>chassit<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span>
+name <span class="token operator">=</span> <span class="token string">'Edward'</span><span class="token punctuation">;</span>   
+chassit <span class="token operator">=</span> <span class="token number">19</span><span class="token punctuation">;</span>
+X <span class="token operator">=</span> <span class="token function">sprintf</span><span class="token punctuation">(</span><span class="token string">'%s Cantor Dean, ka-tet of %d'</span><span class="token punctuation">,</span>name<span class="token punctuation">,</span>chassit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>X<span class="token punctuation">)</span></code></pre>
+<h2 id="字符数组与字符串数组"><a href="#字符数组与字符串数组" class="headerlink" title="字符数组与字符串数组"></a>字符数组与字符串数组</h2><p>在 R2016b 版本之后，Matlab引入了字符串数组 string。只有一个字符串的字符串数组也可称为字符串标量。</p>
+<pre class="language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">%% 创建</span>
+char_array <span class="token operator">=</span> <span class="token string">'THU EESAST'</span> <span class="token comment">% 字符数组</span>
+string_array <span class="token operator">=</span> "THU EESAST" <span class="token comment">% 字符串数组</span>
+
+<span class="token comment">%% 互相转换</span>
+
+<span class="token comment">% 字符串数组 -> 字符数组</span>
+string_array2 <span class="token operator">=</span> "string to char"
+<span class="token function">strlength</span><span class="token punctuation">(</span>string_array2<span class="token punctuation">)</span> <span class="token comment">% 14</span>
+char_array2 <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>string_array2<span class="token punctuation">)</span>
+<span class="token function">size</span><span class="token punctuation">(</span>char_array2<span class="token punctuation">)</span> <span class="token comment">% [1, 14]</span>
+
+<span class="token comment">% 字符串列向量 -> 字符数组</span>
+string_array3 <span class="token operator">=</span> <span class="token punctuation">[</span>"string1"<span class="token punctuation">;</span>"string2"<span class="token punctuation">;</span>"string3"<span class="token punctuation">]</span> <span class="token comment">% 3 x 1</span>
+char_array3 <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>string_array3<span class="token punctuation">)</span>
+
+<span class="token comment">% char_array3 =  % 3 x 7 char</span>
+<span class="token comment">%     'string1'</span>
+<span class="token comment">%     'string2'</span>
+<span class="token comment">%     'string3'</span>
+
+<span class="token comment">% 字符串行向量 -> 字符数组</span>
+string_array4 <span class="token operator">=</span> <span class="token punctuation">[</span>"string1"<span class="token punctuation">,</span>"string2"<span class="token punctuation">,</span>"string3"<span class="token punctuation">]</span>
+char_array4 <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>string_array4<span class="token punctuation">)</span>
+<span class="token comment">% 1 x 7 x 3 char, every page contains a "string\d"</span>
+
+<span class="token comment">% 字符串矩阵 -> 字符数组</span>
+string_array5 <span class="token operator">=</span> <span class="token punctuation">[</span>"string1"<span class="token punctuation">,</span>"string2"<span class="token punctuation">,</span>"string3"<span class="token punctuation">;</span>"string4"<span class="token punctuation">,</span>"string5"<span class="token punctuation">,</span>"string6"<span class="token punctuation">]</span>
+char_array5 <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span>string_array5<span class="token punctuation">)</span>
+<span class="token comment">% 2 x 7 x 3 char, every page contains a column</span>
+
+<span class="token comment">% 字符数组行向量 -> 字符串数组</span>
+char_array6 <span class="token operator">=</span> <span class="token string">'char'</span> <span class="token comment">% 完全等价于 char_array6 = ['c','h','a','r']</span>
+string_array6 <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span>char_array6<span class="token punctuation">)</span> <span class="token comment">% "char"</span>
+
+<span class="token comment">% 字符数组列向量 -> 字符串数组</span>
+char_array7 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">;</span><span class="token string">'b'</span><span class="token punctuation">;</span><span class="token string">'c'</span><span class="token punctuation">;</span><span class="token string">'d'</span><span class="token punctuation">]</span>
+string_array7 <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span>char_array7<span class="token punctuation">)</span> <span class="token comment">% 4 x 1 string</span>
+
+<span class="token comment">%% 两者的行为区别</span>
+<span class="token comment">% 减去一个字符</span>
+char_array8 <span class="token operator">=</span> <span class="token string">'abcdefg'</span><span class="token punctuation">;</span>
+string_array8 <span class="token operator">=</span> "abcdefg"<span class="token punctuation">;</span>
+char_array8 <span class="token operator">-</span> <span class="token string">'a'</span>
+char_array8 <span class="token operator">-</span> <span class="token number">97</span>
+<span class="token comment">% 可以逐条尝试执行下面几行代码</span>
+<span class="token comment">% char_array8 - "a"  </span>
+<span class="token comment">% string_array8 - 'a'</span>
+<span class="token comment">% string_array8 - "a"</span>
+<span class="token comment">% string_array8 - 97 % string 类型的操作数不支持 '-'，string 作为 arg[1] 还是 arg[2] 都报错</span>
+
+<span class="token comment">% 将字符串数组或字符数组相加</span>
+<span class="token comment">% 字符数组会得到Unicode码相加的结果：</span>
+char_array9 <span class="token operator">=</span> <span class="token string">'THU EESAST'</span><span class="token punctuation">;</span>
+char_array10 <span class="token operator">=</span> <span class="token string">'!'</span><span class="token punctuation">;</span>
+char_array9 <span class="token operator">+</span> char_array10 <span class="token comment">% ans 1 x 10 [117, 105, ...]</span>
+
+<span class="token comment">% 字符串数组会将两端字符串拼接起来：</span>
+string_array9 <span class="token operator">=</span> "THU EESAST"<span class="token punctuation">;</span>
+string_array10 <span class="token operator">=</span> "<span class="token punctuation">!</span>"<span class="token punctuation">;</span>
+string_array9 <span class="token operator">+</span> string_array10 <span class="token comment">% 拼接</span>
+
+<span class="token comment">% 将内容为数字的文本转换为 double 等类型</span>
+<span class="token comment">% 字符数组会得到对应字符的Unicode编码：</span>
+char_array11 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'123'</span><span class="token punctuation">;</span><span class="token string">'1e2'</span><span class="token punctuation">;</span><span class="token string">'1.2'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+char_array12 <span class="token operator">=</span> <span class="token string">'123 456 789'</span><span class="token punctuation">;</span>
+<span class="token function">double</span><span class="token punctuation">(</span>char_array11<span class="token punctuation">)</span>
+<span class="token function">double</span><span class="token punctuation">(</span>char_array12<span class="token punctuation">)</span>
+<span class="token comment">% 字符串数组则直接得到文本表示的数字：</span>
+string_array11 <span class="token operator">=</span> <span class="token punctuation">[</span>"<span class="token number">123</span>"<span class="token punctuation">;</span>"<span class="token number">1e2</span>"<span class="token punctuation">;</span>"<span class="token number">1.2</span>"<span class="token punctuation">]</span><span class="token punctuation">;</span>
+string_array12 <span class="token operator">=</span> "<span class="token number">123</span> <span class="token number">456</span> <span class="token number">789</span>"<span class="token punctuation">;</span>
+<span class="token function">double</span><span class="token punctuation">(</span>string_array11<span class="token punctuation">)</span> <span class="token comment">% [123; 100; 1.2]</span>
+<span class="token function">double</span><span class="token punctuation">(</span>string_array12<span class="token punctuation">)</span> <span class="token comment">% 123456789</span>
+
+<span class="token comment">% 欲将字符向量转换为文本表示的数字，请使用str2double函数</span>
+<span class="token comment">% 此函数的输入可以为字符向量、字符向量元胞数组(之后会学习到)或字符串数组：</span>
+<span class="token function">str2double</span><span class="token punctuation">(</span><span class="token string">'123'</span><span class="token punctuation">)</span>
+<span class="token function">str2double</span><span class="token punctuation">(</span><span class="token string">'1e5'</span><span class="token punctuation">)</span>
+<span class="token comment">%str2double(string_array11) % 3 x 1 ans</span>
+<span class="token comment">%str2double(string_array12) % NaN</span>
+<span class="token comment">%str2double(char_array11) % NaN</span>
+<span class="token comment">%str2double(char_array12) % NaN</span>
+<span class="token comment">% 可以尝试执行最后四行代码，看看会得到什么结果</span>
+<span class="token comment">% 关于str2double函数的详细内容请参考MATLAB说明文档</span>
+<span class="token comment">% 另有str2num函数可供选择</span>
+
+<span class="token comment">%% 将数字转换为文本</span>
+double_array1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">28165</span> <span class="token number">21326</span> <span class="token number">22823</span> <span class="token number">23398</span> <span class="token number">30005</span> <span class="token number">23376</span> <span class="token number">31185</span> <span class="token number">21327</span> <span class="token number">23398</span> <span class="token number">22521</span> <span class="token number">37096</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">% 字符数组会按照Unicode编码进行转换：</span>
+<span class="token function">char</span><span class="token punctuation">(</span>double_array1<span class="token punctuation">)</span>
+<span class="token comment">% 字符串数组则直接转换为文本：</span>
+<span class="token function">string</span><span class="token punctuation">(</span>double_array1<span class="token punctuation">)</span>
+<span class="token comment">% 欲将数字转换为对应的字符数组类型文本，请使用num2str函数：</span>
+<span class="token function">num2str</span><span class="token punctuation">(</span>double_array1<span class="token punctuation">)</span> <span class="token comment">% '28165 21326 ...'</span>
+<span class="token function">num2str</span><span class="token punctuation">(</span>double_array1<span class="token operator">'</span><span class="token punctuation">)</span> <span class="token comment">% 11x5 char</span>
+
+<span class="token comment">%% 索引操作</span>
+<span class="token comment">% 字符数组可以像数值数组一样正常索引</span>
+<span class="token comment">% 而单个字符串标量则无法索引内部的某个字符</span>
+char_array13 <span class="token operator">=</span> <span class="token string">'123456789'</span><span class="token punctuation">;</span>
+string_array13 <span class="token operator">=</span> "<span class="token number">123456789</span>"<span class="token punctuation">;</span>
+<span class="token function">char_array13</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token operator">:</span><span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token comment">% string_array13(3:6) % length == 1, error</span></code></pre>
+<h2 id="元胞数组"><a href="#元胞数组" class="headerlink" title="元胞数组"></a>元胞数组</h2><p>元胞数组是包含称为元胞的索引数据容器的数据类型。每个元胞可以包含任意类型的数据。</p>
+<p>// TODO</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>无系 2021-2022 冬 MatPyFly 培训的 MATLAB 部分讲义</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>技术/MATLAB</category>
+      </categories>
+      <tags>
+        <tag>MATLAB</tag>
+      </tags>
+  </entry>
 </search>
