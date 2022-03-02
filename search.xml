@@ -17529,4 +17529,116 @@ hold on
         <tag>MATLAB</tag>
       </tags>
   </entry>
+  <entry>
+    <title>GAN 生成对抗网络 简介</title>
+    <url>/gan/</url>
+    <content><![CDATA[<p>Reference 是 2021 Spring Hung-yi Lee 的机器学习的 GAN 部分。</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=4OWp0wDu6Xw&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J&amp;index=14">https://www.youtube.com/watch?v=4OWp0wDu6Xw&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J&amp;index=14</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>Network as Generator:<ul>
+<li>Network 的输入加上一个 random variable $z$ sampled from a certain distribution.</li>
+<li>使得相同的 $x$ 输入产生的输出 $y$ 不同，特别是对于那些需要“creativity”的任务.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Unconditional-Generation"><a href="#Unconditional-Generation" class="headerlink" title="Unconditional Generation"></a>Unconditional Generation</h2><ul>
+<li>Unconditional Generation<ul>
+<li>Input: $z$, sampled from a normal distribution, low-dim vector.</li>
+<li>Output: $y$, high-dim vector.</li>
+<li>Generator(Network): 把简单的 distribution 放大成复杂的 distribution.</li>
+<li>Discriminator: 多训练一个 Discriminator，输入一个图片，输出一个数值，越大代表输入图片越真实。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/02/B7s6RfJOHdurVlz.png" alt="image-20220302204358282"></p>
+<ul>
+<li>训练步骤：<ul>
+<li>Fix generator G, update discriminator D</li>
+<li>Fix discriminator D, update generator G</li>
+</ul>
+</li>
+</ul>
+<h2 id="Theory-behind-GAN"><a href="#Theory-behind-GAN" class="headerlink" title="Theory behind GAN"></a>Theory behind GAN</h2><p>我们的目标是：</p>
+<ul>
+<li>Normal Distribution 经过 Generator G 后产生的 Distribution $P_G$，与真实的数据集的 $P_{data}$ 越接近越好。</li>
+<li>$G^{*}=\arg \min _{G} \operatorname{Div}\left(P_{G}, P_{d a t a}\right)$</li>
+<li>问题是，该怎么计算 $\operatorname{Div}\left(P_{G}, P_{d a t a}\right)$ 呢？</li>
+<li>事实上，GAN 是在这两个 Distribution 中做 sample 来解决这个问题，也就是 Discriminator 的功能。</li>
+<li>$\max_D V(D,G)$ 与 $P_G$ 和 $P_{data}$ 的 JS Divergence 有关.</li>
+<li>也就是 $G^{*}=\arg \min _{G} \max _{D} V(G, D)$.</li>
+</ul>
+<h2 id="Tips-for-training-GAN"><a href="#Tips-for-training-GAN" class="headerlink" title="Tips for training GAN"></a>Tips for training GAN</h2><ul>
+<li>JS divergence 的问题？<ul>
+<li>$P_G$ 和 $P_{data}$ 往往交集不大，因为二者往往是高维空间的 manifold.</li>
+<li>对于两个没有重合的分布，JS Divergence 永远是 log 2.</li>
+<li>也就是说，JS Divergence 没有考虑两个 Distribution 之间的距离…</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/02/XNSAdmxy6QnHLjg.png" alt="image-20220302211540458"></p>
+<p>于是，我们换一种 Divergence…</p>
+<ul>
+<li>Wasserstein distance<ul>
+<li>两个 Distribution 之间的距离</li>
+<li>让一个 Distribution 变成另一个所花费的最小代价</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\max _{D \in 1-\text { Lipschitz }}\left\{E_{x \sim P_{d a t a}}[D(x)]-E_{x \sim P_{G}}[D(x)]\right\}</script><ul>
+<li>1-Lipschitz 限制<ul>
+<li>使得 D 足够平滑，以免出现朝向 inf 发展的情况</li>
+<li>如何实现这个限制？<ul>
+<li>Improved WGAN</li>
+<li>SNGAN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Evaluation-of-generation"><a href="#Evaluation-of-generation" class="headerlink" title="Evaluation of generation"></a>Evaluation of generation</h2><ul>
+<li>Quality of Image</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/02/vCqfKOxlocLFbjt.png" alt="image-20220302215009447"></p>
+<p>可能会出现 Mode Collapse 的现象，生成的图片比较集中，这个问题主要是由于实际的数据分布峰值有多个，而训练只拟合了其中的一个.</p>
+<p><img src="https://s2.loli.net/2022/03/02/ajGgzuOA4cUn7mh.png" alt="img"></p>
+<p>也可能会出现 Mode Dropping 的现象，训练只 pick 了某个特征，训练了多次以后，生成的图片人脸都是一样的，只有色调的改变。</p>
+<p><img src="https://s2.loli.net/2022/03/02/c48IWslmbdftrZX.png" alt="img"></p>
+<ul>
+<li>How to ensure diversity:</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/02/SsDhqYEUzO3Ibvx.png" alt="image-20220302215633902"></p>
+<ul>
+<li>Quality 看的是一张图片丢进 Image Classifier 之后的分布是否集中，而 Diversity 看的是一组图片丢进 Image Classifier 之后分布是否均匀.</li>
+</ul>
+<h2 id="Conditional-Generation"><a href="#Conditional-Generation" class="headerlink" title="Conditional Generation"></a>Conditional Generation</h2><p><img src="https://s2.loli.net/2022/03/02/dTHE8nAWeGLpawb.png" alt="image-20220302220339320"></p>
+<ul>
+<li>Discriminator 也增加输入 $x$，只有当 G 的输出与 $x$ match 的时候才输出高分.</li>
+</ul>
+<p>应用：</p>
+<ul>
+<li>Text to image</li>
+<li>Image to image</li>
+<li>Sound to image</li>
+</ul>
+<h2 id="Learning-from-unpaired-data"><a href="#Learning-from-unpaired-data" class="headerlink" title="Learning from unpaired data"></a>Learning from unpaired data</h2><p>最直观的想法：</p>
+<p><img src="https://s2.loli.net/2022/03/02/RwlZ9mcL6oQObpM.png" alt="image-20220302221524154"></p>
+<p><img src="https://s2.loli.net/2022/03/02/g2YL19ds6fjetFJ.png" alt="image-20220302221623184"></p>
+<p>但是，G 可能只会把 input 当成是一个 noise 来处理，在输入和输出之间没什么关系…</p>
+<p>于是我们改进模型：</p>
+<p><img src="https://s2.loli.net/2022/03/02/LPsAvhYX9r24Bgi.png" alt="image-20220302221820843"></p>
+<p>Then we add the dual part:</p>
+<p><img src="https://s2.loli.net/2022/03/02/QpL75kSsZMYawPF.png" alt="image-20220302222132643"></p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
 </search>
