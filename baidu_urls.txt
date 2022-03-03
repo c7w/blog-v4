@@ -50,3 +50,4 @@ https://www.c7w.tech/linear-algebra-complement/
 https://www.c7w.tech/dp-backpack/
 https://www.c7w.tech/calculus-complement/
 https://www.c7w.tech/hello-world/
+https://www.c7w.tech/diary22A/
