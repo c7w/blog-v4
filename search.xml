@@ -18038,7 +18038,7 @@ y_{c t x t}=\sum w_{i} y_{c t x t}^{i} \quad \text { where } \quad\left(w_{1}, \
 </ul>
 <h2 id="Review-Aggregator"><a href="#Review-Aggregator" class="headerlink" title="Review: Aggregator"></a>Review: Aggregator</h2><p><img src="https://s2.loli.net/2022/03/03/mFe25cMlpigUVts.png" alt="image-20220207164752721"></p>
 <p><strong>Independent Aggregator</strong></p>
-<p>$q_<em>$ and $d_</em>$ are the direct output of the BERT layer. A pooler is needed to extract the inputs for the scoring function. For example, $e_q = q_*[CLS]$ in Karpukhin et al.</p>
+<p>$q_\star$ and $d_\star$ are the direct output of the BERT layer. A pooler is needed to extract the inputs for the scoring function. For example, $e_q = q_\star[CLS]$ in Karpukhin et al.</p>
 <p>Although it might be efficient to compute, compressing m or n embeddings just into 1 embedding may lose information.</p>
 <p><strong>Late Interaction Aggregator</strong></p>
 <p>As shown in Figure 1 (c), the model preserves all of the document token embeddings {di} m i=1 in the cache until a new query is given.</p>
@@ -18092,6 +18092,7 @@ c_{j}^{t+1}=\frac{1}{\sum_{i=1}^{m} 1\left(s_{i}^{t}=j\right)} \sum_{\left\{i \m
 </ul>
 <p>// 下周组会要分享论文，寄寄寄，总不能讲这些 21 年及之前的老货色吧，下周看起来要顶着软工 init project 的时候多找几篇论文了</p>
 <p>// 读了也不算很多论文，但连 BERT 都没上手跑过几次，搞完挑战杯一定要上手写代码了，不然感觉还是太理论，太泛泛而谈了，丝毫没感到码力有提升（x</p>
+<p>// 计网原小作业都要读 TCP/IP 的论文 不会吧不会吧 计网原我 <em> </em> *</p>
 ]]></content>
       <categories>
         <category>理论</category>
