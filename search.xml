@@ -18137,6 +18137,76 @@ c_{j}^{t+1}=\frac{1}{\sum_{i=1}^{m} 1\left(s_{i}^{t}=j\right)} \sum_{\left\{i \m
 <li>下周实验室组会要分享论文，寄</li>
 <li>今晚一定早睡 c7w，能不能做到！</li>
 </ul>
+<h2 id="3-4"><a href="#3-4" class="headerlink" title="3.4"></a>3.4</h2><ul>
+<li>并没有做到</li>
+<li>数逻实验又没听课，Verilog 还是不会</li>
+<li>写计网原抓包实验</li>
+<li>晚上去桃李三层跟课咨委网原调研团队恰饭<ul>
+<li>达哥tql</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-5"><a href="#3-5" class="headerlink" title="3.5"></a>3.5</h2><ul>
+<li>过了游泳测试</li>
+<li>把软工 Project 的志愿顺序定了</li>
+<li>下午不知道在干什么，摸鱼都摸不利索</li>
+<li>晚上还得去值班，今天找时间去跑个步吧</li>
+</ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Adversarial Attack 概述</title>
+    <url>/adversarial-attack/</url>
+    <content><![CDATA[<p>Reference:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=xGQKhbjrFRk&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J&amp;index=24">https://www.youtube.com/watch?v=xGQKhbjrFRk&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J&amp;index=24</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>在 Network Deploy 的过程中，除了正确率之外，我们还需要其可以能够应对人类的恶意攻击。</p>
+<p>举个例子：给某个图片 $x$ 加入 Noise $\Delta x$. $\Delta x$ 小到在表征上人类难以发现。</p>
+<p>攻击可以分为 Targeted 和 Non-targeted 的方式，前者使得模型可以朝着攻击者想要的方向预测，后者只要预测结果不一样就好.</p>
+<h2 id="How-to-attack"><a href="#How-to-attack" class="headerlink" title="How to attack"></a>How to attack</h2><p>同样是解一个 optimization 的问题。</p>
+<p><img src="https://s2.loli.net/2022/03/05/Zljdb14K7BMqn8T.png" alt="image-20220305161342730"></p>
+<p>注意关注 Non-perceivable 条件 $d(x^0, x) \le \epsilon$ 的具体实现方式：</p>
+<ul>
+<li>L2-norm</li>
+<li>L-infinity (Better in image classification?)</li>
+</ul>
+<p>But still needs domain-specific knowledge…</p>
+<p>如果没有这个限制条件直接用 Gradient-descent 就可以，其实修改这个限制条件也相当直觉，其中 $fix(x^t)$ 是 $x^t$ 到可行域的投影。</p>
+<p><img src="https://s2.loli.net/2022/03/05/lKmTJ3pX56AOcPs.png" alt="image-20220305161948086"> </p>
+<h2 id="White-Box-Attack-v-s-Black-Box-Attack"><a href="#White-Box-Attack-v-s-Black-Box-Attack" class="headerlink" title="White Box Attack v.s. Black Box Attack?"></a>White Box Attack v.s. Black Box Attack?</h2><p>不知道模型参数的 Black Box Attack 也是有可能的。</p>
+<p>如果你知道要被攻击的对象的训练资料，那么可以自训练一个 proxy network 当成是靶子。</p>
+<p>但如果不知道训练资料呢？用大量的 unlabelled 资料让被攻击对象 predict，拿到预测结果后去 supervised 训练 proxy network 作为靶子。</p>
+<p><img src="https://s2.loli.net/2022/03/05/BKGFf5vhDs8dpex.png" alt="image-20220305162838051"></p>
+<p>可能 Data 才是造成这种可能被攻击的问题的原因…</p>
+<h2 id="发展方向"><a href="#发展方向" class="headerlink" title="发展方向"></a>发展方向</h2><ul>
+<li>Universal Adversarial Attack<ul>
+<li>找到一个信号，将这个信号施加到输入数据上，让输出结果全是错的。</li>
+</ul>
+</li>
+<li>Attack in the Physical World</li>
+<li>Adversarial Reprogramming</li>
+<li>Backdoor in Model</li>
+</ul>
+<h2 id="Defense"><a href="#Defense" class="headerlink" title="Defense"></a>Defense</h2><ul>
+<li><p>被动防御</p>
+<p><img src="https://s2.loli.net/2022/03/05/Z32iKUaVLPb4SAj.png" alt="image-20220305164107350"></p>
+</li>
+</ul>
+<p>比如说将图片稍微模糊化，图像压缩，基于 Generator 的图片再生成。</p>
+<p>这种 Filter 可以加上随机性…</p>
+<ul>
+<li>主动防御</li>
+</ul>
+<p>在最初就训练一个 Robust 的模型。</p>
+<p>在训练的过程中就进行攻击，在回传的过程中纠正。</p>
+<p><img src="https://s2.loli.net/2022/03/05/gmWsQMDaUtA7Rfd.png" alt="image-20220305164544063"></p>
+<p>同时还实现了数据增广，但是可能不能抵挡新的攻击方式。</p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/机器学习</category>
+      </categories>
   </entry>
 </search>
