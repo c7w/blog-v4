@@ -1,3 +1,4 @@
+https://www.c7w.tech/block-cipher/
 https://www.c7w.tech/adversarial-attack/
 https://www.c7w.tech/paper2202/
 https://www.c7w.tech/gan/
@@ -51,4 +52,3 @@ https://www.c7w.tech/linear-algebra-complement/
 https://www.c7w.tech/dp-backpack/
 https://www.c7w.tech/calculus-complement/
 https://www.c7w.tech/hello-world/
-https://www.c7w.tech/diary22A/
