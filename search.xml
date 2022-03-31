@@ -18343,6 +18343,38 @@ b_{7}
 <p><img src="https://s2.loli.net/2022/03/25/23PbK4vhcxBFuz7.png" alt="image-20220325173130166"></p>
 <h3 id="输出反馈模式-OFB"><a href="#输出反馈模式-OFB" class="headerlink" title="输出反馈模式 OFB"></a>输出反馈模式 OFB</h3><p><img src="https://s2.loli.net/2022/03/25/IwPrBQ4GO3JKUko.png" alt="image-20220325173350914"></p>
 <h3 id="计数器模式-CTR"><a href="#计数器模式-CTR" class="headerlink" title="计数器模式 CTR"></a>计数器模式 CTR</h3><p><img src="https://s2.loli.net/2022/03/25/M1hArD4kPoQuLyf.png" alt="image-20220325173417266"></p>
+<h3 id="工作模式分析"><a href="#工作模式分析" class="headerlink" title="工作模式分析"></a>工作模式分析</h3><ul>
+<li>Padding Oracle Attack：基于填充格式的攻击</li>
+</ul>
+<h2 id="分组密码分析"><a href="#分组密码分析" class="headerlink" title="分组密码分析"></a>分组密码分析</h2><blockquote>
+<p>重温：分组密码分析的攻击类型</p>
+<ul>
+<li>唯密文攻击：仅有当前密钥下截获的密文</li>
+<li>已知明文攻击：仅知道当前密钥下的明密文对</li>
+<li>[CPA] 选择明文攻击：能够获得当前密钥下的一些特定的明文所对应的密文</li>
+<li>[X, CCA] 选择密文攻击：能够获得当前密钥下的一些特定的密文所对应的明文</li>
+</ul>
+<p>重温：攻击复杂度</p>
+<ul>
+<li>时间复杂度</li>
+<li>空间复杂度</li>
+<li>数据复杂度：要 截获/Query 的数据数量</li>
+</ul>
+</blockquote>
+<ul>
+<li>通用密码分析过程<ul>
+<li>穷举密钥搜索攻击：唯密文攻击、已知明文攻击。</li>
+<li>字典攻击：建立密文-&gt;明文的映射字典</li>
+<li>查表攻击：给定明文 $x$，对于 $2^k$ 个密钥 $K$，打表 $\{(E_K(x), K)\}$.</li>
+<li>*时间存储折中攻击：对固定的明文 $P$ 和某个密文 $C_0$，已知加密算法 $S$，目标恢复加密过程中使用的密钥 $K_0$.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/30/Uvug96zSyHkeTV8.png" alt="image-20220330144402496"></p>
+<p><img src="https://s2.loli.net/2022/03/30/AaWVUjBwYKXuSDC.png" alt="image-20220330144422077"></p>
+<ul>
+<li>其改进方向：Rainbow 表（彩虹表）</li>
+</ul>
 ]]></content>
       <categories>
         <category>理论</category>
@@ -18350,6 +18382,141 @@ b_{7}
       </categories>
       <tags>
         <tag>密码学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《计算机网络原理》补完计划</title>
+    <url>/cs-network/</url>
+    <content><![CDATA[<p>2022 Spring，cy 老师的计网原。算是当期末的背诵提纲使用吧。希望不会咕咕咕。</p>
+<p>“补完计划”是指半期开始才开始做这个东西。</p>
+<a id="more"></a>
+<h2 id="介质访问子层基础"><a href="#介质访问子层基础" class="headerlink" title="介质访问子层基础"></a>介质访问子层基础</h2><h3 id="本节目标"><a href="#本节目标" class="headerlink" title="本节目标"></a>本节目标</h3><ol>
+<li><p>了解 MAC 子层的位置和功能</p>
+</li>
+<li><p>掌握两种 ALOHA 协议的原理和性能</p>
+</li>
+<li><p>掌握 CSMA 的工作原理及性能区别</p>
+</li>
+<li><p>掌握经典以太网的拓扑和帧结构</p>
+</li>
+<li><p>掌握以太网 CSMA/CD 中最小帧长与相关参数的关系</p>
+</li>
+</ol>
+<ul>
+<li>多路访问协议</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/u6YRTVOl2MG5yps.png" alt="image-20220331103939307"><img src="https://s2.loli.net/2022/03/31/aN4mlpD91OeRWnV.png" alt="image-20220331115410069"></p>
+<h3 id="Mac-子层"><a href="#Mac-子层" class="headerlink" title="Mac 子层"></a>Mac 子层</h3><p><img src="https://s2.loli.net/2022/03/31/jo9lgZVIxJ4LRTq.png" alt="image-20220331103335999"></p>
+<p>数据链路层分为两个子层：用于介质访问控制的 Mac 子层（Medium Access Control）和逻辑链路控制 LLC 子层。</p>
+<h3 id="随机访问"><a href="#随机访问" class="headerlink" title="随机访问"></a>随机访问</h3><h4 id="ALOHA-协议"><a href="#ALOHA-协议" class="headerlink" title="ALOHA 协议"></a>ALOHA 协议</h4><h5 id="纯-ALOHA-协议"><a href="#纯-ALOHA-协议" class="headerlink" title="纯 ALOHA 协议"></a>纯 ALOHA 协议</h5><p>纯 ALOHA 协议的工作原理是想发就发，而两个或以上的帧随时可能会冲突。发生冲突的帧被完全破坏，破坏了的帧要进行重传。</p>
+<p>为了便于分析我们定义以下概念并做出相应假设：</p>
+<ul>
+<li>帧时：发送一个标准长的帧所需的时间</li>
+<li>网络负载：某段时间内所有通信站点总共发送的平均帧数，即平均负载 $G$</li>
+<li>某个帧时内，到达帧数为 $k$ 的概率为 $P[k] = \dfrac{G^k}{k!}\times e^{-k}$.<ul>
+<li>$k=0$ 时表示该帧时内没有帧到达的概率为 $P[0] = e^{-G}$.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/A98YzeloR1EsNW2.png" alt="image-20220331110240317"></p>
+<p>纯 ALOHA 协议的冲突危险期是 $2D$，其中 $D$ 是帧时长度。这是因为针对一个数据帧来说，另一个数据帧只有其发送时间在这个数据帧的发送时间的 $\pm D$ 之外，才可能与其不冲突。</p>
+<p>于是，想要成功传输一个帧，这 $2D$ 的时间内应该均没有其他帧到达。于是该帧被成功传输的概率为 $P[0]^2=e^{-2G}$.</p>
+<p>在一个帧时内，纯 ALOHA 协议平均成功传输的帧数为：$S=G\times e^{-2G}$，当 $G=0.5$ 时，$S_{max} \approx 0.184$.</p>
+<h5 id="分隙-ALOHA-协议"><a href="#分隙-ALOHA-协议" class="headerlink" title="分隙 ALOHA 协议"></a>分隙 ALOHA 协议</h5><p>分隙 ALOHA（Slotted ALOHA）将连续的时间离散化成<strong>时隙</strong>，每一个 Time Slot 的长度就是 $D$。其规定每一帧的发送<strong>只能在时隙的起点</strong>。也就是说，既然冲突就彻底冲突，要不然就不可能冲突：</p>
+<p><img src="https://s2.loli.net/2022/03/31/jf2T8KUxiEqW5JD.png" alt="image-20220331110624254"></p>
+<p>这样做将冲突危险期降为了 $D$，一个帧时内平均成功传输的帧数 $S=G\times e^{-G}$，当 $G=1$ 时 $S_{max}=\frac 1 e \approx 0.368$.</p>
+<h4 id="CSMA-协议"><a href="#CSMA-协议" class="headerlink" title="CSMA 协议"></a>CSMA 协议</h4><p>CSMA 协议是载波侦听多路访问协议（Carrier Sense Multiple Access）的缩写。载波监听是说站点在为发送帧而访问传输信道之前，首先会监听信号是否已有载波。若已有载波，即有其他用户在使用信道，则不发送帧以避免冲突。</p>
+<p>CSMA 协议的特点：“先听后发”。</p>
+<h5 id="持续式-CSMA"><a href="#持续式-CSMA" class="headerlink" title="持续式 CSMA"></a>持续式 CSMA</h5><p>特点：</p>
+<ul>
+<li>经侦听，若介质空闲则发送</li>
+<li>若发送时出现冲突则等待随机时间再重复侦听步骤</li>
+<li>如介质忙则持续侦听，一旦空闲立即发送</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>持续侦听的等待延迟较小</li>
+</ul>
+<p>主要问题：</p>
+<ul>
+<li>如果两个以上的站等待发送，一旦介质空闲就一定会发生冲突</li>
+</ul>
+<h5 id="非持续式-CSMA"><a href="#非持续式-CSMA" class="headerlink" title="非持续式 CSMA"></a>非持续式 CSMA</h5><p>改进：</p>
+<ul>
+<li>如介质忙，则等待随机时间，然后再次侦听</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>等待一个随机时间可以减少再次碰撞冲突的可能性</li>
+</ul>
+<p>主要问题：</p>
+<ul>
+<li>信道利用率下降，传输时延增加：等待时间内介质上如果没有数据传送，则浪费了时间</li>
+</ul>
+<h5 id="p-持续式-CSMA"><a href="#p-持续式-CSMA" class="headerlink" title="p-持续式 CSMA"></a>p-持续式 CSMA</h5><p>改进：</p>
+<ul>
+<li>经侦听，如介质空闲，那么以 $p$ 的概率发送，以 $1–p$ 的概率延迟一个时间单元发送</li>
+<li>如介质忙，持续侦听，一旦空闲重复上述步骤</li>
+<li>如果发送已推迟一个时间单元，再重复上述步骤</li>
+</ul>
+<p>这就类似于 Russian Roulette…</p>
+<p>持续式 CSMA 事实上是 1-持续式 CSMA.</p>
+<p><img src="https://s2.loli.net/2022/03/31/gJ1wj2B8vnAayix.png" alt="image-20220331111701225"></p>
+<p>如 0.01-persistent CSMA，高吞吐量可能意味着高时延…</p>
+<h3 id="受控访问"><a href="#受控访问" class="headerlink" title="受控访问"></a>受控访问</h3><h4 id="位图协议"><a href="#位图协议" class="headerlink" title="位图协议"></a>位图协议</h4><p>每个周期划分成两个时段：</p>
+<ul>
+<li>竞争期：在自己的时槽内发送竞争 Bit，举手示意预留资源（Contention Slot）</li>
+<li>传输期：按序发送，明确使用权，避免冲突</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/dJwhCVBrE7mPKz8.png" alt="image-20220331112032634"></p>
+<p>假设有 $N$ 个用户，需 $N$ 个时隙，每帧 $d$ bit。则信道利用率：</p>
+<ul>
+<li>当在低负载时：$\omega = \dfrac d {d+N}$</li>
+<li><p>当在高负载时：$\omega = \dfrac d {d+1}$</p>
+<p>位图协议的缺点：位图协议时延较大，没有考虑优先级。</p>
+</li>
+</ul>
+<h4 id="二进制倒计数协议"><a href="#二进制倒计数协议" class="headerlink" title="二进制倒计数协议"></a>二进制倒计数协议</h4><p>将所有站点编二进制序号。若站点要占用信道则广播该信号，不同站发的地址按位或。一旦某站了解到比本站地址高位更高的位置被置为“1”，便放弃发送请求。</p>
+<p>N个站的二进制编码所需位数是 $\log_2N$ 位，每帧 $d$ 比特，信道的利用率为：$\omega = \dfrac d {d+\log_2 N}$。</p>
+<p>如何实现 100% 的利用率？如果规定每个帧的帧头为发送地址，竞争时也在发源地址，则效率为 100%。</p>
+<p>特点分析：高序号站点优先。</p>
+<h4 id="IEEE-802-5-令牌环"><a href="#IEEE-802-5-令牌环" class="headerlink" title="IEEE 802.5 令牌环"></a>IEEE 802.5 令牌环</h4><p>令牌（Token）便是使用信道发送信息的权限。令牌环是说令牌在站点环中不断传递，发送站点抓取环中传输的令牌，获得发送权，从而向环中发送数据帧。为了防止无限循环，环上的帧需要由目的站或发送站将其从环上去除，重新生成令牌，并转入监听模式。</p>
+<ul>
+<li>环的维护：环上存在一个监控站，负责环的维护，通过站的竞争产生令牌</li>
+<li>监控站的职责：保证令牌不丢失；处理环断开情况；清除坏帧，检查无主帧；</li>
+<li>优点：重负载下，效率接近 100%；除了环，令牌也可以运行在其它拓扑上，如令牌总线；</li>
+<li>缺点：令牌具有其维护代价。</li>
+</ul>
+<h3 id="有限竞争"><a href="#有限竞争" class="headerlink" title="有限竞争"></a>有限竞争</h3><h4 id="自适应树搜索协议"><a href="#自适应树搜索协议" class="headerlink" title="自适应树搜索协议"></a>自适应树搜索协议</h4><p><img src="https://s2.loli.net/2022/03/31/bTpjaMUBrCy7XfE.png" alt="image-20220331114703935"></p>
+<p>将所有站点组织成一颗二叉树结构。初始时所有站可以竞争信道，如果只有一个站要使用信道则直接发送。</p>
+<p>不然，在第 1 槽内半数站（2 以下站）参与竞争，如其中之一获得信道，本帧后的时槽留给 3 以下的站。</p>
+<p>重负载时，从根结点开始竞争，发生冲突的概率非常大。为提高效率，可以从中间结点开始竞争。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>CSMA 协议确实是在侦听到介质上没有数据发送时才发送，而发送后在实际应用中却仍然可能发生冲突。这包括两种可能的情况：</p>
+<ul>
+<li>同时传送</li>
+<li>传播延迟时间</li>
+</ul>
+<p>而面对潜在的冲突，我们可以使用 CSMA/CD（CSMA with Collision Detection，载波监听冲突检测）模式，即先听后发，边发边听。</p>
+<p><img src="https://s2.loli.net/2022/03/31/SWmZzFADoT7b5Ju.png" alt="image-20220331120232405"></p>
+<p>Collision Detection 的 Motivation：两个帧发生冲突之后，继续传输损坏帧毫无意义，浪费信道。如果站点边发送便监听，如果监听到冲突则停止发送，则可以提高信道的利用率。</p>
+<p>CSMA/CD 的工作过程：</p>
+<ul>
+<li>经侦听，若介质空闲则发送</li>
+<li>若介质忙则持续侦听，一旦空闲立刻发送</li>
+<li>如果发生冲突，立即停止并发送 Jam（强化）信号，等待一个随机分布的时间再重复步骤</li>
+</ul>
+<p>Jam 信号是向连接中的所有站点汇报“有冲突发生”，停止传输。</p>
+<p><img src="https://s2.loli.net/2022/03/31/oXPCtQ1er79SR2f.png" alt="image-20220331120619288"></p>
+<p>定义冲突窗口为发送站发送帧后能检测到冲突的最长时间，如上述的 $t_4-t_0$。冲突窗口最大为 $2D=RTT$，其中 $D$ 为单边延迟。</p>
+<p>这对发送方提出了需求：在发送一帧的同时，完成该帧的冲突检测。如有冲突，则要求在一帧发送完成前检测到冲突。</p>
+<p>因此要求发送方①<u>帧与帧之间的发送间隔至少为一个冲突窗口的时间</u>，即 $2D$. 除此之外，我们还需规定②<u>最短帧长</u>。</p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/网络原理</category>
+      </categories>
+      <tags>
+        <tag>网络原理</tag>
       </tags>
   </entry>
 </search>
