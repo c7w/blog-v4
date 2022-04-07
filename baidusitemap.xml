@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.c7w.tech/cs-network/</loc>
-    <lastmod>2022-03-31</lastmod>
+    <lastmod>2022-04-07</lastmod>
   </url>
   <url>
     <loc>https://www.c7w.tech/block-cipher/</loc>
-    <lastmod>2022-03-30</lastmod>
+    <lastmod>2022-04-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.c7w.tech/pbrt/</loc>
+    <lastmod>2022-03-31</lastmod>
   </url>
   <url>
     <loc>https://www.c7w.tech/adversarial-attack/</loc>
