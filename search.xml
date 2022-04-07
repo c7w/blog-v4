@@ -18663,17 +18663,4 @@ b_{7}
         <tag>网络原理</tag>
       </tags>
   </entry>
-  <entry>
-    <title>Physically Based Rendering:From Theory To Implementation</title>
-    <url>/pbrt/</url>
-    <content><![CDATA[<a id="more"></a>
-]]></content>
-      <categories>
-        <category>理论</category>
-        <category>理论/图形学</category>
-      </categories>
-      <tags>
-        <tag>图形学</tag>
-      </tags>
-  </entry>
 </search>

@@ -1,4 +1,3 @@
-https://www.c7w.tech/pbrt/
 https://www.c7w.tech/cs-network/
 https://www.c7w.tech/block-cipher/
 https://www.c7w.tech/adversarial-attack/
