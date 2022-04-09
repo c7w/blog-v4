@@ -18663,4 +18663,145 @@ b_{7}
         <tag>网络原理</tag>
       </tags>
   </entry>
+  <entry>
+    <title>多线程 in C++ &amp; Python</title>
+    <url>/multi-thread/</url>
+    <content><![CDATA[<blockquote>
+<p>c7w 显出极高兴的样子，将两个指头的长指甲敲着键盘，点头说，“对呀对呀！……多线程有四样写法，你知道么？”</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><p>C 首先拿下一杀. 编译时记得 <code>-pthread</code>.</p>
+<ul>
+<li>创建线程、收获返回值</li>
+</ul>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"pthread.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"stdio.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"stdlib.h"</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">NUM_THREADS</span> <span class="token expression"><span class="token number">12</span></span></span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ReturnVal</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> seed<span class="token punctuation">;</span>
+    <span class="token keyword">long</span> <span class="token keyword">long</span> my_sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">InputVal</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> seed<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> rubbish<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReturnVal</span><span class="token operator">*</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Input: void*</span>
+<span class="token comment">// Output: void*</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> r_in<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">InputVal</span><span class="token operator">*</span> in <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">InputVal</span><span class="token operator">*</span><span class="token punctuation">)</span> r_in<span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm a thread! I'm running with seed %d!\n"</span><span class="token punctuation">,</span> in<span class="token operator">-></span>seed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">srand</span><span class="token punctuation">(</span>in<span class="token operator">-></span>seed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span> <span class="token keyword">long</span> my_sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5e7</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        my_sum <span class="token operator">+=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm a thread! I'm exiting with output %lld!\n"</span><span class="token punctuation">,</span> my_sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    in<span class="token operator">-></span>ret<span class="token operator">-></span>seed <span class="token operator">=</span> in<span class="token operator">-></span>seed<span class="token punctuation">;</span> in<span class="token operator">-></span>ret<span class="token operator">-></span>my_sum <span class="token operator">=</span> my_sum<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">// Thread IDs</span>
+    <span class="token class-name">pthread_t</span> tids<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">struct</span> <span class="token class-name">InputVal</span> in<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReturnVal</span> ret<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NUM_THREADS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        in<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>seed <span class="token operator">=</span> <span class="token number">3</span> <span class="token operator">*</span> i <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span> in<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>rubbish <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> in<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>ret <span class="token operator">=</span> ret <span class="token operator">+</span> i<span class="token punctuation">;</span>
+        <span class="token comment">// Create Threads!</span>
+        <span class="token comment">// Params: Thread ID Storage, Thread Attribute, Function, Function args</span>
+        <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pthread_create</span><span class="token punctuation">(</span>tids <span class="token operator">+</span> i<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> run<span class="token punctuation">,</span> in <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Create error!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread ID %lld created!\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> tids<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NUM_THREADS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// Joining threads!</span>
+        <span class="token function">pthread_join</span><span class="token punctuation">(</span>tids<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Reaping thread %lld with output %lld!\n"</span><span class="token punctuation">,</span> tids<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> ret<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>my_sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h2><pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//</span>
+<span class="token comment">// Created by c7w on 2022/4/10.</span>
+<span class="token comment">//</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;thread></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">NUM_THREADS</span> <span class="token expression"><span class="token number">12</span></span></span>
+
+<span class="token keyword">struct</span> <span class="token class-name">ReturnVal</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> seed<span class="token punctuation">;</span>
+    <span class="token keyword">long</span> <span class="token keyword">long</span> my_sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">int</span> seed<span class="token punctuation">,</span> <span class="token keyword">int</span> rubbish<span class="token punctuation">,</span> ReturnVal<span class="token operator">*</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm a thread! I'm running with seed %d!\n"</span><span class="token punctuation">,</span> seed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">srand</span><span class="token punctuation">(</span>seed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span> <span class="token keyword">long</span> my_sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5e7</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        my_sum <span class="token operator">+=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    ret<span class="token operator">-></span>seed <span class="token operator">=</span> seed<span class="token punctuation">;</span> ret<span class="token operator">-></span>my_sum <span class="token operator">=</span> my_sum<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm a thread! I'm exiting with output %lld!\n"</span><span class="token punctuation">,</span> my_sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    std<span class="token double-colon punctuation">::</span>thread<span class="token double-colon punctuation">::</span>id main_thread_id <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">get_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Main thread ID: %lld\n"</span><span class="token punctuation">,</span> main_thread_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token double-colon punctuation">::</span>thread threads<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    ReturnVal ret<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NUM_THREADS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>run<span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ret <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// move-assign threads</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread ID %lld created!\n"</span><span class="token punctuation">,</span> threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">get_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NUM_THREADS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        std<span class="token double-colon punctuation">::</span>thread<span class="token double-colon punctuation">::</span>id id <span class="token operator">=</span> threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">get_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Reaping thread %lld with output %lld!\n"</span><span class="token punctuation">,</span> id<span class="token punctuation">,</span> ret<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>my_sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>// TODO: mutex</p>
+<h2 id="C-2"><a href="#C-2" class="headerlink" title="C"></a>C</h2><ul>
+<li><a href="https://c7w.tech/multi-thread-and-concurrent/">https://c7w.tech/multi-thread-and-concurrent/</a></li>
+</ul>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>// TODO: subprocessing</p>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><ul>
+<li><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1306580710588449">https://www.liaoxuefeng.com/wiki/1252599548343744/1306580710588449</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/高性能</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+        <tag>并发</tag>
+      </tags>
+  </entry>
 </search>
