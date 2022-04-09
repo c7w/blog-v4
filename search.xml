@@ -18664,11 +18664,9 @@ b_{7}
       </tags>
   </entry>
   <entry>
-    <title>多线程 in C++ &amp; Python</title>
+    <title>多线程 in C &amp; C++ &amp; Python</title>
     <url>/multi-thread/</url>
-    <content><![CDATA[<blockquote>
-<p>c7w 显出极高兴的样子，将两个指头的长指甲敲着键盘，点头说，“对呀对呀！……多线程有四样写法，你知道么？”</p>
-</blockquote>
+    <content><![CDATA[<p>c7w 显出极高兴的样子，将两个指头的长指甲敲着键盘，点头说，“对呀对呀！……多线程有四样写法，你知道么？”</p>
 <a id="more"></a>
 <h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><p>C 首先拿下一杀. 编译时记得 <code>-pthread</code>.</p>
 <ul>
@@ -18774,7 +18772,7 @@ b_{7}
     ReturnVal ret<span class="token punctuation">[</span>NUM_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NUM_THREADS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>run<span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ret <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// move-assign threads</span>
+        threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">thread</span><span class="token punctuation">(</span>run<span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token number">3</span><span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> ret <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread ID %lld created!\n"</span><span class="token punctuation">,</span> threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">get_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 
@@ -18787,7 +18785,7 @@ b_{7}
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 <p>// TODO: mutex</p>
-<h2 id="C-2"><a href="#C-2" class="headerlink" title="C"></a>C</h2><ul>
+<h2 id="C-Sharp"><a href="#C-Sharp" class="headerlink" title="C Sharp"></a>C Sharp</h2><ul>
 <li><a href="https://c7w.tech/multi-thread-and-concurrent/">https://c7w.tech/multi-thread-and-concurrent/</a></li>
 </ul>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>// TODO: subprocessing</p>
