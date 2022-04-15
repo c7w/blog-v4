@@ -18654,6 +18654,31 @@ b_{7}
 <p><img src="https://s2.loli.net/2022/04/07/9mwHkdthU2XJxWo.png" alt="image-20220407121317152"></p>
 <p><strong>无碎片交换</strong> 接收到帧的前 64 字节，即开始转发。这样过滤了冲突碎片，延迟和转发错帧介于存储转发和直通交换之间，但仍可能转发错误帧，不支持非对称交换。</p>
 <p><img src="https://s2.loli.net/2022/04/07/q5bYZzuMCWcgGEB.png" alt="image-20220407121350899"></p>
+<h3 id="VLAN"><a href="#VLAN" class="headerlink" title="VLAN"></a>VLAN</h3><p><strong>广播域</strong> 广播域是一个广播帧能够到达的范围。在缺省情况下，交换机所有端口同属于一个广播域，无法隔离广播域。广播帧在广播域中传播，占用资源，降低性能，且具有安全隐患。</p>
+<p><img src="https://s2.loli.net/2022/04/14/DMmkWRiOj536wca.png" alt="image-20220414103157970"></p>
+<p><strong>虚拟局域网</strong> 需要在物理网络上根据用途、工作组、应用等来进行逻辑划分的局域网络，与用户的物理位置没有关系。</p>
+<p>每一个 VLAN 是一个独立的广播域，交换机通过划分 VLAN 来分隔广播域。不同 VLAN 的成员之间不能直接进行二层通信。</p>
+<p><img src="https://s2.loli.net/2022/04/14/RWUtgrEu1lAc6IN.png" alt="image-20220414103237277"></p>
+<h4 id="VLAN-类型"><a href="#VLAN-类型" class="headerlink" title="VLAN 类型"></a>VLAN 类型</h4><p>VLAN 有四种类型，包括基于端口的、基于 MAC 地址的、基于协议的和基于子网的。</p>
+<p><strong>基于端口的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 端口 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/ApDfVkXvhQG1dx4.png" alt="image-20220414103455111"></p>
+<p><strong>基于 MAC 地址的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 MAC 地址 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/PfeEHywvi4R9znm.png" alt="image-20220414103541618"></p>
+<p><strong>基于协议的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 协议 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/ZBWioDC2acXtPVq.png" alt="image-20220414103608166"></p>
+<p><strong>基于子网的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 子网 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/3JgdYTm8hkQ5EDu.png" alt="image-20220414103814578"></p>
+<p><strong>问题</strong> 如何让交换机区分不同 VLAN 的数据帧？</p>
+<p>在数据帧中需要携带 VLAN 标记…VLAN 标记由交换机添加/剥除，对终端站点透明。</p>
+<p><img src="https://s2.loli.net/2022/04/14/BrxR8eKUkzCDPn9.png" alt="image-20220414104950548"></p>
+<p><strong>帧标记标准 IEEE 802.1Q</strong></p>
+<p><img src="https://s2.loli.net/2022/04/14/vNreEnfLB5IYO3l.png" alt="image-20220414105155439"></p>
+<p><strong>Access 端口与 Trunk 端口</strong> </p>
+<p>接入链路类型端口可以通过指定 VLAN 的流量，干道链路允许多个 VLAN 的流量通过。</p>
+<p><img src="https://s2.loli.net/2022/04/14/YNz89HslvKWiTCt.png" alt="image-20220414105507630"></p>
+<h3 id="WLAN"><a href="#WLAN" class="headerlink" title="WLAN"></a>WLAN</h3><p><strong>无线局域网</strong> 指以无线信道作为传输介质的计算机局域网。</p>
+<p><strong>无线局域网的组网模式</strong></p>
+<p><img src="https://s2.loli.net/2022/04/14/CwvSILEkdpf7NK8.png" alt="image-20220414110721285"></p>
 ]]></content>
       <categories>
         <category>理论</category>
@@ -18893,6 +18918,24 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
       <tags>
         <tag>多线程</tag>
         <tag>并发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>光子映射与 SPPM</title>
+    <url>/photon-mapping/</url>
+    <content><![CDATA[<p>从 PT 迁移学习到 SPPM.</p>
+<a id="more"></a>
+<h2 id="Basic-Photon-Mapping"><a href="#Basic-Photon-Mapping" class="headerlink" title="Basic Photon Mapping"></a>Basic Photon Mapping</h2><p>基本的光子映射分为两个阶段（pass）。</p>
+<p>第一阶段，构建一张光子图，存储从光源发射的所有光子的通量信息。</p>
+<p>第二阶段，从相机进行传统的路径追踪（path tracing），在追踪到漫反射表面的时候，统计附近的光子信息，并根据这些信息计算出最终的辐射率（radiance）。</p>
+<h3 id="Pass-1-Building-Photon-Map"><a href="#Pass-1-Building-Photon-Map" class="headerlink" title="Pass 1: Building Photon Map"></a>Pass 1: Building Photon Map</h3><p>我们从光源发射出光子，让光子在场景中反复弹射，每次击中漫反射表面都进行一次光子的记录，直到被某个漫反射表面彻底吸收掉为止。</p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/计算机图形学</category>
+      </categories>
+      <tags>
+        <tag>图形学</tag>
       </tags>
   </entry>
 </search>
