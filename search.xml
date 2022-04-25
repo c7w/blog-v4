@@ -18938,4 +18938,151 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
         <tag>图形学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>16-889 三维视觉入门</title>
+    <url>/16-889-3d-vision/</url>
+    <content><![CDATA[<p>大概是一些笔记和个人想法吧。f.r. <a href="https://learning3d.github.io/">https://learning3d.github.io/</a></p>
+<p>本课程可能 cover 的内容：</p>
+<ul>
+<li>三维模型的显式、隐式与 Nerual 表示<ul>
+<li>如何将三维的数据用可计算的方式来表示？</li>
+<li>不同类型的表示方式有哪些有点和缺点？</li>
+</ul>
+</li>
+<li>Image Formation<ul>
+<li>Form 2D Images from 3D Objects</li>
+</ul>
+</li>
+<li>Data-driven 3D Prediction<ul>
+<li>表示方法与学习目标</li>
+<li>重建刚体、连接体、整个场景</li>
+<li>弱监督？</li>
+</ul>
+</li>
+<li>Instance-specific 3D from multi-view</li>
+<li>Processing and Generating 3D</li>
+<li>Potpurri + Project Presentations</li>
+</ul>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>​        为什么要关注<strong>三维</strong>视觉（3D Vision）？数学家们考虑问题时，可以想象 $n$ 维空间中的情况，得出普遍性的结论之后，然后令 $n = 3$，便能得到一些有趣的结果。但是，<strong>我们所处的这个世界是三维的</strong>，针对三维的情况而特有的一些技巧或表示方法，可能比上述的普遍解法得到更优的效果。比如说，逆平方反比定律，就只有在给定<strong>三维</strong>这个条件之下才有效。</p>
+<h2 id="3D-Representations"><a href="#3D-Representations" class="headerlink" title="3D Representations"></a>3D Representations</h2><p>下面介绍一些常用的三维场景表示方法。</p>
+<ul>
+<li><strong>深度图</strong>（Depth Maps）：传感器进行数据采集时的常用方法<ul>
+<li>It is an <strong>image</strong> that represents <strong>how far</strong> each pixel <strong>p</strong> is.</li>
+<li>For every pixel $p$ in the map, it stores $D[p] \in \mathbb R^+$.</li>
+<li>深度图并没有捕捉到完整的 3D 结构，其只是记录了图像像素中的深度这一属性，可以称为 2.5D 表示</li>
+</ul>
+</li>
+</ul>
+<h3 id="Surface-Representations"><a href="#Surface-Representations" class="headerlink" title="Surface Representations"></a>Surface Representations</h3><p>这几种方法关注的是如何去刻画物体的表面。</p>
+<ul>
+<li><strong>点云</strong>（Point Clouds）：通常也是从传感器中采集，作为统一不同传感器不同输出数据格式的方式<ul>
+<li>通常记作 $\{p_1, p_2, \cdots, p_N\}$，<strong>无序</strong>的点列表</li>
+<li>点云是一种数据结构，通常表示成 $n \times 3$ 维的数组</li>
+<li>为了保证其对无序性，或者说使得数组中任意两个元素交换位置后，点云整体的不变性，需要考虑具有置换不变性的处理方法（比如 FC 就不 work，因为输入位置不同对其结果有影响）</li>
+<li>扩展：<strong>Oriented Point Clouds</strong>，同样是点的集合，不过集合元素为 $(p_i, n_i)$，记录了其法向用于渲染</li>
+<li>点云没有记录各点之间的连接关系：虽然增大采样率可以在某种程度上缓解这个问题，但是明明加边更有效率…</li>
+</ul>
+</li>
+<li><p><strong>网格</strong>（Meshes）：存储顶点与面的数据结构</p>
+<ul>
+<li>维护两个线性结构：顶点（Vertices）的集合、三角形面（Faces）的集合</li>
+<li>对顶点标号，每一个面定义为一个三维数组，数组的内容是相应顶点的标号</li>
+<li>是三维物体表面（Surface）的线性估计</li>
+<li>但是通常来说，设计能够还原出<strong>任意</strong>连接方式的方法是困难的，这是因为即使是 8 个顶点和 10 个三角形面的网格也是 Non-trivial 的</li>
+</ul>
+</li>
+<li><p><strong>参数曲面</strong>（Parametric Surfaces）</p>
+<ul>
+<li><p>通过一个映射 $f(u) = p \in \mathbb R^3; u \in M$ 来实现</p>
+<ul>
+<li>$f$ 需要是连续函数，$M$ 需要是二维流形</li>
+</ul>
+</li>
+<li><p>更多例子：贝塞尔曲面</p>
+</li>
+<li><p>同时，我们之前的想法一直是手动构造这样的二维流形 $M$ 与函数 $f$，来拟合想要的三维模型。</p>
+<ul>
+<li>而我们可以固定流形 $M$ 为单位球面，$f$ 为函数 $\theta$ 的参数，这样我们得到 $f_\theta(u) = p \in \mathbb R^3; u \in \mathbb S^2$，是否可以让机器自己学习合适的 $f_\theta$ 满足拟合要求？</li>
+<li>It is a nerual network with parameter $\theta$!</li>
+</ul>
+</li>
+<li><p>参数曲面也有一些不利之处</p>
+<ul>
+<li><p>仅靠给定的流形和函数，很难对全局结构做出把握</p>
+<ul>
+<li>给定 $q$，$q$ 到底是在描述的三维形体之内还是之外？</li>
+</ul>
+</li>
+<li><p>有时难以渲染（光追如何与 $f$ 求交？）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Volume-Representations"><a href="#Volume-Representations" class="headerlink" title="Volume Representations"></a>Volume Representations</h3><p>这些方法关注于如何描述物体自身占有的空间。</p>
+<ul>
+<li>体素化存储（Voxelized 3D）<ul>
+<li>这里 Voxel 的全拼是 Volume Pixel，类比 Pixel - Picture Element，Voxel 是 3D 存储的最基本单位（如下图，红色方块便是一个 Voxel）</li>
+<li><img src="https://s2.loli.net/2022/04/25/WvgS9cR7LlYtibP.png" alt="Voxels.svg"></li>
+<li>Voxel 将连续的三维空间离散化</li>
+<li>一个 Voxel 可以代表 $(W , H, D)$ 大小的实际空间</li>
+<li>这种类图像的表示对卷积等图像处理与生成方式友好</li>
+<li>缺点：增大分辨率可能会导致计算性能的需求以立方的次数增长</li>
+</ul>
+</li>
+<li><strong>隐式曲面</strong>（Implicit Surfaces）<ul>
+<li>其定义：$\{ \mathbf p | f (\mathbf p) = 0 \}$.</li>
+<li>我们可以对隐式曲面进行：<ul>
+<li><strong>并</strong>操作：$\bigcup_i f_i(\mathbf p) = \min_i f_i(\mathbf p)$.</li>
+<li><strong>交</strong>操作：$\bigcap_i f_i(\mathbf p) = \max_i f_i(\mathbf p)$.</li>
+<li><strong>差</strong>操作：$(f-g)(\mathbf p) = \max(f(\mathbf p), -g(\mathbf p))$.</li>
+</ul>
+</li>
+<li>当然我们可以将 $f$ 看做 $f_\theta$…</li>
+<li>Signed Distance Function<ul>
+<li>为函数增加条件：$f(p)$ 要代表点 $p$ 到所表示曲面的距离</li>
+<li>这种函数满足条件：$|| \nabla f || = 1$.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Other-Representations"><a href="#Other-Representations" class="headerlink" title="Other Representations"></a>Other Representations</h3><ul>
+<li><strong>八元树</strong>（Octrees）<ul>
+<li>对于渲染和存储来说十分方便</li>
+<li>很难编辑或预测</li>
+</ul>
+</li>
+<li>Layered Depth Images<ul>
+<li>Layer 1 = Visible Content</li>
+<li>Layer $n + 1$ = Depth and color of the “next” surface point the ray hits after Layer $n$</li>
+</ul>
+</li>
+<li>Multi-plane Images<ul>
+<li>极其方便渲染，each layer is just a plane at fixed length</li>
+<li>Limited resolution for far-away ccontent</li>
+</ul>
+</li>
+<li>CAD Models</li>
+<li>CSG Trees<ul>
+<li>物体的交并差组成的“计算图”</li>
+</ul>
+</li>
+</ul>
+<h3 id="更多讨论"><a href="#更多讨论" class="headerlink" title="更多讨论"></a>更多讨论</h3><p>我们关注以下两个问题：</p>
+<ol>
+<li>从可微性的角度，连续的变换能否拟合出相应的变化？</li>
+<li>从渲染的角度，将 3D 表示添加纹理后渲染出来是否简单？</li>
+</ol>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/三维视觉</category>
+      </categories>
+      <tags>
+        <tag>三维视觉</tag>
+      </tags>
+  </entry>
 </search>

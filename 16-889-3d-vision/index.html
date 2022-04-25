@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>16-889 三维视觉入门 | c7w 的博客</title><meta name="keywords" content="三维视觉"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="大概是一些笔记和个人想法吧。f.r. https:&#x2F;&#x2F;learning3d.github.io&#x2F; 本课程可能 cover 的内容：  三维模型的显式、隐式与 Nerual 表示 如何将三维的数据用可计算的方式来表示？ 不同类型的表示方式有哪些有点和缺点？   Image Formation Form 2D Images from 3D Objects   Data-driven 3D Predic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="16-889 三维视觉入门">
+<meta property="og:url" content="https://www.c7w.tech/16-889-3d-vision/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="大概是一些笔记和个人想法吧。f.r. https:&#x2F;&#x2F;learning3d.github.io&#x2F; 本课程可能 cover 的内容：  三维模型的显式、隐式与 Nerual 表示 如何将三维的数据用可计算的方式来表示？ 不同类型的表示方式有哪些有点和缺点？   Image Formation Form 2D Images from 3D Objects   Data-driven 3D Predic">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-04-24T13:28:16.000Z">
+<meta property="article:modified_time" content="2022-04-25T08:51:36.233Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="三维视觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/16-889-3d-vision/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '16-889 三维视觉入门',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-25 16:51:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">16-889 三维视觉入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-24T13:28:16.000Z" title="发表于 2022-04-24 21:28:16">2022-04-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-25T08:51:36.233Z" title="更新于 2022-04-25 16:51:36">2022-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/">理论/三维视觉</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="16-889 三维视觉入门"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>大概是一些笔记和个人想法吧。f.r. <a target="_blank" rel="noopener" href="https://learning3d.github.io/">https://learning3d.github.io/</a></p>
+<p>本课程可能 cover 的内容：</p>
+<ul>
+<li>三维模型的显式、隐式与 Nerual 表示<ul>
+<li>如何将三维的数据用可计算的方式来表示？</li>
+<li>不同类型的表示方式有哪些有点和缺点？</li>
+</ul>
+</li>
+<li>Image Formation<ul>
+<li>Form 2D Images from 3D Objects</li>
+</ul>
+</li>
+<li>Data-driven 3D Prediction<ul>
+<li>表示方法与学习目标</li>
+<li>重建刚体、连接体、整个场景</li>
+<li>弱监督？</li>
+</ul>
+</li>
+<li>Instance-specific 3D from multi-view</li>
+<li>Processing and Generating 3D</li>
+<li>Potpurri + Project Presentations</li>
+</ul>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>​        为什么要关注<strong>三维</strong>视觉（3D Vision）？数学家们考虑问题时，可以想象 $n$ 维空间中的情况，得出普遍性的结论之后，然后令 $n = 3$，便能得到一些有趣的结果。但是，<strong>我们所处的这个世界是三维的</strong>，针对三维的情况而特有的一些技巧或表示方法，可能比上述的普遍解法得到更优的效果。比如说，逆平方反比定律，就只有在给定<strong>三维</strong>这个条件之下才有效。</p>
+<h2 id="3D-Representations"><a href="#3D-Representations" class="headerlink" title="3D Representations"></a>3D Representations</h2><p>下面介绍一些常用的三维场景表示方法。</p>
+<ul>
+<li><strong>深度图</strong>（Depth Maps）：传感器进行数据采集时的常用方法<ul>
+<li>It is an <strong>image</strong> that represents <strong>how far</strong> each pixel <strong>p</strong> is.</li>
+<li>For every pixel $p$ in the map, it stores $D[p] \in \mathbb R^+$.</li>
+<li>深度图并没有捕捉到完整的 3D 结构，其只是记录了图像像素中的深度这一属性，可以称为 2.5D 表示</li>
+</ul>
+</li>
+</ul>
+<h3 id="Surface-Representations"><a href="#Surface-Representations" class="headerlink" title="Surface Representations"></a>Surface Representations</h3><p>这几种方法关注的是如何去刻画物体的表面。</p>
+<ul>
+<li><strong>点云</strong>（Point Clouds）：通常也是从传感器中采集，作为统一不同传感器不同输出数据格式的方式<ul>
+<li>通常记作 $\{p_1, p_2, \cdots, p_N\}$，<strong>无序</strong>的点列表</li>
+<li>点云是一种数据结构，通常表示成 $n \times 3$ 维的数组</li>
+<li>为了保证其对无序性，或者说使得数组中任意两个元素交换位置后，点云整体的不变性，需要考虑具有置换不变性的处理方法（比如 FC 就不 work，因为输入位置不同对其结果有影响）</li>
+<li>扩展：<strong>Oriented Point Clouds</strong>，同样是点的集合，不过集合元素为 $(p_i, n_i)$，记录了其法向用于渲染</li>
+<li>点云没有记录各点之间的连接关系：虽然增大采样率可以在某种程度上缓解这个问题，但是明明加边更有效率…</li>
+</ul>
+</li>
+<li><p><strong>网格</strong>（Meshes）：存储顶点与面的数据结构</p>
+<ul>
+<li>维护两个线性结构：顶点（Vertices）的集合、三角形面（Faces）的集合</li>
+<li>对顶点标号，每一个面定义为一个三维数组，数组的内容是相应顶点的标号</li>
+<li>是三维物体表面（Surface）的线性估计</li>
+<li>但是通常来说，设计能够还原出<strong>任意</strong>连接方式的方法是困难的，这是因为即使是 8 个顶点和 10 个三角形面的网格也是 Non-trivial 的</li>
+</ul>
+</li>
+<li><p><strong>参数曲面</strong>（Parametric Surfaces）</p>
+<ul>
+<li><p>通过一个映射 $f(u) = p \in \mathbb R^3; u \in M$ 来实现</p>
+<ul>
+<li>$f$ 需要是连续函数，$M$ 需要是二维流形</li>
+</ul>
+</li>
+<li><p>更多例子：贝塞尔曲面</p>
+</li>
+<li><p>同时，我们之前的想法一直是手动构造这样的二维流形 $M$ 与函数 $f$，来拟合想要的三维模型。</p>
+<ul>
+<li>而我们可以固定流形 $M$ 为单位球面，$f$ 为函数 $\theta$ 的参数，这样我们得到 $f_\theta(u) = p \in \mathbb R^3; u \in \mathbb S^2$，是否可以让机器自己学习合适的 $f_\theta$ 满足拟合要求？</li>
+<li>It is a nerual network with parameter $\theta$!</li>
+</ul>
+</li>
+<li><p>参数曲面也有一些不利之处</p>
+<ul>
+<li><p>仅靠给定的流形和函数，很难对全局结构做出把握</p>
+<ul>
+<li>给定 $q$，$q$ 到底是在描述的三维形体之内还是之外？</li>
+</ul>
+</li>
+<li><p>有时难以渲染（光追如何与 $f$ 求交？）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Volume-Representations"><a href="#Volume-Representations" class="headerlink" title="Volume Representations"></a>Volume Representations</h3><p>这些方法关注于如何描述物体自身占有的空间。</p>
+<ul>
+<li>体素化存储（Voxelized 3D）<ul>
+<li>这里 Voxel 的全拼是 Volume Pixel，类比 Pixel - Picture Element，Voxel 是 3D 存储的最基本单位（如下图，红色方块便是一个 Voxel）</li>
+<li><img src="https://s2.loli.net/2022/04/25/WvgS9cR7LlYtibP.png" alt="Voxels.svg"></li>
+<li>Voxel 将连续的三维空间离散化</li>
+<li>一个 Voxel 可以代表 $(W , H, D)$ 大小的实际空间</li>
+<li>这种类图像的表示对卷积等图像处理与生成方式友好</li>
+<li>缺点：增大分辨率可能会导致计算性能的需求以立方的次数增长</li>
+</ul>
+</li>
+<li><strong>隐式曲面</strong>（Implicit Surfaces）<ul>
+<li>其定义：$\{ \mathbf p | f (\mathbf p) = 0 \}$.</li>
+<li>我们可以对隐式曲面进行：<ul>
+<li><strong>并</strong>操作：$\bigcup_i f_i(\mathbf p) = \min_i f_i(\mathbf p)$.</li>
+<li><strong>交</strong>操作：$\bigcap_i f_i(\mathbf p) = \max_i f_i(\mathbf p)$.</li>
+<li><strong>差</strong>操作：$(f-g)(\mathbf p) = \max(f(\mathbf p), -g(\mathbf p))$.</li>
+</ul>
+</li>
+<li>当然我们可以将 $f$ 看做 $f_\theta$…</li>
+<li>Signed Distance Function<ul>
+<li>为函数增加条件：$f(p)$ 要代表点 $p$ 到所表示曲面的距离</li>
+<li>这种函数满足条件：$|| \nabla f || = 1$.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Other-Representations"><a href="#Other-Representations" class="headerlink" title="Other Representations"></a>Other Representations</h3><ul>
+<li><strong>八元树</strong>（Octrees）<ul>
+<li>对于渲染和存储来说十分方便</li>
+<li>很难编辑或预测</li>
+</ul>
+</li>
+<li>Layered Depth Images<ul>
+<li>Layer 1 = Visible Content</li>
+<li>Layer $n + 1$ = Depth and color of the “next” surface point the ray hits after Layer $n$</li>
+</ul>
+</li>
+<li>Multi-plane Images<ul>
+<li>极其方便渲染，each layer is just a plane at fixed length</li>
+<li>Limited resolution for far-away ccontent</li>
+</ul>
+</li>
+<li>CAD Models</li>
+<li>CSG Trees<ul>
+<li>物体的交并差组成的“计算图”</li>
+</ul>
+</li>
+</ul>
+<h3 id="更多讨论"><a href="#更多讨论" class="headerlink" title="更多讨论"></a>更多讨论</h3><p>我们关注以下两个问题：</p>
+<ol>
+<li>从可微性的角度，连续的变换能否拟合出相应的变化？</li>
+<li>从渲染的角度，将 3D 表示添加纹理后渲染出来是否简单？</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/16-889-3d-vision/">https://www.c7w.tech/16-889-3d-vision/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/">三维视觉</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/photon-mapping/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">光子映射与 SPPM</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3D-Representations"><span class="toc-number">2.</span> <span class="toc-text">3D Representations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Surface-Representations"><span class="toc-number">2.1.</span> <span class="toc-text">Surface Representations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Volume-Representations"><span class="toc-number">2.2.</span> <span class="toc-text">Volume Representations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-Representations"><span class="toc-number">2.3.</span> <span class="toc-text">Other Representations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E8%AE%A8%E8%AE%BA"><span class="toc-number">2.4.</span> <span class="toc-text">更多讨论</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div><div class="beian"><a target="_blank" rel="noopener" href="//beian.miit.gov.cn/" style="color: grey">京 ICP 备 2021034897 号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
