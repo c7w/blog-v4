@@ -19094,6 +19094,20 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 <p>我们首先将定义域的二维流形离散化，然后将离散化后的区域使用 $f$ 进行映射。</p>
 <h4 id="Sampling-Points-on-a-Triangle-Mesh"><a href="#Sampling-Points-on-a-Triangle-Mesh" class="headerlink" title="Sampling Points on a Triangle Mesh"></a>Sampling Points on a Triangle Mesh</h4><p><img src="https://s2.loli.net/2022/04/25/HsbmWnxOF2zBZUl.png" alt="image-20220425174422681">接下来，给定一个三角形，该如何在其上均匀采样呢？</p>
 <p><img src="https://s2.loli.net/2022/04/25/X3GIHKdfevLlZBJ.png" alt="image-20220425174609673"></p>
+<h3 id="Volume-Representation-和-Surface-Representation-之间的转换"><a href="#Volume-Representation-和-Surface-Representation-之间的转换" class="headerlink" title="Volume Representation 和 Surface Representation 之间的转换"></a>Volume Representation 和 Surface Representation 之间的转换</h3><h4 id="Volumes-to-Surface-Marching-Cubes"><a href="#Volumes-to-Surface-Marching-Cubes" class="headerlink" title="Volumes to Surface: Marching Cubes"></a>Volumes to Surface: Marching Cubes</h4><p><img src="https://s2.loli.net/2022/04/25/f4GtxzQM5AqlunS.png" alt="image-20220425184506421"></p>
+<p>我们本质上是要解决如何找出<strong>曲面边界</strong>的问题。比如，上面这张图绿色表示点在曲面内部，红色表示点在曲面外部，而具体该如何决定这个曲面边界所在的位置。通过这张图我们可以看到，对于每一个 Cube，决定其表面所在的边界是较为简单的。于是我们的想法便是，打表…</p>
+<p><img src="https://s2.loli.net/2022/04/25/CaYZAq1L8UWF7et.png" alt="image-20220425184311060"></p>
+<p>同时，使用 Voxel 的属性值来影响顶点的位置，这也保证了可微性。</p>
+<h4 id="Points-to-Meshes-via-Implicit-Functions"><a href="#Points-to-Meshes-via-Implicit-Functions" class="headerlink" title="Points to Meshes via Implicit Functions"></a>Points to Meshes via Implicit Functions</h4><p>Points to Meshes 本来是 Surface Representations 方面的内容，而直接在点云中建立不同点之间的连接关系让人感觉无从下手。</p>
+<p>而我们可以认为，点云中的点是某个隐函数取值为 0 的点集中 sample 出来的。我们可以尝试先拟合出隐函数，然后再将其转换成 Meshes.</p>
+<p><strong>Poisson Reconstruction</strong> (可以再好好看一看)</p>
+<h2 id="Image-Formation"><a href="#Image-Formation" class="headerlink" title="Image Formation"></a>Image Formation</h2><p>这一节我们关注成像相关的问题。与 GAMES 101 课程类似，这里不再过多赘述。</p>
+<ul>
+<li>小孔成像的原理</li>
+<li>正交投影与透视投影</li>
+<li>齐次坐标</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/25/xFypLgbDud4UavB.png" alt="image-20220425200131195"></p>
 ]]></content>
       <categories>
         <category>理论</category>
