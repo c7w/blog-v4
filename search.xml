@@ -19076,6 +19076,24 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 <li>从可微性的角度，连续的变换能否拟合出相应的变化？</li>
 <li>从渲染的角度，将 3D 表示添加纹理后渲染出来是否简单？</li>
 </ol>
+<h2 id="Conversions-between-3D-Representations"><a href="#Conversions-between-3D-Representations" class="headerlink" title="Conversions between 3D Representations"></a>Conversions between 3D Representations</h2><p>本节我们分为以下三个方面，介绍三维表示之间的不同转换方法：</p>
+<p><img src="https://s2.loli.net/2022/04/25/mKGudAtURpbiQSw.png" alt="image-20220425171456719"></p>
+<ul>
+<li>Surface Representations 之间的转换</li>
+<li>Volume Representations 之间的转换</li>
+<li>Surface Representations 和 Volume Representations 之间的转换</li>
+</ul>
+<h3 id="何谓“可微变换”"><a href="#何谓“可微变换”" class="headerlink" title="何谓“可微变换”"></a>何谓“可微变换”</h3><p>首先，变换的定义我们在《离散数学》课程中就已经学过，是一个集合到自身上的映射。那么，什么是可微变换呢？</p>
+<p><img src="https://s2.loli.net/2022/04/25/XxWRFetBq3D7GhM.png" alt="image-20220425171919339"></p>
+<p>我们假设给定图片输入 Input，其可用参数 $\theta_1$ 来表示，而经过了变换 $\mathcal T$ 之后，其得到了点云可用参数 $\theta_2$ 来表示。而此处 Loss $\mathcal L$ …？？？（没弄懂 回头要问一问）</p>
+<h3 id="Volume-Representations-之间的转换"><a href="#Volume-Representations-之间的转换" class="headerlink" title="Volume Representations 之间的转换"></a>Volume Representations 之间的转换</h3><h4 id="Approximating-Continuous-from-Discrete"><a href="#Approximating-Continuous-from-Discrete" class="headerlink" title="Approximating Continuous from Discrete"></a>Approximating Continuous from Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/k8X4gE79iKUPM1G.png" alt="image-20220425173204447"></p>
+<p>没错，其核心问题在于图中的注释，给定离散的网格对应的值，怎样才能将其连续化呢？没错，插值。我们早已学过一阶线性插值和双线性插值的概念，而这里我们便使用<strong>三线性插值</strong>来处理三维的问题。</p>
+<h4 id="From-Continuous-to-Discrete"><a href="#From-Continuous-to-Discrete" class="headerlink" title="From Continuous to Discrete"></a>From Continuous to Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/yUAbrKpl4N5PMgu.png" alt="image-20220425173544322"></p>
+<p>对于 sigmoid 函数，我们易于求 $\dfrac {\part V}{\part f}$.</p>
+<h3 id="Surface-Representations-之间的转换"><a href="#Surface-Representations-之间的转换" class="headerlink" title="Surface Representations 之间的转换"></a>Surface Representations 之间的转换</h3><h4 id="From-Continuous-to-Discrete-1"><a href="#From-Continuous-to-Discrete-1" class="headerlink" title="From Continuous to Discrete"></a>From Continuous to Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/S5pjk7ctMZF9D6o.png" alt="image-20220425174320830"></p>
+<p>我们首先将定义域的二维流形离散化，然后将离散化后的区域使用 $f$ 进行映射。</p>
+<h4 id="Sampling-Points-on-a-Triangle-Mesh"><a href="#Sampling-Points-on-a-Triangle-Mesh" class="headerlink" title="Sampling Points on a Triangle Mesh"></a>Sampling Points on a Triangle Mesh</h4><p><img src="https://s2.loli.net/2022/04/25/HsbmWnxOF2zBZUl.png" alt="image-20220425174422681">接下来，给定一个三角形，该如何在其上均匀采样呢？</p>
+<p><img src="https://s2.loli.net/2022/04/25/X3GIHKdfevLlZBJ.png" alt="image-20220425174609673"></p>
 ]]></content>
       <categories>
         <category>理论</category>
