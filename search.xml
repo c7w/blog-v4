@@ -19089,7 +19089,7 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 <h3 id="Volume-Representations-之间的转换"><a href="#Volume-Representations-之间的转换" class="headerlink" title="Volume Representations 之间的转换"></a>Volume Representations 之间的转换</h3><h4 id="Approximating-Continuous-from-Discrete"><a href="#Approximating-Continuous-from-Discrete" class="headerlink" title="Approximating Continuous from Discrete"></a>Approximating Continuous from Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/k8X4gE79iKUPM1G.png" alt="image-20220425173204447"></p>
 <p>没错，其核心问题在于图中的注释，给定离散的网格对应的值，怎样才能将其连续化呢？没错，插值。我们早已学过一阶线性插值和双线性插值的概念，而这里我们便使用<strong>三线性插值</strong>来处理三维的问题。</p>
 <h4 id="From-Continuous-to-Discrete"><a href="#From-Continuous-to-Discrete" class="headerlink" title="From Continuous to Discrete"></a>From Continuous to Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/yUAbrKpl4N5PMgu.png" alt="image-20220425173544322"></p>
-<p>对于 sigmoid 函数，我们易于求 $\dfrac {\part V}{\part f}$.</p>
+<p>对于 sigmoid 函数，我们易于求 $\dfrac {\partial V}{\partial f}$.</p>
 <h3 id="Surface-Representations-之间的转换"><a href="#Surface-Representations-之间的转换" class="headerlink" title="Surface Representations 之间的转换"></a>Surface Representations 之间的转换</h3><h4 id="From-Continuous-to-Discrete-1"><a href="#From-Continuous-to-Discrete-1" class="headerlink" title="From Continuous to Discrete"></a>From Continuous to Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/S5pjk7ctMZF9D6o.png" alt="image-20220425174320830"></p>
 <p>我们首先将定义域的二维流形离散化，然后将离散化后的区域使用 $f$ 进行映射。</p>
 <h4 id="Sampling-Points-on-a-Triangle-Mesh"><a href="#Sampling-Points-on-a-Triangle-Mesh" class="headerlink" title="Sampling Points on a Triangle Mesh"></a>Sampling Points on a Triangle Mesh</h4><p><img src="https://s2.loli.net/2022/04/25/HsbmWnxOF2zBZUl.png" alt="image-20220425174422681">接下来，给定一个三角形，该如何在其上均匀采样呢？</p>
@@ -19101,13 +19101,89 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 <h4 id="Points-to-Meshes-via-Implicit-Functions"><a href="#Points-to-Meshes-via-Implicit-Functions" class="headerlink" title="Points to Meshes via Implicit Functions"></a>Points to Meshes via Implicit Functions</h4><p>Points to Meshes 本来是 Surface Representations 方面的内容，而直接在点云中建立不同点之间的连接关系让人感觉无从下手。</p>
 <p>而我们可以认为，点云中的点是某个隐函数取值为 0 的点集中 sample 出来的。我们可以尝试先拟合出隐函数，然后再将其转换成 Meshes.</p>
 <p><strong>Poisson Reconstruction</strong> (可以再好好看一看)</p>
-<h2 id="Image-Formation"><a href="#Image-Formation" class="headerlink" title="Image Formation"></a>Image Formation</h2><p>这一节我们关注成像相关的问题。与 GAMES 101 课程类似，这里不再过多赘述。</p>
+<h2 id="Image-Formation"><a href="#Image-Formation" class="headerlink" title="Image Formation"></a>Image Formation</h2><p>这一节我们关注成像相关的问题。我们关注的是<strong>几何</strong>与<strong>物理</strong>：几何是 3D 空间中的某个点该映射到图像中的什么地方，而<strong>物理</strong>是说像素的颜色该如何被计算。</p>
 <ul>
 <li>小孔成像的原理</li>
-<li>正交投影与透视投影</li>
-<li>齐次坐标</li>
+</ul>
+<h3 id="Geometry"><a href="#Geometry" class="headerlink" title="Geometry"></a>Geometry</h3><ul>
+<li><p>正交投影与透视投影</p>
+</li>
+<li><p>齐次坐标</p>
+<ul>
+<li><p>我们假设成像平面在 $Z = 1$.</p>
+</li>
+<li><p>将三维空间中的点映射到像平面</p>
+<ul>
+<li>$(X, Y, Z) \rightarrow (X/Z, Y/Z)$，即 $\mathbb R^3 \rightarrow \mathbb R^2$.</li>
+</ul>
+</li>
+<li><p>定义 Projective 2D Space $\mathbb P^2$ 满足 $(x,y,z) \equiv (\lambda x, \lambda y, \lambda z)$，其满足的性质：</p>
+<ul>
+<li>$(x, y) \rightarrow(x,y,1)$，这是 $\mathbb R^2 \rightarrow \mathbb P^2$</li>
+<li>$(x,y,z) \rightarrow(x/z, y/z)$，这是 $\mathbb P^2 \rightarrow \mathbb R^2$.</li>
+</ul>
+</li>
+<li><p>然后，定义 Projective 3D Space $\mathbb P^3$，定义 $\mathbb P^3 \rightarrow \mathbb P^2$ 的 Projection Matrix $\mathbf P$ 如下：</p>
+<ul>
+<li><script type="math/tex; mode=display">
+\left[\begin{array}{llll}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right]</script></li>
+<li><p>这个 Projection Matrix 相当于取 $\mathbb P^3$ 这个四维坐标的前三项后得到 $\mathbb P^2$ 中的元素。</p>
+</li>
+<li><p>$\mathbf P X_{cam} = X_{img}$.</p>
+</li>
+</ul>
+</li>
+<li><p>更一般地，如果我们的像平面在 $Z = f$ 的位置，事实上我们可以把 $Z = 1$ 的这个“像”的 $x, y$ scale $f$ 倍，得出新的投影阵：</p>
+<ul>
+<li><script type="math/tex; mode=display">
+P \equiv\left[\begin{array}{llll}
+f & 0 & 0 & 0 \\
+0 & f & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right]</script></li>
+</ul>
+</li>
+<li><p>而接下来，再考虑更加一般的情况，任意的图像中心。</p>
+<ul>
+<li><script type="math/tex; mode=display">
+\mathbf{P}=\left[\begin{array}{llc}
+f & 0 & p_{x} \\
+0 & f & p_{y} \\
+0 & 0 & 1
+\end{array}\right]\left[\begin{array}{lll:l}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right]</script></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p><img src="https://s2.loli.net/2022/04/25/xFypLgbDud4UavB.png" alt="image-20220425200131195"></p>
+<p>然后是应用一个平移 + 旋转换基变换将摄像机的中心移到原点，up 与 y 方向对齐。</p>
+<p>注意不同的库在建坐标系时有不同的 Convention，这是可能导致 Bug 的原因之一。</p>
+<h3 id="Physics"><a href="#Physics" class="headerlink" title="Physics"></a>Physics</h3><p>熟悉的渲染方程：</p>
+<script type="math/tex; mode=display">
+L_{o}(x, v)=\int_{\Omega} f_{r}(x, v, \omega) L_{i}(x, \omega)(\omega \cdot n) d \omega</script><h2 id="Single-view-3D-History-2-5D"><a href="#Single-view-3D-History-2-5D" class="headerlink" title="Single-view 3D: History + 2.5D"></a>Single-view 3D: History + 2.5D</h2><p>我们关注的问题是，如何将一张 2D 的图像理解成 3D 的表示。上面几部分我们关注“怎样表示”，而接下来的几节我们关注以怎样的方法来进行理解。</p>
+<p><img src="https://s2.loli.net/2022/04/26/6tKqbfw4adE8N7I.png" alt="image-20220426233313729"></p>
+<p><img src="https://s2.loli.net/2022/04/26/pgz8Vkvjuh2L6JS.png" alt="image-20220426233335167"></p>
+<p>虽然有些问题我们难以界定（比如上面几张图中的问题），但我们所在的世界是一个有规律性的世界。虽然有些时候，我们对一个场景有无穷多种解释，但是有些解释比其他的可能性更大。几何的知识虽然信息量足够大，但有时还是不足够的，我们需要对于可能的场景结构有一些先验知识，以尽可能减小我们的“搜索空间”。</p>
+<p>那么这些先验知识都有哪些呢？一种是<strong>面向用户（User-specific）</strong>的，不同的用户的先验知识不同，另一种是<strong>数据驱动型（Data-Driven）</strong>的。目前的研究范式是：<strong>主要为数据驱动型，加入特定的 Inductive bias.</strong>（What is inductive bias? <a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE">https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE</a> 没看懂，<a href="https://www.baeldung.com/cs/ml-inductive-bias，大概就是一个模型做的假设吧，这个假设可能正确性很高(strong)或是很低(weak)）">https://www.baeldung.com/cs/ml-inductive-bias，大概就是一个模型做的假设吧，这个假设可能正确性很高(strong)或是很低(weak)）</a></p>
+<p>3D Inference 发展的历史：</p>
+<ul>
+<li>The first vision thesis: Model-based fitting<ul>
+<li>Improving Model-fitting: A Representative Approach</li>
+</ul>
+</li>
+<li>Automatic Photo Pop-up</li>
+<li>Modeling Indoor Scenes (Given the World Model as Inductive Bias)</li>
+</ul>
+<p>摆了摆了，明天再看 2022-4-26 23:56:10</p>
 ]]></content>
       <categories>
         <category>理论</category>
@@ -19115,6 +19191,130 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
       </categories>
       <tags>
         <tag>三维视觉</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Deep Learning for Computer Vision</title>
+    <url>/dl-for-computer-vision/</url>
+    <content><![CDATA[<p>Michigan Online 的 Deep Learning for Computer Vision.</p>
+<p>前面在讲 Machine Learning 相关的东西所以直接跳过去了，这里是 Lecture 15 ~ Lecture 22 的笔记。</p>
+<a id="more"></a>
+<h2 id="Lecture-15-Object-Detection"><a href="#Lecture-15-Object-Detection" class="headerlink" title="Lecture 15: Object Detection"></a>Lecture 15: Object Detection</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p><img src="https://s2.loli.net/2022/04/26/5FChmiPsvz8YUwl.png" alt="image-20220426155531177"></p>
+<ul>
+<li>Classification：针对整张图片的</li>
+<li>Semantic Segmentation：针对图片的不同 Part 分不同类别<ul>
+<li>这东西能不能做成 self-supervised？似乎可以？</li>
+</ul>
+</li>
+<li>Object Detection<ul>
+<li>Input: Single RGB Image</li>
+<li>Output: a set of detected objects; For each object predict:<ul>
+<li>Category label</li>
+<li>Bounding box (four numbers: x, y, width, height)</li>
+</ul>
+</li>
+<li>Challenging Points<ul>
+<li>多输出，不定数目</li>
+<li>输出不仅输出类型，还要输出包围盒</li>
+<li>高分辨率的图片</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Detecting-a-single-object-Multi-task-Loss"><a href="#Detecting-a-single-object-Multi-task-Loss" class="headerlink" title="Detecting a single object: Multi-task Loss"></a>Detecting a single object: Multi-task Loss</h3><p><img src="https://s2.loli.net/2022/04/26/wGvb8rg7ednRAhk.png" alt="image-20220426160850322"></p>
+<h3 id="Detecting-Multiple-Objects-Sliding-Window"><a href="#Detecting-Multiple-Objects-Sliding-Window" class="headerlink" title="Detecting Multiple Objects: Sliding Window"></a>Detecting Multiple Objects: Sliding Window</h3><ul>
+<li>加一个分类叫做 background，表示没有识别到物体</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/26/vqJU51bCgNQonhY.png" alt="image-20220426161359111"></p>
+<p>问题：枚举包围盒需要 $O(H^2W^2)$，而且可能重复检测…<em>二分法，树结构？</em></p>
+<h4 id="Region-Proposals"><a href="#Region-Proposals" class="headerlink" title="Region Proposals"></a>Region Proposals</h4><p>Key Idea: find a small set of boxes that are likely to cover all objects</p>
+<ul>
+<li>Often based on heuristics: e.g. look for “blob-like” image regions</li>
+<li>Relatively fast to run: <em>Selective Search</em></li>
+</ul>
+<h4 id="R-CNN-Region-Based-CNN"><a href="#R-CNN-Region-Based-CNN" class="headerlink" title="R-CNN: Region-Based CNN"></a>R-CNN: Region-Based CNN</h4><ul>
+<li>Run Region Proposals first, and get ~2k region candidates</li>
+<li>For each of the candidate regions, they could be different sizes, but we warp that region by 224 * 224</li>
+<li>Forward the classification network using the padded region, to decide if it is background or objects contained</li>
+<li><p>Learn another region transformation network: from 224 x 224 to Delta (x, y, h, w)</p>
+<ul>
+<li><img src="https://s2.loli.net/2022/04/26/uagDnvqCLK4yJ3U.png" alt="image-20220426162529821"></li>
+</ul>
+</li>
+<li><p>That can be summarized as:</p>
+<ul>
+<li><img src="https://s2.loli.net/2022/04/26/lrxWubUN2a61QVY.png" alt="image-20220426163111643"></li>
+</ul>
+</li>
+</ul>
+<h4 id="IoU"><a href="#IoU" class="headerlink" title="IoU"></a>IoU</h4><ul>
+<li>Evaluating (Comparing Boxes): <em>Intersection over Union</em> (IoU)<ul>
+<li>How can we compare our prediction to the ground-truth box?</li>
+<li>$\text{IoU} = \dfrac{\text{Area of Intersection}}{\text{Area of Union}}$</li>
+<li>Also called Jaccard similarity or Jaccard Index</li>
+<li>IoU &gt; 0.5 is “decent”</li>
+<li>IoU &gt; 0.7 is “pretty good”</li>
+<li>IoU &gt; 0.9 is “almost perfect”</li>
+</ul>
+</li>
+</ul>
+<h4 id="Overlapping-Boxes"><a href="#Overlapping-Boxes" class="headerlink" title="Overlapping Boxes"></a>Overlapping Boxes</h4><ul>
+<li>Object detectors often output many overlapping detections</li>
+<li>Trouble:  images very crowded with people</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/26/5vA9FSuw3ZfrQzP.png" alt="image-20220426163927640"></p>
+<h3 id="Evaluating-Object-Detectors-Mean-Average-Precision-mAP"><a href="#Evaluating-Object-Detectors-Mean-Average-Precision-mAP" class="headerlink" title="Evaluating Object Detectors: Mean Average Precision (mAP)"></a>Evaluating Object Detectors: Mean Average Precision (mAP)</h3><p><img src="https://s2.loli.net/2022/04/26/old4JAvTM2sUwOi.png" alt="image-20220426165608364"></p>
+<p>Get all APs from each category, then compute the mean value.</p>
+<p>记作 mAP@0.5 = 0.77. IoU 是参数。</p>
+<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p><img src="https://s2.loli.net/2022/04/26/fOeWnMd2KXyLTHQ.png" alt="image-20220426170107583"></p>
+<h4 id="RoI-Pool-Region-of-Interest-Pooling"><a href="#RoI-Pool-Region-of-Interest-Pooling" class="headerlink" title="RoI Pool: Region of Interest Pooling"></a>RoI Pool: Region of Interest Pooling</h4><ul>
+<li>Must come into a differential way…</li>
+<li>Region Proposals suggest on the original picture</li>
+<li>Just <em>project</em> proposal onto image features, then snap it to grid cells…</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/26/NyvmQa24pxKW1sr.png" alt="image-20220426171913274"></p>
+<ul>
+<li><em>Divide</em> it up into sub regions of equal area, like 2x2</li>
+<li>Perform <em>Max-Pooling</em> within each of the region</li>
+</ul>
+<ul>
+<li>Avoid Snapping? RoI Align, use bilinear interpolation to get everything down right…</li>
+</ul>
+<h3 id="Faster-R-CNN-Learnable-Region-Proposals"><a href="#Faster-R-CNN-Learnable-Region-Proposals" class="headerlink" title="Faster R-CNN: Learnable Region Proposals"></a>Faster R-CNN: Learnable Region Proposals</h3><ul>
+<li>Insert a region-proposal network, or RPN, to propose the regions</li>
+<li>How to use CNN to output region proposals in a trainable way?</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/26/f5MPszcZulnyOwL.png" alt="image-20220426172829598"></p>
+<ul>
+<li>Imagine anchor boxes of fixed size at each point in the feature map</li>
+<li>Use a CNN to decide, if the anchor box contains an object…</li>
+<li>Again, for positive boxes, also predict a box transform to regress from anchor box to object box…</li>
+</ul>
+<h4 id="Two-stages"><a href="#Two-stages" class="headerlink" title="Two stages"></a>Two stages</h4><p><img src="https://s2.loli.net/2022/04/26/UouDiLN3Cm8zyj5.png" alt="image-20220426173812732"></p>
+<p>Faster R-CNN 可以分为两个阶段考虑：</p>
+<ul>
+<li>First stage: Run once per image<ul>
+<li>Backbone Network to extract features</li>
+<li>Region proposal network to suggest regions</li>
+</ul>
+</li>
+<li>Second stage: Run once per region<ul>
+<li>Crop features: RoI pool / align</li>
+<li>Predict object class</li>
+<li>Predict b-box offset</li>
+</ul>
+</li>
+</ul>
+<h3 id="Single-Stage-Object-Detection"><a href="#Single-Stage-Object-Detection" class="headerlink" title="Single-Stage Object Detection"></a>Single-Stage Object Detection</h3><p>再稍作改动，得到：</p>
+<p><img src="https://s2.loli.net/2022/04/26/tGaAoexUHzIbYOE.png" alt="image-20220426173743628"></p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/CV</category>
+      </categories>
+      <tags>
+        <tag>计算机视觉</tag>
       </tags>
   </entry>
 </search>
