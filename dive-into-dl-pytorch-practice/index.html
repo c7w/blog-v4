@@ -1,0 +1,998 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《动手学深度学习》 Pytorch ver. 阅读后练习 | c7w 的博客</title><meta name="keywords" content="机器学习"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《动手学深度学习》原书地址：https:&#x2F;&#x2F;github.com&#x2F;d2l-ai&#x2F;d2l-zh 《动手学深度学习》(Pytorch ver.)：https:&#x2F;&#x2F;tangshusen.me&#x2F;Dive-into-DL-PyTorch&#x2F;#&#x2F;  知识架构：  本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域，c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《动手学深度学习》 Pytorch ver. 阅读后练习">
+<meta property="og:url" content="https://www.c7w.tech/dive-into-dl-pytorch-practice/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="《动手学深度学习》原书地址：https:&#x2F;&#x2F;github.com&#x2F;d2l-ai&#x2F;d2l-zh 《动手学深度学习》(Pytorch ver.)：https:&#x2F;&#x2F;tangshusen.me&#x2F;Dive-into-DL-PyTorch&#x2F;#&#x2F;  知识架构：  本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域，c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-26T13:44:56.000Z">
+<meta property="article:modified_time" content="2022-01-28T08:20:45.206Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/dive-into-dl-pytorch-practice/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《动手学深度学习》 Pytorch ver. 阅读后练习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-28 16:20:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《动手学深度学习》 Pytorch ver. 阅读后练习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-26T13:44:56.000Z" title="发表于 2022-01-26 21:44:56">2022-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-28T08:20:45.206Z" title="更新于 2022-01-28 16:20:45">2022-01-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">理论/机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《动手学深度学习》 Pytorch ver. 阅读后练习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/cover.png" alt=""></p>
+<ul>
+<li>《动手学深度学习》原书地址：<a target="_blank" rel="noopener" href="https://github.com/d2l-ai/d2l-zh">https://github.com/d2l-ai/d2l-zh</a></li>
+<li>《动手学深度学习》(Pytorch ver.)：<a target="_blank" rel="noopener" href="https://tangshusen.me/Dive-into-DL-PyTorch/#/">https://tangshusen.me/Dive-into-DL-PyTorch/#/</a></li>
+</ul>
+<p>知识架构：</p>
+<p><img src="https://tangshusen.me/Dive-into-DL-PyTorch/img/book-org.svg" alt="封面"></p>
+<p>本文的主要作用是在阅读过程中做一些摘录。对于「机器学习」领域，c7w 虽然曾尝试从各个领域入门，也尝试训过一些模型，但是还是缺少系统性、结构性的学习。希望阅读本书能带来更多的收获吧。</p>
+<p>与前面的一些笔记相比，本文更加侧重于「实践」。也就是说切实地提升自己的代码能力。</p>
+<p>本部分包含：</p>
+<ol>
+<li>{Finished} [5-5] 实现一个可以实现表情识别的类 CNN 网络并训练，重点在于造出一个机器学习的框架，然后评估其准确率。</li>
+<li>{Finished} [5-11, 5-12] 实现 ResNet 和 DenseNet，注意体会怎样才能使得运算维度匹配。</li>
+</ol>
+<a id="more"></a>
+<h2 id="5-5-CNN"><a href="#5-5-CNN" class="headerlink" title="[5-5] CNN"></a>[5-5] CNN</h2><p>主要是把训练模型的轮子连抄带造写了一遍。</p>
+<ul>
+<li><code>train.py</code></li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> toolkit<span class="token punctuation">.</span>dataset <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">import</span> torch
+<span class="token keyword">from</span> toolkit<span class="token punctuation">.</span>utils <span class="token keyword">import</span> get_device
+<span class="token keyword">from</span> toolkit<span class="token punctuation">.</span>net <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> toolkit<span class="token punctuation">.</span>procedure <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment"># By c7w, created on 2022/1/27.</span>
+
+<span class="token triple-quoted-string string">'''
+Usage:
++ Define your model in toolkit/net.py
++ Define your dataset in toolkit/dataset.py
++ Define configuration in main.py
+'''</span>
+
+device <span class="token operator">=</span> get_device<span class="token punctuation">(</span><span class="token punctuation">)</span>
+device <span class="token operator">=</span> <span class="token string">'cpu'</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Now on </span><span class="token interpolation"><span class="token punctuation">&#123;</span>device<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Configuration Here</span>
+config <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'epochs'</span><span class="token punctuation">:</span> <span class="token number">10000</span><span class="token punctuation">,</span>
+    <span class="token string">'batch_size'</span><span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+    <span class="token comment"># 'optimizer': in training stage</span>
+    <span class="token string">'early_stop'</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+    <span class="token string">'save_path'</span><span class="token punctuation">:</span> <span class="token string">'save/model2-rms.pth'</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token comment"># Data Preparation Stage</span>
+    tr_data <span class="token operator">=</span> Data<span class="token punctuation">(</span><span class="token string">'train'</span><span class="token punctuation">)</span>
+    vd_data <span class="token operator">=</span> Data<span class="token punctuation">(</span><span class="token string">'valid'</span><span class="token punctuation">)</span>
+    tt_data <span class="token operator">=</span> Data<span class="token punctuation">(</span><span class="token string">'test'</span><span class="token punctuation">)</span>
+
+    tr_set <span class="token operator">=</span> DataLoader<span class="token punctuation">(</span>tr_data<span class="token punctuation">,</span> config<span class="token punctuation">[</span><span class="token string">'batch_size'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> drop_last<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    vd_set <span class="token operator">=</span> DataLoader<span class="token punctuation">(</span>vd_data<span class="token punctuation">,</span> config<span class="token punctuation">[</span><span class="token string">'batch_size'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> drop_last<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    tt_set <span class="token operator">=</span> DataLoader<span class="token punctuation">(</span>tt_data<span class="token punctuation">,</span> config<span class="token punctuation">[</span><span class="token string">'batch_size'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> drop_last<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># Training Stage</span>
+    model <span class="token operator">=</span> LeNet<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+    <span class="token comment"># config['optimizer'] = torch.optim.Adam(model.parameters())</span>
+    config<span class="token punctuation">[</span><span class="token string">'optimizer'</span><span class="token punctuation">]</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>optim<span class="token punctuation">.</span>RMSprop<span class="token punctuation">(</span>model<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    model_loss<span class="token punctuation">,</span> model_loss_record <span class="token operator">=</span> train<span class="token punctuation">(</span>tr_set<span class="token punctuation">,</span> vd_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> config<span class="token punctuation">,</span> device<span class="token punctuation">)</span>
+
+    <span class="token comment"># Test Stage</span>
+    <span class="token keyword">del</span> model
+    model <span class="token operator">=</span> LeNet<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+    model<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span>config<span class="token punctuation">[</span><span class="token string">'save_path'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    acc <span class="token operator">=</span> test<span class="token punctuation">(</span>tt_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> device<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>acc<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>toolkit/dataset.py</code></li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token keyword">from</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data <span class="token keyword">import</span> Dataset<span class="token punctuation">,</span> DataLoader
+<span class="token keyword">from</span> icecream <span class="token keyword">import</span> ic
+<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
+
+<span class="token keyword">class</span> <span class="token class-name">Data</span><span class="token punctuation">(</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>mode <span class="token operator">=</span> mode
+        data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">"./project/data.csv"</span><span class="token punctuation">)</span>
+        
+        usage <span class="token operator">=</span> <span class="token string">"Test"</span> <span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">"test"</span> <span class="token keyword">else</span> <span class="token string">"Training"</span>
+        data <span class="token operator">=</span> data<span class="token punctuation">.</span>loc<span class="token punctuation">[</span>data<span class="token punctuation">.</span>Usage <span class="token operator">==</span> usage<span class="token punctuation">]</span>
+        
+        features <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        labels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        
+        <span class="token keyword">for</span> r<span class="token punctuation">,</span> row <span class="token keyword">in</span> data<span class="token punctuation">.</span>iterrows<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            labels<span class="token punctuation">.</span>append<span class="token punctuation">(</span>  <span class="token builtin">int</span><span class="token punctuation">(</span>row<span class="token punctuation">[</span><span class="token string">'emotion'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+            feature <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">(</span>number<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">255</span> <span class="token keyword">for</span> number <span class="token keyword">in</span> row<span class="token punctuation">[</span><span class="token string">'pixels'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+            features<span class="token punctuation">.</span>append<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span>feature<span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        self<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">zip</span><span class="token punctuation">(</span>features<span class="token punctuation">,</span> labels<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        random<span class="token punctuation">.</span>shuffle<span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        
+        <span class="token comment"># im = Image.fromarray((self.data[0][0].view(48, 48) * 255).numpy())</span>
+        <span class="token comment"># im = im.convert('L')</span>
+        <span class="token comment"># ic(self.data[0][0], self.data[0][1])</span>
+        <span class="token comment"># im.show()</span>
+        
+        l <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">10</span>
+        <span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">'valid'</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>data <span class="token operator">=</span> self<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token operator">-</span>l <span class="token punctuation">:</span> <span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>data <span class="token operator">=</span> self<span class="token punctuation">.</span>data<span class="token punctuation">[</span> <span class="token punctuation">:</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">-</span> l<span class="token punctuation">]</span>
+        
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Reading </span><span class="token interpolation"><span class="token punctuation">&#123;</span>mode<span class="token punctuation">&#125;</span></span><span class="token string"> set finished with </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> samples in total."</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Example:"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+        
+    <span class="token keyword">def</span> <span class="token function">__getitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>data<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+        
+    <span class="token keyword">def</span> <span class="token function">__len__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>  
+        <span class="token keyword">return</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>data<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>toolkit/net.py</code></li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+
+<span class="token keyword">class</span> <span class="token class-name">LeNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span>LeNet<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        self<span class="token punctuation">.</span>net <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            <span class="token comment"># Conv Layer</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">9</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            
+            nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            
+            <span class="token comment"># FC Layer</span>
+            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">*</span><span class="token number">6</span><span class="token operator">*</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">84</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm1d<span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        
+        self<span class="token punctuation">.</span>Loss <span class="token operator">=</span> nn<span class="token punctuation">.</span>CrossEntropyLoss<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>net<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">loss</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>Loss<span class="token punctuation">(</span>pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>toolkit/procedure.py</code></li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+
+<span class="token keyword">def</span> <span class="token function">train</span><span class="token punctuation">(</span>tr_set<span class="token punctuation">,</span> vd_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> config<span class="token punctuation">,</span> device<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    max_epoch_count <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'epochs'</span><span class="token punctuation">]</span>
+    optimizer <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'optimizer'</span><span class="token punctuation">]</span>
+
+    loss_record <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'train'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'valid'</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span>
+    curr_min_loss <span class="token operator">=</span> <span class="token number">1145141919810.0</span>
+    early_stop_cnt <span class="token operator">=</span> <span class="token number">0</span>
+    epoch <span class="token operator">=</span> <span class="token number">0</span>
+    
+    <span class="token keyword">while</span> epoch <span class="token operator">&lt;</span> max_epoch_count<span class="token punctuation">:</span>
+        model<span class="token punctuation">.</span>train<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> x<span class="token punctuation">,</span> y <span class="token keyword">in</span> tr_set<span class="token punctuation">:</span>
+            optimizer<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            x<span class="token punctuation">,</span> y <span class="token operator">=</span> x<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span><span class="token punctuation">,</span> y<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+            pred <span class="token operator">=</span> model<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            
+            l <span class="token operator">=</span> model<span class="token punctuation">.</span>loss<span class="token punctuation">(</span>pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+            l<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            optimizer<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            
+            loss_record<span class="token punctuation">[</span><span class="token string">'train'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>l<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        valid_mse <span class="token operator">=</span> validate<span class="token punctuation">(</span>vd_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> device<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Epoch &#123;:4d&#125; completed, tr_loss = &#123;:.4f&#125;'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>epoch <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> valid_mse<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+        
+        <span class="token keyword">if</span> valid_mse <span class="token operator">&lt;</span> curr_min_loss<span class="token punctuation">:</span>
+            <span class="token comment"># Save model if model improved</span>
+            curr_min_loss <span class="token operator">=</span> valid_mse
+            
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Saving model (epoch = &#123;:4d&#125;, loss = &#123;:.4f&#125;)'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>epoch <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> curr_min_loss<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>model<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> config<span class="token punctuation">[</span><span class="token string">'save_path'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment"># Save model to specified path</span>
+            early_stop_cnt <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            early_stop_cnt <span class="token operator">+=</span> <span class="token number">1</span>
+
+        epoch <span class="token operator">+=</span> <span class="token number">1</span>
+        loss_record<span class="token punctuation">[</span><span class="token string">'valid'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>valid_mse<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> early_stop_cnt <span class="token operator">></span> config<span class="token punctuation">[</span><span class="token string">'early_stop'</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token comment"># Stop training if your model stops improving for "config['early_stop']" epochs.</span>
+            <span class="token keyword">break</span>
+    
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'Finished training after </span><span class="token interpolation"><span class="token punctuation">&#123;</span>epoch<span class="token punctuation">&#125;</span></span><span class="token string"> epochs.'</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> curr_min_loss<span class="token punctuation">,</span> loss_record
+
+<span class="token keyword">def</span> <span class="token function">validate</span><span class="token punctuation">(</span>vd_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> device<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    model<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    total_loss <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> x<span class="token punctuation">,</span> y <span class="token keyword">in</span> vd_set<span class="token punctuation">:</span>
+        x<span class="token punctuation">,</span> y <span class="token operator">=</span> x<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span><span class="token punctuation">,</span> y<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+        <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            pred <span class="token operator">=</span> model<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            vd_loss <span class="token operator">=</span> model<span class="token punctuation">.</span>loss<span class="token punctuation">(</span>pred<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+        total_loss <span class="token operator">+=</span> vd_loss<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token builtin">len</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    
+    total_loss <span class="token operator">=</span> total_loss <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>vd_set<span class="token punctuation">.</span>dataset<span class="token punctuation">)</span>              <span class="token comment"># compute averaged loss</span>
+    <span class="token keyword">return</span> total_loss
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span>tt_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> device<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    model<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    total_right <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> x<span class="token punctuation">,</span> y <span class="token keyword">in</span> tt_set<span class="token punctuation">:</span>
+        x<span class="token punctuation">,</span> y <span class="token operator">=</span> x<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span><span class="token punctuation">,</span> y<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+        
+        <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            pred <span class="token operator">=</span> model<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>numpy<span class="token punctuation">(</span><span class="token punctuation">)</span>     
+            <span class="token keyword">for</span> i<span class="token punctuation">,</span> logit <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>pred<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>logit<span class="token punctuation">)</span> <span class="token operator">==</span> y<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span> total_right <span class="token operator">+=</span> <span class="token number">1</span>
+            
+
+    acc <span class="token operator">=</span> total_right <span class="token operator">/</span> <span class="token builtin">len</span><span class="token punctuation">(</span>tt_set<span class="token punctuation">.</span>dataset<span class="token punctuation">)</span>              <span class="token comment"># compute averaged loss</span>
+    <span class="token keyword">return</span> acc
+
+<span class="token keyword">def</span> <span class="token function">predict</span><span class="token punctuation">(</span>tt_set<span class="token punctuation">,</span> model<span class="token punctuation">,</span> device<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    model<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    preds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> tt_set<span class="token punctuation">:</span>
+        x <span class="token operator">=</span> x<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
+        <span class="token keyword">with</span> torch<span class="token punctuation">.</span>no_grad<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            pred <span class="token operator">=</span> model<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            preds<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pred<span class="token punctuation">.</span>detach<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    preds <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span>preds<span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>numpy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> preds</code></pre>
+<ul>
+<li><code>toolkit/utils.py</code></li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+
+
+<span class="token keyword">def</span> <span class="token function">get_device</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">'cuda'</span> <span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">'cpu'</span>
+
+<span class="token keyword">def</span> <span class="token function">get_one_hot</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> dim<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    t <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>size<span class="token operator">=</span><span class="token punctuation">(</span>dim<span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">)</span>
+    t<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> t</code></pre>
+<ul>
+<li>训练结果</li>
+</ul>
+<pre class="language-none"><code class="language-none">Now on cpu
+Reading train set finished with 25839 samples in total.
+Example:
+(tensor([[[0.2000, 0.1922, 0.2118,  ..., 0.1804, 0.2392, 0.2863],
+         [0.1922, 0.1843, 0.1647,  ..., 0.2392, 0.2078, 0.2588],
+         [0.1961, 0.1804, 0.1608,  ..., 0.2039, 0.1569, 0.2000],
+         ...,
+         [0.3098, 0.1961, 0.2353,  ..., 0.2980, 0.3255, 0.3412],
+         [0.2706, 0.1647, 0.2471,  ..., 0.3098, 0.3294, 0.3373],
+         [0.2392, 0.1686, 0.2157,  ..., 0.3255, 0.3333, 0.3490]]]), 3)
+
+
+Reading valid set finished with 2870 samples in total.
+Example:
+(tensor([[[0.1725, 0.1333, 0.1451,  ..., 0.3176, 0.3216, 0.4510],
+         [0.1333, 0.1333, 0.1255,  ..., 0.3137, 0.3216, 0.4471],
+         [0.1333, 0.1216, 0.1137,  ..., 0.3137, 0.3216, 0.4471],
+         ...,
+         [0.3922, 0.3255, 0.4039,  ..., 0.4000, 0.4510, 0.5137],
+         [0.3882, 0.3098, 0.3961,  ..., 0.3843, 0.4549, 0.5333],
+         [0.4000, 0.2745, 0.3725,  ..., 0.3961, 0.4392, 0.5137]]]), 3)
+
+
+Reading test set finished with 6461 samples in total.
+Example:
+(tensor([[[0.7373, 0.7608, 0.7255,  ..., 0.8549, 0.8157, 0.8275],
+         [0.7529, 0.7608, 0.7137,  ..., 0.8588, 0.8314, 0.8157],
+         [0.7804, 0.7451, 0.7137,  ..., 0.8510, 0.8353, 0.8157],
+         ...,
+         [0.4784, 0.5765, 0.5804,  ..., 0.6863, 0.5451, 0.4235],
+         [0.2549, 0.3373, 0.4588,  ..., 0.5804, 0.5373, 0.5608],
+         [0.3608, 0.3961, 0.6275,  ..., 0.5569, 0.3176, 0.6314]]]), 3)
+
+
+Epoch    1 completed, tr_loss &#x3D; 1.4529
+Saving model (epoch &#x3D;    1, loss &#x3D; 1.4529)
+Epoch    2 completed, tr_loss &#x3D; 1.2995
+Saving model (epoch &#x3D;    2, loss &#x3D; 1.2995)
+Epoch    3 completed, tr_loss &#x3D; 1.1131
+Saving model (epoch &#x3D;    3, loss &#x3D; 1.1131)
+Epoch    4 completed, tr_loss &#x3D; 1.0275
+Saving model (epoch &#x3D;    4, loss &#x3D; 1.0275)
+Epoch    5 completed, tr_loss &#x3D; 1.1062
+Epoch    6 completed, tr_loss &#x3D; 0.8805
+Saving model (epoch &#x3D;    6, loss &#x3D; 0.8805)
+Epoch    7 completed, tr_loss &#x3D; 0.7520
+Saving model (epoch &#x3D;    7, loss &#x3D; 0.7520)
+Epoch    8 completed, tr_loss &#x3D; 0.8390
+Epoch    9 completed, tr_loss &#x3D; 0.8715
+Epoch   10 completed, tr_loss &#x3D; 0.6758
+Saving model (epoch &#x3D;   10, loss &#x3D; 0.6758)
+Epoch   11 completed, tr_loss &#x3D; 0.6634
+Saving model (epoch &#x3D;   11, loss &#x3D; 0.6634)
+Epoch   12 completed, tr_loss &#x3D; 0.5063
+Saving model (epoch &#x3D;   12, loss &#x3D; 0.5063)
+Epoch   13 completed, tr_loss &#x3D; 0.5055
+Saving model (epoch &#x3D;   13, loss &#x3D; 0.5055)
+Epoch   14 completed, tr_loss &#x3D; 0.6266
+Epoch   15 completed, tr_loss &#x3D; 0.4653
+Saving model (epoch &#x3D;   15, loss &#x3D; 0.4653)
+Epoch   16 completed, tr_loss &#x3D; 0.4373
+Saving model (epoch &#x3D;   16, loss &#x3D; 0.4373)
+Epoch   17 completed, tr_loss &#x3D; 0.3892
+Saving model (epoch &#x3D;   17, loss &#x3D; 0.3892)
+Epoch   18 completed, tr_loss &#x3D; 0.4048
+Epoch   19 completed, tr_loss &#x3D; 0.4376
+Epoch   20 completed, tr_loss &#x3D; 0.3657
+Saving model (epoch &#x3D;   20, loss &#x3D; 0.3657)
+Epoch   21 completed, tr_loss &#x3D; 0.3765
+Epoch   22 completed, tr_loss &#x3D; 0.3329
+Saving model (epoch &#x3D;   22, loss &#x3D; 0.3329)
+Epoch   23 completed, tr_loss &#x3D; 0.3969
+Epoch   24 completed, tr_loss &#x3D; 0.3382
+Epoch   25 completed, tr_loss &#x3D; 0.3283
+Saving model (epoch &#x3D;   25, loss &#x3D; 0.3283)
+Epoch   26 completed, tr_loss &#x3D; 0.3192
+Saving model (epoch &#x3D;   26, loss &#x3D; 0.3192)
+Epoch   27 completed, tr_loss &#x3D; 0.3671
+Epoch   28 completed, tr_loss &#x3D; 0.3457
+Epoch   29 completed, tr_loss &#x3D; 0.3352
+Epoch   30 completed, tr_loss &#x3D; 0.3461
+Epoch   31 completed, tr_loss &#x3D; 0.3258
+Epoch   32 completed, tr_loss &#x3D; 0.3097
+Saving model (epoch &#x3D;   32, loss &#x3D; 0.3097)
+Epoch   33 completed, tr_loss &#x3D; 0.3976
+Epoch   34 completed, tr_loss &#x3D; 0.3364
+Epoch   35 completed, tr_loss &#x3D; 0.3275
+Epoch   36 completed, tr_loss &#x3D; 0.3179
+Epoch   37 completed, tr_loss &#x3D; 0.3415
+Epoch   38 completed, tr_loss &#x3D; 0.3471
+Epoch   39 completed, tr_loss &#x3D; 0.3302
+Epoch   40 completed, tr_loss &#x3D; 0.3407
+Epoch   41 completed, tr_loss &#x3D; 0.4045
+Epoch   42 completed, tr_loss &#x3D; 0.3310
+Epoch   43 completed, tr_loss &#x3D; 0.3626
+Epoch   44 completed, tr_loss &#x3D; 0.3288
+Epoch   45 completed, tr_loss &#x3D; 0.3600
+Epoch   46 completed, tr_loss &#x3D; 0.3866
+Epoch   47 completed, tr_loss &#x3D; 0.3613
+Epoch   48 completed, tr_loss &#x3D; 0.3402
+Epoch   49 completed, tr_loss &#x3D; 0.3562
+Epoch   50 completed, tr_loss &#x3D; 0.3674
+Epoch   51 completed, tr_loss &#x3D; 0.3733
+Epoch   52 completed, tr_loss &#x3D; 0.3461
+Epoch   53 completed, tr_loss &#x3D; 0.3542
+Finished training after 53 epochs.
+0.5304132487231079</code></pre>
+<h2 id="Resnet-amp-DenseNet-5-11-5-12"><a href="#Resnet-amp-DenseNet-5-11-5-12" class="headerlink" title="Resnet &amp; DenseNet (5-11, 5-12)"></a>Resnet &amp; DenseNet (5-11, 5-12)</h2><ul>
+<li><code>main.py</code></li>
+</ul>
+<p>随机生成数据，模拟 <code>batch_size = 4</code>，<code>input_channels = 3</code>, <code>pic_size = 96x96</code> 的情况，然后将其丢入实现的网络中查看运行结果，没有发生错误则说明维度对应正确。</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">from</span> ResNet <span class="token keyword">import</span> ResNet
+<span class="token keyword">from</span> DenseNet <span class="token keyword">import</span> DenseNet
+<span class="token keyword">from</span> icecream <span class="token keyword">import</span> ic <span class="token keyword">as</span> <span class="token keyword">print</span>
+
+data <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># print(data)</span>
+
+<span class="token comment"># net = ResNet(3)</span>
+net <span class="token operator">=</span> DenseNet<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+<span class="token comment"># print(net(data))</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>net<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">)</span></code></pre>
+<ul>
+<li><code>ResNet.py</code></li>
+</ul>
+<p>本文件中实现了 ResNet-18.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+
+<span class="token comment"># Implementation of ResNet-18</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Residual</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    
+    <span class="token comment"># Stride: to control the height/width of the manipulating data</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>conv1 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> stride<span class="token operator">=</span>stride<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>conv2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>out_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># If in_channels != out_channels</span>
+        <span class="token comment"># Then use 1x1 conv layer to change channel size</span>
+        self<span class="token punctuation">.</span>conv3 <span class="token operator">=</span> nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> stride<span class="token operator">=</span>stride<span class="token punctuation">)</span> <span class="token keyword">if</span> in_channels <span class="token operator">!=</span> out_channels <span class="token keyword">else</span> <span class="token boolean">None</span>
+        
+        self<span class="token punctuation">.</span>bn <span class="token operator">=</span> nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>out_channels<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>bn2 <span class="token operator">=</span> nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>out_channels<span class="token punctuation">)</span>
+        
+        self<span class="token punctuation">.</span>relu <span class="token operator">=</span> nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>conv1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>bn<span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>conv2<span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+        y <span class="token operator">=</span> self<span class="token punctuation">.</span>bn2<span class="token punctuation">(</span>y<span class="token punctuation">)</span>
+        
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>conv3<span class="token punctuation">:</span>
+            x <span class="token operator">=</span> self<span class="token punctuation">.</span>conv3<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>x <span class="token operator">+</span> y<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">resnet_block</span><span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> num_residuals<span class="token punctuation">,</span> first_block<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    blk <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_residuals<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span> <span class="token keyword">and</span> <span class="token keyword">not</span> first_block<span class="token punctuation">:</span>
+            blk<span class="token punctuation">.</span>append<span class="token punctuation">(</span>Residual<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            blk<span class="token punctuation">.</span>append<span class="token punctuation">(</span>Residual<span class="token punctuation">(</span>out_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span><span class="token operator">*</span>blk<span class="token punctuation">)</span>    
+
+<span class="token keyword">class</span> <span class="token class-name">ResNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> in_channels<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>start <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">7</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>residual <span class="token operator">=</span> nn<span class="token punctuation">.</span>ModuleList<span class="token punctuation">(</span><span class="token punctuation">[</span>
+            resnet_block<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            resnet_block<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">128</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            resnet_block<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            resnet_block<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">,</span> <span class="token number">512</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>output <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+
+    
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        old_shape <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>start<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> rb <span class="token keyword">in</span> self<span class="token punctuation">.</span>residual<span class="token punctuation">:</span>
+            x <span class="token operator">=</span> rb<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        x <span class="token operator">=</span> x<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span>old_shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>output<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> x</code></pre>
+<pre class="language-none"><code class="language-none">ic| net: ResNet(
+           (start): Sequential(
+             (0): Conv2d(3, 64, kernel_size&#x3D;(7, 7), stride&#x3D;(2, 2), padding&#x3D;(3, 3))
+             (1): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+             (2): ReLU()
+             (3): MaxPool2d(kernel_size&#x3D;3, stride&#x3D;2, padding&#x3D;1, dilation&#x3D;1, ceil_mode&#x3D;False)
+           )
+           (residual): ModuleList(
+             (0): Sequential(
+               (0): Residual(
+                 (conv1): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (bn): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+               (1): Residual(
+                 (conv1): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (bn): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+             )
+             (1): Sequential(
+               (0): Residual(
+                 (conv1): Conv2d(64, 128, kernel_size&#x3D;(3, 3), stride&#x3D;(2, 2), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(128, 128, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv3): Conv2d(64, 128, kernel_size&#x3D;(1, 1), stride&#x3D;(2, 2))
+                 (bn): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+               (1): Residual(
+                 (conv1): Conv2d(128, 128, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(128, 128, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (bn): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+             )
+             (2): Sequential(
+               (0): Residual(
+                 (conv1): Conv2d(128, 256, kernel_size&#x3D;(3, 3), stride&#x3D;(2, 2), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(256, 256, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv3): Conv2d(128, 256, kernel_size&#x3D;(1, 1), stride&#x3D;(2, 2))
+                 (bn): BatchNorm2d(256, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(256, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+               (1): Residual(
+                 (conv1): Conv2d(256, 256, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(256, 256, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (bn): BatchNorm2d(256, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(256, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+             )
+             (3): Sequential(
+               (0): Residual(
+                 (conv1): Conv2d(256, 512, kernel_size&#x3D;(3, 3), stride&#x3D;(2, 2), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(512, 512, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv3): Conv2d(256, 512, kernel_size&#x3D;(1, 1), stride&#x3D;(2, 2))
+                 (bn): BatchNorm2d(512, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(512, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+               (1): Residual(
+                 (conv1): Conv2d(512, 512, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (conv2): Conv2d(512, 512, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 (bn): BatchNorm2d(512, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (bn2): BatchNorm2d(512, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                 (relu): ReLU()
+               )
+             )
+           )
+           (output): Sequential(
+             (0): Flatten(start_dim&#x3D;1, end_dim&#x3D;-1)
+             (1): Linear(in_features&#x3D;512, out_features&#x3D;10, bias&#x3D;True)
+           )
+         )
+ic| net(data).shape: torch.Size([4, 10])</code></pre>
+<ul>
+<li><code>DenseNet.py</code></li>
+</ul>
+<p>本文件实现了 DenseNet.</p>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> enum
+<span class="token keyword">import</span> torch
+<span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+
+<span class="token comment"># Implementation of DenseNet</span>
+
+<span class="token keyword">def</span> <span class="token function">conv_block</span><span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+        nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DenseBlock</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>    
+    
+    <span class="token comment"># Out_channels number is the increasing rate of channels</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> num_convs<span class="token punctuation">,</span> in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        net <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_convs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            in_c <span class="token operator">=</span> in_channels <span class="token operator">+</span> i <span class="token operator">*</span> out_channels
+            net<span class="token punctuation">.</span>append<span class="token punctuation">(</span>conv_block<span class="token punctuation">(</span>in_c<span class="token punctuation">,</span> out_channels<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>net <span class="token operator">=</span> nn<span class="token punctuation">.</span>ModuleList<span class="token punctuation">(</span>net<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>out_channels <span class="token operator">=</span> in_channels <span class="token operator">+</span> num_convs <span class="token operator">*</span> out_channels
+    
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> blk <span class="token keyword">in</span> self<span class="token punctuation">.</span>net<span class="token punctuation">:</span>
+            y <span class="token operator">=</span> blk<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            x <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">,</span> dim <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> x
+
+<span class="token keyword">def</span> <span class="token function">transition_block</span><span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+        nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> out_channels<span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        nn<span class="token punctuation">.</span>AvgPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DenseNet</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> in_channels<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>start <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Conv2d<span class="token punctuation">(</span>in_channels<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token number">7</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>MaxPool2d<span class="token punctuation">(</span>kernel_size<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> stride<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        
+        dense_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        
+        num_channels<span class="token punctuation">,</span> growth_rate <span class="token operator">=</span> <span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">32</span>
+        num_convs_in_dense_blocks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+        
+        <span class="token keyword">for</span> i<span class="token punctuation">,</span> num_convs <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>num_convs_in_dense_blocks<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            DB <span class="token operator">=</span> DenseBlock<span class="token punctuation">(</span>num_convs<span class="token punctuation">,</span> num_channels<span class="token punctuation">,</span> growth_rate<span class="token punctuation">)</span>
+            num_channels <span class="token operator">=</span> DB<span class="token punctuation">.</span>out_channels
+            
+            dense_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>DB<span class="token punctuation">)</span>
+            
+            <span class="token keyword">if</span> i <span class="token operator">!=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>num_convs_in_dense_blocks<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+                dense_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span> transition_block<span class="token punctuation">(</span>num_channels<span class="token punctuation">,</span> num_channels <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                num_channels <span class="token operator">=</span> num_channels <span class="token operator">//</span> <span class="token number">2</span>
+        
+        self<span class="token punctuation">.</span>dense <span class="token operator">=</span> nn<span class="token punctuation">.</span>ModuleList<span class="token punctuation">(</span>dense_list<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>output <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>num_channels<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>ReLU<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>fc <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sequential<span class="token punctuation">(</span>
+            nn<span class="token punctuation">.</span>Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>num_channels<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>start<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> layer <span class="token keyword">in</span> self<span class="token punctuation">.</span>dense<span class="token punctuation">:</span>
+            x <span class="token operator">=</span> layer<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>output<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        x <span class="token operator">=</span> x<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        x <span class="token operator">=</span> self<span class="token punctuation">.</span>fc<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> x</code></pre>
+<pre class="language-none"><code class="language-none">ic| net: DenseNet(
+           (start): Sequential(
+             (0): Conv2d(3, 64, kernel_size&#x3D;(7, 7), stride&#x3D;(2, 2), padding&#x3D;(3, 3))
+             (1): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+             (2): ReLU()
+             (3): MaxPool2d(kernel_size&#x3D;3, stride&#x3D;2, padding&#x3D;1, dilation&#x3D;1, ceil_mode&#x3D;False)
+           )
+           (dense): ModuleList(
+             (0): DenseBlock(
+               (net): ModuleList(
+                 (0): Sequential(
+                   (0): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(64, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (1): Sequential(
+                   (0): BatchNorm2d(96, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(96, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (2): Sequential(
+                   (0): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(128, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (3): Sequential(
+                   (0): BatchNorm2d(160, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(160, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+               )
+             )
+             (1): Sequential(
+               (0): BatchNorm2d(192, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+               (1): ReLU()
+               (2): Conv2d(192, 96, kernel_size&#x3D;(1, 1), stride&#x3D;(1, 1))
+               (3): AvgPool2d(kernel_size&#x3D;2, stride&#x3D;2, padding&#x3D;0)
+             )
+             (2): DenseBlock(
+               (net): ModuleList(
+                 (0): Sequential(
+                   (0): BatchNorm2d(96, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(96, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (1): Sequential(
+                   (0): BatchNorm2d(128, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(128, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (2): Sequential(
+                   (0): BatchNorm2d(160, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(160, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (3): Sequential(
+                   (0): BatchNorm2d(192, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(192, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+               )
+             )
+             (3): Sequential(
+               (0): BatchNorm2d(224, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+               (1): ReLU()
+               (2): Conv2d(224, 112, kernel_size&#x3D;(1, 1), stride&#x3D;(1, 1))
+               (3): AvgPool2d(kernel_size&#x3D;2, stride&#x3D;2, padding&#x3D;0)
+             )
+             (4): DenseBlock(
+               (net): ModuleList(
+                 (0): Sequential(
+                   (0): BatchNorm2d(112, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(112, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (1): Sequential(
+                   (0): BatchNorm2d(144, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(144, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (2): Sequential(
+                   (0): BatchNorm2d(176, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(176, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (3): Sequential(
+                   (0): BatchNorm2d(208, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(208, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+               )
+             )
+             (5): Sequential(
+               (0): BatchNorm2d(240, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+               (1): ReLU()
+               (2): Conv2d(240, 120, kernel_size&#x3D;(1, 1), stride&#x3D;(1, 1))
+               (3): AvgPool2d(kernel_size&#x3D;2, stride&#x3D;2, padding&#x3D;0)
+             )
+             (6): DenseBlock(
+               (net): ModuleList(
+                 (0): Sequential(
+                   (0): BatchNorm2d(120, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(120, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (1): Sequential(
+                   (0): BatchNorm2d(152, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(152, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (2): Sequential(
+                   (0): BatchNorm2d(184, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(184, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+                 (3): Sequential(
+                   (0): BatchNorm2d(216, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+                   (1): ReLU()
+                   (2): Conv2d(216, 32, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1))
+                 )
+               )
+             )
+           )
+           (output): Sequential(
+             (0): BatchNorm2d(248, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)
+             (1): ReLU()
+           )
+           (fc): Sequential(
+             (0): Flatten(start_dim&#x3D;1, end_dim&#x3D;-1)
+             (1): Linear(in_features&#x3D;248, out_features&#x3D;10, bias&#x3D;True)
+           )
+         )
+ic| net(data).shape: torch.Size([4, 10])</code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/dive-into-dl-pytorch-practice/">https://www.c7w.tech/dive-into-dl-pytorch-practice/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dive-into-dl-pytorch-C/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《动手学深度学习》 Pytorch ver. 阅读摘录 Part C</div></div></a></div><div class="next-post pull-right"><a href="/dive-into-dl-pytorch-B/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《动手学深度学习》 Pytorch ver. 阅读摘录 Part B</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-CNN"><span class="toc-number">1.</span> <span class="toc-text">[5-5] CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resnet-amp-DenseNet-5-11-5-12"><span class="toc-number">2.</span> <span class="toc-text">Resnet &amp; DenseNet (5-11, 5-12)</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
