@@ -19230,7 +19230,7 @@ L(y, y^*) = L(\alpha y, y^*), \forall \alpha > 0.</script><p>这样设计出的 
 L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y^{*}\right)\right\|^{2} \\
 \alpha\left(y, y^{*}\right)=\frac{1}{n} \sum_{i}\left(\log y_{i}^{*}-\log y_{i}\right)
 \end{gathered}</script><blockquote>
-<p>From intuition we can know that, 把 log 去掉的话这个 Loss 是 $\dfrac {y_i}{y_i^<em>} \times \text{avg}(\dfrac{y^</em>}{y})$，如果我们只关注预测值和真实值之间的比例关系的话，预测出 $y_i^* = \alpha y_i, \forall i$ 的结果肯定是最好的。但是在真正运作的时候，我们没法保证这个 $\alpha$ 是个常数，于是我们就索性取了平均值。这个式子越接近于 1，取个 log，原来的 Loss Function 就越接近 0，不然就会因为范数的存在变大，非常符合直觉。</p>
+<p>From intuition we can know that, 把 log 去掉的话这个 Loss 是 $\dfrac {y_i}{y_i^\star} \times \text{avg}(\dfrac{y^\star}{y})$，如果我们只关注预测值和真实值之间的比例关系的话，预测出 $y_i^\star = \alpha y_i, \forall i$ 的结果肯定是最好的。但是在真正运作的时候，我们没法保证这个 $\alpha$ 是个常数，于是我们就索性取了平均值。这个式子越接近于 1，取个 log，原来的 Loss Function 就越接近 0，不然就会因为范数的存在变大，非常符合直觉。</p>
 </blockquote>
 <h4 id="Architecture-Example"><a href="#Architecture-Example" class="headerlink" title="Architecture Example"></a>Architecture Example</h4><p><img src="https://s2.loli.net/2022/04/27/KxdplNeT9gtcOQu.png" alt="image-20220427193805996"></p>
 <p>这是一种预测结构的例子。</p>
@@ -19243,11 +19243,11 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
 <p>We identify three major challenges. </p>
 <p>1) Inherently different representations of depth: direct vs. inverse depth representations.<br>2) Scale ambiguity: for some data sources, depth is only given up to an unknown scale.<br>3) Shift ambiguity: some datasets provide disparity only up to an unknown scale and global disparity shift that is a function of the unknown baseline and a horizontal shift of the principal points due to post-processing.</p>
 <p>这里的 disparity 可以理解成图像中“相对深度”的感觉。</p>
-<p>假设我们的图片有 $M$ 个像素，$d, d^* \in \mathbb R^m$ 是 GT / Predicted disparity。 </p>
+<p>假设我们的图片有 $M$ 个像素，$d, d^\star \in \mathbb R^m$ 是 GT / Predicted disparity。 </p>
 <p>然后我们定义两个算子：$s: \mathbb R^M \rightarrow \mathbb R_+, t: \mathbb R^M \rightarrow \mathbb R$ 是 scale 和 translation 的 estimator.</p>
 <p>接下来是如何解决 disparity 的 scale 和 translation 不统一的问题，论文提供两种方法。</p>
-<p>一种是最小二乘拟合 $d_i^<em>$ 和 $d_i$ 的关系（$d^</em>_i = s d_i + t$），找到 (s, t) 后做映射 $\hat{\mathbf{d}}=s \mathbf{d}+t, \quad \hat{\mathbf{d}}^{<em>}=\mathbf{d}^{</em>}$。</p>
-<p>另一种是做 normalize：$t(\mathbf{d})=\operatorname{median}(\mathbf{d}), \quad s(\mathbf{d})=\frac{1}{M} \sum_{i=1}^{M}|\mathbf{d}-t(\mathbf{d})|$，进而 $\hat{\mathbf{d}}=\frac{\mathbf{d}-t(\mathbf{d})}{s(\mathbf{d})}, \quad \hat{\mathbf{d}}^{<em>}=\frac{\mathbf{d}^{</em>}-t\left(\mathbf{d}^{<em>}\right)}{s\left(\mathbf{d}^{</em>}\right)}$.</p>
+<p>一种是最小二乘拟合 $d_i^\star$ 和 $d_i$ 的关系（$d^\star_i = s d_i + t$），找到 (s, t) 后做映射 $\hat{\mathbf{d}}=s \mathbf{d}+t, \quad \hat{\mathbf{d}}^{\star}=\mathbf{d}^{\star}$。</p>
+<p>另一种是做 normalize：$t(\mathbf{d})=\operatorname{median}(\mathbf{d}), \quad s(\mathbf{d})=\frac{1}{M} \sum_{i=1}^{M}|\mathbf{d}-t(\mathbf{d})|$，进而 $\hat{\mathbf{d}}=\frac{\mathbf{d}-t(\mathbf{d})}{s(\mathbf{d})}, \quad \hat{\mathbf{d}}^{\star}=\frac{\mathbf{d}^{\star}-t\left(\mathbf{d}^{\star}\right)}{s\left(\mathbf{d}^{\star}\right)}$.</p>
 <p>然后定义 scale- and shift- invariant loss：</p>
 <script type="math/tex; mode=display">
 \mathcal{L}_{s s i}\left(\hat{\mathbf{d}}, \hat{\mathbf{d}}^{*}\right)=\frac{1}{2 M} \sum_{i=1}^{M} \rho\left(\hat{\mathbf{d}}_{i}-\hat{\mathbf{d}}_{i}^{*}\right)</script><p>这里 $\rho$ 可以决定这个 Loss Function 的种类：第一种就用 $\rho(x) = x^2$，第二种用 $\rho(x) = |x|.$</p>
