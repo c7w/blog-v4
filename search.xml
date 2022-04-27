@@ -18942,6 +18942,9 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
     <title>16-889 三维视觉入门</title>
     <url>/16-889-3d-vision/</url>
     <content><![CDATA[<p>大概是一些笔记和个人想法吧。f.r. <a href="https://learning3d.github.io/">https://learning3d.github.io/</a></p>
+<blockquote>
+<p> 个人想法用这种格式书写，与笔记区分。所以可以直接跳过这部分，只看正文。</p>
+</blockquote>
 <p>本课程可能 cover 的内容：</p>
 <ul>
 <li>三维模型的显式、隐式与 Nerual 表示<ul>
@@ -19085,7 +19088,10 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 </ul>
 <h3 id="何谓“可微变换”"><a href="#何谓“可微变换”" class="headerlink" title="何谓“可微变换”"></a>何谓“可微变换”</h3><p>首先，变换的定义我们在《离散数学》课程中就已经学过，是一个集合到自身上的映射。那么，什么是可微变换呢？</p>
 <p><img src="https://s2.loli.net/2022/04/25/XxWRFetBq3D7GhM.png" alt="image-20220425171919339"></p>
-<p>我们假设给定图片输入 Input，其可用参数 $\theta_1$ 来表示，而经过了变换 $\mathcal T$ 之后，其得到了点云可用参数 $\theta_2$ 来表示。而此处 Loss $\mathcal L$ …？？？（没弄懂 回头要问一问）</p>
+<p>我们假设给定图片输入 Input，其可用参数 $\theta_1$ 来表示，而经过了变换 $\mathcal T$ 之后，其得到了点云可用参数 $\theta_2$ 来表示。如果我们可以计算出 L 对两个参数的偏导，那么就可以计算出这个变换的微分。</p>
+<blockquote>
+<p>这个 Loss 都有哪些计算方式？也就是说，怎么去衡量这个 Loss 对 $\theta$ 的微分？</p>
+</blockquote>
 <h3 id="Volume-Representations-之间的转换"><a href="#Volume-Representations-之间的转换" class="headerlink" title="Volume Representations 之间的转换"></a>Volume Representations 之间的转换</h3><h4 id="Approximating-Continuous-from-Discrete"><a href="#Approximating-Continuous-from-Discrete" class="headerlink" title="Approximating Continuous from Discrete"></a>Approximating Continuous from Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/k8X4gE79iKUPM1G.png" alt="image-20220425173204447"></p>
 <p>没错，其核心问题在于图中的注释，给定离散的网格对应的值，怎样才能将其连续化呢？没错，插值。我们早已学过一阶线性插值和双线性插值的概念，而这里我们便使用<strong>三线性插值</strong>来处理三维的问题。</p>
 <h4 id="From-Continuous-to-Discrete"><a href="#From-Continuous-to-Discrete" class="headerlink" title="From Continuous to Discrete"></a>From Continuous to Discrete</h4><p><img src="https://s2.loli.net/2022/04/25/yUAbrKpl4N5PMgu.png" alt="image-20220425173544322"></p>
@@ -19100,7 +19106,9 @@ added <span class="token operator">=</span> p_map<span class="token punctuation"
 <p>同时，使用 Voxel 的属性值来影响顶点的位置，这也保证了可微性。</p>
 <h4 id="Points-to-Meshes-via-Implicit-Functions"><a href="#Points-to-Meshes-via-Implicit-Functions" class="headerlink" title="Points to Meshes via Implicit Functions"></a>Points to Meshes via Implicit Functions</h4><p>Points to Meshes 本来是 Surface Representations 方面的内容，而直接在点云中建立不同点之间的连接关系让人感觉无从下手。</p>
 <p>而我们可以认为，点云中的点是某个隐函数取值为 0 的点集中 sample 出来的。我们可以尝试先拟合出隐函数，然后再将其转换成 Meshes.</p>
+<blockquote>
 <p><strong>Poisson Reconstruction</strong> (可以再好好看一看)</p>
+</blockquote>
 <h2 id="Image-Formation"><a href="#Image-Formation" class="headerlink" title="Image Formation"></a>Image Formation</h2><p>这一节我们关注成像相关的问题。我们关注的是<strong>几何</strong>与<strong>物理</strong>：几何是 3D 空间中的某个点该映射到图像中的什么地方，而<strong>物理</strong>是说像素的颜色该如何被计算。</p>
 <ul>
 <li>小孔成像的原理</li>
@@ -19172,18 +19180,152 @@ f & 0 & p_{x} \\
 L_{o}(x, v)=\int_{\Omega} f_{r}(x, v, \omega) L_{i}(x, \omega)(\omega \cdot n) d \omega</script><h2 id="Single-view-3D-History-2-5D"><a href="#Single-view-3D-History-2-5D" class="headerlink" title="Single-view 3D: History + 2.5D"></a>Single-view 3D: History + 2.5D</h2><p>我们关注的问题是，如何将一张 2D 的图像理解成 3D 的表示。上面几部分我们关注“怎样表示”，而接下来的几节我们关注以怎样的方法来进行理解。</p>
 <p><img src="https://s2.loli.net/2022/04/26/6tKqbfw4adE8N7I.png" alt="image-20220426233313729"></p>
 <p><img src="https://s2.loli.net/2022/04/26/pgz8Vkvjuh2L6JS.png" alt="image-20220426233335167"></p>
-<p>虽然有些问题我们难以界定（比如上面几张图中的问题），但我们所在的世界是一个有规律性的世界。虽然有些时候，我们对一个场景有无穷多种解释，但是有些解释比其他的可能性更大。几何的知识虽然信息量足够大，但有时还是不足够的，我们需要对于可能的场景结构有一些先验知识，以尽可能减小我们的“搜索空间”。</p>
-<p>那么这些先验知识都有哪些呢？一种是<strong>面向用户（User-specific）</strong>的，不同的用户的先验知识不同，另一种是<strong>数据驱动型（Data-Driven）</strong>的。目前的研究范式是：<strong>主要为数据驱动型，加入特定的 Inductive bias.</strong>（What is inductive bias? <a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE">https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE</a> 没看懂，<a href="https://www.baeldung.com/cs/ml-inductive-bias，大概就是一个模型做的假设吧，这个假设可能正确性很高(strong)或是很低(weak)）">https://www.baeldung.com/cs/ml-inductive-bias，大概就是一个模型做的假设吧，这个假设可能正确性很高(strong)或是很低(weak)）</a></p>
-<p>3D Inference 发展的历史：</p>
+<p>虽然有些图像我们难以界定其三维场景（比如上面几张图中的问题），但我们所在的世界是一个<strong>有规律性</strong>的世界，见下面几张图。</p>
+<p><img src="https://s2.loli.net/2022/04/27/CXagBjSJefUOWc5.png" alt="image-20220427191825020"></p>
+<p><img src="https://s2.loli.net/2022/04/27/5cJalGIndSxE9eU.png" alt="image-20220427191832287"></p>
+<p><img src="https://s2.loli.net/2022/04/27/pv3YeU6FDRJ2q1h.png" alt="image-20220427191842738"></p>
+<p><img src="https://s2.loli.net/2022/04/27/TeS8cNIdrqMVtCj.png" alt="image-20220427191852638"></p>
+<p>虽然有些时候，我们对一个场景有无穷多种解释，但是有些解释比其他的可能性更大。几何的知识虽然信息量足够大，但有时还是不足够的，我们需要对于可能的场景结构有一些先验知识，以尽可能减小我们的“搜索空间”。</p>
+<p>那么这些先验知识都有哪些呢？一种是<strong>面向用户（User-specific）</strong>的，不同的用户的先验知识不同，另一种是<strong>数据驱动型（Data-Driven）</strong>的。目前的研究范式是：<strong>主要为数据驱动型，加入特定的 Inductive bias.</strong></p>
+<blockquote>
+<p> What is inductive bias? </p>
 <ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE">https://zh.wikipedia.org/wiki/%E5%BD%92%E7%BA%B3%E5%81%8F%E7%BD%AE</a> </li>
+<li><a href="https://www.baeldung.com/cs/ml-inductive-bias">https://www.baeldung.com/cs/ml-inductive-bias</a></li>
+</ul>
+<p>大概我的理解就是，一个模型所做的假设吧，这个假设可能正确性很高(strong)或是很低(weak)）。比如后续我们提到说要对室内场景建模，给出的这个 World Model 那么就是 Inductive Bias.</p>
+</blockquote>
+<h3 id="3D-Inference-发展的历史"><a href="#3D-Inference-发展的历史" class="headerlink" title="3D Inference 发展的历史"></a>3D Inference 发展的历史</h3><ul>
 <li>The first vision thesis: Model-based fitting<ul>
 <li>Improving Model-fitting: A Representative Approach</li>
 </ul>
 </li>
 <li>Automatic Photo Pop-up</li>
-<li>Modeling Indoor Scenes (Given the World Model as Inductive Bias)</li>
+<li><p>Modeling Indoor Scenes (Given the World Model as Inductive Bias)</p>
+<ul>
+<li>在结构方面的先验知识（Structural Prior）</li>
 </ul>
-<p>摆了摆了，明天再看 2022-4-26 23:56:10</p>
+</li>
+<li><p>Towards Data-driven Modeling: Morphable Models for Faces</p>
+<ul>
+<li>从 3D Faces 的数据集中学习模型参数</li>
+<li>然后用来推断未见过的图像</li>
+</ul>
+</li>
+<li><p>Data-driven Modeling: A modern view</p>
+<ul>
+<li>使用 CNN 等神经网络，在大笔训练资料上训练神经网络</li>
+<li>Learning from direct supervision!</li>
+<li>我们有数据集！比如 ImageNet，比如 COCO (Common Objects in Context)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Depth-Prediction：场景深度预测任务"><a href="#Depth-Prediction：场景深度预测任务" class="headerlink" title="Depth Prediction：场景深度预测任务"></a>Depth Prediction：场景深度预测任务</h3><p>任务定义非常简单：输入 2D 图片，输出这个图片对应的场景中，每个点对应的深度。</p>
+<p><img src="https://s2.loli.net/2022/04/27/kz9MBWvFSqNEtLr.png" alt="image-20220427192302730"></p>
+<h4 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h4><p>这样设计 Loss 的核心问题：接近成像平面的较小的物体和远离成像平面的较大的物体可能最终在图像上的表现相同。绝对深度是难以确定的…于是我们的 Loss 需要满足：</p>
+<script type="math/tex; mode=display">
+L(y, y^*) = L(\alpha y, y^*), \forall \alpha > 0.</script><p>这样设计出的 Loss Function 为：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y^{*}\right)\right\|^{2} \\
+\alpha\left(y, y^{*}\right)=\frac{1}{n} \sum_{i}\left(\log y_{i}^{*}-\log y_{i}\right)
+\end{gathered}</script><blockquote>
+<p>From intuition we can know that, 把 log 去掉的话这个 Loss 是 $\dfrac {y_i}{y_i^<em>} \times \text{avg}(\dfrac{y^</em>}{y})$，如果我们只关注预测值和真实值之间的比例关系的话，预测出 $y_i^* = \alpha y_i, \forall i$ 的结果肯定是最好的。但是在真正运作的时候，我们没法保证这个 $\alpha$ 是个常数，于是我们就索性取了平均值。这个式子越接近于 1，取个 log，原来的 Loss Function 就越接近 0，不然就会因为范数的存在变大，非常符合直觉。</p>
+</blockquote>
+<h4 id="Architecture-Example"><a href="#Architecture-Example" class="headerlink" title="Architecture Example"></a>Architecture Example</h4><p><img src="https://s2.loli.net/2022/04/27/KxdplNeT9gtcOQu.png" alt="image-20220427193805996"></p>
+<p>这是一种预测结构的例子。</p>
+<blockquote>
+<p>为啥把 Coarse 接回来 Refine 就能 work 了？肯定是因为又有了原图的信息吧？如果改用 ResNet 会不会可能更好？有没有可能搞个大模型学习到原图的 Dense Representation？（也就是说那种 Encoder 的感觉）</p>
+</blockquote>
+<h4 id="Depth-Datasets"><a href="#Depth-Datasets" class="headerlink" title="Depth Datasets"></a>Depth Datasets</h4><p>这个任务常用的一些数据集。</p>
+<p><img src="https://s2.loli.net/2022/04/27/PrNcZdkaUJWmqsM.png" alt="image-20220427194154609"></p>
+<h4 id="Scale-and-Shift-invariant-Depth-Prediction"><a href="#Scale-and-Shift-invariant-Depth-Prediction" class="headerlink" title="Scale and Shift-invariant Depth Prediction"></a>Scale and Shift-invariant Depth Prediction</h4><p>直接去翻了 1907 那篇 Paper: Towards Robust Monocular Depth Estimation: Mixing Datasets for Zero-shot Cross-dataset Transfer.</p>
+<p>We identify three major challenges. </p>
+<p>1) Inherently different representations of depth: direct vs. inverse depth representations.<br>2) Scale ambiguity: for some data sources, depth is only given up to an unknown scale.<br>3) Shift ambiguity: some datasets provide disparity only up to an unknown scale and global disparity shift that is a function of the unknown baseline and a horizontal shift of the principal points due to post-processing.</p>
+<p>这里的 disparity 可以理解成图像中“相对深度”的感觉。</p>
+<p>假设我们的图片有 $M$ 个像素，$d, d^* \in \mathbb R^m$ 是 GT / Predicted disparity。 </p>
+<p>然后我们定义两个算子：$s: \mathbb R^M \rightarrow \mathbb R_+, t: \mathbb R^M \rightarrow \mathbb R$ 是 scale 和 translation 的 estimator.</p>
+<p>接下来是如何解决 disparity 的 scale 和 translation 不统一的问题，论文提供两种方法。</p>
+<p>一种是最小二乘拟合 $d_i^<em>$ 和 $d_i$ 的关系（$d^</em>_i = s d_i + t$），找到 (s, t) 后做映射 $\hat{\mathbf{d}}=s \mathbf{d}+t, \quad \hat{\mathbf{d}}^{<em>}=\mathbf{d}^{</em>}$。</p>
+<p>另一种是做 normalize：$t(\mathbf{d})=\operatorname{median}(\mathbf{d}), \quad s(\mathbf{d})=\frac{1}{M} \sum_{i=1}^{M}|\mathbf{d}-t(\mathbf{d})|$，进而 $\hat{\mathbf{d}}=\frac{\mathbf{d}-t(\mathbf{d})}{s(\mathbf{d})}, \quad \hat{\mathbf{d}}^{<em>}=\frac{\mathbf{d}^{</em>}-t\left(\mathbf{d}^{<em>}\right)}{s\left(\mathbf{d}^{</em>}\right)}$.</p>
+<p>然后定义 scale- and shift- invariant loss：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{s s i}\left(\hat{\mathbf{d}}, \hat{\mathbf{d}}^{*}\right)=\frac{1}{2 M} \sum_{i=1}^{M} \rho\left(\hat{\mathbf{d}}_{i}-\hat{\mathbf{d}}_{i}^{*}\right)</script><p>这里 $\rho$ 可以决定这个 Loss Function 的种类：第一种就用 $\rho(x) = x^2$，第二种用 $\rho(x) = |x|.$</p>
+<h2 id="Lecture-6-Single-view-3D-Objects"><a href="#Lecture-6-Single-view-3D-Objects" class="headerlink" title="Lecture 6: Single-view 3D: Objects"></a>Lecture 6: Single-view 3D: Objects</h2><p>我们的任务是：给定一个 2D 图片，这个图片上仅有一个物体，输出其 3D 的结构。</p>
+<p>首先我们要解决的问题是：该怎么建坐标系。</p>
+<p>可能的方法：</p>
+<p><img src="https://s2.loli.net/2022/04/27/sDhF5P6dywWoACL.png" alt="image-20220427204817186"></p>
+<ul>
+<li>Camera Coordinate System：以相机为中心，相机轴为坐标轴</li>
+<li>View-aligned Object-centric Coordinate System: 以物体为中心，坐标轴与相机轴对齐</li>
+<li>Object-centric ‘Canonical’ Coordinate System: 物体中心，但是物体的“前面”是 -Z 方向，上方是 Y 方向</li>
+</ul>
+<p>Whenever reading a 3D prediction work, understand the prediction frame!</p>
+<p>第三种坐标系让机器学习起来更容易（Aligned shapes have less variation）</p>
+<p><img src="https://s2.loli.net/2022/04/27/mK4XowydG8Z6Ijh.png" alt="image-20220427210056753"></p>
+<p>所以我们的任务变成：Given a 2D picture of a single object, how can we reconstruct the object in 3D in canonical frame?</p>
+<h3 id="Learning-to-Predict"><a href="#Learning-to-Predict" class="headerlink" title="Learning to Predict"></a>Learning to Predict</h3><p><img src="https://s2.loli.net/2022/04/27/tgYxnEyJ13lQIFr.png" alt="image-20220427210133626"></p>
+<p>我们可以使用合成的数据（比如上图 ShapeNet 数据集）来学习，但这样的数据既不真实，还会有偏向刚体和人造物体的 Bias。</p>
+<h4 id="Predict-Volumetric-3D"><a href="#Predict-Volumetric-3D" class="headerlink" title="Predict Volumetric 3D"></a>Predict Volumetric 3D</h4><p><img src="https://s2.loli.net/2022/04/27/oXYvfMA589FPd4t.png" alt="image-20220427210419988"></p>
+<p>Why not use pixel-aligned prediction? 是不是因为要求输出有连续性？而且要求有 invariant to observed viewpoint 的要求？Pixel-aligned 是否会忽略不同组件间的连接关系？</p>
+<p><strong>Loss Function</strong>  这个 Loss 该怎么计算？</p>
+<script type="math/tex; mode=display">
+-\dfrac 1 N \sum_{n=1}^N[p_n\log \hat p _n + (1-p_n) \log(1-\hat p _n)]</script><p>这个就相当于把三维的场景 Flattern，然后做 cross entropy。</p>
+<blockquote>
+<p>这样是否抹杀掉了一些“连接关系”对整体的影响？因为这个办法相当于是每个体素的权重是相同的。比如说在关注点高的地方缺了俩体素，和在一个本来就比较混乱的地方有两个体素的 difference 相比…</p>
+</blockquote>
+<p><strong>Training</strong>  Renderings of CAD models on <strong>random backgrounds</strong> (which helps to make up for the domain-shift between real images and CAD model images)</p>
+<blockquote>
+<p>这玩意是不是能在 Minecraft 里复现出来啊，xswl</p>
+<p>写个插件，给它看一张二维图片，后面挂一个模型，然后直接三维重建，草草草</p>
+<p>我记得现在只有二维复现二维的插件，颜色选择也只是逼近，绝对没有三维重建的，这不得卷爆插件区啊 :clown_face:</p>
+<p>有空可以看下这个，看一下实现，比较好奇什么是 Context-awared，然后 fused volume 后面的 refine 经历了什么:</p>
+<p><a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Xie_Pix2Vox_Context-Aware_3D_Reconstruction_From_Single_and_Multi-View_Images_ICCV_2019_paper.pdf">https://openaccess.thecvf.com/content_ICCV_2019/papers/Xie_Pix2Vox_Context-Aware_3D_Reconstruction_From_Single_and_Multi-View_Images_ICCV_2019_paper.pdf</a></p>
+</blockquote>
+<p>然后还可以 refine 一下表面，类似于 Octree 的思想。</p>
+<p>逐层细分，对一个大体素 predict 3 个 label 其中之一：是 all empty，all occupied, 还是 mixed. 如果是 mixed，那么把这体素分成八份，每一份再递归 predict。 </p>
+<blockquote>
+<p>Paper 贴出来，回头细看：<a href="https://arxiv.org/pdf/1704.00710.pdf">https://arxiv.org/pdf/1704.00710.pdf</a></p>
+</blockquote>
+<h4 id="Predict-Implicit-Volumetric-Representations"><a href="#Predict-Implicit-Volumetric-Representations" class="headerlink" title="Predict Implicit Volumetric Representations"></a>Predict Implicit Volumetric Representations</h4><p>Instead of decoding a volumetric representation, answer occupancy query of an arbitrary point.</p>
+<blockquote>
+<p>也是类似于上面的 Encoder-Decoder 架构，不过上面 Decoder 在回答二分类（occupied or not）/三分类（empty, occupied or mixed），这里的 Decoder 在 answer occupancy query of an arbitrary point.</p>
+<p>这样是不是要对空间 sample 足够多个点啊？看到下一页 PPT 确实，resolution 和 sample 的点数有关系。</p>
+</blockquote>
+<h4 id="Predict-Point-Clouds"><a href="#Predict-Point-Clouds" class="headerlink" title="Predict Point Clouds"></a>Predict Point Clouds</h4><p><img src="https://s2.loli.net/2022/04/27/jL2ksEySYFoGmZ8.png" alt="image-20220427213755786"></p>
+<p><strong>We need permutation invariant learning objectives!</strong></p>
+<p>定义 Loss 的方法：</p>
+<ul>
+<li>Chamfer Distance</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/27/hRsmx6idVayJ3vl.png" alt="image-20220427213934586"></p>
+<ul>
+<li>Earth Mover’s Distance</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/27/1fw5UtHpYLB9nVP.png" alt="image-20220427214144419"></p>
+<blockquote>
+<p>怎么变图论问题了啊，离散数学我没学会啊x</p>
+</blockquote>
+<h5 id="Predict-Parametric-Point-Clouds"><a href="#Predict-Parametric-Point-Clouds" class="headerlink" title="Predict Parametric Point Clouds"></a>Predict Parametric Point Clouds</h5><p><img src="https://s2.loli.net/2022/04/27/HF4wsGNn7felgc9.png" alt="image-20220427214514627"></p>
+<h4 id="Predict-Meshes"><a href="#Predict-Meshes" class="headerlink" title="Predict Meshes"></a>Predict Meshes</h4><p><img src="https://s2.loli.net/2022/04/27/SRziLandU2YmCw3.png" alt="image-20220427214613371"></p>
+<h5 id="Training-Objective"><a href="#Training-Objective" class="headerlink" title="Training Objective"></a>Training Objective</h5><p><img src="https://s2.loli.net/2022/04/27/4upMcDVQvmnkFYB.png" alt="image-20220427220947376"></p>
+<h5 id="Regularization-Smoothness"><a href="#Regularization-Smoothness" class="headerlink" title="Regularization: Smoothness"></a>Regularization: Smoothness</h5><p>A vertex should get near to average of its neighbors, and that is: $\delta_{i}=\frac{1}{d_{i}} \sum_{j \in N(i)}\left(\mathbf{v}_{i}-\mathbf{v}_{j}\right)$.</p>
+<p>于是我们把 $\sum |\delta_i|$ 作为正则项就好了。这也可以表述为 $||LV||^2$：</p>
+<p><img src="https://s2.loli.net/2022/04/27/VdopXzWbZgTnj1U.png" alt="image-20220427221616389"></p>
+<h5 id="Learning-to-Deform-Meshes"><a href="#Learning-to-Deform-Meshes" class="headerlink" title="Learning to Deform Meshes"></a>Learning to Deform Meshes</h5><p><img src="https://s2.loli.net/2022/04/27/MITv5VwAkCarp6g.png" alt="image-20220427221756418"></p>
+<h3 id="Evaluation-Methods"><a href="#Evaluation-Methods" class="headerlink" title="Evaluation Methods"></a>Evaluation Methods</h3><ul>
+<li>IoU: $\dfrac {\text{Intersection}}{\text{Union}}$</li>
+<li>Chamfer Distance</li>
+<li>F1-score @ t<ul>
+<li>Precision @ t: fraction of predicted points within $t$ of some GT points</li>
+<li>Recall @ t: fraction of GT points within t of some predicted point</li>
+<li>F1 @ t = 2 <em> (Precision @ t) </em> (Recall @ t) / (Precision @ t + Recall @ t).</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>暂时先这样吧 有时间可能去看看另一个课 或者装一下 Pytorch3D 试着做一下 Assignments 2022-4-27 22:24:51</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>理论</category>
