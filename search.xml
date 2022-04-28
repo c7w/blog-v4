@@ -19459,4 +19459,53 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
         <tag>计算机视觉</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Hash 函数与认证</title>
+    <url>/hash-function/</url>
+    <content><![CDATA[<p><s>学不完了学不完了学不完了</s></p>
+<p>密码学还有大作业，设计加密算法，到现在还没有着落，课又有两三节没听了，赶紧补赶紧补</p>
+<p>本篇内容包括：</p>
+<ul>
+<li>§ 8：密码 Hash 函数</li>
+<li>§ 9：消息认证码</li>
+</ul>
+<a id="more"></a>
+<h2 id="密码-Hash-函数"><a href="#密码-Hash-函数" class="headerlink" title="密码 Hash 函数"></a>密码 Hash 函数</h2><h3 id="Hash-函数基础"><a href="#Hash-函数基础" class="headerlink" title="Hash 函数基础"></a>Hash 函数基础</h3><h4 id="Hash-函数与压缩函数"><a href="#Hash-函数与压缩函数" class="headerlink" title="Hash 函数与压缩函数"></a>Hash 函数与压缩函数</h4><p><strong>定义</strong>（Hash 函数）：Hash 函数 $H: \{0, 1\}^{\star} \rightarrow \{ 0, 1 \}^l$，将任意长的消息压缩为一个固定长度的摘要，记作 $Y = H(M)$。</p>
+<p><strong>定义</strong>（压缩函数）：将固定长度的消息 M 压缩成一个固定长度的输出 $f: \{0, 1\}^{m+l} \rightarrow \{ 0, 1 \}^l$.</p>
+<h4 id="Hash-函数属性"><a href="#Hash-函数属性" class="headerlink" title="Hash 函数属性"></a>Hash 函数属性</h4><ul>
+<li>有效性：已知消息 $M$，计算消息指纹 $Y=H(M)$ 是容易的。</li>
+<li>抗原像攻击：给定任意消息指纹 $Y=H(M)$，恢复消息 $M$ 是计算不可行的。<ul>
+<li>理想的复杂度是搜索攻击 $2^n$ 次计算</li>
+</ul>
+</li>
+<li>抗第二原像攻击：给定任意消息 $M_1$，找到另一个消息 $M_2$ 具有相同电子指纹 $H(M_1)=H(M_2)$ 是计算不可行的。<ul>
+<li>理想的复杂度是 $2^n$</li>
+</ul>
+</li>
+<li>无碰撞性：找到不同的消息 $(M_1, M_2)$ 有相同的指纹 $H(M_1)=H(M_2)$ 是计算不可行的。<ul>
+<li>生日攻击复杂度 $2^{n/2}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="MD-迭代结构"><a href="#MD-迭代结构" class="headerlink" title="MD 迭代结构"></a>MD 迭代结构</h4><p>大多数 Hash 函数的设计采用迭代结构，每次处理一个固定程度的消息分组。这便是基于压缩函数的 MD 设计准则。</p>
+<h5 id="Mekle’s-meta-迭代算法"><a href="#Mekle’s-meta-迭代算法" class="headerlink" title="Mekle’s meta-迭代算法"></a>Mekle’s meta-迭代算法</h5><ul>
+<li>输入：<strong>无碰撞</strong>的压缩函数 $f$ </li>
+<li>输出：<strong>无碰撞</strong>的 Hash 函数 $h$</li>
+</ul>
+<ol>
+<li>假设 $f$ 把 $(n+r)$ bit 的输入映成 <em>n</em> 比特的输出（例如 $n=128, r=512$ )。由 $f$ 构造一个具有 $n$ 比特杂凑值的 Hash 函数如下。</li>
+<li>把长度为 $b$ 的输入 $x$ 分解成 $t$ 个长度为 $r$ 比特的分组 $x_1x_2\cdots x_t$。假如 $b$ 不是 $r$ 的倍数，则在 $x_t$ 的后面添充上若干个 0，使其成为一个完整的消息分组。</li>
+<li>添加最后的一个分组 $x_{t+1}$，它是 $b$ 的长度的二进制表示（假设 $b&lt;2r$）</li>
+<li>归纳定义 $n$ bit 的散列值计算：$H_0 = 0^n; \ H_i = f(H_{i-1} || x_i), 1 \le i \le t+1; \  h = H_{t+1}$.</li>
+</ol>
+<p><strong>证明</strong> 若 $f$ 是无碰撞的，则 $h$ 是无碰撞的。可考虑逆否命题，假设 $\exist M_1 \ne M_2, h(M_1) = h(M_2)$，则根据归纳定义的过程，</p>
+]]></content>
+      <categories>
+        <category>理论</category>
+        <category>理论/密码学</category>
+      </categories>
+      <tags>
+        <tag>密码学</tag>
+      </tags>
+  </entry>
 </search>
