@@ -19251,7 +19251,7 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
 <p>然后定义 scale- and shift- invariant loss：</p>
 <script type="math/tex; mode=display">
 \mathcal{L}_{s s i}\left(\hat{\mathbf{d}}, \hat{\mathbf{d}}^{*}\right)=\frac{1}{2 M} \sum_{i=1}^{M} \rho\left(\hat{\mathbf{d}}_{i}-\hat{\mathbf{d}}_{i}^{*}\right)</script><p>这里 $\rho$ 可以决定这个 Loss Function 的种类：第一种就用 $\rho(x) = x^2$，第二种用 $\rho(x) = |x|.$</p>
-<h2 id="Lecture-6-Single-view-3D-Objects"><a href="#Lecture-6-Single-view-3D-Objects" class="headerlink" title="Lecture 6: Single-view 3D: Objects"></a>Lecture 6: Single-view 3D: Objects</h2><p>我们的任务是：给定一个 2D 图片，这个图片上仅有一个物体，输出其 3D 的结构。</p>
+<h2 id="Lecture-6-Single-view-3D-Objects-amp-Scenes"><a href="#Lecture-6-Single-view-3D-Objects-amp-Scenes" class="headerlink" title="Lecture 6: Single-view 3D: Objects &amp; Scenes"></a>Lecture 6: Single-view 3D: Objects &amp; Scenes</h2><p>我们的任务是：给定一个 2D 图片，这个图片上仅有一个物体，输出其 3D 的结构。</p>
 <p>首先我们要解决的问题是：该怎么建坐标系。</p>
 <p>可能的方法：</p>
 <p><img src="https://s2.loli.net/2022/04/27/sDhF5P6dywWoACL.png" alt="image-20220427204817186"></p>
@@ -19319,13 +19319,24 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
 <li>F1-score @ t<ul>
 <li>Precision @ t: fraction of predicted points within $t$ of some GT points</li>
 <li>Recall @ t: fraction of GT points within t of some predicted point</li>
-<li>F1 @ t = 2 <em> (Precision @ t) </em> (Recall @ t) / (Precision @ t + Recall @ t).</li>
+<li>F1 @ t = 2 $\times$ (Precision @ t) $\times$ (Recall @ t) / (Precision @ t + Recall @ t).</li>
 </ul>
 </li>
 </ul>
 <blockquote>
 <p>暂时先这样吧 有时间可能去看看另一个课 或者装一下 Pytorch3D 试着做一下 Assignments 2022-4-27 22:24:51</p>
 </blockquote>
+<h3 id="Single-view-3D-Scenes"><a href="#Single-view-3D-Scenes" class="headerlink" title="Single-view 3D: Scenes"></a>Single-view 3D: Scenes</h3><p>Decouple prediction of objects, locations and layout.</p>
+<ul>
+<li>Objects: Last section…</li>
+<li>Locations</li>
+<li>Layout: what would the scene look like if there were no objects?</li>
+</ul>
+<p>Putting it together: Factored 3D Reconstruction</p>
+<blockquote>
+<p> 然后有各式各样的论文…感觉这一块儿没有研究范式</p>
+</blockquote>
+<h2 id="3D-Prediction-without-3D-supervision"><a href="#3D-Prediction-without-3D-supervision" class="headerlink" title="3D Prediction without 3D supervision"></a>3D Prediction without 3D supervision</h2><h3 id="Reasoning-about-Relationships"><a href="#Reasoning-about-Relationships" class="headerlink" title="Reasoning about Relationships"></a>Reasoning about Relationships</h3><p><img src="C:/Users/c7w/AppData/Roaming/Typora/typora-user-images/image-20220428193055357.png" alt="image-20220428193055357"></p>
 ]]></content>
       <categories>
         <category>理论</category>
@@ -19460,7 +19471,7 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
       </tags>
   </entry>
   <entry>
-    <title>Hash 函数与认证</title>
+    <title>Hash 函数与消息认证</title>
     <url>/hash-function/</url>
     <content><![CDATA[<p><s>学不完了学不完了学不完了</s></p>
 <p>密码学还有大作业，设计加密算法，到现在还没有着落，课又有两三节没听了，赶紧补赶紧补</p>
@@ -19499,6 +19510,69 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
 <li>归纳定义 $n$ bit 的散列值计算：$H_0 = 0^n; \ H_i = f(H_{i-1} || x_i), 1 \le i \le t+1; \  h = H_{t+1}$.</li>
 </ol>
 <p><strong>证明</strong> 若 $f$ 是无碰撞的，则 $h$ 是无碰撞的。可考虑逆否命题，假设 $\exist M_1 \ne M_2, h(M_1) = h(M_2)$，则根据归纳定义的过程，</p>
+<h5 id="常用迭代结构"><a href="#常用迭代结构" class="headerlink" title="常用迭代结构"></a>常用迭代结构</h5><h6 id="Wide-pipe-结构"><a href="#Wide-pipe-结构" class="headerlink" title="Wide-pipe 结构"></a>Wide-pipe 结构</h6><p><img src="https://s2.loli.net/2022/04/30/jcn4YybaEeoW6lV.png" alt="image-20220430112632600"></p>
+<h6 id="Sponge-结构"><a href="#Sponge-结构" class="headerlink" title="Sponge 结构"></a>Sponge 结构</h6><p><img src="https://s2.loli.net/2022/04/30/ntSe9pIfCGjlwLP.png" alt="image-20220430112859041"></p>
+<h3 id="Hash-函数算法"><a href="#Hash-函数算法" class="headerlink" title="Hash 函数算法"></a>Hash 函数算法</h3><h4 id="MD5-算法"><a href="#MD5-算法" class="headerlink" title="MD5 算法"></a>MD5 算法</h4><p><img src="https://s2.loli.net/2022/04/30/GhlcdZEpI7WwRxv.png" alt="image-20220430114535918"></p>
+<p>①  Padding. 填充消息至 $448 + 512 \times k$ bit，即使消息本身满足长度要求也要填充，即填充长度需要在 $1 - 512$ bit 之间。</p>
+<p>② 在结尾增加 64 Bit 的报文长度。</p>
+<p>③ 初始化 MD 缓存。（低位优先）</p>
+<p>④ 以 512 Bit 为单位分组处理消息。</p>
+<p>⑤ 输出。</p>
+<p>其压缩函数 $f$ 可表示为：</p>
+<p><img src="https://s2.loli.net/2022/04/30/sYDALokOXgEbvST.png" alt="image-20220430133451882"></p>
+<p>每个框中有 16 次单步计算，单步计算的流程为：</p>
+<p><img src="https://s2.loli.net/2022/04/30/9h1oSrCjOM6I2cN.png" alt="image-20220430133959441"></p>
+<p>$K_i$ 使用正弦函数生成：</p>
+<p><img src="https://s2.loli.net/2022/04/30/w2pj5dLCuS8DUfW.png" alt="image-20220430134200888"></p>
+<p>$M_i$ 是输入的 32 bit 的数据（因为 512 / 32 = 16，所以需要 16 次单步计算）</p>
+<h4 id="SHA-1"><a href="#SHA-1" class="headerlink" title="SHA-1"></a>SHA-1</h4><p>SHA-1 算法也将消息按照 512 位分组，但 Hash 值长为 160 位。</p>
+<p>① Padding to $448 + k \times 512$ bit.</p>
+<p>② 填充 64 bit 长度信息。</p>
+<p>③ 初始化 MD 缓存。（高位优先）</p>
+<p>④ 以 512 Bit 为单位分组处理消息。</p>
+<p>⑤ 输出。</p>
+<p>那么，它是怎么以 512 bit 为单位处理消息的呢？</p>
+<p><img src="https://s2.loli.net/2022/04/30/fJRbSc5oF3YhVyH.png" alt="image-20220430143232047"></p>
+<p>每一次循环以当前正在处理的 512 bit（$Y_q$）和 160 bit 的缓存值（ABCDE）为输入，进而更新缓存中的内容。每个循环使用一个额外的常数值 $K_t$，其中 $0 \le t \le 79$.</p>
+<p>然后我们来看下 SHA-1 的压缩函数。</p>
+<p><img src="https://s2.loli.net/2022/04/30/ZEexlKYnFWDTsgU.png" alt="image-20220430143625147"></p>
+<h4 id="其他加密算法"><a href="#其他加密算法" class="headerlink" title="其他加密算法"></a>其他加密算法</h4><ul>
+<li>SHA-2 family</li>
+<li>SM3</li>
+</ul>
+<h3 id="Hash-的攻击"><a href="#Hash-的攻击" class="headerlink" title="Hash 的攻击"></a>Hash 的攻击</h3><h4 id="生日攻击"><a href="#生日攻击" class="headerlink" title="生日攻击"></a>生日攻击</h4><p><strong>定理（生日攻击）</strong> 若 $k \ge 2^{n/2}$，则 $k$ 个在 $[1, 2^n]$ 中的随机数有两个相同的概率不低于 0.5.</p>
+<p><strong>Remark</strong> 生日攻击可以用于伪造数字签名。对两份不同的文件 A, B 分别作 $\frac n 2$ 次扰动，选择扰动后 $A’$ 与 $B’$ Hash 值相同，将 B’ 发送给对方获得签名，即获得了 A’ 的签名。</p>
+<h4 id="寻找碰撞的其他方法"><a href="#寻找碰撞的其他方法" class="headerlink" title="寻找碰撞的其他方法"></a>寻找碰撞的其他方法</h4><ul>
+<li>穷举搜索</li>
+<li>生日攻击</li>
+<li>随机路径算法</li>
+<li>Nivasch Algorithm</li>
+</ul>
+<h2 id="消息认证码与认证加密算法"><a href="#消息认证码与认证加密算法" class="headerlink" title="消息认证码与认证加密算法"></a>消息认证码与认证加密算法</h2><p>网络通信威胁：我们需要对<strong>消息完整性</strong>和<strong>消息源</strong>进行认证。</p>
+<h3 id="认证的功能"><a href="#认证的功能" class="headerlink" title="认证的功能"></a>认证的功能</h3><ul>
+<li>用于验证消息的完整性，未被篡改、插入或删除</li>
+<li>用于验证消息的来源（真实性）</li>
+<li>用于验证消息的顺序性和时间性</li>
+<li>用于验证消息的不可否认性<ul>
+<li>防止通讯双方中的某一方对所传输消息的否认</li>
+</ul>
+</li>
+</ul>
+<h4 id="消息完整性的认证"><a href="#消息完整性的认证" class="headerlink" title="消息完整性的认证"></a>消息完整性的认证</h4><p>加密算法不能提供消息完整性认证，实现消息的完整性认证必须有以下方法：</p>
+<ul>
+<li>Hash 函数 + 可信通道</li>
+<li>Hash 函数 + 加密算法</li>
+<li>消息认证码</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/30/KUzSh4uMw9ovXRi.png" alt="image-20220430150015669"></p>
+<h3 id="消息认证码-MAC"><a href="#消息认证码-MAC" class="headerlink" title="消息认证码 MAC"></a>消息认证码 MAC</h3><p>消息认证码是在密钥的控制下，将任意长的消息映射为一个固定长度的短数据分组。</p>
+<p>消息认证码的参数：密钥的长度 $k$，输出标签长度 $n$.</p>
+<p><img src="https://s2.loli.net/2022/04/30/1EywWKlFvLtTH2m.png" alt="image-20220430150512453"></p>
+<h3 id="消息认证码的构造"><a href="#消息认证码的构造" class="headerlink" title="消息认证码的构造"></a>消息认证码的构造</h3><h4 id="密钥前缀方案：基于-MD-迭代结构"><a href="#密钥前缀方案：基于-MD-迭代结构" class="headerlink" title="密钥前缀方案：基于 MD 迭代结构"></a>密钥前缀方案：基于 MD 迭代结构</h4><script type="math/tex; mode=display">
+MAC_k(M) = Hash(K || M)</script><p>缺点：长度扩展攻击，攻击者可以在消息的尾部增加一个新的消息分组，伪造一个新的 MAC $(M||S, newtag)$</p>
+<h4 id="密钥前缀方案：基于-MD-增强结构-Hash"><a href="#密钥前缀方案：基于-MD-增强结构-Hash" class="headerlink" title="密钥前缀方案：基于 MD 增强结构 Hash"></a>密钥前缀方案：基于 MD 增强结构 Hash</h4><p><img src="https://s2.loli.net/2022/04/30/ijhszDyYOwT2WLH.png" alt="image-20220430151153962"></p>
+<p>缺点：长度扩展攻击，攻击者仍然可以在消息的尾部增加一个新的消息分组，伪造一个新的 MAC $(M||pad||S, newtag) $.</p>
+<h4 id="密钥后缀方案"><a href="#密钥后缀方案" class="headerlink" title="密钥后缀方案"></a>密钥后缀方案</h4><p><img src="https://s2.loli.net/2022/04/30/JXHdargGSnFl8LA.png" alt="image-20220430155432819"></p>
 ]]></content>
       <categories>
         <category>理论</category>
