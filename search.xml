@@ -19654,6 +19654,48 @@ l_{\mathcal{W}}=\mathbb{E}\left[\frac { 1 } { \epsilon ^ { 2 } } d \left(g\left(
 </ul>
 </li>
 </ul>
+<h1 id="Enhancing-photorealism-enhancement"><a href="#Enhancing-photorealism-enhancement" class="headerlink" title="Enhancing photorealism enhancement"></a>Enhancing photorealism enhancement</h1><p>Link: <a href="https://arxiv.org/abs/2105.04619">https://arxiv.org/abs/2105.04619</a></p>
+<p>这篇文章的方法是 unpaired image-to-image translation，which learns a mapping from one image collection to another.</p>
+<p><img src="https://s2.loli.net/2022/05/03/MwhEQeHnDKdOsi7.png" alt="image-20220503194719309"></p>
+<p>这张图是这篇文章中所用到的方法的导览，下面一一对其介绍。</p>
+<ul>
+<li>G-buffer<ul>
+<li><img src="https://s2.loli.net/2022/05/03/aBqe241LZQHuvKW.png" alt="image-20220503195709338"></li>
+</ul>
+</li>
+<li>Image Enhancement Network<ul>
+<li><img src="https://s2.loli.net/2022/05/03/cV2SmKLjyOzp6C7.png" alt="image-20220503195335903"></li>
+<li>基于 HRNetV2（在 Dense Prediction 预测上表现突出）改动</li>
+</ul>
+</li>
+<li>Training Objectives<ul>
+<li>LPIPS Loss：focuses on structural differences</li>
+<li>Realism Score</li>
+</ul>
+</li>
+<li>A specific sampling strategy during training</li>
+</ul>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="G-Buffer-Encoder"><a href="#G-Buffer-Encoder" class="headerlink" title="G-Buffer Encoder"></a>G-Buffer Encoder</h3><p><img src="https://s2.loli.net/2022/05/03/aAXUPfgyxKcwu83.png" alt="image-20220503200117762"></p>
+<p>其中每个 Stream 都包含两个 Residual Block，架构如下图：</p>
+<p><img src="https://s2.loli.net/2022/05/03/XBSyNQHVpqKAehg.png" alt="image-20220503200353851"></p>
+<h3 id="Perceptual-Discriminator"><a href="#Perceptual-Discriminator" class="headerlink" title="Perceptual Discriminator"></a>Perceptual Discriminator</h3><p><img src="https://s2.loli.net/2022/05/03/T4sRaFnXlqwv86H.png" alt="image-20220503201157142"></p>
+<h3 id="Layout-Differences-cause-Artifacts"><a href="#Layout-Differences-cause-Artifacts" class="headerlink" title="Layout Differences cause Artifacts"></a>Layout Differences cause Artifacts</h3><p>不同数据集中的图片有不同的风格，比如 GTA V 中图像上方往往是天空，而 CityScape 中往往是山或树林。Discriminator 可以通过这一点来判断到底应该是 Fake 还是 Real。如果我们对 GTA V 中的图片做增强的话，这可能倾向于让 Generator 在图像上方生成树。</p>
+<p><img src="https://s2.loli.net/2022/05/03/WHzoL5ImRa7lNjE.png" alt="image-20220503203716048"></p>
+<ul>
+<li>解决方案？Sampling only <strong>matching</strong> patches. So what is <strong>matching</strong> between different datasets?<ul>
+<li>Crop size: 7% of the full image per patch</li>
+<li>Extract 1 x 1 x 512-dim feature map, using a VGG network pretrained on ImageNet at the last relu layer</li>
+<li>Let $p_i, p_j \in$ Different datasets, then call them “matching” if their cosine similiarity &gt; 0.5.</li>
+<li>Using FAISS could accelerate the process!</li>
+</ul>
+</li>
+</ul>
+<h3 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h3><p>IS, FID, KID 是常用的衡量图片真实感的 score。但是 KID 的问题是，他只能衡量图片的真实感，即使是图片所表示的物体结构发生了变化，它是反应不出来的。于是本作提出新的 Metrics <code>sKVD</code>:</p>
+<ul>
+<li>Extract patches of 1/8 image size from the semantic label maps of souce and target datasets</li>
+<li>Downsample these patches to 16x16 resolution to obtain a 256-dim vector</li>
+<li>For each such vector from the synthetic dataset, we fifind the nearest neighbor in the set of vectors from the real dataset. We retain pairs of vectors with more than 50% matching entries.</li>
+</ul>
 ]]></content>
       <categories>
         <category>理论</category>
