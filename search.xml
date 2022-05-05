@@ -19483,6 +19483,22 @@ L\left(y, y^{*}\right)=\sum_{i}\left\|\log y_{i}-\log y_{i}^{*}+\alpha\left(y, y
 <li>Point Cloud</li>
 <li>Mesh</li>
 </ul>
+<h3 id="Generating-Voxel-Shapes-“Voxel-Tubes”"><a href="#Generating-Voxel-Shapes-“Voxel-Tubes”" class="headerlink" title="Generating Voxel Shapes: “Voxel Tubes”"></a>Generating Voxel Shapes: “Voxel Tubes”</h3><p><img src="https://s2.loli.net/2022/05/04/GNzcyV6n9MqrugB.png" alt="image-20220504232647380"></p>
+<p>The voxel <strong>tubes</strong> indicates that, we’ll output a tensor that has channel size $V$ and $(V,V)$ shape for each channel.</p>
+<p>当然可以将右半部分变成 3D CNN，这样增加 Z 轴上的平移不变性。</p>
+<ul>
+<li>Voxel Problem: Memory Usage<ul>
+<li>Scaling Voxels: Oct-Trees</li>
+<li>Nested Shape Layers</li>
+</ul>
+</li>
+</ul>
+<h3 id="Implicit-Functions"><a href="#Implicit-Functions" class="headerlink" title="Implicit Functions"></a>Implicit Functions</h3><p>示性函数：</p>
+<p><img src="https://s2.loli.net/2022/05/04/DgnoLxOBf25dp41.png" alt="image-20220504233631511"></p>
+<ul>
+<li>SDF: Signed Distance Function</li>
+<li>The function can be learned!</li>
+</ul>
 ]]></content>
       <categories>
         <category>理论</category>
@@ -19696,6 +19712,25 @@ l_{\mathcal{W}}=\mathbb{E}\left[\frac { 1 } { \epsilon ^ { 2 } } d \left(g\left(
 <li>Downsample these patches to 16x16 resolution to obtain a 256-dim vector</li>
 <li>For each such vector from the synthetic dataset, we fifind the nearest neighbor in the set of vectors from the real dataset. We retain pairs of vectors with more than 50% matching entries.</li>
 </ul>
+<h1 id="Standardized-Max-Logits"><a href="#Standardized-Max-Logits" class="headerlink" title="Standardized Max Logits"></a>Standardized Max Logits</h1><p>A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation</p>
+<p>Key Idea: <strong>standardize</strong> the max logits to align the different distributions and reflect the relative meanings of max logits within each predicted class.</p>
+<p><img src="https://s2.loli.net/2022/05/05/pX8sSw3C54tPNqA.png" alt="image-20220505200158778"></p>
+<p>启发是因为这张图，对于没有出现过的物体，Road 的 Max Logit 远远大于其他种类，导致被分类成 Road 的可能性较大。</p>
+<p>即使是把这些 Max Logit 都做了标准化，还会遇到的问题是，在 instance 的边界，the boundary pixels tend to have low resolution scores，作者通过 <em>iterative boundary suppresion</em> 的方法对其进行了解决。然后，作者进一步使用了 <em>dilated smoothing</em>  方法对 anomaly score 进行平滑化。</p>
+<p><img src="https://s2.loli.net/2022/05/05/u4g6teT2os9VC1w.png" alt="image-20220505201429689"></p>
+<ol>
+<li>standardizing the max logits in a class-wise manner</li>
+<li>iterative boundary suppression<ol>
+<li>Propate the SMLs of the neighboring non-boundary pixels to the boundary regions</li>
+<li>Start from the outer areas of the boundary to the inner areas</li>
+<li>To be specifific, we assume the boundary width as a particular value and update the boundaries by iteratively reducing the boundary width at each iteration.</li>
+</ol>
+</li>
+<li>dilated smoothing<ol>
+<li>Gaussian kernel</li>
+</ol>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>理论</category>
