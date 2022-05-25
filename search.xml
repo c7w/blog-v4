@@ -19731,10 +19731,105 @@ l_{\mathcal{W}}=\mathbb{E}\left[\frac { 1 } { \epsilon ^ { 2 } } d \left(g\left(
 </ol>
 </li>
 </ol>
-]]></content>
+<h1 id="Normalizations"><a href="#Normalizations" class="headerlink" title="Normalizations"></a>Normalizations</h1><p>我们假设输入的数据维度为 $(N, C, H, W)$.</p>
+<p><img src="https://s2.loli.net/2022/05/13/GwrZhEou6dyvOLN.png" alt="image-20220513232103204"></p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=l_3zj6HeWUE">https://www.youtube.com/watch?v=l_3zj6HeWUE</a></li>
+</ul>
+<h2 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>num_features<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> momentum<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">,</span> affine<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<p>在 batch 上，对 $(N, H, W)$ 做归一化。设 $x.shape = (C, H, W)$，其中 num_features $=C$,则 $y=\frac{x-\mathrm{E}[x]}{\sqrt{\operatorname{Var}[x]+\epsilon}} * \gamma+\beta$，其中 $\gamma, \beta$ 当 affine=True 时启用。</p>
+<p>这里的 momentum 是用来更新统计数据的均值与方差的。准确的说，$x_{\text {new }}=(1 \text {-momentum })^{<em>} x+\text { momentum }{ }^{</em>} x_{t}$.</p>
+<h2 id="InstanceNorm2d"><a href="#InstanceNorm2d" class="headerlink" title="InstanceNorm2d"></a>InstanceNorm2d</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>InstanceNorm2d<span class="token punctuation">(</span>num_features<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> momentum<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">,</span> affine<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> track_running_stats<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span></code></pre>
+<p>InstanceNorm 在图像像素上对 $(H, W)$ 做 Normalization.</p>
+<script type="math/tex; mode=display">
+y_{t i j k}=\frac{x_{t i j k}-\mu_{t i}}{\sqrt{\sigma_{t i}^{2}+\epsilon}}, \quad \mu_{t i}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H} x_{t i l m}, \quad \sigma_{t i}^{2}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H}\left(x_{t i l m}-m u_{t i}\right)^{2}</script><h2 id="LayerNorm"><a href="#LayerNorm" class="headerlink" title="LayerNorm"></a>LayerNorm</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>LayerNorm<span class="token punctuation">(</span>normalized_shape<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> elementwise_affine<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<h2 id="GroupNorm"><a href="#GroupNorm" class="headerlink" title="GroupNorm"></a>GroupNorm</h2><h2 id="Spectral-Norm"><a href="#Spectral-Norm" class="headerlink" title="Spectral Norm"></a>Spectral Norm</h2><p><a href="https://www.youtube.com/watch?v=vG-oEreLG-Q">https://www.youtube.com/watch?v=vG-oEreLG-Q</a></p>
+<h1 id="ViT"><a href="#ViT" class="headerlink" title="ViT"></a>ViT</h1>]]></content>
       <categories>
         <category>理论</category>
         <category>理论/CV</category>
       </categories>
+  </entry>
+  <entry>
+    <title>《现代密码学》公钥密码体制</title>
+    <url>/rsa/</url>
+    <content><![CDATA[<p>包含以下内容：</p>
+<ul>
+<li>Miller-Rabin 算法</li>
+<li>欧拉函数</li>
+<li>RSA 算法</li>
+</ul>
+<a id="more"></a>
+<h2 id="Miller-Rabin"><a href="#Miller-Rabin" class="headerlink" title="Miller-Rabin"></a>Miller-Rabin</h2><p>算法描述：给定输入 $x$，输出一个 bool 类型的变量，表示 $x$ 是/不是素数。算法的时间复杂度为 $O(k \log^3n)$.</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><h4 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h4><script type="math/tex; mode=display">
+a^{p-1} \equiv 1 \mod p</script><p>如果 $p$ 是素数，该式对于任意的 $a$ 都成立；</p>
+<p>如果 $p$ 是合数，那么该式可能成立，也可能不成立。</p>
+<p>值得注意的是，如果该式成立，那么 $p$ 大概率是素数，除了某些特殊的情况，比如卡迈尔数（3 个以上互不相同的质数的乘积）。</p>
+<h4 id="二次探测"><a href="#二次探测" class="headerlink" title="二次探测"></a>二次探测</h4><p>定义  $\mod p$ 意义下，$1$ 的平方根是任意满足 $x^2 \mod p = 1$ 的 $x$。</p>
+<p>即 $(x-1)(x+1) \mod p = 0$.</p>
+<p><strong>如果 $p$ 是素数，那么 $1$ 的平方根只能是 $1$ 和 $p-1$.</strong></p>
+<p>如果在模 $p$ 意义下 $1$ 有不是 $1$, $p-1$ 的平方根，那么 $p$ 就不是素数。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>在 $a^{n-1} \equiv 1 \ (\mod n)$ 中，将指数 $n-1$ 分解为 $n-1 = u \times 2^t$，在每轮测试中，先对 $a$ 计算 $a^u \mod n$，之后对这个值执行最多 $t$ 次平方操作。若发现非平凡平方根时即可判断出其不是素数，否则本轮测试通过。</p>
+<p><img src="https://s2.loli.net/2022/05/25/BLkF8wr6DQZzGXd.png" alt="image-20220525143853115">内循环实际上每一步在迭代后判断：</p>
+<ul>
+<li>如果 $y = 1$，那么不能通过平方根检验</li>
+<li>如果 $y = -1$，那么 $n$ 是强伪素数，可以通过两个检验</li>
+</ul>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>定义<strong>欧拉函数</strong> $\phi(n)$：$n$ 是正整数，$\phi(n)$ 是比 $n$ 小且与 $n$ 互素的正整数个数。其具有以下性质：</p>
+<ul>
+<li>$\phi(1) = 0$</li>
+<li>$\phi(p) = p - 1$，若 $p$ 是素数</li>
+<li>当 $(m, n) = 1$ 时， $\phi(mn) = \phi(m) \phi(n)$</li>
+<li>$\phi(p^e) = p^e - p ^{e-1}$，如果 $p$ 是素数</li>
+</ul>
+<p>如果 $n = p_1^{e_1}p_2^{e_2}\cdots p_c^{e_c}$，那么可以分解出 $\phi(n)$ 的值。</p>
+<p>只有当 $n$ 可以分解为素数时才可以求出大复合数 $φ(n)$，即求 $φ(n)$ 的困难性依赖于 $n$ 的因数分解的困难性。</p>
+<p><strong>欧拉定理</strong>是说，如果整数 $m$ 和整数 $n$ 互素，那么 $m^{\phi(n) + 1} \equiv m \mod n$，或者说 $m^{\phi(n)} = 1 \mod n$.</p>
+<p><strong>Remark.</strong> 给定两个互异的素数 $p, q$ 和两个整数 $n, m$，其中 $n = pq$，$0 &lt; m &lt; n$。那么对于任意的整数 $k$，以下关系均成立：</p>
+<script type="math/tex; mode=display">
+m^{k\phi(n) + 1} \equiv m \mod n</script><h2 id="RSA-算法"><a href="#RSA-算法" class="headerlink" title="RSA 算法"></a>RSA 算法</h2><h3 id="RSA-算法的运作流程"><a href="#RSA-算法的运作流程" class="headerlink" title="RSA 算法的运作流程"></a>RSA 算法的运作流程</h3><p>首先产生密钥。取两个大质数 $p, q$，计算 $n = pq$ 与欧拉函数 $\phi(n)= (p-1)(q-1)$。任意取一个与 $\phi(n)$ 互素的小整数 $e$，即寻找 $e$，使得 $(e, \phi(n)) = 1$，这里 $1 &lt; e &lt; \phi(n)$。然后寻找 $d$，$d &lt; \phi(n)$，使得 $de \equiv 1 \mod \phi(n)$。然后将 $\{e, n\}$ 作为公钥公开，将 $\{d, n\}$ 作为私钥留存。</p>
+<p>加密过程。将待加密的内容分成 $k$ 比特的分组，然后记为 $M$，$k \le \log_2n$。进而加密过程为：$C = M^e \mod n$。</p>
+<p>解密过程。$M= C^d \mod n$。</p>
+<h3 id="RSA-算法的证明"><a href="#RSA-算法的证明" class="headerlink" title="RSA 算法的证明"></a>RSA 算法的证明</h3><p>证明如下。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+M' &= C^d \mod n \\
+&= (M^e \mod n)^d \mod n \\
+&= M^{ed} \mod n \\
+&= M \mod n \ (\text{By Remark. of Euler's Rule})
+\end{align}</script><h3 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h3><ul>
+<li>分解 $n$</li>
+</ul>
+<p>密码分析者攻击 RSA 体制的关键点在于如何分解 $n$。若分解成功使得 $n = pq$，则可以算出 $\phi(n) = (p-1)(q-1)$，然后由公开的 $e$ 便可以解出秘密的 $d$。如果想要使 RSA 安全，那么 $p$ 和 $q$ 必须是足够大的素数，使得分析者不能在多项式时间内将 $n$ 分解出来。</p>
+<ul>
+<li>攻击 $e$：小加密指数问题</li>
+</ul>
+<blockquote>
+<p>[中国剩余定理]</p>
+<p>中国剩余定理 (Chinese Remainder Theorem, CRT) 可求解如下形式的一元线性同余方程组（其中 $n_1, n_2, \cdots, n_k$ 两两互质）：</p>
+<script type="math/tex; mode=display">
+\left\{\begin{aligned}
+x & \equiv a_{1}\left(\bmod n_{1}\right) \\
+x & \equiv a_{2}\left(\bmod n_{2}\right) \\
+& \vdots \\
+x & \equiv a_{k}\left(\bmod n_{k}\right)
+\end{aligned}\right.</script><p>其算法的基本流程如下：</p>
+<ol>
+<li>计算所有模数的积 $n$；</li>
+<li>对于第 $i$ 个方程：<ol>
+<li>计算 $m_i = \frac {n} {n_i}$ ；</li>
+<li>计算 $m_i$ 在模 $n_i$ 意义下的逆元 $m_i^{-1}$；</li>
+<li>计算 $c_i = m_im_i^{-1}$（不要对 $n_i$ 取模）。</li>
+</ol>
+</li>
+<li>方程组的唯一解为：$x=\sum_{i=1}^{k} a_{i} c_{i}(\bmod n)$。</li>
+</ol>
+</blockquote>
+<ul>
+<li>同模攻击</li>
+</ul>
+<p>​        不同的人若使用相同的模数，那么利用自己的 $n = de$ 的关系，便可以分解他人的私钥。</p>
+<p>​        如果 $B$ 与 $C$ 的模数相同，$y_1 = x^{b_1} \bmod n, y_2 = x^{b_2} \bmod n$。若可求得 $c_1, c_2$ 满足 $c_1b_1 + c_2b_2 =1 $，那么可恢复 $x = y_1^{c_1}y_2^{c_2} \bmod n$.</p>
+]]></content>
   </entry>
 </search>
