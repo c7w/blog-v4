@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>《计算机网络原理》补完计划 | c7w 的博客</title><meta name="keywords" content="网络原理"><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2022 Spring，cy 老师的计网原。算是当期末的背诵提纲使用吧。希望不会咕咕咕。 “补完计划”是指半期开始才开始做这个东西。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络原理》补完计划">
+<meta property="og:url" content="https://www.c7w.tech/cs-network/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="2022 Spring，cy 老师的计网原。算是当期末的背诵提纲使用吧。希望不会咕咕咕。 “补完计划”是指半期开始才开始做这个东西。">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-03-31T01:55:18.000Z">
+<meta property="article:modified_time" content="2022-04-14T03:07:30.599Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="网络原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/cs-network/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《计算机网络原理》补完计划',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-14 11:07:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">《计算机网络原理》补完计划</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-31T01:55:18.000Z" title="发表于 2022-03-31 09:55:18">2022-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-14T03:07:30.599Z" title="更新于 2022-04-14 11:07:30">2022-04-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">理论/网络原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="《计算机网络原理》补完计划"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>2022 Spring，cy 老师的计网原。算是当期末的背诵提纲使用吧。希望不会咕咕咕。</p>
+<p>“补完计划”是指半期开始才开始做这个东西。</p>
+<a id="more"></a>
+<h2 id="介质访问子层基础"><a href="#介质访问子层基础" class="headerlink" title="介质访问子层基础"></a>介质访问子层基础</h2><h3 id="本节目标"><a href="#本节目标" class="headerlink" title="本节目标"></a>本节目标</h3><ol>
+<li><p>了解 MAC 子层的位置和功能</p>
+</li>
+<li><p>掌握两种 ALOHA 协议的原理和性能</p>
+</li>
+<li><p>掌握 CSMA 的工作原理及性能区别</p>
+</li>
+<li><p>掌握经典以太网的拓扑和帧结构</p>
+</li>
+<li><p>掌握以太网 CSMA/CD 中最小帧长与相关参数的关系</p>
+</li>
+</ol>
+<ul>
+<li>多路访问协议</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/u6YRTVOl2MG5yps.png" alt="image-20220331103939307"><img src="https://s2.loli.net/2022/03/31/aN4mlpD91OeRWnV.png" alt="image-20220331115410069"></p>
+<h3 id="Mac-子层"><a href="#Mac-子层" class="headerlink" title="Mac 子层"></a>Mac 子层</h3><p><img src="https://s2.loli.net/2022/03/31/jo9lgZVIxJ4LRTq.png" alt="image-20220331103335999"></p>
+<p>数据链路层分为两个子层：用于介质访问控制的 Mac 子层（Medium Access Control）和逻辑链路控制 LLC 子层。</p>
+<h3 id="随机访问"><a href="#随机访问" class="headerlink" title="随机访问"></a>随机访问</h3><h4 id="ALOHA-协议"><a href="#ALOHA-协议" class="headerlink" title="ALOHA 协议"></a>ALOHA 协议</h4><h5 id="纯-ALOHA-协议"><a href="#纯-ALOHA-协议" class="headerlink" title="纯 ALOHA 协议"></a>纯 ALOHA 协议</h5><p>纯 ALOHA 协议的工作原理是想发就发，而两个或以上的帧随时可能会冲突。发生冲突的帧被完全破坏，破坏了的帧要进行重传。</p>
+<p>为了便于分析我们定义以下概念并做出相应假设：</p>
+<ul>
+<li>帧时：发送一个标准长的帧所需的时间</li>
+<li>网络负载：某段时间内所有通信站点总共发送的平均帧数，即平均负载 $G$</li>
+<li>某个帧时内，到达帧数为 $k$ 的概率为 $P[k] = \dfrac{G^k}{k!}\times e^{-k}$.<ul>
+<li>$k=0$ 时表示该帧时内没有帧到达的概率为 $P[0] = e^{-G}$.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/A98YzeloR1EsNW2.png" alt="image-20220331110240317"></p>
+<p>纯 ALOHA 协议的冲突危险期是 $2D$，其中 $D$ 是帧时长度。这是因为针对一个数据帧来说，另一个数据帧只有其发送时间在这个数据帧的发送时间的 $\pm D$ 之外，才可能与其不冲突。</p>
+<p>于是，想要成功传输一个帧，这 $2D$ 的时间内应该均没有其他帧到达。于是该帧被成功传输的概率为 $P[0]^2=e^{-2G}$.</p>
+<p>在一个帧时内，纯 ALOHA 协议平均成功传输的帧数为：$S=G\times e^{-2G}$，当 $G=0.5$ 时，$S_{max} \approx 0.184$.</p>
+<h5 id="分隙-ALOHA-协议"><a href="#分隙-ALOHA-协议" class="headerlink" title="分隙 ALOHA 协议"></a>分隙 ALOHA 协议</h5><p>分隙 ALOHA（Slotted ALOHA）将连续的时间离散化成<strong>时隙</strong>，每一个 Time Slot 的长度就是 $D$。其规定每一帧的发送<strong>只能在时隙的起点</strong>。也就是说，既然冲突就彻底冲突，要不然就不可能冲突：</p>
+<p><img src="https://s2.loli.net/2022/03/31/jf2T8KUxiEqW5JD.png" alt="image-20220331110624254"></p>
+<p>这样做将冲突危险期降为了 $D$，一个帧时内平均成功传输的帧数 $S=G\times e^{-G}$，当 $G=1$ 时 $S_{max}=\frac 1 e \approx 0.368$.</p>
+<h4 id="CSMA-协议"><a href="#CSMA-协议" class="headerlink" title="CSMA 协议"></a>CSMA 协议</h4><p>CSMA 协议是载波侦听多路访问协议（Carrier Sense Multiple Access）的缩写。载波监听是说站点在为发送帧而访问传输信道之前，首先会监听信号是否已有载波。若已有载波，即有其他用户在使用信道，则不发送帧以避免冲突。</p>
+<p>CSMA 协议的特点：“先听后发”。</p>
+<h5 id="持续式-CSMA"><a href="#持续式-CSMA" class="headerlink" title="持续式 CSMA"></a>持续式 CSMA</h5><p>特点：</p>
+<ul>
+<li>经侦听，若介质空闲则发送</li>
+<li>若发送时出现冲突则等待随机时间再重复侦听步骤</li>
+<li>如介质忙则持续侦听，一旦空闲立即发送</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>持续侦听的等待延迟较小</li>
+</ul>
+<p>主要问题：</p>
+<ul>
+<li>如果两个以上的站等待发送，一旦介质空闲就一定会发生冲突</li>
+</ul>
+<h5 id="非持续式-CSMA"><a href="#非持续式-CSMA" class="headerlink" title="非持续式 CSMA"></a>非持续式 CSMA</h5><p>改进：</p>
+<ul>
+<li>如介质忙，则等待随机时间，然后再次侦听</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>等待一个随机时间可以减少再次碰撞冲突的可能性</li>
+</ul>
+<p>主要问题：</p>
+<ul>
+<li>信道利用率下降，传输时延增加：等待时间内介质上如果没有数据传送，则浪费了时间</li>
+</ul>
+<h5 id="p-持续式-CSMA"><a href="#p-持续式-CSMA" class="headerlink" title="p-持续式 CSMA"></a>p-持续式 CSMA</h5><p>改进：</p>
+<ul>
+<li>经侦听，如介质空闲，那么以 $p$ 的概率发送，以 $1–p$ 的概率延迟一个时间单元发送</li>
+<li>如介质忙，持续侦听，一旦空闲重复上述步骤</li>
+<li>如果发送已推迟一个时间单元，再重复上述步骤</li>
+</ul>
+<p>这就类似于 Russian Roulette…</p>
+<p>持续式 CSMA 事实上是 1-持续式 CSMA.</p>
+<p><img src="https://s2.loli.net/2022/03/31/gJ1wj2B8vnAayix.png" alt="image-20220331111701225"></p>
+<p>如 0.01-persistent CSMA，高吞吐量可能意味着高时延…</p>
+<h3 id="受控访问"><a href="#受控访问" class="headerlink" title="受控访问"></a>受控访问</h3><h4 id="位图协议"><a href="#位图协议" class="headerlink" title="位图协议"></a>位图协议</h4><p>每个周期划分成两个时段：</p>
+<ul>
+<li>竞争期：在自己的时槽内发送竞争 Bit，举手示意预留资源（Contention Slot）</li>
+<li>传输期：按序发送，明确使用权，避免冲突</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/31/dJwhCVBrE7mPKz8.png" alt="image-20220331112032634"></p>
+<p>假设有 $N$ 个用户，需 $N$ 个时隙，每帧 $d$ bit。则信道利用率：</p>
+<ul>
+<li>当在低负载时：$\omega = \dfrac d {d+N}$</li>
+<li><p>当在高负载时：$\omega = \dfrac d {d+1}$</p>
+<p>位图协议的缺点：位图协议时延较大，没有考虑优先级。</p>
+</li>
+</ul>
+<h4 id="二进制倒计数协议"><a href="#二进制倒计数协议" class="headerlink" title="二进制倒计数协议"></a>二进制倒计数协议</h4><p>将所有站点编二进制序号。若站点要占用信道则广播该信号，不同站发的地址按位或。一旦某站了解到比本站地址高位更高的位置被置为“1”，便放弃发送请求。</p>
+<p>N个站的二进制编码所需位数是 $\log_2N$ 位，每帧 $d$ 比特，信道的利用率为：$\omega = \dfrac d {d+\log_2 N}$。</p>
+<p>如何实现 100% 的利用率？如果规定每个帧的帧头为发送地址，竞争时也在发源地址，则效率为 100%。</p>
+<p>特点分析：高序号站点优先。</p>
+<h4 id="IEEE-802-5-令牌环"><a href="#IEEE-802-5-令牌环" class="headerlink" title="IEEE 802.5 令牌环"></a>IEEE 802.5 令牌环</h4><p>令牌（Token）便是使用信道发送信息的权限。令牌环是说令牌在站点环中不断传递，发送站点抓取环中传输的令牌，获得发送权，从而向环中发送数据帧。为了防止无限循环，环上的帧需要由目的站或发送站将其从环上去除，重新生成令牌，并转入监听模式。</p>
+<ul>
+<li>环的维护：环上存在一个监控站，负责环的维护，通过站的竞争产生令牌</li>
+<li>监控站的职责：保证令牌不丢失；处理环断开情况；清除坏帧，检查无主帧；</li>
+<li>优点：重负载下，效率接近 100%；除了环，令牌也可以运行在其它拓扑上，如令牌总线；</li>
+<li>缺点：令牌具有其维护代价。</li>
+</ul>
+<h3 id="有限竞争"><a href="#有限竞争" class="headerlink" title="有限竞争"></a>有限竞争</h3><h4 id="自适应树搜索协议"><a href="#自适应树搜索协议" class="headerlink" title="自适应树搜索协议"></a>自适应树搜索协议</h4><p><img src="https://s2.loli.net/2022/03/31/bTpjaMUBrCy7XfE.png" alt="image-20220331114703935"></p>
+<p>将所有站点组织成一颗二叉树结构。初始时所有站可以竞争信道，如果只有一个站要使用信道则直接发送。</p>
+<p>不然，在第 1 槽内半数站（2 以下站）参与竞争，如其中之一获得信道，本帧后的时槽留给 3 以下的站。</p>
+<p>重负载时，从根结点开始竞争，发生冲突的概率非常大。为提高效率，可以从中间结点开始竞争。</p>
+<h2 id="Mac-子层进阶"><a href="#Mac-子层进阶" class="headerlink" title="Mac 子层进阶"></a>Mac 子层进阶</h2><h3 id="经典以太网：Mac-子层"><a href="#经典以太网：Mac-子层" class="headerlink" title="经典以太网：Mac 子层"></a>经典以太网：Mac 子层</h3><p><img src="https://s2.loli.net/2022/04/07/IB4FwyUgYLifA6Z.png" alt="image-20220407102316451"></p>
+<p>CSMA 协议确实是在侦听到介质上没有数据发送时才发送，而发送后在实际应用中却仍然可能发生冲突。这包括两种可能的情况：</p>
+<ul>
+<li>同时传送</li>
+<li>传播延迟时间</li>
+</ul>
+<p>而面对潜在的冲突，我们可以使用 CSMA/CD（CSMA with Collision Detection，载波监听冲突检测）模式，即先听后发，边发边听。</p>
+<p><img src="https://s2.loli.net/2022/03/31/SWmZzFADoT7b5Ju.png" alt="image-20220331120232405"></p>
+<p>Collision Detection 的 Motivation：两个帧发生冲突之后，继续传输损坏帧毫无意义，浪费信道。如果站点边发送便监听，如果监听到冲突则停止发送，则可以提高信道的利用率。</p>
+<p>CSMA/CD 的工作过程：</p>
+<ul>
+<li>经侦听，若介质空闲则发送</li>
+<li>若介质忙则持续侦听，一旦空闲立刻发送</li>
+<li>如果发生冲突，立即停止并发送 Jam（强化）信号，等待一个随机分布的时间再重复步骤</li>
+</ul>
+<p>Jam 信号是向连接中的所有站点汇报“有冲突发生”，停止传输。</p>
+<p><img src="https://s2.loli.net/2022/03/31/oXPCtQ1er79SR2f.png" alt="image-20220331120619288"></p>
+<p>定义冲突窗口为发送站发送帧后能检测到冲突的最长时间，如上述的 $t_4-t_0$。冲突窗口最大为 $2D=RTT$，其中 $D$ 为单边延迟。</p>
+<p>这对发送方提出了需求：在发送一帧的同时，完成该帧的冲突检测。如有冲突，则要求在一帧发送完成前检测到冲突。</p>
+<p>因此要求发送方①<u>帧与帧之间的发送间隔至少为一个冲突窗口的时间</u>，即 $2D$. 除此之外，我们还需规定②<u>最短帧长</u>。</p>
+<h4 id="二进制指数后退的-CSMA-CD"><a href="#二进制指数后退的-CSMA-CD" class="headerlink" title="二进制指数后退的 CSMA/CD"></a>二进制指数后退的 CSMA/CD</h4><ul>
+<li>确定基本退避时间槽，其长度为以太介质上往返传播时间($2𝜏$)，以太网中设为 512 Bit 时间</li>
+<li>定义重传次数 $k$ 满足 $k = \min {\{\text{cnt}, 10\}}$.</li>
+<li>从整数集合 $[0,1,\cdots, 2k −1]$ 中随机地取出一个数，记为 $r$</li>
+<li>重传所需的时延就是 $r$ 倍的时间槽 $2𝜏$</li>
+<li>当重传达 16 次仍不能成功时即丢弃该帧，并向高层报告</li>
+</ul>
+<p>接下来进行效率分析。假设 $F$ 为 frame length，$B$ 为 bandwidth，$L$ 为电缆长度，$c$ 为信号传输速度，每帧有 $e$ 个竞争时间槽。记 $P := F / B$.</p>
+<p>信道效率 $\omega = \dfrac P {P + 2𝜏 /A}= \dfrac 1 {1 + 2BLe/cF}$，其中 $A$ 是某个站获得信号的概率。</p>
+<h4 id="帧结构"><a href="#帧结构" class="headerlink" title="帧结构"></a>帧结构</h4><p><img src="https://s2.loli.net/2022/04/07/hpYfgbG9JliDWUK.png" alt="image-20220407102404300"></p>
+<ul>
+<li>硬件地址又称为物理地址，或 MAC 地址</li>
+<li>MAC帧中的源地址和目的地址长度均为6字节</li>
+</ul>
+<h4 id="单播、广播、组播与-Mac-地址"><a href="#单播、广播、组播与-Mac-地址" class="headerlink" title="单播、广播、组播与 Mac 地址"></a>单播、广播、组播与 Mac 地址</h4><p><img src="https://s2.loli.net/2022/04/07/k3YuzEWorCPDvIF.png" alt="image-20220407101113601"></p>
+<ul>
+<li>单播：发送者发送四份相同的数据</li>
+<li>组播：发送者发送一份数据，由路由器进行复制。若上路接收端撤走则上路不再发送。</li>
+<li>广播：发送者发送一份数据，由路由器进行复制。类似于全域搜索。</li>
+</ul>
+<p>这体现在 Mac 地址的编号中：</p>
+<p><img src="https://s2.loli.net/2022/04/07/rsoPZYTHi84yueh.png" alt="image-20220407101459041"></p>
+<ul>
+<li>前 3 个字节为生产厂商特有，后 3 个字节为生产厂商进行指定。</li>
+<li>原地址的 $b_1$ 位只可能是 $0$。</li>
+<li>接收端除了精准匹配目的地址与自己的 Mac 地址相同（单播）之外，还应该注意广播与组播的情况，比如 $\text{FF-FF-FF-FF-FF-FF}$.</li>
+</ul>
+<h4 id="数据包类型"><a href="#数据包类型" class="headerlink" title="数据包类型"></a>数据包类型</h4><ul>
+<li>IPv4: 0x0800</li>
+<li>ARP: 0x0806</li>
+<li>IPv6: 0x86DD</li>
+<li>PPP: 0x880B</li>
+<li>PPPoE: 0x8864</li>
+</ul>
+<h4 id="数据字段"><a href="#数据字段" class="headerlink" title="数据字段"></a>数据字段</h4><p><img src="https://s2.loli.net/2022/04/07/H4qmFuxbvjsfiZJ.png" alt="image-20220407102459233"></p>
+<ul>
+<li>允许的数据字段为 $46$ ~ $1500$ 字节。</li>
+<li>最小帧长 $46+18=64$ Byte.</li>
+<li>最大帧长 $1500+18=1518$ Byte.</li>
+<li>也就是说，给予上层的最大传输单元 MTU：1500 Byte.</li>
+<li>数据字段不足 46 字节，需要填充整数字节（Padding）至 46 字节，以保证以太网 Mac 帧不小于 64 字节。</li>
+</ul>
+<h4 id="校验和"><a href="#校验和" class="headerlink" title="校验和"></a>校验和</h4><ul>
+<li><p>FCS, Frame Check Sequence</p>
+</li>
+<li><p>使用 CRC32 计算除了校验和以外的其他字段</p>
+</li>
+<li>对于检查出的无效 MAC 帧就简单地丢弃，以太网不负责重传丢弃的帧</li>
+</ul>
+<h3 id="链路层交换原理"><a href="#链路层交换原理" class="headerlink" title="链路层交换原理"></a>链路层交换原理</h3><p>先考虑使用<strong>集线器</strong>来进行以太网的组建。集线器是物理层的设备，所有端口内部都是连通的，使用同一根总线。使用 Hub 来扩展以太网，不仅不会增加集线器的容量，还限制了网络的可扩展性。</p>
+<p>我们或许可以通过“分域”的方式来解决这个问题，而这里便用<strong>交换机</strong>来替代集线器。</p>
+<p><img src="https://s2.loli.net/2022/04/07/Ptnqkb2erTiOvmM.png" alt="image-20220407105130838"></p>
+<p>我们的目标是在交换机中建立“转发表”，关联站地址与接口。</p>
+<p><img src="https://s2.loli.net/2022/04/07/KDFOpv5ka8GRhEo.png" alt="image-20220407110555004"></p>
+<p>如何避免手工配置呢？可以采用“逆向学习源地址”的方式，根据接收到的帧完善 Mac 地址表。</p>
+<h4 id="Mac-地址表的工作方式"><a href="#Mac-地址表的工作方式" class="headerlink" title="Mac 地址表的工作方式"></a>Mac 地址表的工作方式</h4><p><img src="https://s2.loli.net/2022/04/07/F7cVAsHpf5YhDUE.png" alt="image-20220407110739162"></p>
+<p><img src="https://s2.loli.net/2022/04/07/ltPaeWw84XfFNvI.png" alt="image-20220407110743359"></p>
+<p><img src="https://s2.loli.net/2022/04/07/AsUnaoNGShl5KX6.png" alt="image-20220407110748765"></p>
+<p>安全隐患的防范：防止 Mac 地址表溢出？</p>
+<ul>
+<li>设定老化时间（默认 300 s）</li>
+<li>当老化时间到期时，该表项会被清除</li>
+<li>在“逆向学习”更新表项时，同时更新其老化时间</li>
+</ul>
+<h3 id="生成树协议"><a href="#生成树协议" class="headerlink" title="生成树协议"></a>生成树协议</h3><p>树形的拓扑结构使得任何一条“割边”被去掉之后，网络就变成了两个连通支。可靠的网络需要冗余的拓扑结构，但是可能会导致物理环路的产生。</p>
+<p>物理环路的产生具有下列问题：</p>
+<p><strong>Mac 地址表不稳定</strong> 当一个帧的多个副本到达不同端口时，交换机会不断修改同一 Mac 地址对应的端口。</p>
+<p><img src="https://s2.loli.net/2022/04/07/7XGhlLqbUYokFSO.png" alt="image-20220407112309625"></p>
+<p><strong>重复帧</strong> X 发送到环路的单播帧，造成目的设备 Y 收到重复的帧。</p>
+<p><strong>广播风暴</strong>  交换机（网桥）在物理环路上无休止地泛洪广播流量，无限循环，迅速消耗网络资源。</p>
+<p><img src="https://s2.loli.net/2022/04/07/V6rsEvmTUcM9yfa.png" alt="image-20220407112436267"></p>
+<p>物理环路的解决思路？建网的时候建成复杂的图拓扑结构，而使用的时候构造最小生成树！</p>
+<p>而实际运用时，我们对于这张“图”的拓扑结构并不知情，图中的每个结点都是一个单独的交换机，和其他的交换机连接与否均存在可能。</p>
+<h4 id="BPDU-与生成树的选举"><a href="#BPDU-与生成树的选举" class="headerlink" title="BPDU 与生成树的选举"></a>BPDU 与生成树的选举</h4><p>接下来介绍如何得到一颗无环的生成树。参与组网的交换机需要收发 BPDU（桥协议数据单元）选举产生根桥、根端口、指定端口，形成生成树。</p>
+<p><img src="https://s2.loli.net/2022/04/07/PGRBoxDhFeKmA9f.png" alt="image-20220407114215580"></p>
+<p>生成树的三个选举过程：</p>
+<ul>
+<li>选举<strong>根桥</strong>作为整个局域网的根（树根）<ul>
+<li>首先比较优先级，优先级数值最小的交换机胜出成为根桥</li>
+<li>如果优先级数值相等，MAC 地址最小的交换机成为根桥</li>
+<li>根桥的所有端口都处在转发状态</li>
+</ul>
+</li>
+<li>为每个非根桥选出一个根端口<ul>
+<li>每个非根桥，通过比较其每个端口到根桥的<strong>根路径开销</strong>，选出根端口</li>
+<li>具有最小根路径开销的端口被选作根端口</li>
+<li>如果多个端口的根路径开销相同，则端口ID最小的端口被选作根端口</li>
+<li>非根桥只能有一个根端口，根端口处于转发状态</li>
+<li>定义“路径开销”为路径的 Capacity</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/07/tqXnT5iCaWGklhF.png" alt="image-20220407114605184"></p>
+<ul>
+<li><p>为每个网段确定一个指定端口</p>
+<ul>
+<li>即代表端口，代表这个网段向其他网段转发数据</li>
+<li>对于每一个网段，在所有连接到它的交换机（网桥）端口中进行选择</li>
+<li>一个具有最小根路径开销的端口，作为该网段的指定端口</li>
+<li>指定端口处于转发状态，负责该网段的数据转发</li>
+<li>连接该网段的其他端口，若既不是指定端口，也不是根端口，则阻塞</li>
+</ul>
+</li>
+<li><p>端口角色与端口状态</p>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/07/jRkoFn3c8DXUSBd.png" alt="image-20220407115511884"></p>
+<p>为了适应网络的动态变化：</p>
+<p><img src="https://s2.loli.net/2022/04/07/ahWMJVSFqLIAtHy.png" alt="image-20220407115825127"></p>
+<h4 id="源路由网桥"><a href="#源路由网桥" class="headerlink" title="源路由网桥"></a>源路由网桥</h4><p>源路由（Source Routing）网桥的需求分析</p>
+<ul>
+<li><p>目的地定位：发送者需要知道目的主机在哪里 </p>
+<ul>
+<li>如果不在自己的 LAN 里，在发出的帧头内构造一个准确的路由序列，包含要经过的网桥、LAN的编号</li>
+<li>网桥对接收到的帧，决定是否采用源路由</li>
+</ul>
+</li>
+<li><p>通过广播“发现帧”（Discovery Frame）获得最佳路由（在搜索时记录中间路径）</p>
+<ul>
+<li>源站若需要定位目的地，则发送“发现帧”，每个网桥收到后广播</li>
+<li>该帧经过网桥时被加上桥标识（接口标识），目的站收到后发应答帧</li>
+<li>源站收到后就知道了到目的站的最佳路由</li>
+</ul>
+</li>
+<li>优点：对拓扑和带宽进行最优使用</li>
+<li>缺点：网桥的插入对于网络是不透明的（要进行端-网协同）</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/04/07/9UwsahdB7PjDTM3.png" alt="image-20220407120832227"></p>
+<h3 id="链路层交换机"><a href="#链路层交换机" class="headerlink" title="链路层交换机"></a>链路层交换机</h3><p>交换机是一种即插即用网络设备，执行数据链路层交换算法。其交换方式从带宽的角度可以分为对称交换与非对称交换两种，这取决于出和入的带宽是否相同。</p>
+<p><img src="https://s2.loli.net/2022/04/07/PvGIBLQ5rtZXWfa.png" alt="image-20220407121138075"></p>
+<p>链路层交换机的三种交换模式：</p>
+<p><strong>存储转发</strong> 转发前必须接收整个帧、执行 CRC 校验。这样可以不转发出错帧、支持非对称交换，而转发延迟较大。</p>
+<p><strong>直通交换</strong> 一旦接收到帧的目的地址，就开始转发。这样延迟非常小，可以边入边出，但可能转发错误帧，不支持非对称交换。</p>
+<p><img src="https://s2.loli.net/2022/04/07/9mwHkdthU2XJxWo.png" alt="image-20220407121317152"></p>
+<p><strong>无碎片交换</strong> 接收到帧的前 64 字节，即开始转发。这样过滤了冲突碎片，延迟和转发错帧介于存储转发和直通交换之间，但仍可能转发错误帧，不支持非对称交换。</p>
+<p><img src="https://s2.loli.net/2022/04/07/q5bYZzuMCWcgGEB.png" alt="image-20220407121350899"></p>
+<h3 id="VLAN"><a href="#VLAN" class="headerlink" title="VLAN"></a>VLAN</h3><p><strong>广播域</strong> 广播域是一个广播帧能够到达的范围。在缺省情况下，交换机所有端口同属于一个广播域，无法隔离广播域。广播帧在广播域中传播，占用资源，降低性能，且具有安全隐患。</p>
+<p><img src="https://s2.loli.net/2022/04/14/DMmkWRiOj536wca.png" alt="image-20220414103157970"></p>
+<p><strong>虚拟局域网</strong> 需要在物理网络上根据用途、工作组、应用等来进行逻辑划分的局域网络，与用户的物理位置没有关系。</p>
+<p>每一个 VLAN 是一个独立的广播域，交换机通过划分 VLAN 来分隔广播域。不同 VLAN 的成员之间不能直接进行二层通信。</p>
+<p><img src="https://s2.loli.net/2022/04/14/RWUtgrEu1lAc6IN.png" alt="image-20220414103237277"></p>
+<h4 id="VLAN-类型"><a href="#VLAN-类型" class="headerlink" title="VLAN 类型"></a>VLAN 类型</h4><p>VLAN 有四种类型，包括基于端口的、基于 MAC 地址的、基于协议的和基于子网的。</p>
+<p><strong>基于端口的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 端口 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/ApDfVkXvhQG1dx4.png" alt="image-20220414103455111"></p>
+<p><strong>基于 MAC 地址的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 MAC 地址 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/PfeEHywvi4R9znm.png" alt="image-20220414103541618"></p>
+<p><strong>基于协议的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 协议 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/ZBWioDC2acXtPVq.png" alt="image-20220414103608166"></p>
+<p><strong>基于子网的 VLAN</strong> 增加 VLAN Table，存储 VLAN ID 与 子网 的关系。</p>
+<p><img src="https://s2.loli.net/2022/04/14/3JgdYTm8hkQ5EDu.png" alt="image-20220414103814578"></p>
+<p><strong>问题</strong> 如何让交换机区分不同 VLAN 的数据帧？</p>
+<p>在数据帧中需要携带 VLAN 标记…VLAN 标记由交换机添加/剥除，对终端站点透明。</p>
+<p><img src="https://s2.loli.net/2022/04/14/BrxR8eKUkzCDPn9.png" alt="image-20220414104950548"></p>
+<p><strong>帧标记标准 IEEE 802.1Q</strong></p>
+<p><img src="https://s2.loli.net/2022/04/14/vNreEnfLB5IYO3l.png" alt="image-20220414105155439"></p>
+<p><strong>Access 端口与 Trunk 端口</strong> </p>
+<p>接入链路类型端口可以通过指定 VLAN 的流量，干道链路允许多个 VLAN 的流量通过。</p>
+<p><img src="https://s2.loli.net/2022/04/14/YNz89HslvKWiTCt.png" alt="image-20220414105507630"></p>
+<h3 id="WLAN"><a href="#WLAN" class="headerlink" title="WLAN"></a>WLAN</h3><p><strong>无线局域网</strong> 指以无线信道作为传输介质的计算机局域网。</p>
+<p><strong>无线局域网的组网模式</strong></p>
+<p><img src="https://s2.loli.net/2022/04/14/CwvSILEkdpf7NK8.png" alt="image-20220414110721285"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/cs-network/">https://www.c7w.tech/cs-network/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">网络原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/multi-thread/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">多线程 in C &amp; C++ &amp; Python</div></div></a></div><div class="next-post pull-right"><a href="/block-cipher/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《现代密码学》分组密码笔记</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E8%B4%A8%E8%AE%BF%E9%97%AE%E5%AD%90%E5%B1%82%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">介质访问子层基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E7%9B%AE%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">本节目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mac-%E5%AD%90%E5%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text">Mac 子层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE"><span class="toc-number">1.3.</span> <span class="toc-text">随机访问</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ALOHA-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">ALOHA 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%AF-ALOHA-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">纯 ALOHA 协议</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E9%9A%99-ALOHA-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">分隙 ALOHA 协议</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">CSMA 协议</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%81%E7%BB%AD%E5%BC%8F-CSMA"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">持续式 CSMA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E6%8C%81%E7%BB%AD%E5%BC%8F-CSMA"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">非持续式 CSMA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#p-%E6%8C%81%E7%BB%AD%E5%BC%8F-CSMA"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">p-持续式 CSMA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%97%E6%8E%A7%E8%AE%BF%E9%97%AE"><span class="toc-number">1.4.</span> <span class="toc-text">受控访问</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8D%E5%9B%BE%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">位图协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%80%92%E8%AE%A1%E6%95%B0%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.4.2.</span> <span class="toc-text">二进制倒计数协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-5-%E4%BB%A4%E7%89%8C%E7%8E%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">IEEE 802.5 令牌环</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E7%AB%9E%E4%BA%89"><span class="toc-number">1.5.</span> <span class="toc-text">有限竞争</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E6%A0%91%E6%90%9C%E7%B4%A2%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.5.1.</span> <span class="toc-text">自适应树搜索协议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-%E5%AD%90%E5%B1%82%E8%BF%9B%E9%98%B6"><span class="toc-number">2.</span> <span class="toc-text">Mac 子层进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E4%BB%A5%E5%A4%AA%E7%BD%91%EF%BC%9AMac-%E5%AD%90%E5%B1%82"><span class="toc-number">2.1.</span> <span class="toc-text">经典以太网：Mac 子层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%8C%87%E6%95%B0%E5%90%8E%E9%80%80%E7%9A%84-CSMA-CD"><span class="toc-number">2.1.1.</span> <span class="toc-text">二进制指数后退的 CSMA&#x2F;CD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A7%E7%BB%93%E6%9E%84"><span class="toc-number">2.1.2.</span> <span class="toc-text">帧结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E6%92%AD%E3%80%81%E5%B9%BF%E6%92%AD%E3%80%81%E7%BB%84%E6%92%AD%E4%B8%8E-Mac-%E5%9C%B0%E5%9D%80"><span class="toc-number">2.1.3.</span> <span class="toc-text">单播、广播、组播与 Mac 地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.4.</span> <span class="toc-text">数据包类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E6%AE%B5"><span class="toc-number">2.1.5.</span> <span class="toc-text">数据字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-number">2.1.6.</span> <span class="toc-text">校验和</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E4%BA%A4%E6%8D%A2%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">链路层交换原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mac-%E5%9C%B0%E5%9D%80%E8%A1%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.1.</span> <span class="toc-text">Mac 地址表的工作方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.3.</span> <span class="toc-text">生成树协议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BPDU-%E4%B8%8E%E7%94%9F%E6%88%90%E6%A0%91%E7%9A%84%E9%80%89%E4%B8%BE"><span class="toc-number">2.3.1.</span> <span class="toc-text">BPDU 与生成树的选举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E8%B7%AF%E7%94%B1%E7%BD%91%E6%A1%A5"><span class="toc-number">2.3.2.</span> <span class="toc-text">源路由网桥</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="toc-number">2.4.</span> <span class="toc-text">链路层交换机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VLAN"><span class="toc-number">2.5.</span> <span class="toc-text">VLAN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#VLAN-%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.5.1.</span> <span class="toc-text">VLAN 类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WLAN"><span class="toc-number">2.6.</span> <span class="toc-text">WLAN</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
