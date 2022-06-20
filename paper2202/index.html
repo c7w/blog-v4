@@ -1,0 +1,684 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>202202 读过的一些 Paper 总结 | c7w 的博客</title><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要是对 202202 读的 Paper 的总结。 涉及的主要主题是 Infomation Retrieval 中的 Dense Retrieval.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="202202 读过的一些 Paper 总结">
+<meta property="og:url" content="https://www.c7w.tech/paper2202/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="主要是对 202202 读的 Paper 的总结。 涉及的主要主题是 Infomation Retrieval 中的 Dense Retrieval.">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-03-03T14:01:54.000Z">
+<meta property="article:modified_time" content="2022-03-03T15:03:25.221Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="c7w">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="日志">
+<meta property="article:tag" content="日常">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="图形学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/paper2202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '202202 读过的一些 Paper 总结',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-03 23:03:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">202202 读过的一些 Paper 总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-03T14:01:54.000Z" title="发表于 2022-03-03 22:01:54">2022-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-03T15:03:25.221Z" title="更新于 2022-03-03 23:03:25">2022-03-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-NLP/">理论/NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>36分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="202202 读过的一些 Paper 总结"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>主要是对 202202 读的 Paper 的总结。</p>
+<p>涉及的主要主题是 Infomation Retrieval 中的 Dense Retrieval.</p>
+<a id="more"></a>
+<h1 id="Pre-training-Methods-in-Information-Retrieval"><a href="#Pre-training-Methods-in-Information-Retrieval" class="headerlink" title="Pre-training Methods in Information Retrieval"></a>Pre-training Methods in Information Retrieval</h1><blockquote>
+<p>Fan Y, Xie X, Cai Y, et al. Pre-training Methods in Information Retrieval[J]. arXiv preprint arXiv:2111.13853, 2021.</p>
+</blockquote>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>这是一篇研究预训练在 IR 中应用的<strong>文献综述</strong>。</p>
+<p>论文中首先介绍了 IR 是什么，然后介绍了预训练模式在 IR 中的应用，包括 Retrieval Component, Re-ranking Component 和 Other Component。</p>
+<p>此外，还包括专门为 IR 定制的预训练任务的介绍。</p>
+<p>然后，论文介绍了 IR 中使用预训练方法可能用到的资源，包括数据集 benchmark 和 leaderboard. </p>
+<p>然后作者提出了目前 预训练 + IR 存在的挑战，给出了未来可能的工作前景。</p>
+<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Intro-amp-Background"><a href="#Intro-amp-Background" class="headerlink" title="Intro &amp; Background"></a>Intro &amp; Background</h3><ul>
+<li>什么是 IR？<ul>
+<li>从一个大规模的答案语料集合中找回跟用户的请求有关的信息</li>
+<li>可能相关的结果有多个，所以需要定义“相关性得分”</li>
+</ul>
+</li>
+<li>什么是预训练？（略去）</li>
+<li>从不同的视角来看待 IR 问题<ul>
+<li>Core Problem View: 核心的问题是计算 Query q 和 Document d 的相似度</li>
+<li>Framework View: Retrieval Process，returns top-k most relative results</li>
+<li>System View: Given a query q, output a sorted list of documents…</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/03/z58qKF7OWJL4YAv.png" alt="image-20220303221755076"></p>
+<h3 id="Retrieval-Component"><a href="#Retrieval-Component" class="headerlink" title="Retrieval Component"></a>Retrieval Component</h3><p>在这里补充 Sparse Retrieval 和 Dense Retrieval 的补充知识。</p>
+<p>不管是 Sparse Retrieval 还是 Dense Retrieval 都是使用某个处理程序将文书处理成某种特殊的表示，并对这种特殊的表示建立索引，下面我们详细介绍。</p>
+<p>Sparse Retrieval 是指 token-level 的切分，常见的算法如 TF-IDF 和 BM25。这两种算法的运作方式在 <a target="_blank" rel="noopener" href="https://c7w.tech/elasticsearch/">https://c7w.tech/elasticsearch/</a> 的第一节进行过相关介绍，这里直接对其进行引用：</p>
+<blockquote>
+<ul>
+<li>TF-IDF</li>
+</ul>
+<p>TF 是指归一化的词频，IDF 是指逆文档频率。给定文档集合 $D$，有 $d_i \in D, 1 \le i \le n$. </p>
+<p>文档集合总共包含 $m$ 个词，去除一些十分常见的词作为停用词（Stop Words），有 $w_i \in W, 1 \le i \le m$.</p>
+<p>定义 TF 如下，即一篇文档中某个词出现的频率：</p>
+<script type="math/tex; mode=display">
+\text{TF}(q_i, d_j) = \dfrac {f_{i, d_j}}{ |d_j| }</script><p>TF 只能描述词在文档中的频率，但假设现在有个词为“我们”，这个词可能在文档集 $D$ 中每篇文档中都会出现，并且有较高的频率。那么这一类词就不具有很好的区分文档的能力，为了降低这种通用词的作用，引入了 IDF：</p>
+<script type="math/tex; mode=display">
+\text{IDF}(q_i) = \ln \dfrac {|D|}{|\{d_i  : q_i \in d_i \}|}</script><p>于是我们综合这两部分， 便可以得到 TF-IDF：</p>
+<script type="math/tex; mode=display">
+\text{TF-IDF} = \text{TF} * \text{IDF}</script><p>TF 可以计算在一篇文档中词出现的频率，而 IDF 可以降低一些通用词的作用。因此对于一篇文档我们可以用文档中每个词的 TF−IDF 组成的向量来表示该文档，再根据余弦相似度这类的方法来计算文档之间的相关性。</p>
+<ul>
+<li>BM25</li>
+</ul>
+<p>BM25 是信息索引领域用来计算 query 与文档相似度得分的经典算法。</p>
+<p>不同于 TF-IDF，BM25 的公式主要由三个部分组成：</p>
+<ol>
+<li>query 中每个单词 $q_i$ 与文档 $d$ 之间的相关性</li>
+<li>单词 $q_i$ 与 query 之间的相似性</li>
+<li>每个单词的权重</li>
+</ol>
+<p>BM25 算法的一般公式：</p>
+<script type="math/tex; mode=display">
+score(Q,d) = \sum_i^n W_i R(q_i, d)</script><p>其中 $Q$ 表示 query，$q_i \in Q$，$d$ 表示 document.</p>
+<p>下展开介绍各部分公式：</p>
+<ul>
+<li><strong>$W_i$</strong></li>
+</ul>
+<script type="math/tex; mode=display">
+W_i = IDF(q_i) = \ln \dfrac {N-df_i+0.5}{df_i+0.5}</script><p>其中 $N$ 是 document 总数，$df_i$ 表示含有 $q_i$ 的文档总数。</p>
+<p>依据 IDF 的作用，对于某个 $q_i$ ，包含 $q_i$ 的文档数越多，说明 $q_i$ 重要性越小，或者区分度越低，IDF 越小，因此 IDF 可以用来刻画 $q_i$ 与文档的相似性。</p>
+<ul>
+<li><strong>$R(q_i, d)$</strong></li>
+</ul>
+<p>BM25 的设计依据一个重要的发现：<strong>词频和相关性之间的关系是非线性的</strong>，也就是说，每个词对于文档的相关性分数不会超过一个特定的阈值，当词出现的次数达到一个阈值后，其影响就不在线性增加了，而这个阈值会跟文档本身有关。</p>
+<script type="math/tex; mode=display">
+R(q_i, d) = \dfrac {f_i \cdot (k_1+1)}{f_i+K} \cdot \dfrac {qf_i \cdot(k_2+1)}{qf_i+k_2}</script><p>我们可以分成两部分来看待上述公式，其中 $f_i$ 为 $q_i$ 在 $d$ 中出现的次数，$k_1, k_2, K$ 是常数。</p>
+<p>后一部分 $\dfrac {qf_i \cdot(k_2+1)}{qf_i+k_2}$ 在控制 $q_i$ 和 Query 的相似度。</p>
+<p>前一部分在计算 $q_i$ 与 $d$ 的相似度，其中 $K = k_1 \cdot (1-b+b\cdot \dfrac {|d|}{AVG_n(|d|)})$，参数 $b$ 在调节文本长度对相关性的影响。</p>
+<p>不失一般性地我们可以取 $k_1 = 2, k_2 = 0, b = 0.75$.</p>
+<p>反正在接下来的运用也是大调库，调参数可以通过更改配置文件来进行。</p>
+<p><s>写到这里发现之前 Promise 的 Elasticsearch 8.0 的教程还没开始写…下次一定下次一定</s></p>
+</blockquote>
+<p>也就是说，我们把每篇 Document $d$ 首先进行 token-level 的切分并计算每个 token 的相应得分，建立起 token 对 document 的倒排索引。然后每当 Query $q$ 来临的时候，直接对 $q$ 进行切分，根据相应的倒排索引查询出对应分数加起来得到每篇文章的相似性得分，然后排序就好。</p>
+<p>这里用到的数据结构就是这种倒排索引结构。</p>
+<p>而 Dense Retrieval 则不同，正如其名字中的 “Dense” 所说，我们把每篇 Document $d$ 通过一个 Encoder. Say, BERT $\phi$, 然后通过 $\phi(d)[cls]$ 来作为其表示。</p>
+<p>当 Query 来临的时候，我们将 Query q 通过相同的 BERT $\phi$ 得到 $\phi(q)$，我们要求解 top-k d 的集合使得 $\max Sim(\phi(q), \phi(d))$.</p>
+<p>这里可以用到组织欧式空间内向量的数据结构，比如 FAISS，其实现是对欧式空间做分划。有点像搜索树的感觉？回头再详细读一读相关教程吧。用这个数据结构主要是为了找出距离某个向量最近的 k 个相同线性空间中的向量。</p>
+<p>此外，为什么不用一个 BERT $\psi$ 做 $\psi( q + \text{‘[sep]’} + d)$ 呢？因为这样计算效率对于每个 q 都铁是 $O(d)$ 的，且因为每次计算都要过一个 BERT，复杂度极大。从时间效率上来说不考虑，后续我们 Re-ranker 中会这么用，因为我们已经取到了 top-k 了，这里 $k \ll d$.</p>
+<p>下面是两种方法应用 Pretrain Method 的可能方法：</p>
+<h4 id="Sparse-Retrieval"><a href="#Sparse-Retrieval" class="headerlink" title="Sparse Retrieval"></a>Sparse Retrieval</h4><ul>
+<li>Term re-weighting: measure term weights with contextual semantics.</li>
+<li>Document Expansion: expanding documents or queries.</li>
+<li>Re-weighting + expansion</li>
+<li>Sparse Representation learning</li>
+</ul>
+<h4 id="Dense-Retrieval"><a href="#Dense-Retrieval" class="headerlink" title="Dense Retrieval"></a>Dense Retrieval</h4><ul>
+<li><strong>Use pretrained models as encoders, then fine-tune them accordingly.</strong></li>
+<li>Use specific tasks to pretrain for IR</li>
+<li>Fine-tuning: distill; using informative negative models;</li>
+</ul>
+<h4 id="Hybrid-Retrieval"><a href="#Hybrid-Retrieval" class="headerlink" title="Hybrid Retrieval"></a>Hybrid Retrieval</h4><h3 id="Re-ranker-Component"><a href="#Re-ranker-Component" class="headerlink" title="Re-ranker Component"></a>Re-ranker Component</h3><ul>
+<li>Representation focused $relevance = f(PLM(Q), PLM(D))$</li>
+<li>Interaction focused $relevance=f(PLM(Q,D))$</li>
+</ul>
+<p>其中第二种就是上述提过的用 BERT $\psi$ 的方法。</p>
+<h3 id="Other-Component"><a href="#Other-Component" class="headerlink" title="Other Component"></a>Other Component</h3><p>Query Understanding:</p>
+<ul>
+<li>Query expansion</li>
+<li>Query rewriting</li>
+<li>Query suggestion$^*$</li>
+<li>Search Clarification</li>
+<li>Personalized Search</li>
+</ul>
+<p>Document Summarization</p>
+<ul>
+<li>Generic Document Summarization</li>
+<li>Snippet Generation</li>
+<li>Keyphrase Extraction</li>
+</ul>
+<h1 id="Latent-Retrieval-for-Weakly-Supervised-Open-Domain-Question-Answering"><a href="#Latent-Retrieval-for-Weakly-Supervised-Open-Domain-Question-Answering" class="headerlink" title="Latent Retrieval for Weakly Supervised Open Domain Question Answering"></a>Latent Retrieval for Weakly Supervised Open Domain Question Answering</h1><p>Lee K, Chang M W, Toutanova K. Latent retrieval for weakly supervised open domain question answering[J]. arXiv preprint arXiv:1906.00300, 2019.</p>
+<h2 id="Background-Infomation"><a href="#Background-Infomation" class="headerlink" title="Background Infomation"></a>Background Infomation</h2><ul>
+<li>什么是 Open Domain 的 QA？简称 ODQA，中文翻译为开放式问答，意为基于涵盖广泛主题的文本集合给出问题答案。</li>
+</ul>
+<p><strong>Definition</strong>: Formally speaking, to give an answer based on the document collection covering wide range of topics is called open-domain question answering (ODQA). </p>
+<p><strong>Challenges</strong>: The ODQA task combines the challenges of document retrieval (finding the relevant articles) with that of machine comprehension of text (identifying the answer span from those articles).</p>
+<p><strong>Architecture</strong>: There are several approaches to the architecture of an ODQA system. A modular ODQA system consists of two components, the first one (<strong>the ranker</strong>) should be able to find the relevant articles in a database (e.g., Wikipedia), whereas the second one (<strong>the reader</strong>) extracts an answer from a single article or a small collection of articles retrieved by the ranker. In addition to the strictly two-component ODQA systems, there are hybrid systems that are based on several rankers where the last ranker in the pipeline is combined with an answer extraction module usually via reinforcement learning.</p>
+<ul>
+<li>什么是 Latent Variable?</li>
+</ul>
+<p>In statistics, latent variables (from Latin: present participle of lateo (“lie hidden”), as opposed to observable variables) are variables that are not directly observed but are rather inferred (through a mathematical model) from other variables that are observed (directly measured).</p>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>现有的方法：要么 supervise 给定相应回答的证据，要么内嵌一个 IR 系统。We show for the first time that <strong>it is possible to jointly learn the retriever and reader from question-answer string pairs and without any IR system</strong>。</p>
+<p>（Review 现有的：① DrQA 2017，训练时用 question-answer-evidence pair，测试时抓一个 IR 系统过来生成 evidence. ② TriviaQA, SearchQA, Quasar，弱监督，也是依赖 IR 去生成 evidence）</p>
+<p><img src="https://s2.loli.net/2022/03/03/lTs5BWSYxE1bXpa.png" alt="image-20220206154839449"></p>
+<p>但是 QA 和 IR 不同，因为 IR 更关注词义和词性的 matching，但是 QA 更侧重于问题理解和答案理解。</p>
+<h2 id="Approach-Feature"><a href="#Approach-Feature" class="headerlink" title="Approach / Feature"></a>Approach / Feature</h2><p>In this work, we introduce the first Open Retrieval Question Answering system (ORQA). <strong>ORQA learns to retrieve evidence from an open corpus, and is supervised only by question-answer string pairs.</strong></p>
+<p>The key insight of this work is that end-to-end learning is possible if we pre-train the retriever with an unsupervised <strong>Inverse Cloze Task (ICT)</strong>. </p>
+<p><strong>What is ICT?</strong> In ICT, a sentence is treated as a pseudo question, and its context is treated as pseudo evidence. Given a pseudo-question, ICT requires selecting the corresponding pseudo-evidence out of the candidates in a batch.</p>
+<p>An important aspect of ORQA is its expressivity—it is capable of retrieving any text in an open corpus, rather than being limited to the closed set returned by a blackbox IR system. </p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>依旧是魔改 BERT。 $Score = S_{retr} + S_{read}$</p>
+<ul>
+<li>Retriever component</li>
+</ul>
+<script type="math/tex; mode=display">
+h_q = W_q \ \ (\text{BERT}_Q(q)[\text{CLS}]) \\ 
+h_b = W_b \ \ (\text{BERT}_B(b)[\text{CLS}]) \\ 
+S_{retr}(b,q) = h_q^Th_b</script><ul>
+<li>Reader component</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{aligned}
+  h_{\text {start }} &=\operatorname{BERT}_{R}(q, b)[\operatorname{START}(s)] \\
+  h_{\text {end }} &=\operatorname{BERT}_{R}(q, b)[\operatorname{END}(s)] \\
+  S_{\text {read }}(b, s, q) &=\operatorname{MLP}\left(\left[h_{\text {start }} ; h_{\text {end }}\right]\right)
+  \end{aligned}</script><p>但是目前存在的问题就是数据集太大了(Wikipedia)，干扰也太多，简单的方法没法 Train。于是提出 ICT。</p>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><ul>
+<li>Inverse Cloze Task: 一种 Pretrain 的方法</li>
+</ul>
+<p>Since this is impractical to learn from scratch, we pre-train the retriever with an Inverse Cloze Task. We evaluate on open versions of five QA datasets.</p>
+<p>先考虑为什么传统的 question-evidence 方法能奏效，这是因为首先 evidence 包含了 question 所要的信息，只不过是多含有了一些 question 不需要的信息。于是这种 question-context 的方法本质上是将与 question 在语义上相近的 context 取作 evidence.</p>
+<p>于是我们就提出 Inverse Cloze Task. 注意到 Close Task（完形填空）就是基于 context 预测 masked 的文本。（<strong>ICT 任务是什么</strong>）而 ICT 则是给定一个句子，预测它的 context.</p>
+<script type="math/tex; mode=display">
+P_{ICT}(b | q) = \dfrac {\exp(S_{retr}(b, q))}{\sum_{b' \in BATCH} S_{retr}(b', q)}</script><p>其中 q 是随机句子，BATCH-{b} 是随机 sample 出来做 negative samples 的，b 是 q 对应的 context.</p>
+<h3 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h3><p>Evaluation was carried out on the following datasets:</p>
+<ul>
+<li>Natural Questions</li>
+<li>WebQuestions</li>
+<li>CuratedTrec</li>
+<li>TriviaQA</li>
+<li>SQuAD</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We presented ORQA, the first open domain question answering system where the retriever and reader are jointly learned end-to-end using only question-answer pairs and without any IR system. </p>
+<p>This is made possible by pre-training the retriever using an Inverse Cloze Task (ICT). </p>
+<p>Experiments show that learning to retrieve is crucial when the questions reflect an information need, i.e. <strong>the question writers do not already know the answer</strong>.</p>
+<h1 id="Domain-matched-pre-training-tasks-for-dense-retrieval"><a href="#Domain-matched-pre-training-tasks-for-dense-retrieval" class="headerlink" title="Domain-matched pre-training tasks for dense retrieval"></a>Domain-matched pre-training tasks for dense retrieval</h1><h2 id="Motivation-1"><a href="#Motivation-1" class="headerlink" title="Motivation"></a>Motivation</h2><p>IR is a exception that pre-training doesn’t produce convincing results. But with right setup, this barrier could be overcome.</p>
+<p>So what is a right setup?</p>
+<p>It’s been generally accepted that the more similar the end task is to the pre-training task, the larger the gains. We hypothesise that previously proposed pretraining tasks might be still too distant from the target task, which limits useful transfer.</p>
+<h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><p>We therefore investigate pre-training tasks for retrieval which are as closely matched to the the target task and domain as possible. To this end, we propose using two corpora for retrieval pre-training:</p>
+<p>1) 65M synthetically generated question-answer pairs.<br>2) A corpus of 220 million post-comment pairs from Reddit, which we use for dialogue retrieval tasks.</p>
+<p>Finally we can prove that:</p>
+<ol>
+<li>pre-training leads to strong achievements in both cases</li>
+<li>domain similarity and task similarity both matters</li>
+<li>the retrieval can benefit from larger models</li>
+</ol>
+<h2 id="Dense-Retrieval-1"><a href="#Dense-Retrieval-1" class="headerlink" title="Dense Retrieval"></a>Dense Retrieval</h2><h3 id="Bi-encoder-architecture"><a href="#Bi-encoder-architecture" class="headerlink" title="Bi-encoder architecture"></a>Bi-encoder architecture</h3><p>Query encoder $E_Q$, passage encoder $E_p$, both output a fixed $d$-dim representation for each query / passage.</p>
+<p>Passages are pre-processed offline, and their representations are indexed using a fast vector similarity search library such as FAISS(?)</p>
+<p>Then when an query $q$ arrives we can use $E_Q(q)$ as its representation and use the index library to get the top-k closest passages.</p>
+<h3 id="Training-1"><a href="#Training-1" class="headerlink" title="Training"></a>Training</h3><p>Given a query, a relevant (+) passage and a list of non-relevant (-) passages, the network is trained to minimize the <strong>negative log likelihood</strong> of picking the positive passage. And the probability assigned to each passage is proportional to $e^{sim(query, passage)}$.</p>
+<p>We do training in two steps:</p>
+<ul>
+<li>use a single BM25 negative per query</li>
+<li>use hard negatives obtained using the first round model</li>
+</ul>
+<h2 id="Experimental-setup"><a href="#Experimental-setup" class="headerlink" title="Experimental setup"></a>Experimental setup</h2><h3 id="Pre-training-tasks"><a href="#Pre-training-tasks" class="headerlink" title="Pre-training tasks"></a>Pre-training tasks</h3><ul>
+<li>PAQ</li>
+<li>Reddit</li>
+</ul>
+<h3 id="Evaluation-tasks"><a href="#Evaluation-tasks" class="headerlink" title="Evaluation tasks"></a>Evaluation tasks</h3><ul>
+<li>Passage retrieval<ul>
+<li>MSMARCO</li>
+<li>Natural Questions</li>
+<li>KILT</li>
+</ul>
+</li>
+<li>Dialogue retrieval (to show the generality of conclusions)<ul>
+<li>ConvAI2</li>
+<li>Ubuntu v2</li>
+<li>DSTC7</li>
+</ul>
+</li>
+</ul>
+<h1 id="Unsupervised-Corpus-Aware-Language-Model-Pre-training-for-Dense-Passage-Retrieval"><a href="#Unsupervised-Corpus-Aware-Language-Model-Pre-training-for-Dense-Passage-Retrieval" class="headerlink" title="Unsupervised Corpus Aware Language Model Pre-training for Dense Passage Retrieval"></a>Unsupervised Corpus Aware Language Model Pre-training for Dense Passage Retrieval</h1><h2 id="Motivation-2"><a href="#Motivation-2" class="headerlink" title="Motivation"></a>Motivation</h2><p>However, dense retrievers are hard to train, typically requiring heavily engineered fine-tuning pipelines to realize their full potential.</p>
+<ul>
+<li>iterative negative mining</li>
+<li>multi-vector representations</li>
+</ul>
+<p>In this paper, we identify and address two underlying problems of dense retrievers: </p>
+<p>i) fragility to training data noise </p>
+<p>ii) requiring large batches to robustly learn the embedding space.</p>
+<p>Then we try to give a hypothesis about why RocketQA (denoising + large batch size) succeeded. </p>
+<ul>
+<li>Denoising -&gt; remove mislabelled samples</li>
+<li>Large bs -&gt; CLS vectors are not well trained, large training batches just helps the LM to learn to form the full embedding space.</li>
+</ul>
+<h2 id="Approach-1"><a href="#Approach-1" class="headerlink" title="Approach"></a>Approach</h2><p>We use the recently proposed Condenser pre-training architecture, which learns to condense information into the dense vector through LM pre-training. (?)</p>
+<p> On top of it, we propose coCondenser, which adds an unsupervised corpus-level contrastive loss (?) to warm up the passage embedding space.</p>
+<p>Then we could think up a way that could realize the two goals without these two approaches.</p>
+<ul>
+<li>Noise resistance -&gt; use Condenser pre-training architecture</li>
+<li>Introduce a corpus-level contrastive learning objective: at each training step sample text pairs; train the model such that the CLS embeddings of text pairs from the same doc are close and those from different documents are far apart.</li>
+</ul>
+<p>-&gt; Combinating the two, propose coCondenser pre-training method.</p>
+<h2 id="Experiment-Method"><a href="#Experiment-Method" class="headerlink" title="Experiment Method"></a>Experiment Method</h2><h3 id="Architecture-1"><a href="#Architecture-1" class="headerlink" title="Architecture"></a>Architecture</h3><ul>
+<li><p>Based on Condenser</p>
+</li>
+<li><p>Added contrastive loss to loss function</p>
+</li>
+</ul>
+<h3 id="Memory-efficient-Pretraining"><a href="#Memory-efficient-Pretraining" class="headerlink" title="Memory-efficient Pretraining"></a>Memory-efficient Pretraining</h3><ul>
+<li>Gradient Caching</li>
+</ul>
+<h3 id="Pre-training"><a href="#Pre-training" class="headerlink" title="Pre-training"></a>Pre-training</h3><ul>
+<li>Universal</li>
+<li>Corpus aware</li>
+</ul>
+<h3 id="Evaluation-1"><a href="#Evaluation-1" class="headerlink" title="Evaluation"></a>Evaluation</h3><ul>
+<li>Wikipedia</li>
+<li>MS-MARCO</li>
+</ul>
+<h1 id="Sparse-Dense-and-Attentional-Representations-for-Text-Retrieval"><a href="#Sparse-Dense-and-Attentional-Representations-for-Text-Retrieval" class="headerlink" title="Sparse, Dense, and Attentional Representations for Text Retrieval"></a>Sparse, Dense, and Attentional Representations for Text Retrieval</h1><p>Luan Y, Eisenstein J, Toutanova K, et al. Sparse, dense, and attentional representations for text retrieval[J]. Transactions of the Association for Computational Linguistics, 2021, 9: 329-345.</p>
+<p>这篇文章在进行理论推导的时候比较偏数学证明.</p>
+<h2 id="Motivation-3"><a href="#Motivation-3" class="headerlink" title="Motivation"></a>Motivation</h2><p>（首先对比 Dense Retrieval 与传统的 Sparse Retrieval.）Dual encoders perform retrieval by encoding documents and queries into dense low-dim vectors, scoring each document by its inner product with the query. We investigate the capacity of this architecture relative to sparse bag-of-words models and attentional neural networks. </p>
+<p>下面是 Review 部分：</p>
+<ul>
+<li>Sparse Retrieval: more recent work has adopted a <strong>two-stage retrieval and ranking pipeline</strong>, where a large number of documents are retrieved using sparse high dimensional query/document representations, and are further reranked with learned neural models</li>
+<li>Dense Retrieval: A promising alternative is to perform first-stage retrieval using learned dense low-dimensional encodings of documents and queries. The dual encoder model scores each document by the inner product between its encoding and that of the query.</li>
+</ul>
+<p>这两者的启发是不同的。Sparse Retrieval 更加看重的是 question 中的重点术语会与 retrieved document 中的术语重合，而 Dense Retrieval 更加关注的是语义上的相似度。</p>
+<h3 id="Analyzing-dual-encoder-fidelity"><a href="#Analyzing-dual-encoder-fidelity" class="headerlink" title="Analyzing dual encoder fidelity"></a>Analyzing dual encoder fidelity</h3><p>这里 fidelity 可以理解为忠诚度，对原文术语的记忆程度。</p>
+<p>And that is, how much can we compress the input while maintaining the ability to mimic the performance of bag-of-words retrieval?</p>
+<p>Section 2 里证明了：Fidelity is important for the sub-problem of detecting precise term overlap, and is a tractable proxy for capacity. Using the theory of dimensionality reduction, we relate fidelity to the normalized margin between the gold retrieval result and its competitors, and show that this margin is in turn related to the length of documents in the collection. （没仔细看证明过程）。</p>
+<h2 id="Approach-Feature-1"><a href="#Approach-Feature-1" class="headerlink" title="Approach / Feature"></a>Approach / Feature</h2><p>Building on these insights, we propose a simple neural model that combines the efficiency of dual encoders with some of the expressiveness of more costly attentional architectures, and <strong>explore sparse-dense hybrids</strong> to capitalize on the precision of sparse retrieval. These models outperform strong alternatives in large-scale retrieval.</p>
+<h3 id="Multi-vector-Encodings"><a href="#Multi-vector-Encodings" class="headerlink" title="Multi-vector Encodings"></a>Multi-vector Encodings</h3><p>The theoretical analysis suggests that fixed-length vector representations of documents may in general need to be large for long documents, if fidelity with respect to sparse high-dimensional representations is important. </p>
+<p><img src="https://s2.loli.net/2022/03/03/49CxJ7kebNZIUX8.png" alt="image-20220206184818740"></p>
+<h3 id="Hybrid"><a href="#Hybrid" class="headerlink" title="Hybrid"></a>Hybrid</h3><p> A natural approach to balancing between the fidelity of sparse representations and the generalization of learned dense ones is to build a hybrid. </p>
+<p>To do this, we linearly combine a sparse and dense system’s scores using a single trainable weight λ, tuned on a development set.</p>
+<h2 id="Experiment-1"><a href="#Experiment-1" class="headerlink" title="Experiment"></a>Experiment</h2><ul>
+<li>Retrieval for Open-domain QA</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/03/TlN3it8aIQGoXbY.png" alt="image-20220206185657503"></p>
+<ul>
+<li>Large Scale Supervised IR</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/03/CjMy6aTvVzhiBDm.png" alt="image-20220206185728980"></p>
+<h2 id="Conclusion-1"><a href="#Conclusion-1" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We have used both theoretical and empirical techniques to characterize the fidelity of fixed-length dual encoders, focusing on the role of document length. </p>
+<p>Based on these observations, we propose hybrid models that yield strong performance while maintaining scalability.</p>
+<h1 id="Condenser-a-pretraining-architecture-for-dense-retrieval"><a href="#Condenser-a-pretraining-architecture-for-dense-retrieval" class="headerlink" title="Condenser: a pretraining architecture for dense retrieval"></a>Condenser: a pretraining architecture for dense retrieval</h1><h2 id="Motivation-4"><a href="#Motivation-4" class="headerlink" title="Motivation"></a>Motivation</h2><p>However, dense encoders require a lot of data and sophisticated techniques to effectively train and suffer in low data situations. </p>
+<p>Reasons?</p>
+<p>This paper finds a key reason is that standard LMs’ internal attention structure is not ready-to-use for dense encoders, which needs to aggregate text information into the dense representation.</p>
+<p>Attention patterns, therefore, define how effective CLS can aggregate information. </p>
+<p>In other words, the CLS token remains dormant in many middle layers and reactivates only in the last round of attention. </p>
+<h2 id="Approach-2"><a href="#Approach-2" class="headerlink" title="Approach"></a>Approach</h2><p>We propose to pre-train towards dense encoder with a novel Transformer architecture, Condenser, where LM prediction CONditions on DENSE Representation. </p>
+<h2 id="Experiment-2"><a href="#Experiment-2" class="headerlink" title="Experiment"></a>Experiment</h2><h3 id="Architecture-2"><a href="#Architecture-2" class="headerlink" title="Architecture"></a>Architecture</h3><p><img src="https://s2.loli.net/2022/03/03/6hteHNfrpa1Odg7.png" alt="image-20220205153145624"></p>
+<ul>
+<li>Pre-train </li>
+</ul>
+<p>重点是 Head 的设计，我们为了让 CLS 里塞入更多的信息，在 head 这一层把 LATE 的 CLS 和 EARLY 的 其他 OUTPUT 给 CAT 起来，作为输入塞给 Head 然后这里主要是为了调整 CLS 的表示力度。</p>
+<p>为了避免 head 让 back 部分的 encoding 坏掉，loss 设置为 $L = L_{mlm} + L_{mlm}^c$.</p>
+<p>$L_{mlm} = \sum_{i \in masked} CrossEntropy(Wh_i^{cd}, x_i)$</p>
+<p>$L_{mlm}^c = \sum _ {i \in masked} CrossEntropy(Wh_i^{late}, x_i)$</p>
+<ul>
+<li>Fine tune</li>
+</ul>
+<p>fine tune 的时候直接把这个 head 给 drop 掉，变成了普普通通的 Transformer 模型.</p>
+<h3 id="Fine-tuning"><a href="#Fine-tuning" class="headerlink" title="Fine tuning"></a>Fine tuning</h3><ol>
+<li>Sentence Similarity</li>
+</ol>
+<p>Semantic Textual Similarity Benchmark</p>
+<p>Wikipedia Section Distinction</p>
+<ol>
+<li>Retrieval for Open QA</li>
+</ol>
+<ul>
+<li>NQ</li>
+<li>TriviaQA</li>
+</ul>
+<ol>
+<li>Retrieval for web search</li>
+</ol>
+<ul>
+<li>MS MARCO</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h1 id="PRE-TRAINING-TASKS-FOR-EMBEDDING-BASED-LARGE-SCALE-RETRIEVAL"><a href="#PRE-TRAINING-TASKS-FOR-EMBEDDING-BASED-LARGE-SCALE-RETRIEVAL" class="headerlink" title="PRE-TRAINING TASKS FOR EMBEDDING-BASED LARGE-SCALE RETRIEVAL"></a>PRE-TRAINING TASKS FOR EMBEDDING-BASED LARGE-SCALE RETRIEVAL</h1><p>Chang W C, Yu F X, Chang Y W, et al. Pre-training tasks for embedding-based large-scale retrieval[J]. arXiv preprint arXiv:2002.03932, 2020.</p>
+<h2 id="Motivation-5"><a href="#Motivation-5" class="headerlink" title="Motivation"></a>Motivation</h2><p>Unlike the scoring phase witnessing significant advances recently due to the BERT-style pre-training tasks on cross-attention models, <strong>the retrieval phase remains less well studied. </strong></p>
+<p>Most previous works rely on classic Information Retrieval (IR) methods such as BM-25 (token matching + TF-IDF weights). <strong>These models only accept sparse handcrafted features and can not be optimized for different downstream tasks of interest. </strong></p>
+<h2 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h2><p>In this paper, we conduct a comprehensive study on the <strong>embedding-based retrieval models</strong>. (Namely Dense Retrieval!)</p>
+<p>We show that the <strong>key ingredient</strong> of learning a strong embedding-based Transformer model is <strong>the set of pre-training tasks</strong>. With adequately designed paragraph-level pre-training tasks, the Transformer models can remarkably improve over the widely-used BM-25 as well as embedding models without Transformers. The paragraph-level pre-training tasks we studied are <strong>Inverse Cloze Task (ICT), Body First Selection (BFS), Wiki Link Prediction (WLP)</strong>, and <strong>the combination of all three</strong>.</p>
+<p>We contribute the following insight:</p>
+<ul>
+<li>The two-tower Transformer models (Retrieval Stage + Reranking stage) with proper pre-training can significantly outperform the widely used BM-25 algorithm;</li>
+<li>Paragraph-level pre-training tasks such as Inverse Cloze Task (ICT), Body First Selection (BFS), and Wiki Link Prediction (WLP) hugely improve the retrieval quality, whereas the most widely used pre-training task (the token-level masked-LM) gives only marginal gains <em>( marginal: small and not important)</em></li>
+<li>The two-tower models with deep transformer encoders benefit more from paragraph-level pre-training compared to its shallow bag-of-word counterpart </li>
+</ul>
+<h1 id="From-doc2query-to-docTTTTTquery"><a href="#From-doc2query-to-docTTTTTquery" class="headerlink" title="From doc2query to docTTTTTquery"></a>From doc2query to docTTTTTquery</h1><p>Nogueira R, Lin J, Epistemic A I. From doc2query to docTTTTTquery[J]. Online preprint, 2019, 6.</p>
+<h2 id="Motivation-6"><a href="#Motivation-6" class="headerlink" title="Motivation"></a>Motivation</h2><p>Nogueira et al. [7] used a simple sequence-to-sequence transformer [9] for <strong>document expansion</strong>. We <strong>replace the transformer with T5</strong> [8] and observe large effectiveness gains.</p>
+<h1 id="Document-Expansion-by-Query-Prediction"><a href="#Document-Expansion-by-Query-Prediction" class="headerlink" title="Document Expansion by Query Prediction"></a>Document Expansion by Query Prediction</h1><h2 id="Motivation-7"><a href="#Motivation-7" class="headerlink" title="Motivation"></a>Motivation</h2><p>One technique to improve the retrieval effectiveness of a search engine is to expand documents with terms that are related or representative of the documents’ content</p>
+<h2 id="Feature-1"><a href="#Feature-1" class="headerlink" title="Feature"></a>Feature</h2><p>Following this observation, we propose a simple method that predicts which queries will be issued for a given document and then expands it with those predictions with a vanilla sequence-to-sequence model, trained using datasets consisting of pairs of query and relevant documents.</p>
+<ul>
+<li>Method [Doc2Query]: For each document, the task is to predict a set of queries for which that document will be relevant.<ul>
+<li>Given a dataset of (query, relevant document) pairs, we use a sequence-to-sequence transformer model (Vaswani et al., 2017) that takes as an input the document terms and produces a query.</li>
+<li>The document and target query are segmented using BPE (Sennrich et al., 2015) after being tokenized with the Moses tokenizer.1 </li>
+<li>Once the model is trained, we predict 10 queries using top-k random sampling and append them to each document in the corpus.</li>
+</ul>
+</li>
+</ul>
+<p>然后用 BM25 作为 Retriever，增广后的 Document 代替原有 Document.</p>
+<h2 id="Experiment-3"><a href="#Experiment-3" class="headerlink" title="Experiment"></a>Experiment</h2><p>Evaluation was carried out on:</p>
+<ul>
+<li>MS MARCO</li>
+<li>TREC-CAR</li>
+</ul>
+<h1 id="ColBERT-Efficient-and-Effective-Passage-Search-via-Contextualized-Late-Interaction-over-BERT"><a href="#ColBERT-Efficient-and-Effective-Passage-Search-via-Contextualized-Late-Interaction-over-BERT" class="headerlink" title="ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT"></a>ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT</h1><h2 id="Motivation-8"><a href="#Motivation-8" class="headerlink" title="Motivation"></a>Motivation</h2><p>While remarkably effective, the ranking models based on these LMs increase computational cost by orders of magnitude over prior approaches, particularly as they must feed each query–document pair through a massive neural network to compute a single relevance score</p>
+<h2 id="Feature-2"><a href="#Feature-2" class="headerlink" title="Feature"></a>Feature</h2><p> To tackle this, we present ColBERT, a novel ranking model that adapts deep LMs (in particular, BERT) for efficient retrieval. </p>
+<p>ColBERT introduces <strong>a late interaction architecture </strong>that independently encodes the query and the document using BERT and then employs a cheap yet powerful interaction step that models their fine-grained similarity. </p>
+<p>Under late interaction, 𝑞 and 𝑑 are separately encoded into two sets of contextual embeddings, and relevance is evaluated using cheap and pruning-friendly computations between both sets—that is, fast computations that enable ranking without exhaustively evaluating every possible candidate.</p>
+<p><img src="https://s2.loli.net/2022/03/03/4TBhui5CsP8fWSb.png" alt="image-20220209150841730"></p>
+<h1 id="Complement-Lexical-Retrieval-Model-with-Semantic-Residual-Embeddings"><a href="#Complement-Lexical-Retrieval-Model-with-Semantic-Residual-Embeddings" class="headerlink" title="Complement Lexical Retrieval Model with Semantic Residual Embeddings"></a>Complement Lexical Retrieval Model with Semantic Residual Embeddings</h1><h2 id="Feature-3"><a href="#Feature-3" class="headerlink" title="Feature"></a>Feature</h2><p>This paper presents <em>clear</em>, a retrieval model that seeks to complement classical lexical exact-match models such as BM25 with semantic matching signals from a neural embedding matching model.</p>
+<h2 id="Approach-3"><a href="#Approach-3" class="headerlink" title="Approach"></a>Approach</h2><p>clear consists of a lexical retrieval model and an embedding retrieval model. Between these two models, one’s weakness is the other’s strength: lexical retrieval performs exact token matching but cannot handle vocabulary mismatch; meanwhile, the embedding retrieval supports semantic matching but loses granular (lexical level) information.</p>
+<p>To ensure that the two types of models work together and fix each other’s weakness, we propose a residual-based learning framework that teaches the neural embeddings to be complementary to the lexical retrieval.</p>
+<h3 id="Lexical-Retrieval-Model"><a href="#Lexical-Retrieval-Model" class="headerlink" title="Lexical Retrieval Model"></a>Lexical Retrieval Model</h3><p>BM25:</p>
+<script type="math/tex; mode=display">
+s_{\text {lex }}(q, d)=\operatorname{BM} 25(q, d)=\sum_{t \in q \cap d} \operatorname{rsj}_{t} \cdot \frac{\mathrm{tf}_{t, d}}{\mathrm{tf}_{t, d}+k_{1}\left\{(1-b)+b \frac{|d|}{l}\right\}}</script><h3 id="Embedding-Retrieval-Model"><a href="#Embedding-Retrieval-Model" class="headerlink" title="Embedding Retrieval Model"></a>Embedding Retrieval Model</h3><script type="math/tex; mode=display">
+\begin{gathered}
+\mathbf{v}_{q}=\operatorname{AvgPool}\left[\operatorname{BERT}_{\theta}(\langle\mathrm{QRY}\rangle ; \text { query })\right] \\
+\mathbf{v}_{d}=\operatorname{AvgPool}\left[\operatorname{BERT}_{\theta}(\langle\operatorname{DOC}\rangle ; \text { document })\right]
+\end{gathered}</script><p>BERT: shared weight</p>
+<script type="math/tex; mode=display">
+s_{emb}(q,d) = v_q^Tv_d</script><h3 id="Residual-Based-Learning"><a href="#Residual-Based-Learning" class="headerlink" title="Residual Based Learning"></a>Residual Based Learning</h3><p>To make the best use of the embedding model, we must avoid the embedding model “relearning” signals already captured by the lexical model. Instead, we focus its capacity on semantic level matching missing in the lexical model.</p>
+<p>一般的 Loss 函数：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}=\left[m-s_{\mathrm{emb}}\left(q, d^{+}\right)+s_{\mathrm{emb}}\left(q, d^{-}\right)\right]_{+}</script><p>where $[x]^+ = max\{0,x\}$</p>
+<p>为了让 embedding 来 complement lexical retrieval，我们 propose 两个 techique:</p>
+<ul>
+<li>Error-based Negative Sampling</li>
+</ul>
+<p>Sample negative examples from those documents mistakenly retrieved by lexical retrieval.</p>
+<p>Given a positive query-document pair, we uniformly sample irrelevant examples from the top N documents returned by lexical retrieval with probability p. With such negative samples, the embedding model learns to differentiate relevant documents from confusing ones that are lexically similar to the query but semantically irrelevant.</p>
+<ul>
+<li>Residual-based Margin</li>
+</ul>
+<p>Intuitively, different query-document pairs require different levels of extra semantic information for matching on top of exact matching signals.</p>
+<p><strong>Our negative sampling strategy does not tell the neural model the degree of error made by the lexical retrieval that it needs to fix.</strong></p>
+<p>于是做修改：</p>
+<script type="math/tex; mode=display">
+m_{r}\left(\mathrm{~s}_{\text {lex }}\left(q, d^{+}\right), \mathrm{s}_{\text {lex }}\left(q, d^{-}\right)\right)=\xi-\lambda_{\text {train }}\left(\mathrm{s}_{\text {lex }}\left(q, d^{+}\right)-\mathrm{s}_{\text {lex }}\left(q, d^{-}\right)\right)</script><script type="math/tex; mode=display">
+\mathcal{L}=\left[m_{r}\left(\mathrm{~s}_{\mathrm{lex}}\left(q, d^{+}\right), \mathrm{s}_{\mathrm{lex}}\left(q, d^{-}\right)\right)-s_{\mathrm{emb}}\left(q, d^{+}\right)+s_{\mathrm{emb}}\left(q, d^{-}\right)\right]_{+}</script><h1 id="Poly-encoders-architectures-and-pre-training-strategies-for-fast-and-accurate-multi-sentence-scoring"><a href="#Poly-encoders-architectures-and-pre-training-strategies-for-fast-and-accurate-multi-sentence-scoring" class="headerlink" title="Poly-encoders: architectures and pre-training strategies for fast and accurate multi-sentence scoring"></a>Poly-encoders: architectures and pre-training strategies for fast and accurate multi-sentence scoring</h1><h2 id="Motivation-9"><a href="#Motivation-9" class="headerlink" title="Motivation"></a>Motivation</h2><p>现有的：Cross-encoders 和 Bi-encoders</p>
+<p>The former often performs better, but is too slow for practical use. </p>
+<h2 id="Feature-4"><a href="#Feature-4" class="headerlink" title="Feature"></a>Feature</h2><p>In this work, we develop a new transformer architecture, the Poly-encoder, that learns global rather than token level self-attention features.</p>
+<p>We introduce the Poly-encoder, an architecture with an additional learnt attention mechanism that represents more global features from which to perform self-attention, resulting in performance gains over Bi-encoders and large speed gains over Cross-Encoders</p>
+<h2 id="Poly-Encoder"><a href="#Poly-Encoder" class="headerlink" title="Poly-Encoder"></a>Poly-Encoder</h2><p>A given candidate label is represented by one vector as in the Bi-encoder, which allows for caching candidates for fast inference time, while the input context is jointly encoded with the candidate, as in the Cross-encoder, allowing the extraction of more information.</p>
+<p>The Poly-encoder uses two separate transformers for the context and label like a Bi-encoder, and the candidate is encoded into a single vector $y_{candi}$ .</p>
+<p>As such, the Poly-encoder method can be implemented using a precomputed cache of encoded responses. However, <strong>the input context, which is typically much longer than a candidate</strong>, is represented with m vectors ($y^1_{ctxt}, \cdots, y^{m}_{ctxt}$) instead of just one as in the Bi-encoder, where m will influence the inference speed. </p>
+<p>To obtain these m global features that represent the input, we learn m context codes $(c_1, \cdots, c_m)$, where $c_i$ extracts representation $y^i_{ctxt}$ by attending over all the outputs of the previous layer:</p>
+<script type="math/tex; mode=display">
+y_{c t x t}^{i}=\sum_{j} w_{j}^{c_{i}} h_{j} \quad \text { where } \quad\left(w_{1}^{c_{i}}, . ., w_{N}^{c_{i}}\right)=\operatorname{softmax}\left(c_{i} \cdot h_{1}, \ldots, c_{i} \cdot h_{N}\right)</script><p>The m context codes are randomly initialized, and learnt during finetuning. Finally, given our m global context features, we attend over them using $y_{candi}$ as the query:</p>
+<script type="math/tex; mode=display">
+y_{c t x t}=\sum w_{i} y_{c t x t}^{i} \quad \text { where } \quad\left(w_{1}, \ldots, w_{m}\right)=\operatorname{softmax}\left(y_{c a n d_{i}} \cdot y_{c t x t}^{1}, \ldots, y_{c a n d_{i}} \cdot y_{c t x t}^{m}\right)</script><p>The final score for that candidate label is then $y_{ctxt} \cdot y_{candi}$ as in a Bi-encoder. As m &lt; N, where N is the number of tokens, and the context-candidate attention is only performed at the top layer, this is far faster than the Cross-encoder’s full self-attention.</p>
+<p><img src="https://s2.loli.net/2022/03/03/rBlRIiAHuqK18jw.png" alt="image-20220208163723909"></p>
+<p>但是…时间呢？</p>
+<p><img src="https://s2.loli.net/2022/03/03/F56m4qxauOjoLA8.png" alt="image-20220208164130924"></p>
+<p>好吧，虽然复杂度感觉不太对，但是他说比 Cross 好上那么几个数量级。Fine.</p>
+<h1 id="Improving-Document-Representations-by-Generating-Pseudo-Query-Embeddings-for-Dense-Retrieval"><a href="#Improving-Document-Representations-by-Generating-Pseudo-Query-Embeddings-for-Dense-Retrieval" class="headerlink" title="Improving Document Representations by Generating Pseudo Query Embeddings for Dense Retrieval"></a><strong>Improving Document Representations</strong> by Generating Pseudo Query Embeddings for Dense Retrieval</h1><h2 id="Motivation-10"><a href="#Motivation-10" class="headerlink" title="Motivation"></a>Motivation</h2><p>However, this simple structure may cause serious information loss during the encoding of documents since the queries are agnostic.</p>
+<p>As it is very common that a document with hundreds of tokens contains several distinct topics, some important semantic information might be easily missed or biased by each other without knowing the query.</p>
+<h2 id="Feature-5"><a href="#Feature-5" class="headerlink" title="Feature"></a>Feature</h2><p>To address this problem, we design a method to mimic the queries on each of the documents by an iterative clustering process and represent the documents by multiple pseudo queries.</p>
+<p>To alleviate the query agnostic problem, we propose a novel approach that mimics multiple potential queries corresponding to the input document and we call them “pseudo query embeddings”.</p>
+<p>Ideally, each of the pseudo query embeddings corresponds to a semantic salient (most important or noticeable) fragment in the document which is similar to a semantic cluster of the document. </p>
+<p>Thus, we implement the process by a clustering algorithm (i.e., K-means in this work) and regard the cluster centroids as the pseudo query embeddings. </p>
+<ul>
+<li>This is a novel approach to represent the document with multiple pseudo query embeddings which are generated by a clustering process.</li>
+</ul>
+<h2 id="Review-Aggregator"><a href="#Review-Aggregator" class="headerlink" title="Review: Aggregator"></a>Review: Aggregator</h2><p><img src="https://s2.loli.net/2022/03/03/mFe25cMlpigUVts.png" alt="image-20220207164752721"></p>
+<p><strong>Independent Aggregator</strong></p>
+<p>$q_\star$ and $d_\star$ are the direct output of the BERT layer. A pooler is needed to extract the inputs for the scoring function. For example, $e_q = q_\star[CLS]$ in Karpukhin et al.</p>
+<p>Although it might be efficient to compute, compressing m or n embeddings just into 1 embedding may lose information.</p>
+<p><strong>Late Interaction Aggregator</strong></p>
+<p>As shown in Figure 1 (c), the model preserves all of the document token embeddings {di} m i=1 in the cache until a new query is given.</p>
+<p> It then computes token-wise matching scores using all of the document and query embeddings. The final matching score is generated by pooling the m × n scores. </p>
+<p>However, the time complexity of the score computation arises from constant O(1) to quadratic O(mn).</p>
+<p><strong>Semi-interactive Aggregator</strong></p>
+<p>compresses the document token embeddings to a constant number k much smaller than the document length m (k &lt;&lt; m).</p>
+<p><strong>Their Method</strong></p>
+<p>Firstly, following the semi-interactive aggregator, we feed the document tokens into BERT and use the last layer hidden states as the document token embeddings {di} m i=1. Next, we perform Kmeans algorithm on these token embeddings.</p>
+<p>The <strong>K-means algorithm</strong> mainly contains two iterative steps: assignment step and update step. These two steps are performed alternatively until the convergence condition is satisfied. </p>
+<p>The assignment step can be expressed by the following equation.</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+s_{i}^{t}=\underset{j}{\operatorname{argmin}}\left\|d_{i}-c_{j}^{t}\right\|^{2} \\
+i \in\{1, \ldots, m\}, j \in\{1, \ldots, k\}
+\end{gathered}</script><p>Update:</p>
+<script type="math/tex; mode=display">
+c_{j}^{t+1}=\frac{1}{\sum_{i=1}^{m} 1\left(s_{i}^{t}=j\right)} \sum_{\left\{i \mid s_{i}^{t}=j\right\}} d_{i}</script><p>实际上这就是 K-means Clustering 的算法，就是一堆上下标记号，没啥高大上的地方。</p>
+<p>然后我们就把 $c_j^t$ 看作是 Query Embedding.</p>
+<h2 id="Experiment-4"><a href="#Experiment-4" class="headerlink" title="Experiment"></a>Experiment</h2><p>Evaluation: MS MARCO; Open QA (翻来覆去这个领域的 baseline 就这么几个)</p>
+<h1 id="Sentence-T5-Scalable-Sentence-Encoders-from-Pre-trained-Text-to-Text-Models"><a href="#Sentence-T5-Scalable-Sentence-Encoders-from-Pre-trained-Text-to-Text-Models" class="headerlink" title="Sentence-T5: Scalable Sentence Encoders from Pre-trained Text-to-Text Models"></a>Sentence-T5: <strong>Scalable</strong> Sentence Encoders from Pre-trained Text-to-Text Models</h1><h2 id="Motivation-11"><a href="#Motivation-11" class="headerlink" title="Motivation"></a>Motivation</h2><p>While T5 achieves impressive performance on language tasks cast as sequence-to-sequence mapping problems, it is unclear how to produce sentence embeddings from encoder-decoder models.</p>
+<p>We investigate three methods for extracting T5 sentence embeddings: two utilize only the T5 encoder and one uses the full T5 encoder-decoder model.</p>
+<h2 id="Feature-6"><a href="#Feature-6" class="headerlink" title="Feature"></a>Feature</h2><p>目的就是一个句子塞进 T5 获取他的 Representation，塞的信息越多越好。</p>
+<p>We explore three ways of turning a pre-trained T5 encoder-decoder model into a sentence embedding model: (i) using the first token representation of the encoder; (ii) averaging all token representations from the encoder; (iii) using the first token representation from the decoder.</p>
+<h2 id="Conclusion-2"><a href="#Conclusion-2" class="headerlink" title="Conclusion"></a>Conclusion</h2><ul>
+<li>encoder-only models have strong transfer performance while encoderdecoder models perform better on textual similarity tasks</li>
+<li>We also demonstrate the effectiveness of scaling up the model size, which greatly improves sentence embedding quality</li>
+</ul>
+<p>如果对 T5 进行进一步研究，能否提取出其每层的表示来做分析，查看到底是哪些层针对哪些任务起了作用？但是因为 T5 本来就是为了做 Universal 的，这个任务也不一定有价值…</p>
+<h1 id="Multi-task-Retrieval-for-Intensive-Tasks"><a href="#Multi-task-Retrieval-for-Intensive-Tasks" class="headerlink" title="Multi-task Retrieval for Intensive Tasks"></a>Multi-task Retrieval for Intensive Tasks</h1><ul>
+<li>什么是 multi-task retrieval?</li>
+</ul>
+<p>we target a retriever that can perform well on a wide variety of problems, without task-specific finetuning</p>
+<ul>
+<li>什么是 Knowledge intensive task? 是任务集（？</li>
+</ul>
+<p>KILT (Knowledge Intensive Language Tasks) is a new unified benchmark to help AI researchers build models that are better able to leverage real-world knowledge to accomplish a broad range of tasks.</p>
+<h2 id="Motivation-12"><a href="#Motivation-12" class="headerlink" title="Motivation"></a>Motivation</h2><p>Although neural retrieval outperforms traditional methods like tf-idf and BM25, its performance degrades considerably when applied to <strong>out-of-domain data.</strong></p>
+<p>现有的 Dense Retrieval 的弱点：</p>
+<p>First, unlike tf-idf or BM25, neural retrieval models are unsuitable for low data regimes such as few- and zero-shot settings. </p>
+<p>Second, task-specific retrievers complicate practical applications where multiple knowledge-intensive tasks may need to be performed using the same supporting database or over the same input text. </p>
+<h2 id="Feature-7"><a href="#Feature-7" class="headerlink" title="Feature"></a>Feature</h2><p><strong>By jointly training on an extensive selection of retrieval tasks</strong>, we obtain a model which is not only more robust than previous approaches, but also can lead to better performance on the downstream knowledge-intensive tasks when plugged into an existing system.</p>
+<h2 id="Experiment-5"><a href="#Experiment-5" class="headerlink" title="Experiment"></a>Experiment</h2><ul>
+<li>The universal retriever performing comparably to task-specific models</li>
+<li>Plugged the universal retriever into a larger pipeline and achieved better results</li>
+<li>Evaluated the model’s performance in the zero-shot and few-shot settings. <ul>
+<li>our proposed approach performs comparably to BM25 in the zero shot setting, and quickly overtakes it even with minimal in-domain training</li>
+</ul>
+</li>
+<li>In Section 4.5 we evaluated a number of more complex variants of the model involving task specialisation, but failed to see clear performance improvements. Finally, in Section 4.6 we saw how a simple iterative approach to data augmentation can lead to better performance.</li>
+</ul>
+<p>// 下周组会要分享论文，寄寄寄，总不能讲这些 21 年及之前的老货色吧，下周看起来要顶着软工 init project 的时候多找几篇论文了</p>
+<p>// 读了也不算很多论文，但连 BERT 都没上手跑过几次，搞完挑战杯一定要上手写代码了，不然感觉还是太理论，太泛泛而谈了，丝毫没感到码力有提升（x</p>
+<p>// 计网原小作业都要读 TCP/IP 的论文 不会吧不会吧 计网原我 <em> </em> *</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/paper2202/">https://www.c7w.tech/paper2202/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/adversarial-attack/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Adversarial Attack 概述</div></div></a></div><div class="next-post pull-right"><a href="/gan/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GAN 生成对抗网络 简介</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pre-training-Methods-in-Information-Retrieval"><span class="toc-number">1.</span> <span class="toc-text">Pre-training Methods in Information Retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">1.1.</span> <span class="toc-text">Summary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Notes"><span class="toc-number">1.2.</span> <span class="toc-text">Notes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Intro-amp-Background"><span class="toc-number">1.2.1.</span> <span class="toc-text">Intro &amp; Background</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrieval-Component"><span class="toc-number">1.2.2.</span> <span class="toc-text">Retrieval Component</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sparse-Retrieval"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">Sparse Retrieval</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dense-Retrieval"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">Dense Retrieval</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hybrid-Retrieval"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">Hybrid Retrieval</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Re-ranker-Component"><span class="toc-number">1.2.3.</span> <span class="toc-text">Re-ranker Component</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-Component"><span class="toc-number">1.2.4.</span> <span class="toc-text">Other Component</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Latent-Retrieval-for-Weakly-Supervised-Open-Domain-Question-Answering"><span class="toc-number">2.</span> <span class="toc-text">Latent Retrieval for Weakly Supervised Open Domain Question Answering</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Background-Infomation"><span class="toc-number">2.1.</span> <span class="toc-text">Background Infomation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">2.2.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-Feature"><span class="toc-number">2.3.</span> <span class="toc-text">Approach &#x2F; Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment"><span class="toc-number">2.4.</span> <span class="toc-text">Experiment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Architecture"><span class="toc-number">2.4.1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training"><span class="toc-number">2.4.2.</span> <span class="toc-text">Training</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evaluation"><span class="toc-number">2.4.3.</span> <span class="toc-text">Evaluation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">2.5.</span> <span class="toc-text">Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Domain-matched-pre-training-tasks-for-dense-retrieval"><span class="toc-number">3.</span> <span class="toc-text">Domain-matched pre-training tasks for dense retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-1"><span class="toc-number">3.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach"><span class="toc-number">3.2.</span> <span class="toc-text">Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dense-Retrieval-1"><span class="toc-number">3.3.</span> <span class="toc-text">Dense Retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bi-encoder-architecture"><span class="toc-number">3.3.1.</span> <span class="toc-text">Bi-encoder architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-1"><span class="toc-number">3.3.2.</span> <span class="toc-text">Training</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experimental-setup"><span class="toc-number">3.4.</span> <span class="toc-text">Experimental setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pre-training-tasks"><span class="toc-number">3.4.1.</span> <span class="toc-text">Pre-training tasks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evaluation-tasks"><span class="toc-number">3.4.2.</span> <span class="toc-text">Evaluation tasks</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unsupervised-Corpus-Aware-Language-Model-Pre-training-for-Dense-Passage-Retrieval"><span class="toc-number">4.</span> <span class="toc-text">Unsupervised Corpus Aware Language Model Pre-training for Dense Passage Retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-2"><span class="toc-number">4.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-1"><span class="toc-number">4.2.</span> <span class="toc-text">Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-Method"><span class="toc-number">4.3.</span> <span class="toc-text">Experiment Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Architecture-1"><span class="toc-number">4.3.1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-efficient-Pretraining"><span class="toc-number">4.3.2.</span> <span class="toc-text">Memory-efficient Pretraining</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pre-training"><span class="toc-number">4.3.3.</span> <span class="toc-text">Pre-training</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evaluation-1"><span class="toc-number">4.3.4.</span> <span class="toc-text">Evaluation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sparse-Dense-and-Attentional-Representations-for-Text-Retrieval"><span class="toc-number">5.</span> <span class="toc-text">Sparse, Dense, and Attentional Representations for Text Retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-3"><span class="toc-number">5.1.</span> <span class="toc-text">Motivation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-dual-encoder-fidelity"><span class="toc-number">5.1.1.</span> <span class="toc-text">Analyzing dual encoder fidelity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-Feature-1"><span class="toc-number">5.2.</span> <span class="toc-text">Approach &#x2F; Feature</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-vector-Encodings"><span class="toc-number">5.2.1.</span> <span class="toc-text">Multi-vector Encodings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hybrid"><span class="toc-number">5.2.2.</span> <span class="toc-text">Hybrid</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-1"><span class="toc-number">5.3.</span> <span class="toc-text">Experiment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion-1"><span class="toc-number">5.4.</span> <span class="toc-text">Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Condenser-a-pretraining-architecture-for-dense-retrieval"><span class="toc-number">6.</span> <span class="toc-text">Condenser: a pretraining architecture for dense retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-4"><span class="toc-number">6.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-2"><span class="toc-number">6.2.</span> <span class="toc-text">Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-2"><span class="toc-number">6.3.</span> <span class="toc-text">Experiment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Architecture-2"><span class="toc-number">6.3.1.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fine-tuning"><span class="toc-number">6.3.2.</span> <span class="toc-text">Fine tuning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.3.3.</span> <span class="toc-text"> </span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PRE-TRAINING-TASKS-FOR-EMBEDDING-BASED-LARGE-SCALE-RETRIEVAL"><span class="toc-number">7.</span> <span class="toc-text">PRE-TRAINING TASKS FOR EMBEDDING-BASED LARGE-SCALE RETRIEVAL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-5"><span class="toc-number">7.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature"><span class="toc-number">7.2.</span> <span class="toc-text">Feature</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#From-doc2query-to-docTTTTTquery"><span class="toc-number">8.</span> <span class="toc-text">From doc2query to docTTTTTquery</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-6"><span class="toc-number">8.1.</span> <span class="toc-text">Motivation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Document-Expansion-by-Query-Prediction"><span class="toc-number">9.</span> <span class="toc-text">Document Expansion by Query Prediction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-7"><span class="toc-number">9.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-1"><span class="toc-number">9.2.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-3"><span class="toc-number">9.3.</span> <span class="toc-text">Experiment</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ColBERT-Efficient-and-Effective-Passage-Search-via-Contextualized-Late-Interaction-over-BERT"><span class="toc-number">10.</span> <span class="toc-text">ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-8"><span class="toc-number">10.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-2"><span class="toc-number">10.2.</span> <span class="toc-text">Feature</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Complement-Lexical-Retrieval-Model-with-Semantic-Residual-Embeddings"><span class="toc-number">11.</span> <span class="toc-text">Complement Lexical Retrieval Model with Semantic Residual Embeddings</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-3"><span class="toc-number">11.1.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-3"><span class="toc-number">11.2.</span> <span class="toc-text">Approach</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lexical-Retrieval-Model"><span class="toc-number">11.2.1.</span> <span class="toc-text">Lexical Retrieval Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding-Retrieval-Model"><span class="toc-number">11.2.2.</span> <span class="toc-text">Embedding Retrieval Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Residual-Based-Learning"><span class="toc-number">11.2.3.</span> <span class="toc-text">Residual Based Learning</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly-encoders-architectures-and-pre-training-strategies-for-fast-and-accurate-multi-sentence-scoring"><span class="toc-number">12.</span> <span class="toc-text">Poly-encoders: architectures and pre-training strategies for fast and accurate multi-sentence scoring</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-9"><span class="toc-number">12.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-4"><span class="toc-number">12.2.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Poly-Encoder"><span class="toc-number">12.3.</span> <span class="toc-text">Poly-Encoder</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Improving-Document-Representations-by-Generating-Pseudo-Query-Embeddings-for-Dense-Retrieval"><span class="toc-number">13.</span> <span class="toc-text">Improving Document Representations by Generating Pseudo Query Embeddings for Dense Retrieval</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-10"><span class="toc-number">13.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-5"><span class="toc-number">13.2.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Review-Aggregator"><span class="toc-number">13.3.</span> <span class="toc-text">Review: Aggregator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-4"><span class="toc-number">13.4.</span> <span class="toc-text">Experiment</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sentence-T5-Scalable-Sentence-Encoders-from-Pre-trained-Text-to-Text-Models"><span class="toc-number">14.</span> <span class="toc-text">Sentence-T5: Scalable Sentence Encoders from Pre-trained Text-to-Text Models</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-11"><span class="toc-number">14.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-6"><span class="toc-number">14.2.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion-2"><span class="toc-number">14.3.</span> <span class="toc-text">Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-task-Retrieval-for-Intensive-Tasks"><span class="toc-number">15.</span> <span class="toc-text">Multi-task Retrieval for Intensive Tasks</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation-12"><span class="toc-number">15.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-7"><span class="toc-number">15.2.</span> <span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiment-5"><span class="toc-number">15.3.</span> <span class="toc-text">Experiment</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>202205 读过的一些 Paper 总结 | c7w 的博客</title><meta name="author" content="c7w"><meta name="copyright" content="c7w"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要是对 2022&#x2F;05 读的 Paper 的总结。 涉及的主要主题估计是 Anomaly Detection 和 Image Generation.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="202205 读过的一些 Paper 总结">
+<meta property="og:url" content="https://www.c7w.tech/paper2205/index.html">
+<meta property="og:site_name" content="c7w 的博客">
+<meta property="og:description" content="主要是对 2022&#x2F;05 读的 Paper 的总结。 涉及的主要主题估计是 Anomaly Detection 和 Image Generation.">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-05-03T08:53:48.000Z">
+<meta property="article:modified_time" content="2022-05-16T15:02:39.296Z">
+<meta property="article:author" content="c7w">
+<meta property="article:tag" content="c7w">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="日志">
+<meta property="article:tag" content="日常">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="图形学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://www.c7w.tech/paper2205/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?08d6b753db81329ea728103fd0d2f84e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '202205 读过的一些 Paper 总结',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-05-16 23:02:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="c7w 的博客" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">c7w 的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://docs.net9.org/"><i class="fa-fw fas fa-book"></i><span> Docs</span></a></div><div class="menus_item"><a class="site-page" href="/friends/"><i class="fa-fw fas fa-heart"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">202205 读过的一些 Paper 总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-03T08:53:48.000Z" title="发表于 2022-05-03 16:53:48">2022-05-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-05-16T15:02:39.296Z" title="更新于 2022-05-16 23:02:39">2022-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/">理论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E8%AE%BA/%E7%90%86%E8%AE%BA-CV/">理论/CV</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="202205 读过的一些 Paper 总结"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>主要是对 2022/05 读的 Paper 的总结。</p>
+<p>涉及的主要主题估计是 Anomaly Detection 和 Image Generation.</p>
+<a id="more"></a>
+<h1 id="StyleGAN"><a href="#StyleGAN" class="headerlink" title="StyleGAN"></a>StyleGAN</h1><p>Link: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.04948">https://arxiv.org/abs/1812.04948</a></p>
+<p>这篇工作提出了一个新的生成网络架构，如下图右侧所示。</p>
+<p><img src="https://s2.loli.net/2022/05/03/fo45c8mISyBWMDR.png" alt="image-20220503172918548"></p>
+<p>其有以下创新点：</p>
+<ul>
+<li><p>因为 $z$ 一般是 normalize 之后的结果，所以变量很难解耦合。其最初的 8 层 FC 将 $z$ 映射为 $w$ 是为了进行变量内蕴含的特征的解耦合。</p>
+</li>
+<li><p>风格迁移：$\operatorname{AdaIN}(\mathbf{x}_{i}, \mathbf{y})=\mathbf{y}_{s, i} \frac{\mathbf{x}_{i}-\mu(\mathbf{x}_{i})}{\sigma(\mathbf{x}_{i})}+\mathbf{y}_{b, i}$，其中 $x_i$ 本来蕴含了其特征 $\mu, \sigma$，而做了 normalize 之后，再乘以 $y_{s,i} = \mu(y_i), y_{b,i}=\sigma(y_i)$，得到在特征空间 $Y_i$ 下的 style</p>
+</li>
+<li><p>解释了其生成架构的 Properties</p>
+<ul>
+<li>Style Mixing: 其通过生成 $z_1, z_2$ 两个不同的 latent code，然后过 FC 之后得到 $w_1, w_2$，然后得到两张图片记为 A, B。然后，把 (b) 图中上半部分的特征输入用 $w_1$ 的上半部分，下半部分的特征输入用 $w_2$ 的下半部分，得到新图片 $C$。通过调整“上半部分”与“下半部分”层数的多少，来看每一层到底在控制什么特征。</li>
+<li>Noise：现象是，对不同层的输出变量施加轻微扰动，其控制效果也不同。其猜测的原因：We hypothesize that at any point in the generator, there is pressure to introduce new content as soon as possible, and the easiest way for our network to create stochastic variation is to rely on the noise provided</li>
+</ul>
+</li>
+<li><p>提供了两种量化“特征解耦合度”的方法</p>
+<ul>
+<li><p>Perceptual path length</p>
+<ul>
+<li><p>Motivation: 从 $z_1$ 到 $z_2$ 做插值，图像的变化应该越小越好</p>
+</li>
+<li><p>This is to avoid that features that are absent in either endpoint may appear in the middle of a linear interpolation path.</p>
+</li>
+<li><script type="math/tex; mode=display">
+\begin{array}{r}
+l_{\mathcal{Z}}=\mathbb{E}\left[\frac { 1 } { \epsilon ^ { 2 } } d \left(G\left(\operatorname{slerp}\left(\mathbf{z}_{1}, \mathbf{z}_{2} ; t\right)\right)\right.\right. \\
+\left.\left.G\left(\operatorname{slerp}\left(\mathbf{z}_{1}, \mathbf{z}_{2} ; t+\epsilon\right)\right)\right)\right]
+\end{array}</script><script type="math/tex; mode=display">
+\begin{array}{r}
+l_{\mathcal{W}}=\mathbb{E}\left[\frac { 1 } { \epsilon ^ { 2 } } d \left(g\left(\operatorname{lerp}\left(f\left(\mathbf{z}_{1}\right), f\left(\mathbf{z}_{2}\right) ; t\right)\right)\right.\right. \\
+\left.\left.g\left(\operatorname{lerp}\left(f\left(\mathbf{z}_{1}\right), f\left(\mathbf{z}_{2}\right) ; t+\epsilon\right)\right)\right)\right]
+\end{array}</script></li>
+</ul>
+</li>
+<li><p>Linear separability</p>
+<ul>
+<li>Motivation: 解耦合的空间应该能找到某一种特征对应的方向向量</li>
+<li>We propose another metric that quantifies this effect by measuring <strong>how well the latent-space points can be separated into two distinct sets via a linear hyperplane</strong>, so that each set corresponds to a specific binary attribute of the image.</li>
+<li>Use SYM…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Enhancing-photorealism-enhancement"><a href="#Enhancing-photorealism-enhancement" class="headerlink" title="Enhancing photorealism enhancement"></a>Enhancing photorealism enhancement</h1><p>Link: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.04619">https://arxiv.org/abs/2105.04619</a></p>
+<p>这篇文章的方法是 unpaired image-to-image translation，which learns a mapping from one image collection to another.</p>
+<p><img src="https://s2.loli.net/2022/05/03/MwhEQeHnDKdOsi7.png" alt="image-20220503194719309"></p>
+<p>这张图是这篇文章中所用到的方法的导览，下面一一对其介绍。</p>
+<ul>
+<li>G-buffer<ul>
+<li><img src="https://s2.loli.net/2022/05/03/aBqe241LZQHuvKW.png" alt="image-20220503195709338"></li>
+</ul>
+</li>
+<li>Image Enhancement Network<ul>
+<li><img src="https://s2.loli.net/2022/05/03/cV2SmKLjyOzp6C7.png" alt="image-20220503195335903"></li>
+<li>基于 HRNetV2（在 Dense Prediction 预测上表现突出）改动</li>
+</ul>
+</li>
+<li>Training Objectives<ul>
+<li>LPIPS Loss：focuses on structural differences</li>
+<li>Realism Score</li>
+</ul>
+</li>
+<li>A specific sampling strategy during training</li>
+</ul>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="G-Buffer-Encoder"><a href="#G-Buffer-Encoder" class="headerlink" title="G-Buffer Encoder"></a>G-Buffer Encoder</h3><p><img src="https://s2.loli.net/2022/05/03/aAXUPfgyxKcwu83.png" alt="image-20220503200117762"></p>
+<p>其中每个 Stream 都包含两个 Residual Block，架构如下图：</p>
+<p><img src="https://s2.loli.net/2022/05/03/XBSyNQHVpqKAehg.png" alt="image-20220503200353851"></p>
+<h3 id="Perceptual-Discriminator"><a href="#Perceptual-Discriminator" class="headerlink" title="Perceptual Discriminator"></a>Perceptual Discriminator</h3><p><img src="https://s2.loli.net/2022/05/03/T4sRaFnXlqwv86H.png" alt="image-20220503201157142"></p>
+<h3 id="Layout-Differences-cause-Artifacts"><a href="#Layout-Differences-cause-Artifacts" class="headerlink" title="Layout Differences cause Artifacts"></a>Layout Differences cause Artifacts</h3><p>不同数据集中的图片有不同的风格，比如 GTA V 中图像上方往往是天空，而 CityScape 中往往是山或树林。Discriminator 可以通过这一点来判断到底应该是 Fake 还是 Real。如果我们对 GTA V 中的图片做增强的话，这可能倾向于让 Generator 在图像上方生成树。</p>
+<p><img src="https://s2.loli.net/2022/05/03/WHzoL5ImRa7lNjE.png" alt="image-20220503203716048"></p>
+<ul>
+<li>解决方案？Sampling only <strong>matching</strong> patches. So what is <strong>matching</strong> between different datasets?<ul>
+<li>Crop size: 7% of the full image per patch</li>
+<li>Extract 1 x 1 x 512-dim feature map, using a VGG network pretrained on ImageNet at the last relu layer</li>
+<li>Let $p_i, p_j \in$ Different datasets, then call them “matching” if their cosine similiarity &gt; 0.5.</li>
+<li>Using FAISS could accelerate the process!</li>
+</ul>
+</li>
+</ul>
+<h3 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h3><p>IS, FID, KID 是常用的衡量图片真实感的 score。但是 KID 的问题是，他只能衡量图片的真实感，即使是图片所表示的物体结构发生了变化，它是反应不出来的。于是本作提出新的 Metrics <code>sKVD</code>:</p>
+<ul>
+<li>Extract patches of 1/8 image size from the semantic label maps of souce and target datasets</li>
+<li>Downsample these patches to 16x16 resolution to obtain a 256-dim vector</li>
+<li>For each such vector from the synthetic dataset, we fifind the nearest neighbor in the set of vectors from the real dataset. We retain pairs of vectors with more than 50% matching entries.</li>
+</ul>
+<h1 id="Standardized-Max-Logits"><a href="#Standardized-Max-Logits" class="headerlink" title="Standardized Max Logits"></a>Standardized Max Logits</h1><p>A Simple yet Effective Approach for Identifying Unexpected Road Obstacles in Urban-Scene Segmentation</p>
+<p>Key Idea: <strong>standardize</strong> the max logits to align the different distributions and reflect the relative meanings of max logits within each predicted class.</p>
+<p><img src="https://s2.loli.net/2022/05/05/pX8sSw3C54tPNqA.png" alt="image-20220505200158778"></p>
+<p>启发是因为这张图，对于没有出现过的物体，Road 的 Max Logit 远远大于其他种类，导致被分类成 Road 的可能性较大。</p>
+<p>即使是把这些 Max Logit 都做了标准化，还会遇到的问题是，在 instance 的边界，the boundary pixels tend to have low resolution scores，作者通过 <em>iterative boundary suppresion</em> 的方法对其进行了解决。然后，作者进一步使用了 <em>dilated smoothing</em>  方法对 anomaly score 进行平滑化。</p>
+<p><img src="https://s2.loli.net/2022/05/05/u4g6teT2os9VC1w.png" alt="image-20220505201429689"></p>
+<ol>
+<li>standardizing the max logits in a class-wise manner</li>
+<li>iterative boundary suppression<ol>
+<li>Propate the SMLs of the neighboring non-boundary pixels to the boundary regions</li>
+<li>Start from the outer areas of the boundary to the inner areas</li>
+<li>To be specifific, we assume the boundary width as a particular value and update the boundaries by iteratively reducing the boundary width at each iteration.</li>
+</ol>
+</li>
+<li>dilated smoothing<ol>
+<li>Gaussian kernel</li>
+</ol>
+</li>
+</ol>
+<h1 id="Normalizations"><a href="#Normalizations" class="headerlink" title="Normalizations"></a>Normalizations</h1><p>我们假设输入的数据维度为 $(N, C, H, W)$.</p>
+<p><img src="https://s2.loli.net/2022/05/13/GwrZhEou6dyvOLN.png" alt="image-20220513232103204"></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=l_3zj6HeWUE">https://www.youtube.com/watch?v=l_3zj6HeWUE</a></li>
+</ul>
+<h2 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>BatchNorm2d<span class="token punctuation">(</span>num_features<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> momentum<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">,</span> affine<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<p>在 batch 上，对 $(N, H, W)$ 做归一化。设 $x.shape = (C, H, W)$，其中 num_features $=C$,则 $y=\frac{x-\mathrm{E}[x]}{\sqrt{\operatorname{Var}[x]+\epsilon}} * \gamma+\beta$，其中 $\gamma, \beta$ 当 affine=True 时启用。</p>
+<p>这里的 momentum 是用来更新统计数据的均值与方差的。准确的说，$x_{\text {new }}=(1 \text {-momentum })^{<em>} x+\text { momentum }{ }^{</em>} x_{t}$.</p>
+<h2 id="InstanceNorm2d"><a href="#InstanceNorm2d" class="headerlink" title="InstanceNorm2d"></a>InstanceNorm2d</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>InstanceNorm2d<span class="token punctuation">(</span>num_features<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> momentum<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">,</span> affine<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> track_running_stats<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span></code></pre>
+<p>InstanceNorm 在图像像素上对 $(H, W)$ 做 Normalization.</p>
+<script type="math/tex; mode=display">
+y_{t i j k}=\frac{x_{t i j k}-\mu_{t i}}{\sqrt{\sigma_{t i}^{2}+\epsilon}}, \quad \mu_{t i}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H} x_{t i l m}, \quad \sigma_{t i}^{2}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H}\left(x_{t i l m}-m u_{t i}\right)^{2}</script><h2 id="LayerNorm"><a href="#LayerNorm" class="headerlink" title="LayerNorm"></a>LayerNorm</h2><pre class="language-python" data-language="python"><code class="language-python">torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>LayerNorm<span class="token punctuation">(</span>normalized_shape<span class="token punctuation">,</span> eps<span class="token operator">=</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">05</span><span class="token punctuation">,</span> elementwise_affine<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<h2 id="GroupNorm"><a href="#GroupNorm" class="headerlink" title="GroupNorm"></a>GroupNorm</h2><h2 id="Spectral-Norm"><a href="#Spectral-Norm" class="headerlink" title="Spectral Norm"></a>Spectral Norm</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vG-oEreLG-Q">https://www.youtube.com/watch?v=vG-oEreLG-Q</a></p>
+<h1 id="ViT"><a href="#ViT" class="headerlink" title="ViT"></a>ViT</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">c7w</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.c7w.tech/paper2205/">https://www.c7w.tech/paper2205/</a></span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/rsa/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《现代密码学》公钥密码体制</div></div></a></div><div class="next-post pull-right"><a href="/hash-function/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hash 函数与消息认证</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/01/03/i8fNgXEPZDqnIlS.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">c7w</div><div class="author-info__description">Forever a c7w.</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/c7w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:cc7w@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://twitter.com/c7wc7w" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#StyleGAN"><span class="toc-number">1.</span> <span class="toc-text">StyleGAN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Enhancing-photorealism-enhancement"><span class="toc-number">2.</span> <span class="toc-text">Enhancing photorealism enhancement</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Methods"><span class="toc-number">2.1.</span> <span class="toc-text">Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#G-Buffer-Encoder"><span class="toc-number">2.1.1.</span> <span class="toc-text">G-Buffer Encoder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Perceptual-Discriminator"><span class="toc-number">2.1.2.</span> <span class="toc-text">Perceptual Discriminator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout-Differences-cause-Artifacts"><span class="toc-number">2.1.3.</span> <span class="toc-text">Layout Differences cause Artifacts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metrics"><span class="toc-number">2.1.4.</span> <span class="toc-text">Metrics</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Standardized-Max-Logits"><span class="toc-number">3.</span> <span class="toc-text">Standardized Max Logits</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Normalizations"><span class="toc-number">4.</span> <span class="toc-text">Normalizations</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">4.1.</span> <span class="toc-text">Batch Normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InstanceNorm2d"><span class="toc-number">4.2.</span> <span class="toc-text">InstanceNorm2d</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LayerNorm"><span class="toc-number">4.3.</span> <span class="toc-text">LayerNorm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GroupNorm"><span class="toc-number">4.4.</span> <span class="toc-text">GroupNorm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spectral-Norm"><span class="toc-number">4.5.</span> <span class="toc-text">Spectral Norm</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ViT"><span class="toc-number">5.</span> <span class="toc-text">ViT</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="framework-info"><span>Powered by Hexo &amp; Theme Butterfly &amp; GitHub Pages</span></div><div class="copyleft"><span>Copyright © 2020-2022 c7w. LICENSE CC BY-NC-SA 4.0.</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
