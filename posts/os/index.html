@@ -22,7 +22,7 @@ lec1 OS overview
   
     <link rel="stylesheet" href="../../fancybox/jquery.fancybox-1.3.4.css">
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -58,7 +58,7 @@ lec1 OS overview
         <section id="main"><article id="post-os" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a class="article-date">
-  <time class="dt-published" datetime="1970-01-01T00:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+  <time class="dt-published" datetime="2023-06-12T11:56:41.414Z" itemprop="datePublished">2023-06-12</time>
 </a>
     
   <div class="article-category">
@@ -270,138 +270,11 @@ lec1 OS overview
 <p><span class="bd-box"><h-char class="bd bd-end"><h-inner>【</h-inner></h-char></span>读者写者问题的信号量实现<span class="bd-box"><h-char class="bd bd-beg"><h-inner>】</h-inner></h-char></span></p>
 <p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem#cite_note-3">https://en.wikipedia.org/wiki/Readers–writers_problem#cite_note-3</a></p>
 <p><strong>读者优先</strong></p>
-<div class="highlight"><pre class="code"><code>semaphore resource=<span class="hljs-number">1</span>;
-semaphore rmutex=<span class="hljs-number">1</span>;
-readcount=<span class="hljs-number">0</span>;
-
-<span class="hljs-comment">/*
-   resource.P() is equivalent to wait(resource)
-   resource.V() is equivalent to signal(resource)
-   rmutex.P() is equivalent to wait(rmutex)
-   rmutex.V() is equivalent to signal(rmutex)
-*/</span>
-
-writer() &#123;
-    resource.P();          <span class="hljs-comment">//Lock the shared file for a writer</span>
-
-    &lt;CRITICAL Section&gt;
-    <span class="hljs-comment">// Writing is done</span>
-
-    &lt;EXIT Section&gt;
-    resource.V();          <span class="hljs-comment">//Release the shared file for use by other readers. Writers are allowed if there are no readers requesting it.</span>
-&#125;
-
-reader() &#123;
-    rmutex.P();           <span class="hljs-comment">//Ensure that no other reader can execute the &lt;Entry&gt; section while you are in it</span>
-    &lt;CRITICAL Section&gt;
-    readcount++;          <span class="hljs-comment">//Indicate that you are a reader trying to enter the Critical Section</span>
-    <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">1</span>)   <span class="hljs-comment">//Checks if you are the first reader trying to enter CS</span>
-        resource.P();     <span class="hljs-comment">//If you are the first reader, lock the resource from writers. Resource stays reserved for subsequent readers</span>
-    &lt;EXIT CRITICAL Section&gt;
-    rmutex.V();           <span class="hljs-comment">//Release</span>
-
-    <span class="hljs-comment">// Do the Reading</span>
-
-    rmutex.P();           <span class="hljs-comment">//Ensure that no other reader can execute the &lt;Exit&gt; section while you are in it</span>
-    &lt;CRITICAL Section&gt;
-    readcount--;          <span class="hljs-comment">//Indicate that you no longer need the shared resource. One fewer reader</span>
-    <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">0</span>)   <span class="hljs-comment">//Checks if you are the last (only) reader who is reading the shared file</span>
-        resource.V();     <span class="hljs-comment">//If you are last reader, then you can unlock the resource. This makes it available to writers.</span>
-    &lt;EXIT CRITICAL Section&gt;
-    rmutex.V();           <span class="hljs-comment">//Release</span>
-&#125;
-</code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">semaphore resource=<span class="number">1</span>;</span><br><span class="line">semaphore rmutex=<span class="number">1</span>;</span><br><span class="line">readcount=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   resource.P() is equivalent to wait(resource)</span></span><br><span class="line"><span class="comment">   resource.V() is equivalent to signal(resource)</span></span><br><span class="line"><span class="comment">   rmutex.P() is equivalent to wait(rmutex)</span></span><br><span class="line"><span class="comment">   rmutex.V() is equivalent to signal(rmutex)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">writer() &#123;</span><br><span class="line">    resource.P();          <span class="comment">//Lock the shared file for a writer</span></span><br><span class="line"></span><br><span class="line">    &lt;CRITICAL Section&gt;</span><br><span class="line">    <span class="comment">// Writing is done</span></span><br><span class="line"></span><br><span class="line">    &lt;EXIT Section&gt;</span><br><span class="line">    resource.V();          <span class="comment">//Release the shared file for use by other readers. Writers are allowed if there are no readers requesting it.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reader() &#123;</span><br><span class="line">    rmutex.P();           <span class="comment">//Ensure that no other reader can execute the &lt;Entry&gt; section while you are in it</span></span><br><span class="line">    &lt;CRITICAL Section&gt;</span><br><span class="line">    readcount++;          <span class="comment">//Indicate that you are a reader trying to enter the Critical Section</span></span><br><span class="line">    <span class="keyword">if</span> (readcount == <span class="number">1</span>)   <span class="comment">//Checks if you are the first reader trying to enter CS</span></span><br><span class="line">        resource.P();     <span class="comment">//If you are the first reader, lock the resource from writers. Resource stays reserved for subsequent readers</span></span><br><span class="line">    &lt;EXIT CRITICAL Section&gt;</span><br><span class="line">    rmutex.V();           <span class="comment">//Release</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do the Reading</span></span><br><span class="line"></span><br><span class="line">    rmutex.P();           <span class="comment">//Ensure that no other reader can execute the &lt;Exit&gt; section while you are in it</span></span><br><span class="line">    &lt;CRITICAL Section&gt;</span><br><span class="line">    readcount--;          <span class="comment">//Indicate that you no longer need the shared resource. One fewer reader</span></span><br><span class="line">    <span class="keyword">if</span> (readcount == <span class="number">0</span>)   <span class="comment">//Checks if you are the last (only) reader who is reading the shared file</span></span><br><span class="line">        resource.V();     <span class="comment">//If you are last reader, then you can unlock the resource. This makes it available to writers.</span></span><br><span class="line">    &lt;EXIT CRITICAL Section&gt;</span><br><span class="line">    rmutex.V();           <span class="comment">//Release</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>写者优先</strong></p>
-<div class="highlight"><pre class="code"><code><span class="hljs-keyword">int</span> readcount, writecount;                   <span class="hljs-comment">//(initial value = 0)</span>
-semaphore rmutex, wmutex, readTry, resource; <span class="hljs-comment">//(initial value = 1)</span>
-
-<span class="hljs-comment">//READER</span>
-reader() &#123;
-&lt;ENTRY Section&gt;
-  readTry.P();                 <span class="hljs-comment">//Indicate a reader is trying to enter</span>
-  rmutex.P();                  <span class="hljs-comment">//lock entry section to avoid race condition with other readers</span>
-  readcount++;                 <span class="hljs-comment">//report yourself as a reader</span>
-  <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">1</span>)          <span class="hljs-comment">//checks if you are first reader</span>
-    resource.P();              <span class="hljs-comment">//if you are first reader, lock the resource</span>
-  rmutex.V();                  <span class="hljs-comment">//release entry section for other readers</span>
-  readTry.V();                 <span class="hljs-comment">//indicate you are done trying to access the resource</span>
-
-&lt;CRITICAL Section&gt;
-<span class="hljs-comment">//reading is performed</span>
-
-&lt;EXIT Section&gt;
-  rmutex.P();                  <span class="hljs-comment">//reserve exit section - avoids race condition with readers</span>
-  readcount--;                 <span class="hljs-comment">//indicate you&#x27;re leaving</span>
-  <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">0</span>)          <span class="hljs-comment">//checks if you are last reader leaving</span>
-    resource.V();              <span class="hljs-comment">//if last, you must release the locked resource</span>
-  rmutex.V();                  <span class="hljs-comment">//release exit section for other readers</span>
-&#125;
-
-<span class="hljs-comment">//WRITER</span>
-writer() &#123;
-&lt;ENTRY Section&gt;
-  wmutex.P();                  <span class="hljs-comment">//reserve entry section for writers - avoids race conditions</span>
-  writecount++;                <span class="hljs-comment">//report yourself as a writer entering</span>
-  <span class="hljs-keyword">if</span> (writecount == <span class="hljs-number">1</span>)         <span class="hljs-comment">//checks if you&#x27;re first writer</span>
-    readTry.P();               <span class="hljs-comment">//if you&#x27;re first, then you must lock the readers out. Prevent them from trying to enter CS</span>
-  wmutex.V();                  <span class="hljs-comment">//release entry section</span>
-  resource.P();                <span class="hljs-comment">//reserve the resource for yourself - prevents other writers from simultaneously editing the shared resource</span>
-&lt;CRITICAL Section&gt;
-  <span class="hljs-comment">//writing is performed</span>
-  resource.V();                <span class="hljs-comment">//release file</span>
-
-&lt;EXIT Section&gt;
-  wmutex.P();                  <span class="hljs-comment">//reserve exit section</span>
-  writecount--;                <span class="hljs-comment">//indicate you&#x27;re leaving</span>
-  <span class="hljs-keyword">if</span> (writecount == <span class="hljs-number">0</span>)         <span class="hljs-comment">//checks if you&#x27;re the last writer</span>
-    readTry.V();               <span class="hljs-comment">//if you&#x27;re last writer, you must unlock the readers. Allows them to try enter CS for reading</span>
-  wmutex.V();                  <span class="hljs-comment">//release exit section</span>
-&#125;
-</code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> readcount, writecount;                   <span class="comment">//(initial value = 0)</span></span><br><span class="line">semaphore rmutex, wmutex, readTry, resource; <span class="comment">//(initial value = 1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//READER</span></span><br><span class="line">reader() &#123;</span><br><span class="line">&lt;ENTRY Section&gt;</span><br><span class="line">  readTry.P();                 <span class="comment">//Indicate a reader is trying to enter</span></span><br><span class="line">  rmutex.P();                  <span class="comment">//lock entry section to avoid race condition with other readers</span></span><br><span class="line">  readcount++;                 <span class="comment">//report yourself as a reader</span></span><br><span class="line">  <span class="keyword">if</span> (readcount == <span class="number">1</span>)          <span class="comment">//checks if you are first reader</span></span><br><span class="line">    resource.P();              <span class="comment">//if you are first reader, lock the resource</span></span><br><span class="line">  rmutex.V();                  <span class="comment">//release entry section for other readers</span></span><br><span class="line">  readTry.V();                 <span class="comment">//indicate you are done trying to access the resource</span></span><br><span class="line"></span><br><span class="line">&lt;CRITICAL Section&gt;</span><br><span class="line"><span class="comment">//reading is performed</span></span><br><span class="line"></span><br><span class="line">&lt;EXIT Section&gt;</span><br><span class="line">  rmutex.P();                  <span class="comment">//reserve exit section - avoids race condition with readers</span></span><br><span class="line">  readcount--;                 <span class="comment">//indicate you&#x27;re leaving</span></span><br><span class="line">  <span class="keyword">if</span> (readcount == <span class="number">0</span>)          <span class="comment">//checks if you are last reader leaving</span></span><br><span class="line">    resource.V();              <span class="comment">//if last, you must release the locked resource</span></span><br><span class="line">  rmutex.V();                  <span class="comment">//release exit section for other readers</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//WRITER</span></span><br><span class="line">writer() &#123;</span><br><span class="line">&lt;ENTRY Section&gt;</span><br><span class="line">  wmutex.P();                  <span class="comment">//reserve entry section for writers - avoids race conditions</span></span><br><span class="line">  writecount++;                <span class="comment">//report yourself as a writer entering</span></span><br><span class="line">  <span class="keyword">if</span> (writecount == <span class="number">1</span>)         <span class="comment">//checks if you&#x27;re first writer</span></span><br><span class="line">    readTry.P();               <span class="comment">//if you&#x27;re first, then you must lock the readers out. Prevent them from trying to enter CS</span></span><br><span class="line">  wmutex.V();                  <span class="comment">//release entry section</span></span><br><span class="line">  resource.P();                <span class="comment">//reserve the resource for yourself - prevents other writers from simultaneously editing the shared resource</span></span><br><span class="line">&lt;CRITICAL Section&gt;</span><br><span class="line">  <span class="comment">//writing is performed</span></span><br><span class="line">  resource.V();                <span class="comment">//release file</span></span><br><span class="line"></span><br><span class="line">&lt;EXIT Section&gt;</span><br><span class="line">  wmutex.P();                  <span class="comment">//reserve exit section</span></span><br><span class="line">  writecount--;                <span class="comment">//indicate you&#x27;re leaving</span></span><br><span class="line">  <span class="keyword">if</span> (writecount == <span class="number">0</span>)         <span class="comment">//checks if you&#x27;re the last writer</span></span><br><span class="line">    readTry.V();               <span class="comment">//if you&#x27;re last writer, you must unlock the readers. Allows them to try enter CS for reading</span></span><br><span class="line">  wmutex.V();                  <span class="comment">//release exit section</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>保证公平防止饥饿</strong></p>
-<div class="highlight"><pre class="code"><code><span class="hljs-keyword">int</span> readcount;                <span class="hljs-comment">// init to 0; number of readers currently accessing resource</span>
-
-<span class="hljs-comment">// all semaphores initialised to 1</span>
-semaphore resource;           <span class="hljs-comment">// controls access (read/write) to the resource. Binary semaphore.</span>
-semaphore rmutex;             <span class="hljs-comment">// for syncing changes to shared variable readcount</span>
-semaphore serviceQueue;       <span class="hljs-comment">// FAIRNESS: preserves ordering of requests (signaling must be FIFO)</span>
-
-<span class="hljs-comment">//READER</span>
-reader() &#123;
-&lt;ENTRY Section&gt;
-  serviceQueue.P();           <span class="hljs-comment">// wait in line to be serviced</span>
-  rmutex.P();                 <span class="hljs-comment">// request exclusive access to readcount</span>
-  readcount++;                <span class="hljs-comment">// update count of active readers</span>
-  <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">1</span>)         <span class="hljs-comment">// if I am the first reader</span>
-    resource.P();             <span class="hljs-comment">// request resource access for readers (writers blocked)</span>
-  serviceQueue.V();           <span class="hljs-comment">// let next in line be serviced</span>
-  rmutex.V();                 <span class="hljs-comment">// release access to readcount</span>
-    
-&lt;CRITICAL Section&gt;
-<span class="hljs-comment">//reading is performed</span>
-    
-&lt;EXIT Section&gt;
-  rmutex.P();                 <span class="hljs-comment">// request exclusive access to readcount</span>
-  readcount--;                <span class="hljs-comment">// update count of active readers</span>
-  <span class="hljs-keyword">if</span> (readcount == <span class="hljs-number">0</span>)         <span class="hljs-comment">// if there are no readers left</span>
-    resource.V();             <span class="hljs-comment">// release resource access for all</span>
-  rmutex.V();                 <span class="hljs-comment">// release access to readcount</span>
-&#125;
-
-<span class="hljs-comment">//WRITER</span>
-writer() &#123;
-&lt;ENTRY Section&gt;
-  serviceQueue.P();           <span class="hljs-comment">// wait in line to be serviced</span>
-  resource.P();               <span class="hljs-comment">// request exclusive access to resource</span>
-  serviceQueue.V();           <span class="hljs-comment">// let next in line be serviced</span>
-    
-&lt;CRITICAL Section&gt;
-<span class="hljs-comment">// writing is performed</span>
-    
-&lt;EXIT Section&gt;
-  resource.V();               <span class="hljs-comment">// release resource access for next reader/writer</span>
-&#125;
-</code></pre></div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> readcount;                <span class="comment">// init to 0; number of readers currently accessing resource</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// all semaphores initialised to 1</span></span><br><span class="line">semaphore resource;           <span class="comment">// controls access (read/write) to the resource. Binary semaphore.</span></span><br><span class="line">semaphore rmutex;             <span class="comment">// for syncing changes to shared variable readcount</span></span><br><span class="line">semaphore serviceQueue;       <span class="comment">// FAIRNESS: preserves ordering of requests (signaling must be FIFO)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//READER</span></span><br><span class="line">reader() &#123;</span><br><span class="line">&lt;ENTRY Section&gt;</span><br><span class="line">  serviceQueue.P();           <span class="comment">// wait in line to be serviced</span></span><br><span class="line">  rmutex.P();                 <span class="comment">// request exclusive access to readcount</span></span><br><span class="line">  readcount++;                <span class="comment">// update count of active readers</span></span><br><span class="line">  <span class="keyword">if</span> (readcount == <span class="number">1</span>)         <span class="comment">// if I am the first reader</span></span><br><span class="line">    resource.P();             <span class="comment">// request resource access for readers (writers blocked)</span></span><br><span class="line">  serviceQueue.V();           <span class="comment">// let next in line be serviced</span></span><br><span class="line">  rmutex.V();                 <span class="comment">// release access to readcount</span></span><br><span class="line">    </span><br><span class="line">&lt;CRITICAL Section&gt;</span><br><span class="line"><span class="comment">//reading is performed</span></span><br><span class="line">    </span><br><span class="line">&lt;EXIT Section&gt;</span><br><span class="line">  rmutex.P();                 <span class="comment">// request exclusive access to readcount</span></span><br><span class="line">  readcount--;                <span class="comment">// update count of active readers</span></span><br><span class="line">  <span class="keyword">if</span> (readcount == <span class="number">0</span>)         <span class="comment">// if there are no readers left</span></span><br><span class="line">    resource.V();             <span class="comment">// release resource access for all</span></span><br><span class="line">  rmutex.V();                 <span class="comment">// release access to readcount</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//WRITER</span></span><br><span class="line">writer() &#123;</span><br><span class="line">&lt;ENTRY Section&gt;</span><br><span class="line">  serviceQueue.P();           <span class="comment">// wait in line to be serviced</span></span><br><span class="line">  resource.P();               <span class="comment">// request exclusive access to resource</span></span><br><span class="line">  serviceQueue.V();           <span class="comment">// let next in line be serviced</span></span><br><span class="line">    </span><br><span class="line">&lt;CRITICAL Section&gt;</span><br><span class="line"><span class="comment">// writing is performed</span></span><br><span class="line">    </span><br><span class="line">&lt;EXIT Section&gt;</span><br><span class="line">  resource.V();               <span class="comment">// release resource access for next reader/writer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="os.assets/image-20230610152658257.png" alt="image-20230610152658257"></p>
 <p><img src="os.assets/image-20230610152706036.png" alt="image-20230610152706036"></p>
 <p>死锁问题 – 必要条件<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
@@ -468,7 +341,7 @@ writer() &#123;
   <div class="outer">
     <div id="footer-info" class="inner">
       
-        <div><p><span id="busuanzi_container_site_pv">Site total view count: <span id="busuanzi_value_site_pv">Loading...</span></span></p><p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2020-2023 c7w. LICENSE CC BY-NC-SA 4.0.</p></div>
+        <div><p><span id="busuanzi_container_site_pv">Site total view count: <span id="busuanzi_value_site_pv">Loading...</span></span></p><p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2020-2024 c7w. LICENSE CC BY-NC-SA 4.0.</p></div>
       
     </div>
   </div>

@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://c7w.tech/posts/cyber-security/</loc>
+    
+    <lastmod>2024-07-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://c7w.tech/about/index.html</loc>
     
     <lastmod>2024-07-03</lastmod>
@@ -41,15 +50,6 @@
     <loc>https://c7w.tech/posts/csarch/</loc>
     
     <lastmod>2023-07-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/posts/cyber-security/</loc>
-    
-    <lastmod>2023-06-13</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -112,7 +112,7 @@
 
   <url>
     <loc>https://c7w.tech/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -122,49 +122,49 @@
   
   <url>
     <loc>https://c7w.tech/categories/RL/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/System/</loc>
-    <lastmod>2024-07-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/categories/Network/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/AIGC/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/categories/Network/</loc>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Journal/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Misc/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Graphics/</loc>
-    <lastmod>2024-07-03</lastmod>
+    <lastmod>2024-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
