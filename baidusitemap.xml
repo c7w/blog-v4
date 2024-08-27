@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://c7w.tech/posts/cyber-security/</loc>
-    <lastmod>2024-07-23</lastmod>
+    <loc>https://c7w.tech/posts/diffusion-dpo/</loc>
+    <lastmod>2024-08-27</lastmod>
   </url>
   <url>
     <loc>https://c7w.tech/posts/cs285/</loc>
@@ -11,6 +11,10 @@
   <url>
     <loc>https://c7w.tech/posts/csarch/</loc>
     <lastmod>2023-07-01</lastmod>
+  </url>
+  <url>
+    <loc>https://c7w.tech/posts/cyber-security/</loc>
+    <lastmod>2023-06-30</lastmod>
   </url>
   <url>
     <loc>https://c7w.tech/posts/hello-world/</loc>
