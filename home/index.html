@@ -56,7 +56,7 @@
     <article id="post-diffusion-dpo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a class="article-date">
-  <time class="dt-published" datetime="2024-08-27T13:30:30.843Z" itemprop="datePublished">2024-08-27</time>
+  <time class="dt-published" datetime="2024-08-27T13:45:18.426Z" itemprop="datePublished">2024-08-27</time>
 </a>
     
   <div class="article-category">
@@ -108,7 +108,7 @@ $$</div><p>因此<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-
 <div class="markdown-them-math-block">$$r(\boldsymbol{c},\boldsymbol{x}_0)=\beta\log\frac{p_\theta^*(\boldsymbol{x}_0|\boldsymbol{c})}{p_\text{ref}(\boldsymbol{x}_0|\boldsymbol{c})}+\beta\log Z(\boldsymbol{c})
 $$</div><p>代入 <span class="markdown-them-math-inline">$L_{\text{BT}}(\phi)$</span> 中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们发现模型参数 <span class="markdown-them-math-inline">$\theta$</span> 本身变成了一个 reward model<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <div class="markdown-them-math-block">$$L_{\mathrm{DPO}}(\theta)=-\mathbb{E}_{\boldsymbol{c},\boldsymbol{x}_{0}^{w},\boldsymbol{x}_{0}^{l}}\left[\log\sigma\left(\beta\log\frac{p_{\theta}(\boldsymbol{x}_{0}^{w}|\boldsymbol{c})}{p_{\mathrm{ref}}(\boldsymbol{x}_{0}^{w}|\boldsymbol{c})}-\beta\log\frac{p_{\theta}(\boldsymbol{x}_{0}^{l}|\boldsymbol{c})}{p_{\mathrm{ref}}(\boldsymbol{x}_{0}^{l}|\boldsymbol{c})}\right)\right]
-$$</div><h2 id="dpo">DPO</h2>
+$$</div><h2 id="dpo-on diffusion">DPO on Diffusion</h2>
 <p>在这个阶段<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>最大的挑战是 <span class="markdown-them-math-inline">$p_\theta(\boldsymbol{x}_0|\boldsymbol{c})$</span> 可以由 <span class="markdown-them-math-inline">$p(\boldsymbol{x}_T)$</span> 由多条 Diffusion Path 生成出来<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>于是我们重新利用 Diffusion 利用 ELBO 的想法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们将奖励函数定义在 <span class="markdown-them-math-inline">$\boldsymbol{x}_{0:T}$</span> 上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <div class="markdown-them-math-block">$$r(\boldsymbol{c},\boldsymbol{x}_0)=\mathbb{E}_{p_\theta(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0,\boldsymbol{c})}\left[R(\boldsymbol{c},\boldsymbol{x}_{0:T})\right].
 $$</div><p>这样定义下的 RLHF 过程<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>应该满足<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>

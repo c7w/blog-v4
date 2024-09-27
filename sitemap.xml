@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://c7w.tech/posts/diffusion-dpo/</loc>
+    <loc>https://c7w.tech/about/index.html</loc>
     
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://c7w.tech/about/index.html</loc>
+    <loc>https://c7w.tech/posts/diffusion-dpo/</loc>
     
-    <lastmod>2024-08-24</lastmod>
+    <lastmod>2024-08-27</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -121,7 +121,7 @@
 
   <url>
     <loc>https://c7w.tech/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -130,64 +130,64 @@
 
   
   <url>
-    <loc>https://c7w.tech/categories/System/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <loc>https://c7w.tech/categories/Network/</loc>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/RL/</loc>
-    <lastmod>2024-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/categories/Network/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/AIGC/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/categories/System/</loc>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Diffusion/</loc>
-    <lastmod>2024-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/categories/Journal/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Misc/</loc>
-    <lastmod>2024-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://c7w.tech/categories/Graphics/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://c7w.tech/categories/Diffusion/Post-training/</loc>
-    <lastmod>2024-08-27</lastmod>
+    <lastmod>2024-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/categories/Journal/</loc>
+    <lastmod>2024-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/categories/Graphics/</loc>
+    <lastmod>2024-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
