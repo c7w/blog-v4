@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="codeva-kligclmjAj" />
+  
+  
+  <title>随笔：Test-time Computation Scaling | c7w&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="主要是针对 Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters (Google DeepMind) 这篇 Paper 的一些结论总结。
+Abstract
+Enablin">
+  
+  
+  
+    <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <link rel="stylesheet" href="../../css/style.css">
+  
+    <link rel="stylesheet" href="../../fancybox/jquery.fancybox-1.3.4.css">
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="../../index.html">Home</a>
+    
+      <a class="main-nav-link" href="../../archives">Posts</a>
+    
+      <a class="main-nav-link" href="../../about">About</a>
+    
+      <a class="main-nav-link" href="../../friends">Friends</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<!-- <div id="header-title">
+  <h1 id="logo-wrap">
+    <a href="../../index.html" id="logo">c7w&#39;s Blog</a>
+  </h1>
+  
+    <h2 id="subtitle-wrap">
+      <a href="../../index.html" id="subtitle">Ready for some fun stuff :)</a>
+    </h2>
+  
+</div> -->
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-test-time-scaling" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a class="article-date">
+  <time class="dt-published" datetime="2024-11-19T08:21:23.338Z" itemprop="datePublished">2024-11-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="../../categories/LLM/">LLM</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      随笔：Test-time Computation Scaling
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>主要是针对 <strong>Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters</strong> (Google DeepMind) 这篇 Paper 的一些结论总结<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="abstract">Abstract</h2>
+<p>Enabling LLMs to improve their outputs by using more test-time computation is a critical step towards building generally self-improving agents that can operate on open-ended natural language. In this paper, we study the scaling of inference-time computation in LLMs, with a focus on answering the question: <strong>if an LLM is allowed to use a fixed but non-trivial amount of inference-time compute, how much can it improve its performance on a challenging prompt?</strong> Answering this question has implications not only on the achievable performance of LLMs, but also on the future of LLM pretraining and how one should tradeoff inference-time and pre-training compute. Despite its importance, little research attempted to understand the scaling behaviors of various test-time inference methods. Moreover, current work largely provides negative results for a number of these strategies. <strong>In this work, we analyze two primary mechanisms to scale test-time computation: (1) searching against dense, process-based verifier reward models; and (2) updating the model’s distribution over a response adaptively, given the prompt at test time.</strong> We find that in both cases, the effectiveness of different approaches to <strong>scaling test-time compute critically varies depending on the difficulty of the prompt</strong>. <strong>This observation motivates applying a <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>compute-optimal<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> scaling strategy, which acts to most effectively allocate test-time compute adaptively per prompt</strong>. Using this compute-optimal strategy, we can improve the efficiency of test-time compute scaling by more than 4× compared to a best-of-N baseline. Additionally, in a FLOPs-matched evaluation, we find that on problems where a smaller base model attains somewhat non-trivial success rates, test-time compute can be used to outperform a 14× larger model.</p>
+<p>问题<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>Test-time scaling<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>背景<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>评估了两种test-time scaling的方法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>Motivation<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>两种方法的成功与否都与当前prompt对应任务的难度有关<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>方法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>dynamic allocation of computation resource to each task.</p>
+<h2 id="a-unified perspective on test-time computation: proposer and verifier">A Unified Perspective on Test-Time Computation: Proposer and Verifier</h2>
+<p>介绍了被评估的两种 test-time scaling的方法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>也是值得我们思考是否可以被用在其他领域的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这里的 Proposer 在 LLM 的 setting 下可以认为是大语言模型自身<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>Verifier 可以被认为是一个外部的预训练好的或者是预定义好的 reward model<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><strong>Modifying the proposal distribution.</strong> One way to improve the proposal distribution is to directly optimize the model for a given reasoning task via RL-inspired finetuning methods such as STaR or ReSTEM. Note that these techniques do not utilize any additional input tokens but specifically finetune the model to induce an improved proposal distribution. Instead, techniques such as self-critique enable the model itself to improve its own proposal distribution at test time by instructing it to critique and revise its own outputs in an iterative fashion. Since prompting off-the-shelf models is not effective at enabling effective revisions at test time, we specifically finetune models to iteratively revise their answers in complex reasoning-based settings. To do so, we utilize the approach of finetuning on on-policy data with Best-of-N guided improvements to the model response.</p>
+<p>[1] Recursive Introspection: Teaching Language Model Agents How to Self-Improve. (CMU, UCB)</p>
+<p><img src="test-time-scaling/image.png" alt="image.png"></p>
+<p><img src="test-time-scaling/image%201.png" alt="image.png"></p>
+<p>这类方法在 test-time scaling 的时候可以将 inference budget 分配给 图 1 的 Inference Turn 这里<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>图 2 是其训练数据的构造过程<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+<p><strong>Optimizing the verifier.</strong> In our abstraction of the proposal distribution and verifier, the verifier is used to aggregate or select the best answer from the proposal distribution. The most canonical way to use such a verifier is by applying best-of-N sampling, wherein we sample N complete solutions and then select the best one according to a verifier. However, this approach can be further improved by training a process-based verifier, or a process reward model (PRM), which produces a prediction of the correctness of each intermediate step in a solution, rather than just the final answer. We can then utilize these per-step predictions to perform tree search over the space of solutions, enabling a potentially more efficient and effective way to search against a verifier, compared to naïve best-of-N.</p>
+<p>[1] Training Verifiers to Solve Math Word Problems. (OpenAI. To increase performance, we propose training verifiers to judge the correctness of model completions. At test time, we generate many candidate solutions and select the one ranked highest by the verifier.)</p>
+<p>[2] Let’s Verify Step by Step. (OpenAI. Introducing process supervision, which provides feedback for each intermediate reasoning step.)</p>
+<p><img src="test-time-scaling/image%202.png" alt="image.png"></p>
+<p><img src="test-time-scaling/image%203.png" alt="image.png"></p>
+<h2 id="scaling-test-time computation optimally">Scaling Test-Time Computation Optimally</h2>
+<p>本文自己提出的方法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>It tackles this problem: when using a model finetuned for revisions as the proposal distribution and an ORM (Outcome Reward Model, or Sparse Reward Model) as the verifier, we could either spend the full test-time compute budget on generating N independent samples in parallel from the model and then apply best-of-N, or we could sample N revisions in sequence using a revision model and then select the best answer in the sequence with an ORM, or strike a balance between these extremes. 也就是说<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>探究在这两种方法下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>在有限的 inference budget 的前提下达到更好的能力<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>Intuitively, we might expect <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>easier<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> problems to benefit more from revisions, since the model’s initial samples are more likely to be on the right track but may just need further refinement. On the other hand, challenging problems may require more exploration of different high-level problem solving strategies, so sampling many times independently in parallel may be preferable in this setting.</p>
+<p>于是我们去 Estimate Question 的 Difficulty. We bin the model’s pass@1 rate—estimated from 2048 samples—on each question in the test set into five quantiles, each corresponding to increasing difficulty levels, and use the final answer score from a learned verifier (and not groundtruth answer correctness checks).</p>
+<h2 id="实验">实验</h2>
+<p><img src="test-time-scaling/image%204.png" alt="image.png"></p>
+<p><img src="test-time-scaling/image%205.png" alt="image.png"></p>
+<p><img src="test-time-scaling/image%206.png" alt="image.png"></p>
+<h2 id="其他想法的讨论">其他想法的讨论</h2>
+<ul>
+<li>Diffusion 生成的 Test-time Scaling 时刻<span class="bd-box"><h-char class="bd bd-beg"><h-inner>？</h-inner></h-char></span>Well…Diffusion 的单次推理开销已经在一定程度上限制了在 test-time 推理的可行性<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Though 很多设计师确实会生成多次然后用 best-of-N<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>把自己当成一个 verifier<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>同时 Sanja Fidler 挂名的 ICML 24 的 Paper <em>Align your steps</em> 其实做了 scheduler space 的 timestep 的搜索<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>somehow 和改变生成式模型的输出分布这件事很像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
+<li>在具身的应用<span class="bd-box"><h-char class="bd bd-beg"><h-inner>？</h-inner></h-char></span>Actually 这个paper里的一些概念从 RL 里 borrow 来的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>一方面是 few-shot demonstration 确实已经被证明了在训练阶段有用<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>虽然 in-context learning from inference stage remains to be explored, 这个还是先等 scalable 的 robotics transformer 开发出来再说吧<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>另一方面是 real-world 不是一个可以 reset 的仿真环境<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不太能像 LLM 的 decoding 一样搜索与回溯<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../diffusion-dpo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Diffusion-DPO 公式推导
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <div><p><span id="busuanzi_container_site_pv">Site total view count: <span id="busuanzi_value_site_pv">Loading...</span></span></p><p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2020-2024 c7w. LICENSE CC BY-NC-SA 4.0.</p></div>
+      
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="../../about" class="mobile-nav-link">About</a>
+  
+    <a href="../../friends" class="mobile-nav-link">Friends</a>
+  
+</nav>
+    
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="../../js/clipboard.min.js"></script>
+<script src="../../js/jquery-1.4.3.min.js"></script>
+
+<script src="../../fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+  </div>
+</body>
+</html>
