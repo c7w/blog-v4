@@ -160,13 +160,6 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/categories/Diffusion/</loc>
-    <lastmod>2024-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://c7w.tech/categories/AIGC/</loc>
     <lastmod>2024-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -174,7 +167,7 @@
   </url>
   
   <url>
-    <loc>https://c7w.tech/categories/Journal/</loc>
+    <loc>https://c7w.tech/categories/Diffusion/</loc>
     <lastmod>2024-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -182,6 +175,13 @@
   
   <url>
     <loc>https://c7w.tech/categories/Misc/</loc>
+    <lastmod>2024-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://c7w.tech/categories/Journal/</loc>
     <lastmod>2024-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
