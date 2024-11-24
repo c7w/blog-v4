@@ -53,6 +53,145 @@
       <div id="content" class="outer">
         <section id="main">
   
+    <article id="post-transformer-circuit" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a class="article-date">
+  <time class="dt-published" datetime="2024-11-24T14:48:49.405Z" itemprop="datePublished">2024-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="../categories/LLM/">LLM</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="../posts/transformer-circuit/">随笔：A Mathematical Framework for Transformer Circuits</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>这篇文章试着分析了 Transformer 架构的可解释性<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>它分析了 Zero-Layer, One-Layer Attn-Only 和 Two-Layer Attn-Only 三种 Transformer 在处理文本 next token prediction 任务时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>模型是怎么通过权重<span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>学会<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span>序列建模的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>本随笔中记录了一些方法论和结论上的有趣之处<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="transformer-overview">Transformer Overview</h2>
+<p><img src="transformer-circuit.assets/image.png" alt="image.png"></p>
+<p>相比于原始 Transformer 的简化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>1. Attn-Only, no MLP, 2. No Bias Term, 3. No Normalization.</p>
+<p>关于 Transformer 架构的一些结论<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%201.png" alt="image.png"></p>
+<p>(A) The residual stream serves as a communication channel, allowing layers to interact without performing processing itself. Its deeply linear structure implies that it doesn’t have a “privileged basis” and can be rotated without changing model behavior.</p>
+<p>(B) Virtual weights directly connect any pair of layers by multiplying out their interactions through the residual stream. These virtual weights describe how later layers read information written by previous layers.</p>
+<p><img src="transformer-circuit.assets/image%202.png" alt="image.png"></p>
+<p>© Subspaces and Residual Stream Bandwidth: The residual stream is a high-dimensional vector space, allowing layers to store information in different subspaces. Dimensions of the residual stream act like “memory” or “bandwidth,” with high demand due to the large number of computational dimensions relative to residual stream dimensions. Some MLP neurons and attention heads may manage memory by clearing residual stream dimensions set by other layers.</p>
+<p><img src="transformer-circuit.assets/image%203.png" alt="image.png"></p>
+<p>(D) Attention Heads are Independent and Additive: Attention heads operate independently and add their output back into the residual stream. This independence allows for a clearer theoretical understanding of transformer layers.</p>
+<p><img src="transformer-circuit.assets/image%204.png" alt="image.png"></p>
+<p>(E) Attention Heads as Information Movement:</p>
+<ul>
+<li><strong>Attention heads move information from one token’s residual stream to another’s.</strong></li>
+<li>The process involves two linear operations: the attention pattern (<span class="markdown-them-math-inline">$A$</span>) and the output-value matrix (<span class="markdown-them-math-inline">$W_O W_V$</span>).</li>
+<li>The attention pattern determines which token’s information is moved, while the output-value matrix determines what information is read and how it is written. These two processes are independent from each other.</li>
+</ul>
+<p>(F) Other Observations about Attention Heads:</p>
+<ul>
+<li>Attention heads perform a linear operation if the attention pattern is fixed.</li>
+<li>The matrices <span class="markdown-them-math-inline">$W_Q$</span> and <span class="markdown-them-math-inline">$W_K$</span> always operate together, as do <span class="markdown-them-math-inline">$W_O$</span> and <span class="markdown-them-math-inline">$W_V$</span>.</li>
+<li>Keys, queries, and value vectors are intermediary by-products of computing low-rank matrices.</li>
+<li>Combined matrices <span class="markdown-them-math-inline">$W_{OV} = W_O W_V$</span> and <span class="markdown-them-math-inline">$W_{QK} = W_Q^T W_K$</span> can be defined for simplicity.</li>
+<li>Products of attention heads behave much like attention heads themselves. (Attention heads across different layers can be combined. We call these virtual attention.)</li>
+</ul>
+<h2 id="zero-layer-transformers">Zero-Layer Transformers</h2>
+<p><img src="transformer-circuit.assets/image%205.png" alt="image.png"></p>
+<p>在语言模型中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>bigram 模型是一种简单的统计模型<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>它根据前一个词预测下一个词<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>对于零层 Transformer<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>由于它只能使用当前 token 的信息来预测下一个 token<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>因此它的行为类似于 bigram 模型<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>具体来说<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>零层 Transformer 通过 <span class="markdown-them-math-inline">$ W_U W_E $</span> 直接将当前 token 的嵌入映射到预测下一个 token 的 logits<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这与 bigram 模型根据前一个词预测下一个词的方式相似<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="one-layer-attn-only transformer">One-Layer Attn-Only Transformer</h2>
+<h3 id="formulation">Formulation</h3>
+<p><img src="transformer-circuit.assets/image%206.png" alt="image.png"></p>
+<p><img src="transformer-circuit.assets/image%207.png" alt="image.png"></p>
+<ol>
+<li><strong>Effect of Source Token on Logits</strong>:
+<ul>
+<li>If multiple destination tokens attend to the same source token with the same attention weight, the source token will influence the logits for the predicted output token in the same way for all those destination tokens.</li>
+</ul>
+</li>
+<li><strong>Independent Consideration of OV and QK Circuits</strong>:
+<ul>
+<li>It can be useful to think of the OV (Output-Value) and QK (Query-Key) circuits <strong>separately</strong> since they are individually understandable functions (linear or bilinear operations on matrices).</li>
+</ul>
+</li>
+</ol>
+<h3 id="skip-trigrams">Skip-Trigrams</h3>
+<p>One-Layer Attn-Only Transformer 可以被解释为 Skip-Trigrams<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%208.png" alt="image.png"></p>
+<ul>
+<li>The QK circuit determines which “source” token<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>提供 K<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span> the “destination”<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>提供 Q<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span> token attends to and copies information from.</li>
+<li>The OV circuit describes the effect on the “out” predictions for the next token.</li>
+<li>Together, they form a “skip-trigram” [source]… [destination] [out].</li>
+</ul>
+<p>这使得 Copying and Primitive In-Context Learning 成为了可能<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>具体来说<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%209.png" alt="image.png"></p>
+<ul>
+<li>Attention heads often dedicate capacity to copying tokens, increasing the probability of the token and similar tokens.</li>
+<li>Tokens are copied to plausible positions based on bigram statistics.</li>
+</ul>
+<p>但是这种 Skip-Trigram 的建模方式也有问题<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%2010.png" alt="image.png"></p>
+<p>我们的单层模型以<span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>分解形式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span>在 OV 和 QK 矩阵之间表示 skip-trigrams<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这有点像将函数 <span class="markdown-them-math-inline">$ f(a, b, c) = f_1(a, b)f_2(a, c) $</span> 表示出来<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>它们无法灵活地捕捉三方交互<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>例如<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>如果一个注意力头增加了 <code>keep</code>…<code>in mind</code> 和 <code>keep</code>…<code>at bay</code> 的概率<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>它也必须增加 <code>keep</code>…<code>in bay</code> 和 <code>keep</code>…<code>at mind</code> 的概率<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这里 in 或者 at 提供了 query<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>成功的 attend 到了 keep 这个 token 提供的 key<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>但是<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>keep 这个 token 提供的 value<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>mind<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>bay<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>却没有与 query 做有效的建模<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这个问题会在 Two-Layer Attn-Only Transformers 中得到解决<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>如何检测这种存在于 Attn Head 之中的复制行为<span class="bd-box"><h-char class="bd bd-beg"><h-inner>？</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%2011.png" alt="image.png"></p>
+<p>To detect copying behavior in transformer models, researchers focus on identifying <strong>matrices that</strong> <strong>map the same vector to itself, thus increasing the probability of a token recurring</strong>. This involves examining the <strong>eigenvalues and eigenvectors</strong> of the OV circuit matrices. If a matrix has positive eigenvalues, it suggests that a linear combination of tokens increases the logits of those same tokens, indicating copying behavior.</p>
+<p>This method reveals that many attention heads possess positive eigenvalues, aligning with the copying structure. While positive eigenvalues are strong indicators of copying, they are not definitive proof, as some matrices with positive eigenvalues may still decrease the logits of certain tokens. Alternative methods, like analyzing the matrix diagonal, also point to copying but lack robustness. Despite its imperfections, the eigenvalue-based approach serves as a useful summary statistic for identifying copying behavior.</p>
+<h2 id="two-layer-attn-only transformer">Two-Layer Attn-Only Transformer</h2>
+<h3 id="formulation-1">Formulation</h3>
+<p><img src="transformer-circuit.assets/image%2012.png" alt="image.png"></p>
+<h3 id="**term-importance analysis**"><strong>Term Importance Analysis</strong></h3>
+<p><img src="transformer-circuit.assets/image%2013.png" alt="image.png"></p>
+<p>我们使用上面的方法分析二层 Transformer 公式中每一项的重要性<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%2014.png" alt="image.png"></p>
+<p>We conclude that for understanding two-layer attention only models, we shouldn’t prioritize understanding the second order <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>virtual attention heads<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> but instead focus on the direct path (which can only contribute to bigram statistics) and individual attention head terms.</p>
+<p>We can further subdivide these individual attention head terms into those in layer 1 and layer 2:</p>
+<p><img src="transformer-circuit.assets/image%2015.png" alt="image.png"></p>
+<p>This suggests we should focus on the second layer head terms.</p>
+<h3 id="induction-head">Induction Head</h3>
+<p>二层 Transformer 与 一层 Transformer 的最大区别在于<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>Q, K, V  read features in a subspace affected by a previous head.</p>
+<p><img src="transformer-circuit.assets/image%2016.png" alt="image.png"></p>
+<p><img src="transformer-circuit.assets/image%2017.png" alt="image.png"></p>
+<p>By dividing the Frobenius norm of the product of the matrices by the Frobenius norms of the individual matrices, we obtain a normalized measure that accounts for the sizes of the matrices involved. This normalization helps to compare the relative importance of different compositions. This ratio indicates how much the product deviates from what would be expected if the matrices were random, providing insight into the significance of the interaction.</p>
+<p>我们看出 K-Composition Term 里有很显著的 pair<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们接下来详细分析这些<span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>induction head<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%2018.png" alt="image.png"></p>
+<p>以第四行为例<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这里 D 作为 query<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>响应最大的 key 是 urs<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这说明<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这两层的 attention 协同交互起到了一个作用<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>即将前一个 token 的 信息映射到第二个 token 的 key 中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>使得<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="transformer-circuit.assets/image%2019.png" alt="image.png"></p>
+<p>然后<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有进一步的实验来验证这个结论<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span> Given that we believe <strong>induction heads are attending to previous copies of the token and shifting forward</strong>, they should be able to do this on <em><strong>totally random</strong></em> repeated patterns. This is likely the hardest test one can give them, since they can’t rely on normal statistics about which tokens typically come after other tokens.</p>
+<p><img src="transformer-circuit.assets/image%2020.png" alt="image.png"></p>
+<p><img src="transformer-circuit.assets/image%2021.png" alt="image.png"></p>
+<p>这两张图展示了 attention to &lt;5767&gt; 的 token<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><strong>怎么找出 induction heads?</strong> Our mechanistic theory suggestions that induction heads must do two things:</p>
+<ul>
+<li>Have a “copying” OV circuit matrix (in previous layer).</li>
+<li>Have a “same matching” QK circuit matrix. (As the previous layer has transported information of the previous token into current hidden state.)</li>
+</ul>
+<p><img src="transformer-circuit.assets/image%2022.png" alt="image.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-test-time-scaling" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a class="article-date">
@@ -1252,97 +1391,6 @@ $$</div><p>也就是说<span class="bd-box"><h-char class="bd bd-beg"><h-inner>�
 <p>之后我们所有的 Diffusion 与 Denoising 过程均在隐空间中进行<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>操作的具体对象是这个隐空间中的 latent code<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 <p>至于加 condition 的方法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们可以采用 cross attention layer 来进行<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>具体来说<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们将 condition 用编码器 <span class="markdown-them-math-inline">$\tau_\theta$</span> 编码<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>之后将 condition feature 与 latent code 之间做 cross attention<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其中 Q 由 latent code 投影得到<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>K 和 V 由 condition feature 投影得到<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-diffusion-ddpm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a class="article-date">
-  <time class="dt-published" datetime="2023-06-11T16:00:38.893Z" itemprop="datePublished">2023-06-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="../categories/AIGC/">AIGC</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="../posts/diffusion-ddpm/">Diffusion-DDPM</a>
-    </h1>
-  
-
-      </header>
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>这一系列博文我们对 Diffusion 模型进行简单的介绍 :)</p>
-<p><img src="diffusion-ddpm.assets/Pasted%20image%2020230403223246.png" alt=""></p>
-<p>我们认为比较重要的 Paper List<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<ul>
-<li>重新回顾 Diffusion<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>更具多样性的生成式模型
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1503.03585">[1503.03585]</a> Deep Unsupervised Learning using Nonequilibrium Thermodynamics (ICML’15)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2006.11239">[2006.11239]</a> <strong>Denoising Diffusion Probabilistic Models</strong> (NIPS’20)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.09672">[2102.09672]</a> Improved Denoising Diffusion Probabilistic Models (ICML’21)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.02502">[2010.02502]</a> Denoising Diffusion Implicit Models (ICLR’21)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.15282">[2106.15282]</a> Cascaded Diffusion Models for High Fidelity Image Generation (JMLR)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.07636">[2104.07636]</a> Image Super-Resolution via Iterative Refinement (TPAMI)</li>
-</ul>
-</li>
-<li>为生成添加引导
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.05233">[2105.05233]</a> <strong>Diffusion Models Beat GANs on Image Synthesis (NIPS’21)</strong>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.10741">[2112.10741]</a> GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models (ICML’22)</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.12598">[2207.12598]</a> <strong>Classifier-Free Diffusion Guidance (NIPS’21 Workshop)</strong></li>
-</ul>
-</li>
-<li>Departure to Latent Space
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.10752v2">[2112.10752]</a> <strong>High-resolution image synthesis with latent diffusion models</strong> (CVPR’22 Oral)
-<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2302.05543">[2302.05543]</a> Adding Conditional Control to Text-to-Image Diffusion Models</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2204.06125">[2204.06125]</a> Hierarchical Text-Conditional Image Generation with CLIP Latents (DALL·E 2)</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2205.11487">[2205.11487]</a> Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding (NIPS’22, Imagen)</li>
-</ul>
-</li>
-<li>未分类<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>还没读<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>咕咕咕<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>
-<ul>
-<li>Zero-Shot Contrastive Loss for Text-Guided Diffusion Image Style Transfer</li>
-</ul>
-</li>
-</ul>
-<h2 id="ddpm">DDPM</h2>
-<p><img src="diffusion-ddpm.assets/Pasted%20image%2020230404215439.png" alt=""></p>
-<p>DDPM<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Denoising Diffusion Probabilistic Models<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>是一种生成式模型<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其可以将噪声 <span class="markdown-them-math-inline">$\mathbf{x}_T$</span> 经过一系列级联的去噪<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Denoising<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>过程生成具有真实感的图像 <span class="markdown-them-math-inline">$\mathbf{x}_0$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
-<p>在 DDPM 中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>具有两个重要的过程<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>前向过程<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span><em>forward process, or diffusion process</em><span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>和去噪过程<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span><em>denoising process</em><span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-        
-          <p class="article-more-link">
-            <a href="../posts/diffusion-ddpm/#more">Read More</a>
-          </p>
-        
       
     </div>
     <footer class="article-footer">
