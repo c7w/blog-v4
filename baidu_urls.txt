@@ -3,8 +3,8 @@ https://c7w.tech/posts/transformer-circuit/
 https://c7w.tech/posts/test-time-scaling/
 https://c7w.tech/posts/diffusion-dpo/
 https://c7w.tech/posts/csarch/
-https://c7w.tech/posts/cyber-security/
 https://c7w.tech/posts/cs285/
+https://c7w.tech/posts/cyber-security/
 https://c7w.tech/posts/diffusion-ddpm/
 https://c7w.tech/posts/diffusion-guidance/
-https://c7w.tech/posts/hello-world/
+https://c7w.tech/posts/license/

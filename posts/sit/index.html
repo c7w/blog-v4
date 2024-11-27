@@ -88,11 +88,99 @@ SiT: Exploring Flow and Diffusion-based Generative Models with Scalable Interpol
 <p>我们用两个主要的对象<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>Transport 与 Sampler 来描述 Diffusion 过程的定义 与 对该过程的采样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 <h2 id="transport">Transport</h2>
 <p>该类型的参数定义<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">parse_transport_args</span>(<span class="params">parser</span>):</span><br><span class="line">    group = parser.add_argument_group(<span class="string">&quot;Transport arguments&quot;</span>)</span><br><span class="line">    group.add_argument(<span class="string">&quot;--path-type&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&quot;Linear&quot;</span>, choices=[<span class="string">&quot;Linear&quot;</span>, <span class="string">&quot;GVP&quot;</span>, <span class="string">&quot;VP&quot;</span>])</span><br><span class="line">    group.add_argument(<span class="string">&quot;--prediction&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&quot;velocity&quot;</span>, choices=[<span class="string">&quot;velocity&quot;</span>, <span class="string">&quot;score&quot;</span>, <span class="string">&quot;noise&quot;</span>])</span><br><span class="line">    group.add_argument(<span class="string">&quot;--loss-weight&quot;</span>, <span class="built_in">type</span>=none_or_str, default=<span class="literal">None</span>, choices=[<span class="literal">None</span>, <span class="string">&quot;velocity&quot;</span>, <span class="string">&quot;likelihood&quot;</span>])</span><br><span class="line">    group.add_argument(<span class="string">&quot;--sample-eps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>)</span><br><span class="line">    group.add_argument(<span class="string">&quot;--train-eps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="keyword">def</span> <span class="title function_">parse_transport_args</span>(<span class="params">parser</span>):
+    group = parser.add_argument_group(<span class="string">&quot;Transport arguments&quot;</span>)
+    group.add_argument(<span class="string">&quot;--path-type&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&quot;Linear&quot;</span>, choices=[<span class="string">&quot;Linear&quot;</span>, <span class="string">&quot;GVP&quot;</span>, <span class="string">&quot;VP&quot;</span>])
+    group.add_argument(<span class="string">&quot;--prediction&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&quot;velocity&quot;</span>, choices=[<span class="string">&quot;velocity&quot;</span>, <span class="string">&quot;score&quot;</span>, <span class="string">&quot;noise&quot;</span>])
+    group.add_argument(<span class="string">&quot;--loss-weight&quot;</span>, <span class="built_in">type</span>=none_or_str, default=<span class="literal">None</span>, choices=[<span class="literal">None</span>, <span class="string">&quot;velocity&quot;</span>, <span class="string">&quot;likelihood&quot;</span>])
+    group.add_argument(<span class="string">&quot;--sample-eps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>)
+    group.add_argument(<span class="string">&quot;--train-eps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>)</code></pre>
 <p>该类型在训练中的位置<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">transport = create_transport(</span><br><span class="line">    args.path_type,</span><br><span class="line">    args.prediction,</span><br><span class="line">    args.loss_weight,</span><br><span class="line">    args.train_eps,</span><br><span class="line">    args.sample_eps</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">f&quot;Training for <span class="subst">&#123;args.epochs&#125;</span> epochs...&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(args.epochs):</span><br><span class="line">    sampler.set_epoch(epoch)</span><br><span class="line">    logger.info(<span class="string">f&quot;Beginning epoch <span class="subst">&#123;epoch&#125;</span>...&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> loader:</span><br><span class="line">        x = x.to(device)</span><br><span class="line">        y = y.to(device)</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            <span class="comment"># Map input images to latent space + normalize latents:</span></span><br><span class="line">            x = vae.encode(x).latent_dist.sample().mul_(<span class="number">0.18215</span>)</span><br><span class="line">        model_kwargs = <span class="built_in">dict</span>(y=y)</span><br><span class="line">        loss_dict = transport.training_losses(model, x, model_kwargs) <span class="comment">#! Here</span></span><br><span class="line">        loss = loss_dict[<span class="string">&quot;loss&quot;</span>].mean()</span><br><span class="line">        opt.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        opt.step()</span><br><span class="line">        update_ema(ema, model.module)</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python">transport = create_transport(
+    args.path_type,
+    args.prediction,
+    args.loss_weight,
+    args.train_eps,
+    args.sample_eps
+)
+
+logger.info(<span class="string">f&quot;Training for <span class="subst">&#123;args.epochs&#125;</span> epochs...&quot;</span>)
+<span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(args.epochs):
+    sampler.set_epoch(epoch)
+    logger.info(<span class="string">f&quot;Beginning epoch <span class="subst">&#123;epoch&#125;</span>...&quot;</span>)
+    <span class="keyword">for</span> x, y <span class="keyword">in</span> loader:
+        x = x.to(device)
+        y = y.to(device)
+        <span class="keyword">with</span> torch.no_grad():
+            <span class="comment"># Map input images to latent space + normalize latents:</span>
+            x = vae.encode(x).latent_dist.sample().mul_(<span class="number">0.18215</span>)
+        model_kwargs = <span class="built_in">dict</span>(y=y)
+        loss_dict = transport.training_losses(model, x, model_kwargs) <span class="comment">#! Here</span>
+        loss = loss_dict[<span class="string">&quot;loss&quot;</span>].mean()
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        update_ema(ema, model.module)</code></pre>
 <p>下面给出关于 training losses 的定义<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">training_losses</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self, </span></span><br><span class="line"><span class="params">    model,  </span></span><br><span class="line"><span class="params">    x1, </span></span><br><span class="line"><span class="params">    model_kwargs=<span class="literal">None</span></span></span><br><span class="line"><span class="params"></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Loss for training the score model</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">    - model: backbone model; could be score, noise, or velocity</span></span><br><span class="line"><span class="string">    - x1: datapoint</span></span><br><span class="line"><span class="string">    - model_kwargs: additional arguments for the model</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> model_kwargs == <span class="literal">None</span>:</span><br><span class="line">        model_kwargs = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    t, x0, x1 = self.sample(x1)  <span class="comment">#! Sampling x0 &amp; t based on shape of x1 (if needed)</span></span><br><span class="line">    t, xt, ut = self.path_sampler.plan(t, x0, x1)  <span class="comment">#! Get x_t according to path planner</span></span><br><span class="line">    model_output = model(xt, t, **model_kwargs)</span><br><span class="line">    B, *_, C = xt.shape</span><br><span class="line">    <span class="keyword">assert</span> model_output.size() == (B, *xt.size()[<span class="number">1</span>:-<span class="number">1</span>], C)</span><br><span class="line"></span><br><span class="line">    terms = &#123;&#125;</span><br><span class="line">    terms[<span class="string">&#x27;pred&#x27;</span>] = model_output</span><br><span class="line">    <span class="keyword">if</span> self.model_type == ModelType.VELOCITY:</span><br><span class="line">		    <span class="comment">#! Calculate loss according to prediction type</span></span><br><span class="line">        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(((model_output - ut) ** <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        _, drift_var = self.path_sampler.compute_drift(xt, t)</span><br><span class="line">        sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, xt))</span><br><span class="line"></span><br><span class="line">				<span class="comment">#! Calculate loss according to weighting type (conditioned on t)</span></span><br><span class="line">        <span class="keyword">if</span> self.loss_type <span class="keyword">in</span> [WeightType.VELOCITY]:</span><br><span class="line">            weight = (drift_var / sigma_t) ** <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.LIKELIHOOD]:</span><br><span class="line">            weight = drift_var / (sigma_t ** <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.NONE]:</span><br><span class="line">            weight = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> NotImplementedError()</span><br><span class="line">        </span><br><span class="line">        <span class="comment">#! Calculate loss according to prediction type</span></span><br><span class="line">        <span class="keyword">if</span> self.model_type == ModelType.NOISE:</span><br><span class="line">            terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output - x0) ** <span class="number">2</span>))</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># ModelType.SCORE, predicting -x0/sigma_t</span></span><br><span class="line">            terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output * sigma_t + x0) ** <span class="number">2</span>))</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">return</span> terms</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sample</span>(<span class="params">self, x1</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Sampling x0 &amp; t based on shape of x1 (if needed)</span></span><br><span class="line"><span class="string">      Args:</span></span><br><span class="line"><span class="string">        x1 - data point; [batch, *dim]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    x0 = th.randn_like(x1)</span><br><span class="line">    t0, t1 = self.check_interval(self.train_eps, self.sample_eps)  <span class="comment"># Related with Path Planning</span></span><br><span class="line">    t = th.rand((x1.shape[<span class="number">0</span>],)) * (t1 - t0) + t0</span><br><span class="line">    t = t.to(x1)</span><br><span class="line">    <span class="keyword">return</span> t, x0, x1</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="keyword">def</span> <span class="title function_">training_losses</span>(<span class="params"></span>
+<span class="params">    self, </span>
+<span class="params">    model,  </span>
+<span class="params">    x1, </span>
+<span class="params">    model_kwargs=<span class="literal">None</span></span>
+<span class="params"></span>):
+    <span class="string">&quot;&quot;&quot;Loss for training the score model</span>
+<span class="string">    Args:</span>
+<span class="string">    - model: backbone model; could be score, noise, or velocity</span>
+<span class="string">    - x1: datapoint</span>
+<span class="string">    - model_kwargs: additional arguments for the model</span>
+<span class="string">    &quot;&quot;&quot;</span>
+    <span class="keyword">if</span> model_kwargs == <span class="literal">None</span>:
+        model_kwargs = &#123;&#125;
+    
+    t, x0, x1 = self.sample(x1)  <span class="comment">#! Sampling x0 &amp; t based on shape of x1 (if needed)</span>
+    t, xt, ut = self.path_sampler.plan(t, x0, x1)  <span class="comment">#! Get x_t according to path planner</span>
+    model_output = model(xt, t, **model_kwargs)
+    B, *_, C = xt.shape
+    <span class="keyword">assert</span> model_output.size() == (B, *xt.size()[<span class="number">1</span>:-<span class="number">1</span>], C)
+
+    terms = &#123;&#125;
+    terms[<span class="string">&#x27;pred&#x27;</span>] = model_output
+    <span class="keyword">if</span> self.model_type == ModelType.VELOCITY:
+		    <span class="comment">#! Calculate loss according to prediction type</span>
+        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(((model_output - ut) ** <span class="number">2</span>))
+    <span class="keyword">else</span>: 
+        _, drift_var = self.path_sampler.compute_drift(xt, t)
+        sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, xt))
+
+				<span class="comment">#! Calculate loss according to weighting type (conditioned on t)</span>
+        <span class="keyword">if</span> self.loss_type <span class="keyword">in</span> [WeightType.VELOCITY]:
+            weight = (drift_var / sigma_t) ** <span class="number">2</span>
+        <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.LIKELIHOOD]:
+            weight = drift_var / (sigma_t ** <span class="number">2</span>)
+        <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.NONE]:
+            weight = <span class="number">1</span>
+        <span class="keyword">else</span>:
+            <span class="keyword">raise</span> NotImplementedError()
+        
+        <span class="comment">#! Calculate loss according to prediction type</span>
+        <span class="keyword">if</span> self.model_type == ModelType.NOISE:
+            terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output - x0) ** <span class="number">2</span>))
+        <span class="keyword">else</span>:  <span class="comment"># ModelType.SCORE, predicting -x0/sigma_t</span>
+            terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output * sigma_t + x0) ** <span class="number">2</span>))
+            
+    <span class="keyword">return</span> terms
+
+<span class="keyword">def</span> <span class="title function_">sample</span>(<span class="params">self, x1</span>):
+    <span class="string">&quot;&quot;&quot;Sampling x0 &amp; t based on shape of x1 (if needed)</span>
+<span class="string">      Args:</span>
+<span class="string">        x1 - data point; [batch, *dim]</span>
+<span class="string">    &quot;&quot;&quot;</span>
+    
+    x0 = th.randn_like(x1)
+    t0, t1 = self.check_interval(self.train_eps, self.sample_eps)  <span class="comment"># Related with Path Planning</span>
+    t = th.rand((x1.shape[<span class="number">0</span>],)) * (t1 - t0) + t0
+    t = t.to(x1)
+    <span class="keyword">return</span> t, x0, x1</code></pre>
 <h3 id="path-planning">Path Planning</h3>
 <p><img src="sit.assets/image%201.png" alt="image.png"></p>
 <p>下面我们给出几个常用的 Path 定义方式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
@@ -100,18 +188,120 @@ SiT: Exploring Flow and Diffusion-based Generative Models with Scalable Interpol
 <p><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>The only design flexibility in the above equation comes from the choice of betas. Otherwise, t=1 does not imply alpha approaches zero.<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
 <p><img src="sit.assets/image%203.png" alt="image.png"></p>
 <p>这几种 Path 的定义为<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ICPlan</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Linear Coupling Plan&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the data coefficient along the path&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> t, <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the noise coefficient along the path&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> - t, -<span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the ratio between d_alpha and alpha&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> / t</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_mu_t</span>(<span class="params">self, t, x0, x1</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the mean of time-dependent density p_t&quot;&quot;&quot;</span></span><br><span class="line">        t = expand_t_like_x(t, x1)</span><br><span class="line">        alpha_t, _ = self.compute_alpha_t(t)</span><br><span class="line">        sigma_t, _ = self.compute_sigma_t(t)</span><br><span class="line">        <span class="keyword">return</span> alpha_t * x1 + sigma_t * x0</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_xt</span>(<span class="params">self, t, x0, x1</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Sample xt from time-dependent density p_t; rng is required&quot;&quot;&quot;</span></span><br><span class="line">        xt = self.compute_mu_t(t, x0, x1)</span><br><span class="line">        <span class="keyword">return</span> xt</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_ut</span>(<span class="params">self, t, x0, x1, xt</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the vector field corresponding to p_t&quot;&quot;&quot;</span></span><br><span class="line">        t = expand_t_like_x(t, x1)</span><br><span class="line">        _, d_alpha_t = self.compute_alpha_t(t)</span><br><span class="line">        _, d_sigma_t = self.compute_sigma_t(t)</span><br><span class="line">        <span class="keyword">return</span> d_alpha_t * x1 + d_sigma_t * x0</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">plan</span>(<span class="params">self, t, x0, x1</span>):</span><br><span class="line">        xt = self.compute_xt(t, x0, x1)</span><br><span class="line">        ut = self.compute_ut(t, x0, x1, xt)</span><br><span class="line">        <span class="keyword">return</span> t, xt, ut</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VPCPlan</span>(<span class="title class_ inherited__">ICPlan</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;class for VP path flow matching&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, sigma_min=<span class="number">0.1</span>, sigma_max=<span class="number">20.0</span></span>):</span><br><span class="line">        self.sigma_min = sigma_min</span><br><span class="line">        self.sigma_max = sigma_max</span><br><span class="line">        self.log_mean_coeff = <span class="keyword">lambda</span> t: -<span class="number">0.25</span> * ((<span class="number">1</span> - t) ** <span class="number">2</span>) * (self.sigma_max - self.sigma_min) - <span class="number">0.5</span> * (<span class="number">1</span> - t) * self.sigma_min </span><br><span class="line">        self.d_log_mean_coeff = <span class="keyword">lambda</span> t: <span class="number">0.5</span> * (<span class="number">1</span> - t) * (self.sigma_max - self.sigma_min) + <span class="number">0.5</span> * self.sigma_min</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute coefficient of x1&quot;&quot;&quot;</span></span><br><span class="line">        alpha_t = self.log_mean_coeff(t)</span><br><span class="line">        alpha_t = th.exp(alpha_t)</span><br><span class="line">        d_alpha_t = alpha_t * self.d_log_mean_coeff(t)</span><br><span class="line">        <span class="keyword">return</span> alpha_t, d_alpha_t</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute coefficient of x0&quot;&quot;&quot;</span></span><br><span class="line">        p_sigma_t = <span class="number">2</span> * self.log_mean_coeff(t)</span><br><span class="line">        sigma_t = th.sqrt(<span class="number">1</span> - th.exp(p_sigma_t))</span><br><span class="line">        d_sigma_t = th.exp(p_sigma_t) * (<span class="number">2</span> * self.d_log_mean_coeff(t)) / (-<span class="number">2</span> * sigma_t)</span><br><span class="line">        <span class="keyword">return</span> sigma_t, d_sigma_t</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Special purposed function for computing numerical stabled d_alpha_t / alpha_t&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.d_log_mean_coeff(t)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GVPCPlan</span>(<span class="title class_ inherited__">ICPlan</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, sigma=<span class="number">0.0</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(sigma)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute coefficient of x1&quot;&quot;&quot;</span></span><br><span class="line">        alpha_t = th.sin(t * np.pi / <span class="number">2</span>)</span><br><span class="line">        d_alpha_t = np.pi / <span class="number">2</span> * th.cos(t * np.pi / <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">return</span> alpha_t, d_alpha_t</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute coefficient of x0&quot;&quot;&quot;</span></span><br><span class="line">        sigma_t = th.cos(t * np.pi / <span class="number">2</span>)</span><br><span class="line">        d_sigma_t = -np.pi / <span class="number">2</span> * th.sin(t * np.pi / <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">return</span> sigma_t, d_sigma_t</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Special purposed function for computing numerical stabled d_alpha_t / alpha_t&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> np.pi / (<span class="number">2</span> * th.tan(t * np.pi / <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python">
+<span class="keyword">class</span> <span class="title class_">ICPlan</span>:
+    <span class="string">&quot;&quot;&quot;Linear Coupling Plan&quot;&quot;&quot;</span>
+
+    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute the data coefficient along the path&quot;&quot;&quot;</span>
+        <span class="keyword">return</span> t, <span class="number">1</span>
+    
+    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute the noise coefficient along the path&quot;&quot;&quot;</span>
+        <span class="keyword">return</span> <span class="number">1</span> - t, -<span class="number">1</span>
+    
+    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute the ratio between d_alpha and alpha&quot;&quot;&quot;</span>
+        <span class="keyword">return</span> <span class="number">1</span> / t
+
+    <span class="keyword">def</span> <span class="title function_">compute_mu_t</span>(<span class="params">self, t, x0, x1</span>):
+        <span class="string">&quot;&quot;&quot;Compute the mean of time-dependent density p_t&quot;&quot;&quot;</span>
+        t = expand_t_like_x(t, x1)
+        alpha_t, _ = self.compute_alpha_t(t)
+        sigma_t, _ = self.compute_sigma_t(t)
+        <span class="keyword">return</span> alpha_t * x1 + sigma_t * x0
+    
+    <span class="keyword">def</span> <span class="title function_">compute_xt</span>(<span class="params">self, t, x0, x1</span>):
+        <span class="string">&quot;&quot;&quot;Sample xt from time-dependent density p_t; rng is required&quot;&quot;&quot;</span>
+        xt = self.compute_mu_t(t, x0, x1)
+        <span class="keyword">return</span> xt
+    
+    <span class="keyword">def</span> <span class="title function_">compute_ut</span>(<span class="params">self, t, x0, x1, xt</span>):
+        <span class="string">&quot;&quot;&quot;Compute the vector field corresponding to p_t&quot;&quot;&quot;</span>
+        t = expand_t_like_x(t, x1)
+        _, d_alpha_t = self.compute_alpha_t(t)
+        _, d_sigma_t = self.compute_sigma_t(t)
+        <span class="keyword">return</span> d_alpha_t * x1 + d_sigma_t * x0
+    
+    <span class="keyword">def</span> <span class="title function_">plan</span>(<span class="params">self, t, x0, x1</span>):
+        xt = self.compute_xt(t, x0, x1)
+        ut = self.compute_ut(t, x0, x1, xt)
+        <span class="keyword">return</span> t, xt, ut
+
+<span class="keyword">class</span> <span class="title class_">VPCPlan</span>(<span class="title class_ inherited__">ICPlan</span>):
+    <span class="string">&quot;&quot;&quot;class for VP path flow matching&quot;&quot;&quot;</span>
+
+    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, sigma_min=<span class="number">0.1</span>, sigma_max=<span class="number">20.0</span></span>):
+        self.sigma_min = sigma_min
+        self.sigma_max = sigma_max
+        self.log_mean_coeff = <span class="keyword">lambda</span> t: -<span class="number">0.25</span> * ((<span class="number">1</span> - t) ** <span class="number">2</span>) * (self.sigma_max - self.sigma_min) - <span class="number">0.5</span> * (<span class="number">1</span> - t) * self.sigma_min 
+        self.d_log_mean_coeff = <span class="keyword">lambda</span> t: <span class="number">0.5</span> * (<span class="number">1</span> - t) * (self.sigma_max - self.sigma_min) + <span class="number">0.5</span> * self.sigma_min
+
+    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute coefficient of x1&quot;&quot;&quot;</span>
+        alpha_t = self.log_mean_coeff(t)
+        alpha_t = th.exp(alpha_t)
+        d_alpha_t = alpha_t * self.d_log_mean_coeff(t)
+        <span class="keyword">return</span> alpha_t, d_alpha_t
+    
+    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute coefficient of x0&quot;&quot;&quot;</span>
+        p_sigma_t = <span class="number">2</span> * self.log_mean_coeff(t)
+        sigma_t = th.sqrt(<span class="number">1</span> - th.exp(p_sigma_t))
+        d_sigma_t = th.exp(p_sigma_t) * (<span class="number">2</span> * self.d_log_mean_coeff(t)) / (-<span class="number">2</span> * sigma_t)
+        <span class="keyword">return</span> sigma_t, d_sigma_t
+    
+    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Special purposed function for computing numerical stabled d_alpha_t / alpha_t&quot;&quot;&quot;</span>
+        <span class="keyword">return</span> self.d_log_mean_coeff(t)
+    
+
+<span class="keyword">class</span> <span class="title class_">GVPCPlan</span>(<span class="title class_ inherited__">ICPlan</span>):
+    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, sigma=<span class="number">0.0</span></span>):
+        <span class="built_in">super</span>().__init__(sigma)
+    
+    <span class="keyword">def</span> <span class="title function_">compute_alpha_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute coefficient of x1&quot;&quot;&quot;</span>
+        alpha_t = th.sin(t * np.pi / <span class="number">2</span>)
+        d_alpha_t = np.pi / <span class="number">2</span> * th.cos(t * np.pi / <span class="number">2</span>)
+        <span class="keyword">return</span> alpha_t, d_alpha_t
+    
+    <span class="keyword">def</span> <span class="title function_">compute_sigma_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Compute coefficient of x0&quot;&quot;&quot;</span>
+        sigma_t = th.cos(t * np.pi / <span class="number">2</span>)
+        d_sigma_t = -np.pi / <span class="number">2</span> * th.sin(t * np.pi / <span class="number">2</span>)
+        <span class="keyword">return</span> sigma_t, d_sigma_t
+    
+    <span class="keyword">def</span> <span class="title function_">compute_d_alpha_alpha_ratio_t</span>(<span class="params">self, t</span>):
+        <span class="string">&quot;&quot;&quot;Special purposed function for computing numerical stabled d_alpha_t / alpha_t&quot;&quot;&quot;</span>
+        <span class="keyword">return</span> np.pi / (<span class="number">2</span> * th.tan(t * np.pi / <span class="number">2</span>))</code></pre>
 <p>我们可以将几种不同的 Path 对应的 coefficient 画出来<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <p><img src="sit.assets/image%204.png" alt="image.png"></p>
 <p><img src="sit.assets/image%205.png" alt="image.png"></p>
 <h3 id="prediction-type">Prediction Type</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.model_type == ModelType.VELOCITY:</span><br><span class="line">  <span class="comment">#! Calculate loss according to prediction type</span></span><br><span class="line">    terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(((model_output - ut) ** <span class="number">2</span>))</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    <span class="comment">#! Calculate loss according to prediction type</span></span><br><span class="line">    <span class="keyword">if</span> self.model_type == ModelType.NOISE:</span><br><span class="line">        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output - x0) ** <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">else</span>:  <span class="comment"># ModelType.SCORE, predicting -x0/sigma_t</span></span><br><span class="line">        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output * sigma_t + x0) ** <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="keyword">if</span> self.model_type == ModelType.VELOCITY:
+  <span class="comment">#! Calculate loss according to prediction type</span>
+    terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(((model_output - ut) ** <span class="number">2</span>))
+<span class="keyword">else</span>: 
+    <span class="comment">#! Calculate loss according to prediction type</span>
+    <span class="keyword">if</span> self.model_type == ModelType.NOISE:
+        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output - x0) ** <span class="number">2</span>))
+    <span class="keyword">else</span>:  <span class="comment"># ModelType.SCORE, predicting -x0/sigma_t</span>
+        terms[<span class="string">&#x27;loss&#x27;</span>] = mean_flat(weight * ((model_output * sigma_t + x0) ** <span class="number">2</span>))</code></pre>
 <p>这里给了 noise, score, velocity 三种方式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这三种方式的关系是<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <p><img src="sit.assets/image%206.png" alt="image.png"></p>
 <p><img src="sit.assets/image%207.png" alt="image.png"></p>
 <h3 id="loss-reweighting">Loss Reweighting</h3>
 <p>这里给了两种 Reweight loss term 的方式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! Calculate loss according to weighting type (conditioned on t)</span></span><br><span class="line">    <span class="keyword">if</span> self.loss_type <span class="keyword">in</span> [WeightType.VELOCITY]:</span><br><span class="line">        weight = (drift_var / sigma_t) ** <span class="number">2</span></span><br><span class="line">    <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.LIKELIHOOD]:</span><br><span class="line">        weight = drift_var / (sigma_t ** <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.NONE]:</span><br><span class="line">        weight = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError()</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="comment">#! Calculate loss according to weighting type (conditioned on t)</span>
+    <span class="keyword">if</span> self.loss_type <span class="keyword">in</span> [WeightType.VELOCITY]:
+        weight = (drift_var / sigma_t) ** <span class="number">2</span>
+    <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.LIKELIHOOD]:
+        weight = drift_var / (sigma_t ** <span class="number">2</span>)
+    <span class="keyword">elif</span> self.loss_type <span class="keyword">in</span> [WeightType.NONE]:
+        weight = <span class="number">1</span>
+    <span class="keyword">else</span>:
+        <span class="keyword">raise</span> NotImplementedError()</code></pre>
 <p>These weight factors are key in the context of score-based models when T becomes large; in contrast, with stochastic interpolants where T = 1 without any bias (i.e., alpha1 set to 0 and sigma1 set to 1), these weights are less important and might impose numerical stability issue.</p>
 <p>[WeightType.VELOCITY] 的来源<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <p><img src="sit.assets/image%208.png" alt="image.png"></p>
@@ -129,7 +319,112 @@ SiT: Exploring Flow and Diffusion-based Generative Models with Scalable Interpol
 <p>其中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <p><img src="sit.assets/image%2014.png" alt="image.png"></p>
 <p>The stochastic interpolant framework decouples the formulation of xt from the forward SDE and shows that there is more flexibility in the choices of wt. This choice can be made after learning.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这个结果是 dt 系数里面 v 这一项</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_drift</span>(<span class="params">self, x, t</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;We always output sde according to score parametrization; &quot;&quot;&quot;</span></span><br><span class="line">        t = expand_t_like_x(t, x)</span><br><span class="line">        alpha_ratio = self.compute_d_alpha_alpha_ratio_t(t)</span><br><span class="line">        sigma_t, d_sigma_t = self.compute_sigma_t(t)</span><br><span class="line">        drift = alpha_ratio * x</span><br><span class="line">        diffusion = alpha_ratio * (sigma_t ** <span class="number">2</span>) - sigma_t * d_sigma_t</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -drift, diffusion  <span class="comment"># drift_mean, drift_var of score</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个结果是 wt 这一项</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">compute_diffusion</span>(<span class="params">self, x, t, form=<span class="string">&quot;constant&quot;</span>, norm=<span class="number">1.0</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compute the diffusion term of the SDE</span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">          x: [batch_dim, ...], data point</span></span><br><span class="line"><span class="string">          t: [batch_dim,], time vector</span></span><br><span class="line"><span class="string">          form: str, form of the diffusion term</span></span><br><span class="line"><span class="string">          norm: float, norm of the diffusion term</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        t = expand_t_like_x(t, x)</span><br><span class="line">        choices = &#123;</span><br><span class="line">            <span class="string">&quot;constant&quot;</span>: norm,</span><br><span class="line">            <span class="string">&quot;SBDM&quot;</span>: norm * self.compute_drift(x, t)[<span class="number">1</span>],</span><br><span class="line">            <span class="string">&quot;sigma&quot;</span>: norm * self.compute_sigma_t(t)[<span class="number">0</span>],</span><br><span class="line">            <span class="string">&quot;linear&quot;</span>: norm * (<span class="number">1</span> - t),</span><br><span class="line">            <span class="string">&quot;decreasing&quot;</span>: <span class="number">0.25</span> * (norm * th.cos(np.pi * t) + <span class="number">1</span>) ** <span class="number">2</span>,</span><br><span class="line">            <span class="string">&quot;inccreasing-decreasing&quot;</span>: norm * th.sin(np.pi * t) ** <span class="number">2</span>,</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            diffusion = choices[form]</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">raise</span> NotImplementedError(<span class="string">f&quot;Diffusion form <span class="subst">&#123;form&#125;</span> not implemented&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> diffusion</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个是计算 v 这一项</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_drift</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self</span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;member function for obtaining the drift of the probability flow ODE&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">score_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):</span><br><span class="line">            drift_mean, drift_var = self.path_sampler.compute_drift(x, t)</span><br><span class="line">            model_output = model(x, t, **model_kwargs)</span><br><span class="line">            <span class="keyword">return</span> (-drift_mean + drift_var * model_output) <span class="comment"># by change of variable</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">noise_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):</span><br><span class="line">            drift_mean, drift_var = self.path_sampler.compute_drift(x, t)</span><br><span class="line">            sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, x))</span><br><span class="line">            model_output = model(x, t, **model_kwargs)</span><br><span class="line">            score = model_output / -sigma_t</span><br><span class="line">            <span class="keyword">return</span> (-drift_mean + drift_var * score)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">velocity_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):</span><br><span class="line">            model_output = model(x, t, **model_kwargs)</span><br><span class="line">            <span class="keyword">return</span> model_output</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.model_type == ModelType.NOISE:</span><br><span class="line">            drift_fn = noise_ode</span><br><span class="line">        <span class="keyword">elif</span> self.model_type == ModelType.SCORE:</span><br><span class="line">            drift_fn = score_ode</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            drift_fn = velocity_ode</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">body_fn</span>(<span class="params">x, t, model, **model_kwargs</span>):</span><br><span class="line">            model_output = drift_fn(x, t, model, **model_kwargs)</span><br><span class="line">            <span class="keyword">assert</span> model_output.shape == x.shape, <span class="string">&quot;Output shape from ODE solver must match input shape&quot;</span></span><br><span class="line">            <span class="keyword">return</span> model_output</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> body_fn</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Sampler</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Sampler class for the transport model&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        transport,</span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Constructor for a general sampler; supporting different sampling methods</span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">        - transport: an tranport object specify model prediction &amp; interpolant type</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">        self.transport = transport</span><br><span class="line">        self.drift = self.transport.get_drift()</span><br><span class="line">        self.score = self.transport.get_score()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__get_sde_diffusion_and_drift</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        *,</span></span><br><span class="line"><span class="params">        diffusion_form=<span class="string">&quot;SBDM&quot;</span>,</span></span><br><span class="line"><span class="params">        diffusion_norm=<span class="number">1.0</span>,</span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">diffusion_fn</span>(<span class="params">x, t</span>):</span><br><span class="line">            diffusion = self.transport.path_sampler.compute_diffusion(x, t, form=diffusion_form, norm=diffusion_norm)</span><br><span class="line">            <span class="keyword">return</span> diffusion</span><br><span class="line">        </span><br><span class="line">        sde_drift = \</span><br><span class="line">            <span class="keyword">lambda</span> x, t, model, **kwargs: \</span><br><span class="line">                self.drift(x, t, model, **kwargs) + diffusion_fn(x, t) * self.score(x, t, model, **kwargs)</span><br><span class="line">    </span><br><span class="line">        sde_diffusion = diffusion_fn</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sde_drift, sde_diffusion</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight python"><span class="comment"># 这个结果是 dt 系数里面 v 这一项</span>
+    <span class="keyword">def</span> <span class="title function_">compute_drift</span>(<span class="params">self, x, t</span>):
+        <span class="string">&quot;&quot;&quot;We always output sde according to score parametrization; &quot;&quot;&quot;</span>
+        t = expand_t_like_x(t, x)
+        alpha_ratio = self.compute_d_alpha_alpha_ratio_t(t)
+        sigma_t, d_sigma_t = self.compute_sigma_t(t)
+        drift = alpha_ratio * x
+        diffusion = alpha_ratio * (sigma_t ** <span class="number">2</span>) - sigma_t * d_sigma_t
+
+        <span class="keyword">return</span> -drift, diffusion  <span class="comment"># drift_mean, drift_var of score</span>
+
+<span class="comment"># 这个结果是 wt 这一项</span>
+    <span class="keyword">def</span> <span class="title function_">compute_diffusion</span>(<span class="params">self, x, t, form=<span class="string">&quot;constant&quot;</span>, norm=<span class="number">1.0</span></span>):
+        <span class="string">&quot;&quot;&quot;Compute the diffusion term of the SDE</span>
+<span class="string">        Args:</span>
+<span class="string">          x: [batch_dim, ...], data point</span>
+<span class="string">          t: [batch_dim,], time vector</span>
+<span class="string">          form: str, form of the diffusion term</span>
+<span class="string">          norm: float, norm of the diffusion term</span>
+<span class="string">        &quot;&quot;&quot;</span>
+        t = expand_t_like_x(t, x)
+        choices = &#123;
+            <span class="string">&quot;constant&quot;</span>: norm,
+            <span class="string">&quot;SBDM&quot;</span>: norm * self.compute_drift(x, t)[<span class="number">1</span>],
+            <span class="string">&quot;sigma&quot;</span>: norm * self.compute_sigma_t(t)[<span class="number">0</span>],
+            <span class="string">&quot;linear&quot;</span>: norm * (<span class="number">1</span> - t),
+            <span class="string">&quot;decreasing&quot;</span>: <span class="number">0.25</span> * (norm * th.cos(np.pi * t) + <span class="number">1</span>) ** <span class="number">2</span>,
+            <span class="string">&quot;inccreasing-decreasing&quot;</span>: norm * th.sin(np.pi * t) ** <span class="number">2</span>,
+        &#125;
+
+        <span class="keyword">try</span>:
+            diffusion = choices[form]
+        <span class="keyword">except</span> KeyError:
+            <span class="keyword">raise</span> NotImplementedError(<span class="string">f&quot;Diffusion form <span class="subst">&#123;form&#125;</span> not implemented&quot;</span>)
+        
+        <span class="keyword">return</span> diffusion
+
+<span class="comment"># 这个是计算 v 这一项</span>
+    <span class="keyword">def</span> <span class="title function_">get_drift</span>(<span class="params"></span>
+<span class="params">        self</span>
+<span class="params">    </span>):
+        <span class="string">&quot;&quot;&quot;member function for obtaining the drift of the probability flow ODE&quot;&quot;&quot;</span>
+        <span class="keyword">def</span> <span class="title function_">score_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):
+            drift_mean, drift_var = self.path_sampler.compute_drift(x, t)
+            model_output = model(x, t, **model_kwargs)
+            <span class="keyword">return</span> (-drift_mean + drift_var * model_output) <span class="comment"># by change of variable</span>
+        
+        <span class="keyword">def</span> <span class="title function_">noise_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):
+            drift_mean, drift_var = self.path_sampler.compute_drift(x, t)
+            sigma_t, _ = self.path_sampler.compute_sigma_t(path.expand_t_like_x(t, x))
+            model_output = model(x, t, **model_kwargs)
+            score = model_output / -sigma_t
+            <span class="keyword">return</span> (-drift_mean + drift_var * score)
+        
+        <span class="keyword">def</span> <span class="title function_">velocity_ode</span>(<span class="params">x, t, model, **model_kwargs</span>):
+            model_output = model(x, t, **model_kwargs)
+            <span class="keyword">return</span> model_output
+
+        <span class="keyword">if</span> self.model_type == ModelType.NOISE:
+            drift_fn = noise_ode
+        <span class="keyword">elif</span> self.model_type == ModelType.SCORE:
+            drift_fn = score_ode
+        <span class="keyword">else</span>:
+            drift_fn = velocity_ode
+        
+        <span class="keyword">def</span> <span class="title function_">body_fn</span>(<span class="params">x, t, model, **model_kwargs</span>):
+            model_output = drift_fn(x, t, model, **model_kwargs)
+            <span class="keyword">assert</span> model_output.shape == x.shape, <span class="string">&quot;Output shape from ODE solver must match input shape&quot;</span>
+            <span class="keyword">return</span> model_output
+
+        <span class="keyword">return</span> body_fn
+        
+        
+<span class="keyword">class</span> <span class="title class_">Sampler</span>:
+    <span class="string">&quot;&quot;&quot;Sampler class for the transport model&quot;&quot;&quot;</span>
+    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span>
+<span class="params">        self,</span>
+<span class="params">        transport,</span>
+<span class="params">    </span>):
+        <span class="string">&quot;&quot;&quot;Constructor for a general sampler; supporting different sampling methods</span>
+<span class="string">        Args:</span>
+<span class="string">        - transport: an tranport object specify model prediction &amp; interpolant type</span>
+<span class="string">        &quot;&quot;&quot;</span>
+        
+        self.transport = transport
+        self.drift = self.transport.get_drift()
+        self.score = self.transport.get_score()
+    
+    <span class="keyword">def</span> <span class="title function_">__get_sde_diffusion_and_drift</span>(<span class="params"></span>
+<span class="params">        self,</span>
+<span class="params">        *,</span>
+<span class="params">        diffusion_form=<span class="string">&quot;SBDM&quot;</span>,</span>
+<span class="params">        diffusion_norm=<span class="number">1.0</span>,</span>
+<span class="params">    </span>):
+
+        <span class="keyword">def</span> <span class="title function_">diffusion_fn</span>(<span class="params">x, t</span>):
+            diffusion = self.transport.path_sampler.compute_diffusion(x, t, form=diffusion_form, norm=diffusion_norm)
+            <span class="keyword">return</span> diffusion
+        
+        sde_drift = \
+            <span class="keyword">lambda</span> x, t, model, **kwargs: \
+                self.drift(x, t, model, **kwargs) + diffusion_fn(x, t) * self.score(x, t, model, **kwargs)
+    
+        sde_diffusion = diffusion_fn
+
+        <span class="keyword">return</span> sde_drift, sde_diffusion</code></pre>
 <h3 id="specifying-the diffusion coefficient">Specifying the diffusion coefficient</h3>
 <p><img src="sit.assets/image%2015.png" alt="image.png"></p>
 <h3 id="实验">实验</h3>
